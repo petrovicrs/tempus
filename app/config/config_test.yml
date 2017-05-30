@@ -1,0 +1,25 @@
+imports:
+    - { resource: config_dev.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        collect: false
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
+
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "mysql1.casumotest.local"
+        port:     "3306"
+        dbname:   "careers_platform_test"
+        user:     "casumowp"
+        password: "casumo123"

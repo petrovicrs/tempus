@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Application</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ application.id }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ application.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ application.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Emailaddress</th>
+                <td>{{ application.emailAddress }}</td>
+            </tr>
+            <tr>
+                <th>Coverletter</th>
+                <td>{{ application.coverLetter }}</td>
+            </tr>
+            <tr>
+                <th>Uniqness</th>
+                <td>{{ application.uniqness }}</td>
+            </tr>
+            <tr>
+                <th>Cv</th>
+                <td>{{ application.cv }}</td>
+            </tr>
+            <tr>
+                <th>Portfolio</th>
+                <td>{{ application.portfolio }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('application_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('application_edit', { 'id': application.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

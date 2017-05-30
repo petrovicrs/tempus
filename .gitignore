@@ -1,0 +1,7 @@
+#.gitignore file
+
+vendor
+.idea
+var
+
+!var/SymphonyRequirements.php

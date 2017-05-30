@@ -1,0 +1,15 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: symfony
+    database_user: root
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: 4abb307f70763a04c0a6ddfd97a2e4689efd1289
+    cors_allow_origin: 'http://localhost'
+    api_name: 'Your API name'
+    api_description: 'The full description of your API'

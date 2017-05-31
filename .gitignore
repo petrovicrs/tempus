@@ -3,5 +3,7 @@
 vendor
 .idea
 var
+supervisord.log
+supervisord.pid
 
 !var/SymphonyRequirements.php

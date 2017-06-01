@@ -5,5 +5,7 @@ vendor
 var
 supervisord.log
 supervisord.pid
+configuration/local/*
 
 !var/SymphonyRequirements.php
+!configuration/local/*.dist

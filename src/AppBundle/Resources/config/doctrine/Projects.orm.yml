@@ -1,0 +1,80 @@
+AppBundle\Entity\Projects:
+    type: entity
+    table: null
+    repositoryClass: AppBundle\Repository\ProjectsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        projectId:
+            type: integer
+            unique: true
+            column: project_id
+        name:
+            type: string
+            length: 255
+        description:
+            type: string
+            length: 255
+        goals:
+            type: string
+            length: 255
+            nullable: true
+        nameOriginalLetter:
+            type: string
+            length: 255
+            column: name_original_letter
+        acronym:
+            type: string
+            length: 255
+        programId:
+            type: integer
+            nullable: true
+            column: program_id
+        status:
+            type: integer
+        scope:
+            type: integer
+        applicationYear:
+            type: date
+            column: application_year
+        referenceNumber:
+            type: string
+            length: 255
+            column: reference_number
+        duration:
+            type: integer
+        endDatetime:
+            type: datetime
+            column: end_datetime
+        startDatetime:
+            type: datetime
+            column: start_datetime
+        extendedTime:
+            type: datetime
+            column: extended_time
+        grantAmount:
+            type: decimal
+            precision: 10
+            scale: 0
+            column: grant_amount
+        coFinancingAmount:
+            type: decimal
+            precision: 10
+            scale: 0
+            column: co_financing_amount
+        totalProjectValue:
+            type: decimal
+            precision: 10
+            scale: 0
+            column: total_project_value
+        mark:
+            type: integer
+        markExplanation:
+            type: string
+            length: 255
+            column: mark_explanation
+    lifecycleCallbacks: {  }

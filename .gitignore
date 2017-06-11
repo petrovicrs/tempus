@@ -6,6 +6,8 @@ var
 supervisord.log
 supervisord.pid
 configuration/local/*
+.DS_Store
+*/.DS_Store
 
 !var/SymphonyRequirements.php
 !configuration/local/*.dist

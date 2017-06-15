@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Project</title>
+    </head>
+    <body>
+    List project
+
+    <hr />x
+
+    {% for key,value in result %}
+        <br/> {{ value.name }}
+    {% endfor %}
+
+    <a href="{{ path('project_create') }}">Add Project</a>
+    </body>
+</html>

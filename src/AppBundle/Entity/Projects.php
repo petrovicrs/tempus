@@ -2,115 +2,148 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+
 /**
- * Projects
+ * @ORM\Entity
+ * @ORM\Table(name="projects")
  */
 class Projects
 {
     /**
      * @var int
+     *
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @var int
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $projectId;
+    protected $name;
 
     /**
-     * @var string
+     * @var string $description
+     *
+     * @ORM\Column(name="description", type="string", length=255)
      */
-    private $name;
+    protected $description;
 
     /**
-     * @var string
+     * @var string $goals
+     *
+     * @ORM\Column(name="goals", type="string", length=255)
      */
-    private $description;
+    protected $goals;
 
     /**
-     * @var string
+     * @var string $nameOriginalLetter
+     *
+     * @ORM\Column(name="nameOriginalLetter", type="string", length=255)
      */
-    private $goals;
+    protected $nameOriginalLetter;
 
     /**
-     * @var string
+     * @var string $acronym
+     *
+     * @ORM\Column(name="acronym", type="string", length=255)
      */
-    private $nameOriginalLetter;
+    protected $acronym;
 
     /**
-     * @var string
+     * @var integer $programId
+     *
+     * @Column(type="integer", name="programId", options={"unsigned":true})
      */
-    private $acronym;
+    protected $programId;
 
     /**
-     * @var int
+     * @var int $status
+     *
+     * @Column(type="integer", name="status", options={"unsigned":true})
      */
-    private $programId;
+    protected $status;
 
     /**
-     * @var int
+     * @var int $scope
+     *
+     * @Column(type="integer", name="scope", options={"unsigned":true})
      */
-    private $status;
+    protected $scope;
 
     /**
-     * @var int
+     * @var \DateTime $applicationYear
      */
-    private $scope;
+    protected $applicationYear;
 
     /**
-     * @var \DateTime
+     * @var string $referenceNumber
+     *
+     * @ORM\Column(name="referenceNumber", type="string", length=255)
      */
-    private $applicationYear;
+    protected $referenceNumber;
 
     /**
-     * @var string
+     * @var integer $duration
+     *
+     * @Column(type="integer", name="duration", options={"unsigned":true})
      */
-    private $referenceNumber;
+    protected $duration;
 
     /**
-     * @var int
+     * @var \DateTime $endDatetime
      */
-    private $duration;
+    protected $endDatetime;
 
     /**
-     * @var \DateTime
+     * @var \DateTime $startDatetime
      */
-    private $endDatetime;
+    protected $startDatetime;
 
     /**
-     * @var \DateTime
+     * @var \DateTime $extendedTime
      */
-    private $startDatetime;
+    protected $extendedTime;
 
     /**
-     * @var \DateTime
+     * @var string $grantAmount
+     *
+     * @ORM\Column(name="grantAmount", type="string", length=255)
      */
-    private $extendedTime;
+    protected $grantAmount;
 
     /**
-     * @var string
+     * @var string $coFinancingAmount
+     *
+     * @ORM\Column(name="coFinancingAmount", type="string", length=255)
      */
-    private $grantAmount;
+    protected $coFinancingAmount;
 
     /**
-     * @var string
+     * @var string $totalProjectValue
+     *
+     * @ORM\Column(name="totalProjectValue", type="string", length=255)
      */
-    private $coFinancingAmount;
+    protected $totalProjectValue;
 
     /**
-     * @var string
+     * @var integer $mark
+     *
+     * @Column(type="integer", name="mark")
      */
-    private $totalProjectValue;
+    protected $mark;
 
     /**
-     * @var int
+     * @var string $markExplanation
+     *
+     * @ORM\Column(name="markExplanation", type="string", length=255)
      */
-    private $mark;
-
-    /**
-     * @var string
-     */
-    private $markExplanation;
+    protected $markExplanation;
 
 
     /**
@@ -121,30 +154,6 @@ class Projects
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set projectId
-     *
-     * @param integer $projectId
-     *
-     * @return Projects
-     */
-    public function setProjectId($projectId)
-    {
-        $this->projectId = $projectId;
-
-        return $this;
-    }
-
-    /**
-     * Get projectId
-     *
-     * @return int
-     */
-    public function getProjectId()
-    {
-        return $this->projectId;
     }
 
     /**

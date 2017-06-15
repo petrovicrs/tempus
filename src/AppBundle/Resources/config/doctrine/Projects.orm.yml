@@ -1,6 +1,6 @@
 AppBundle\Entity\Projects:
     type: entity
-    table: null
+    table: projects
     repositoryClass: AppBundle\Repository\ProjectsRepository
     id:
         id:
@@ -9,10 +9,6 @@ AppBundle\Entity\Projects:
             generator:
                 strategy: AUTO
     fields:
-        projectId:
-            type: integer
-            unique: true
-            column: project_id
         name:
             type: string
             length: 255
@@ -77,4 +73,3 @@ AppBundle\Entity\Projects:
             type: string
             length: 255
             column: mark_explanation
-    lifecycleCallbacks: {  }

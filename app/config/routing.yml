@@ -12,7 +12,14 @@ NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix: "/doc"
 
-
 api:
     type: rest
     resource: "routing_api.yml"
+
+list:
+    path: /
+    defaults: {_controller: AppBundle:Project:list}
+
+project_create:
+    path:     /project/create
+    defaults: { _controller: AppBundle:Project:create }

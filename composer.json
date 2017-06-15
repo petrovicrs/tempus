@@ -33,8 +33,9 @@
     "jms/serializer-bundle" : "*",
     "nelmio/cors-bundle" : "*",
     "nelmio/api-doc-bundle" : "*",
-    "twbs/bootstrap": "*",
-    "components/jquery": "1.11.1"
+    "components/jquery": "1.11.1",
+    "symfony/assetic-bundle": "*",
+    "twbs/bootstrap": "3.*"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",

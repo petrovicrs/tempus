@@ -4,18 +4,32 @@
         <meta charset="UTF-8" />
 
         <title>{% block title %}Welcome!{% endblock %}</title>
-
+        {#<img src="{{ asset('/images/header_traka-f6cd05016fd710db00ec1de10780d25d.jpg') }}">#}
 
 
         {% block stylesheets %}
             {% stylesheets '@bootstrap_css' %}
                 <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
             {% endstylesheets %}
+            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/css/kbs.css') }}"/>
+
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
         {% endblock %}
 
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
+        <div id="traka"></div>
+        <nav class="navbar navbar-default" style="height: 75px">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <img alt="Project Database - Erasmus+, Tempus, Erasmus Mundus and Lifelong Learning Programme"
+                             src="{{ asset('/images/logo_horizontal_en-470e29804c52b459fae2c00b8ead4843.png') }}">
+                    </a>
+                </div>
+            </div>
+        </nav>
     </head>
     <body>
 
@@ -26,6 +40,9 @@
             {% javascripts '@jquery' '@bootstrap_js' %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+
         {% endblock %}
     </body>
 </html>

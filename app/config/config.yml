@@ -93,17 +93,17 @@ nelmio_api_doc:
             formats:
                 json:       "application/json"
 
-# FOSRest Configuration
-fos_rest:
-    body_listener: true
-    format_listener:
-        rules:
-            - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
-    param_fetcher_listener: true
-    view:
-        view_response_listener: 'force'
-        formats:
-            json: true
+## FOSRest Configuration
+#fos_rest:
+#    body_listener: true
+#    format_listener:
+#        rules:
+#            - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
+#    param_fetcher_listener: true
+#    view:
+#        view_response_listener: 'force'
+#        formats:
+#            json: true
 
 assetic:
     debug:          "%kernel.debug%"

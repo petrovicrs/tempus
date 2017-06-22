@@ -1,29 +1,81 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <title>View project x</title>
-</head>
-<body>
+{% extends 'base.html.twig' %}
 
-{{ result.name }} <br/>
-{{ result.description }} <br/>
-{{ result.goals }} <br/>
-{{ result.nameOriginalLetter }} <br/>
-{{ result.acronym }} <br/>
-{{ result.programId }} <br/>
-{{ result.status }} <br/>
-{{ result.scope }} <br/>
-{{ result.applicationYear|date('Y-m-d') }} <br/>
-{{ result.referenceNumber }} <br/>
-{{ result.duration }} <br/>
-{{ result.endDatetime|date('Y-m-d') }} <br/>
-{{ result.startDatetime|date('Y-m-d') }} <br/>
-{{ result.extendedTime|date('Y-m-d') }} <br/>
-{{ result.grantAmount }} <br/>
-{{ result.coFinancingAmount }} <br/>
-{{ result.totalProjectValue }} <br/>
-{{ result.mark }} <br/>
-{{ result.markExplanation }} <br/>
-</body>
-</html>
+{% block body %}
+<section id="main">
+    <div class="container-fluid">
+        <div class="page-header">
+            <h1>Project: <b>{{ project.name }}</b></h1>
+        </div>
+
+        <a href="/project/edit/{{ project.id }}" class="btn btn-warning pull-right" role="button">Edit</a>
+        <table class="table project" id="general_info">
+            <thead>
+                <tr>
+                    <th class="acronym">Acronym</th>
+                    <th class="application_year">Application year</th>
+                    <th class="tempus_grant">Grant</th>
+                    <th class="reference_number">Reference number</th>
+                    <th class="duration">Duration</th>
+                    <th class="scope">Scope</th>
+                    <th class="status">Project Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="acronym">{{ project.acronym }}</td>
+                    <td class="application_year">{{ project.applicationYear|date('Y-m-d') }}</td>
+                    <td class="tempus_grant">{{ project.grantAmount }}</td>
+                    <td class="reference_number">{{ project.referenceNumber }}</td>
+                    <td class="duration">{{ project.duration }}</td>
+                    <td class="scope">{{ project.scope }}</td>
+                    <td class="status">{{ project.status }}</td>
+                </tr>
+            </tbody>
+
+            <thead>
+                <tr>
+                    <th class="eligibility">Eligibility period start</th>
+                    <th class="eligibility">Eligibility period end</th>
+                    <th class="extended_until">Extended until</th>
+                    <th class="website" colspan="2">Website</th>
+                    <th class="fb_link" colspan="2">Facebook</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                <tr>
+                    <td class="eligibility">{{ project.startDatetime|date('Y-m-d') }}</td>
+                    <td class="eligibility">{{ project.endDatetime|date('Y-m-d') }}</td>
+                    <td class="extended_until">{{ project.extendedTime|date('Y-m-d') }}</td>
+                    <td class="website" colspan="2">Website</td>
+                    <td class="fb_link" colspan="2">Facebook</td>
+                </tr>
+            </tbody>
+
+
+
+        {#{{ project.nameOriginalLetter }} <br/>#}
+        {#{{ project.coFinancingAmount }} <br/>#}
+        {#{{ project.totalProjectValue }} <br/>#}
+        {#{{ project.mark }} <br/>#}
+        {#{{ project.markExplanation }} <br/>#}
+        {#used programmeId should be programme#}
+        </table>
+
+        <h2 id="summary">Project Summary</h2>
+        <div class="summary">{{ project.description }}</div>
+
+        <h2 id="objectives">Objectives</h2>
+        <div>{{ project.goals }}</div>
+
+        <h2 class="programme">Programme</h2>
+        <dl>
+            <dt>Programme</dt>
+            <dd>{{ project.programId }} </dd>
+        </dl>
+    </div>
+</section>
+
+
+{% endblock %}

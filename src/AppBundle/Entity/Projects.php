@@ -63,7 +63,7 @@ class Projects
     /**
      * @var integer $programId
      * @Assert\NotBlank()
-     * @Assert\Type("integer")
+     * @Assert\Type("numeric")
      * @Column(type="integer", name="programId", options={"unsigned":true})
      */
     protected $programId;
@@ -71,7 +71,7 @@ class Projects
     /**
      * @var integer $status
      * @Assert\NotBlank()
-     * @Assert\Type("integer")
+     * @Assert\Type("numeric")
      * @Column(type="integer", name="status", options={"unsigned":true})
      */
     protected $status;
@@ -79,7 +79,7 @@ class Projects
     /**
      * @var integer $scope
      * @Assert\NotBlank()
-     * @Assert\Type("integer")
+     * @Assert\Type("numeric")
      * @Column(type="integer", name="scope", options={"unsigned":true})
      */
     protected $scope;
@@ -102,7 +102,7 @@ class Projects
     /**
      * @var integer $duration
      * @Assert\NotBlank()
-     * @Assert\Type("integer")
+     * @Assert\Type("numeric")
      * @Column(type="integer", name="duration", options={"unsigned":true})
      */
     protected $duration;
@@ -152,7 +152,7 @@ class Projects
     /**
      * @var integer $mark
      * @Assert\NotBlank()
-     * @Assert\Type("integer")
+     * @Assert\Type("numeric")
      * @Column(type="integer", name="mark")
      */
     protected $mark;

@@ -1,33 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <section id="main">
+        <div class="container">
 
-    <table class="table table-hover" data-toggle="table">
-        <thead>
-        <tr class="table-header">
-            <th class="sortable" data-field="project_title" data-sortable="true">Project title</th>
-            <th class="sortable">Reference number</th>
-            <th class="sortable">Application year</th>
-            <th>Programe</th>
-            <th>Partners</th>
-        </tr>
-        </thead>
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                <tr class="table-header">
+                    <th class="sortable" data-field="project_title" data-sortable="true">Project title</th>
+                    <th class="sortable">Reference number</th>
+                    <th class="sortable">Application year</th>
+                    <th>Programe</th>
+                    <th>Partners</th>
+                </tr>
+                </thead>
 
-        <tbody>
-        {% for key,value in result %}
-            <tr>
-                <td> {{ value.name }} </td>
-                <td> {{ value.referenceNumber }} </td>
-                <td> {{ value.applicationYear.format('Y-m-d') }} </td>
-                <td> {{ value.programId }} </td>
-                <td> Partners-test </td>
-            </tr>
-        {% endfor %}
-        </tbody>
+                <tbody>
+                {% for key,value in result %}
+                    <tr>
+                        <td> {{ value.name }} </td>
+                        <td> {{ value.referenceNumber }} </td>
+                        <td> {{ value.applicationYear.format('Y-m-d') }} </td>
+                        <td> {{ value.programId }} </td>
+                        <td> Partners-test </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
 
-    </table>
+            </table>
 
 
+            <a href="{{ path('project_create') }}">Add Project</a>
 
-    <a href="{{ path('project_create') }}">Add Project</a>
+        </div>
+    <div>
 {% endblock %}

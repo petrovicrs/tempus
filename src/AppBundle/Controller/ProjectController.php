@@ -47,7 +47,7 @@ class ProjectController extends Controller
         $projectForm->handleRequest($request);
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
-            
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($project);
             $em->flush();
@@ -76,7 +76,7 @@ class ProjectController extends Controller
         $response = $this->render(
             'project/create.twig',
             [
-                'form' => $form->createView(),
+                'my_form' => $form->createView(),
             ]
         );
 

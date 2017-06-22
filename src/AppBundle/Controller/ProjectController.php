@@ -35,6 +35,20 @@ class ProjectController extends Controller
         return $response;
     }
 
+    private function getAllFormErrorMessages($form) {
+        $retval = array();
+        if ($form->hasErrors()) {
+            foreach ($form->getErrors() as $error) {
+                $retval[] = $error->getMessage();
+            }
+        }
+        foreach ($form->all() as $name => $child) {
+            $retval[$name] = $this->getAllFormErrors($child);
+        }
+
+        return $retval;
+    }
+
     /**
      *{ @Route("/project/create"), name="project_create" }
      *
@@ -42,7 +56,10 @@ class ProjectController extends Controller
     public function createAction(Request $request)
     {
         $project = new Projects();
-        $projectForm = $this->createForm(ProjectForm::class, $project);
+        $projectForm = $this->createForm(ProjectForm::class, $project, [
+            'action' => $this->generateUrl('project_create'),
+            'method' => 'POST'
+            ]);
 
         $projectForm->handleRequest($request);
 
@@ -63,20 +80,15 @@ class ProjectController extends Controller
 
             return $response;
         } else {
-            $form = $this->createForm(ProjectForm::class, null, [
-                'action' => $this->generateUrl('project_create'),
-                'method' => 'POST'
-            ]);
-
-            $form->add('submit', SubmitType::class, array(
-                'label' => 'Create',
-                'attr'  => array('class' => 'btn btn-default pull-right')
-            ));
+//            $projectForm->add('submit', SubmitType::class, array(
+//                'label' => 'Create',
+//                'attr'  => array('class' => 'btn btn-default pull-right')
+//            ));
         }
         $response = $this->render(
             'project/create.twig',
             [
-                'my_form' => $form->createView(),
+                'my_form' => $projectForm->createView(),
             ]
         );
 

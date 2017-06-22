@@ -11,6 +11,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class ProjectForm extends AbstractType
 {
@@ -20,25 +23,25 @@ class ProjectForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('goals')
-            ->add('nameOriginalLetter')
-            ->add('acronym')
-            ->add('programId')
-            ->add('status')
-            ->add('scope')
-            ->add('applicationYear')
-            ->add('referenceNumber')
-            ->add('duration')
+            ->add('name', TextType::class)
+            ->add('description', TextType::class)
+            ->add('goals', TextType::class)
+            ->add('nameOriginalLetter', TextType::class)
+            ->add('acronym', TextType::class)
+            ->add('programId', TextType::class)
+            ->add('status', TextType::class)
+            ->add('scope', TextType::class)
+            ->add('applicationYear', TextType::class)
+            ->add('referenceNumber', TextType::class)
+            ->add('duration', TextType::class)
             ->add('endDatetime')
             ->add('startDatetime')
             ->add('extendedTime')
-            ->add('grantAmount')
-            ->add('coFinancingAmount')
-            ->add('totalProjectValue')
-            ->add('mark')
-            ->add('markExplanation')
+            ->add('grantAmount', TextType::class)
+            ->add('coFinancingAmount', TextType::class)
+            ->add('totalProjectValue', TextType::class)
+            ->add('mark', TextType::class)
+            ->add('markExplanation', TextType::class)
             ->add('submit', SubmitType::class, array('label' => 'Create'));
     }
 

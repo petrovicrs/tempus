@@ -4,7 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="projects")
@@ -22,125 +22,145 @@ class Projects
 
     /**
      * @var string $name
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      * @ORM\Column(name="name", type="string", length=255)
      */
     protected $name;
 
     /**
      * @var string $description
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      * @ORM\Column(name="description", type="string", length=255)
      */
     protected $description;
 
     /**
      * @var string $goals
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      * @ORM\Column(name="goals", type="string", length=255)
      */
     protected $goals;
 
     /**
      * @var string $nameOriginalLetter
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      * @ORM\Column(name="nameOriginalLetter", type="string", length=255)
      */
     protected $nameOriginalLetter;
 
     /**
      * @var string $acronym
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      * @ORM\Column(name="acronym", type="string", length=255)
      */
     protected $acronym;
 
     /**
      * @var integer $programId
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("integer")
      * @Column(type="integer", name="programId", options={"unsigned":true})
      */
     protected $programId;
 
     /**
-     * @var int $status
-     *
+     * @var integer $status
+     * @Assert\NotBlank()
+     * @Assert\Type("integer")
      * @Column(type="integer", name="status", options={"unsigned":true})
      */
     protected $status;
 
     /**
-     * @var int $scope
-     *
+     * @var integer $scope
+     * @Assert\NotBlank()
+     * @Assert\Type("integer")
      * @Column(type="integer", name="scope", options={"unsigned":true})
      */
     protected $scope;
 
     /**
+     * @Assert\NotBlank()
+     *
      * @var \DateTime $applicationYear
      */
     protected $applicationYear;
 
     /**
      * @var string $referenceNumber
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      * @ORM\Column(name="referenceNumber", type="string", length=255)
      */
     protected $referenceNumber;
 
     /**
      * @var integer $duration
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("integer")
      * @Column(type="integer", name="duration", options={"unsigned":true})
      */
     protected $duration;
 
     /**
      * @var \DateTime $endDatetime
+     * @Assert\NotBlank()
      */
     protected $endDatetime;
 
     /**
      * @var \DateTime $startDatetime
+     * @Assert\NotBlank()
      */
     protected $startDatetime;
 
     /**
      * @var \DateTime $extendedTime
+     * @Assert\NotBlank()
      */
     protected $extendedTime;
 
     /**
      * @var string $grantAmount
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      * @ORM\Column(name="grantAmount", type="string", length=255)
      */
     protected $grantAmount;
 
     /**
      * @var string $coFinancingAmount
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      * @ORM\Column(name="coFinancingAmount", type="string", length=255)
      */
     protected $coFinancingAmount;
 
     /**
      * @var string $totalProjectValue
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      * @ORM\Column(name="totalProjectValue", type="string", length=255)
      */
     protected $totalProjectValue;
 
     /**
      * @var integer $mark
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("integer")
      * @Column(type="integer", name="mark")
      */
     protected $mark;
 
     /**
      * @var string $markExplanation
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
      * @ORM\Column(name="markExplanation", type="string", length=255)
      */
     protected $markExplanation;
@@ -341,7 +361,7 @@ class Projects
     /**
      * Get scope
      *
-     * @return int
+     * @return integer
      */
     public function getScope()
     {
@@ -413,7 +433,7 @@ class Projects
     /**
      * Get duration
      *
-     * @return int
+     * @return integer
      */
     public function getDuration()
     {
@@ -495,7 +515,7 @@ class Projects
     /**
      * Set grantAmount
      *
-     * @param string $grantAmount
+     * @param integer $grantAmount
      *
      * @return Projects
      */
@@ -509,7 +529,7 @@ class Projects
     /**
      * Get grantAmount
      *
-     * @return string
+     * @return integer
      */
     public function getGrantAmount()
     {

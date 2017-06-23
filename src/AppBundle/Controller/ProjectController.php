@@ -58,7 +58,7 @@ class ProjectController extends Controller
         $project = new Projects();
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_create'),
-            'method' => 'POST'
+            'method' => 'POST',
             ]);
 
         $projectForm->handleRequest($request);

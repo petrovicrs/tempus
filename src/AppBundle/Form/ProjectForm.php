@@ -31,7 +31,7 @@ class ProjectForm extends AbstractType
             ->add('programId', TextType::class)
             ->add('status', TextType::class)
             ->add('scope', TextType::class)
-            ->add('applicationYear', TextType::class)
+            ->add('applicationYear')
             ->add('referenceNumber', TextType::class)
             ->add('duration', TextType::class)
             ->add('endDatetime')

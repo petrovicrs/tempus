@@ -9,18 +9,17 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Form\ProjectForm;
 use AppBundle\Entity\Projects;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProjectController extends Controller
 {
     /**
-     *{ @Route("project/list"), name="project_list")
+     * @Route("project/list", name="project_list")
      */
     public function listAction()
     {
@@ -28,145 +27,91 @@ class ProjectController extends Controller
 
         $result = $em->getRepository('AppBundle:Projects')->findAll();
 
-        $response = $this->render('project/list.twig', ['result' => $result]);
-
-        $response->headers->set('Content-Type', 'text/html');
-
-        return $response;
-    }
-
-    private function getAllFormErrorMessages($form) {
-        $retval = array();
-        if ($form->hasErrors()) {
-            foreach ($form->getErrors() as $error) {
-                $retval[] = $error->getMessage();
-            }
-        }
-        foreach ($form->all() as $name => $child) {
-            $retval[$name] = $this->getAllFormErrors($child);
-        }
-
-        return $retval;
+        return $this->render('project/list.twig', ['result' => $result]);
     }
 
     /**
-     *{ @Route("/project/create"), name="project_create" }
+     * @Route("/project/create", name="project_create")
      *
      */
     public function createAction(Request $request)
     {
         $project = new Projects();
+
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_create'),
             'method' => 'POST',
             ]);
 
+
         $projectForm->handleRequest($request);
 
-        if ($projectForm->isSubmitted() && $projectForm->isValid()) {
 
+//
+//        $errors=$projectForm->getErrors(true);
+//        var_dump(count($errors));
+//        foreach($errors as $error){
+//            var_dump($error->getMessage());
+//        }
+//        die;
+
+        if ($projectForm->isSubmitted() && $projectForm->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($project);
             $em->flush();
 
-            $response = $this->render(
-                'project/list.twig',
-                [
-                    'result' => $em->getRepository('AppBundle:Projects')->findAll(),
-                ]
-            );
+            return $this->redirectToRoute('project_list');
 
-            $response->headers->set('Content-Type', 'text/html');
-
-            return $response;
-        } else {
-//            $projectForm->add('submit', SubmitType::class, array(
-//                'label' => 'Create',
-//                'attr'  => array('class' => 'btn btn-default pull-right')
-//            ));
         }
-        $response = $this->render(
-            'project/create.twig',
-            [
-                'my_form' => $projectForm->createView(),
-            ]
-        );
 
-        $response->headers->set('Content-Type', 'text/html');
-
-        return $response;
+        return $this->render('project/create.twig', ['my_form' => $projectForm->createView()]);
     }
 
     /**
-     *{ @Route("/project/edit/{projectId}"), name="project_edit", requirements={"projectId": "\d+"} }
+     * @Route("/project/edit/{projectId}", name="project_edit", requirements={"projectId": "\d+"})
      *
      */
-    public function editAction($projectId)
+    public function editAction(Request $request, $projectId)
     {
-        $project = new Projects();
-        $projectForm = $this->createForm(ProjectForm::class, $project);
+        $em = $this->getDoctrine()->getManager();
+        $project = $em->getRepository('AppBundle:Projects')->findOneBy(['id' => $projectId]);
+        $projectForm = $this->createForm(ProjectForm::class, $project, [
+            'action' => $this->generateUrl('project_edit', ['projectId' => $projectId]),
+            'method' => 'POST'
+        ]);
 
         $projectForm->handleRequest($request);
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($project);
             $em->flush();
 
-            $response = $this->render(
-                'project/list.twig',
-                [
-                    'result' => $em->getRepository('AppBundle:Projects')->findAll(),
-                ]
-            );
-
-            $response->headers->set('Content-Type', 'text/html');
-
-            return $response;
-        } else {
-            $form = $this->createForm(ProjectForm::class, null, [
-                'action' => $this->generateUrl('project_create'),
-                'method' => 'POST'
-            ]);
-
-            $form->add('submit', SubmitType::class, array(
-                'label' => 'Create',
-                'attr'  => array('class' => 'btn btn-default pull-right')
-            ));
+            return $this->redirectToRoute('project_list');
         }
-        $response = $this->render(
-            'project/create.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
 
-        $response->headers->set('Content-Type', 'text/html');
-
-        return $response;
+        return $this->render('project/edit.twig', ['my_form' => $projectForm->createView()]);
     }
 
     /**
-     * { @Route("/project/view/{projectId}"), name="project_view", requirements={"projectId": "\d+"} }
+     * @Route("/project/{projectId}", name="project_view", requirements={"projectId": "\d+"})
+     *
+     * }
      */
     public function viewProjectAction($projectId)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $result = $em->getRepository('AppBundle:Projects')->find($projectId);
+        $project = $em->getRepository('AppBundle:Projects')->find($projectId);
 
-        if (!$result) {
+        if (!$project) {
             throw $this->createNotFoundException(
                 'No project found for id '. $projectId
             );
         }
 
-        $response = $this->render('project/view.twig', ['result' => $result]);
-
-        $response->headers->set('Content-Type', 'text/html');
-
-        return $response;
+        return $this->render('project/view.twig', ['project' => $project]);
     }
 
 }

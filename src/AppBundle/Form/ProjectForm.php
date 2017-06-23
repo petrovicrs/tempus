@@ -62,6 +62,4 @@ class ProjectForm extends AbstractType
     {
         return 'appbundle_project';
     }
-
-
 }

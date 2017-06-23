@@ -23,3 +23,8 @@ list:
 project_create:
     path:     /project/create
     defaults: { _controller: AppBundle:Project:create }
+
+project_edit:
+    resource: "@AppBundle/Controller"
+    type:     annotation
+#    defaults: { _controller: AppBundle:Project:edit }

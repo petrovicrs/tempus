@@ -2,7 +2,7 @@
 
 {% block body %}
     <section id="main">
-        <div class="container">
+        <div class="container-fluid">
 
             <table class="table table-hover" data-toggle="table">
                 <thead>
@@ -18,7 +18,7 @@
                 <tbody>
                 {% for key,value in result %}
                     <tr>
-                        <td> {{ value.name }} </td>
+                        <td> <a href="/project/{{ value.id }}"> {{ value.name }} </a> </td>
                         <td> {{ value.referenceNumber }} </td>
                         <td> {{ value.applicationYear.format('Y-m-d') }} </td>
                         <td> {{ value.programId }} </td>

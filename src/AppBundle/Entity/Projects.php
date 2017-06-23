@@ -128,7 +128,7 @@ class Projects
     /**
      * @var string $grantAmount
      * @Assert\NotBlank()
-     * @Assert\Type("string")
+     * @Assert\Type("numeric")
      * @ORM\Column(name="grantAmount", type="string", length=255)
      */
     protected $grantAmount;
@@ -136,7 +136,7 @@ class Projects
     /**
      * @var string $coFinancingAmount
      * @Assert\NotBlank()
-     * @Assert\Type("string")
+     * @Assert\Type("numeric")
      * @ORM\Column(name="coFinancingAmount", type="string", length=255)
      */
     protected $coFinancingAmount;
@@ -144,7 +144,7 @@ class Projects
     /**
      * @var string $totalProjectValue
      * @Assert\NotBlank()
-     * @Assert\Type("string")
+     * @Assert\Type("numeric")
      * @ORM\Column(name="totalProjectValue", type="string", length=255)
      */
     protected $totalProjectValue;

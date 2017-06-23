@@ -12,3 +12,8 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\Application
+    doctrine_entity_repository.projects:
+            class: Doctrine\ORM\EntityRepository
+            factory: ["@doctrine", getRepository]
+            arguments:
+                - AppBundle\Entity\Projects

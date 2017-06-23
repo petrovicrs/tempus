@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Form\ProjectForm;
 use AppBundle\Entity\Projects;
+use AppBundle\Repository\ProjectsRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,20 +47,9 @@ class ProjectController extends Controller
 
         $projectForm->handleRequest($request);
 
-
-//
-//        $errors=$projectForm->getErrors(true);
-//        var_dump(count($errors));
-//        foreach($errors as $error){
-//            var_dump($error->getMessage());
-//        }
-//        die;
-
         if ($projectForm->isSubmitted() && $projectForm->isValid())
         {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($project);
-            $em->flush();
+            $this->getProjectsRepository()->saveProject($project);
 
             return $this->redirectToRoute('project_list');
 
@@ -74,8 +64,8 @@ class ProjectController extends Controller
      */
     public function editAction(Request $request, $projectId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $project = $em->getRepository('AppBundle:Projects')->findOneBy(['id' => $projectId]);
+        $project = $this->getProjectsRepository()->findOneBy(['id' => $projectId]);
+
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_edit', ['projectId' => $projectId]),
             'method' => 'POST'
@@ -85,8 +75,7 @@ class ProjectController extends Controller
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
 
-            $em->persist($project);
-            $em->flush();
+            $this->getProjectsRepository()->saveProject($project);
 
             return $this->redirectToRoute('project_list');
         }
@@ -103,7 +92,7 @@ class ProjectController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $project = $em->getRepository('AppBundle:Projects')->find($projectId);
+        $project = $this->getProjectsRepository()->find($projectId);
 
         if (!$project) {
             throw $this->createNotFoundException(
@@ -112,6 +101,14 @@ class ProjectController extends Controller
         }
 
         return $this->render('project/view.twig', ['project' => $project]);
+    }
+
+    /**
+     * @return ProjectsRepository
+     */
+    private function getProjectsRepository() {
+
+        return $this->get('doctrine_entity_repository.projects');
     }
 
 }

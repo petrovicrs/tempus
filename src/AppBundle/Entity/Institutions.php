@@ -26,126 +26,147 @@ class Institutions extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\Column(name="parent_institution", type="integer")
+     * @ORM\Column(name="parent_institution", type="string")
      */
     protected $parentInstitution;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string")
      */
     protected $name;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="founder", type="string")
      */
     protected $founder;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="name_original_letter", type="string")
      */
     protected $nameOriginalLetter;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="founder_original_letter", type="string")
      */
     protected $founderOriginalLetter;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="legal_representative", type="string")
      */
     protected $legalRepresentative;
 
     /**
-     * @ORM\Column(name="contact_person", type="string")
+     * @ORM\OneToOne(targetEntity="Persons", inversedBy="person")
+     * @ORM\JoinColumn(name="contact_person", referencedColumnName="id")
      */
     protected $contactPerson;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="pic_number", type="string")
      */
     protected $picNumber;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="registration_number", type="string")
      */
     protected $registrationNumber;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="vat_number", type="string")
      */
     protected $vatNumber;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="hierarchy_level", type="string")
      */
     protected $hierarchyLevel;
 
     /**
-     * @ORM\Column(name="institution_type", type="integer")
+     * @Assert\NotBlank()
+     * @ORM\Column(name="institution_type", type="string")
      */
     protected $institutionType;
 
     /**
-     * @ORM\Column(name="country", type="integer")
+     * @Assert\NotBlank()
+     * @ORM\Column(name="country", type="string")
      */
     protected $country;
 
     /**
-     * @ORM\Column(name="founder_type", type="integer")
+     * @Assert\NotBlank()
+     * @ORM\Column(name="founder_type", type="string")
      */
     protected $founderType;
 
     /**
-     * @ORM\Column(name="founder_country", type="integer")
+     * @Assert\NotBlank()
+     * @ORM\Column(name="founder_country", type="string")
      */
     protected $founderCountry;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="address", type="string")
      */
     protected $address;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="postal_code", type="string")
      */
     protected $postalCode;
 
     /**
-     * @ORM\Column(name="city", type="integer")
+     * @Assert\NotBlank()
+     * @ORM\Column(name="city", type="string")
      */
     protected $city;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="web_site", type="string")
      */
     protected $webSite;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="belonging_to_group", type="string")
      */
     protected $belongingToGroup;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="note", type="string")
      */
     protected $note;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="accreditation", type="string")
      */
     protected $accreditation;
 
     /**
-     * @ORM\Column(name="accreditation_valid_from", type="datetime")
+     * @ORM\Column(name="accreditation_valid_from", type="datetime", nullable=true)
      */
     protected $accreditationValidFrom;
 
     /**
-     * @ORM\Column(name="accreditation_valid_to", type="datetime")
+     * @ORM\Column(name="accreditation_valid_to", type="datetime", nullable=true)
      */
     protected $accreditationValidTo;
 
-    /**
+    /**@Assert\NotBlank()
      * @ORM\Column(name="accreditor", type="string")
      */
     protected $accreditor;

@@ -49,7 +49,7 @@ class InstitutionController extends Controller
         if ($institutionForm->isSubmitted() && $institutionForm->isValid()) {
             $this->getInstitutionsRepository()->save($institutions);
 
-            return $this->redirectToRoute('institution_list');
+            return $this->redirectToRoute('project_list');
 
         }
 

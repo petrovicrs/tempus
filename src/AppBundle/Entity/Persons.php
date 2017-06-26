@@ -38,6 +38,11 @@ class Persons extends AbstractAuditable
      */
     protected $contacts;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Institutions")
+     */
+    protected $person;
+
     public function __construct()
     {
         parent::__construct();

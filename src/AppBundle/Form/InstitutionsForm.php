@@ -12,6 +12,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class InstitutionsForm extends AbstractType
 {
@@ -27,7 +29,10 @@ class InstitutionsForm extends AbstractType
             ->add('nameOriginalLetter', TextType::class)
             ->add('founderOriginalLetter', TextType::class)
             ->add('legalRepresentative', TextType::class)
-            ->add('contactPerson', TextType::class)
+            ->add('contactPerson', EntityType::class, [
+                'class' => 'AppBundle:Persons',
+                'choice_label' => 'name',
+            ])
             ->add('picNumber', TextType::class)
             ->add('registrationNumber', TextType::class)
             ->add('vatNumber', TextType::class)
@@ -43,8 +48,8 @@ class InstitutionsForm extends AbstractType
             ->add('belongingToGroup', TextType::class)
             ->add('note', TextType::class)
             ->add('accreditation', TextType::class)
-            ->add('accreditationValidFrom')
-            ->add('accreditationValidTo')
+            ->add('accreditationValidFrom', DateType::class)
+            ->add('accreditationValidTo', DateType::class)
             ->add('accreditor', TextType::class)
             ->add('submit', SubmitType::class, array('label' => 'Create'));
     }

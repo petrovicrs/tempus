@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ProjectForm extends AbstractType
 {
@@ -23,12 +24,13 @@ class ProjectForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('nameEng', TextType::class)
+            ->add('nameSrb', TextType::class)
             ->add('description', TextType::class)
             ->add('goals', TextType::class)
             ->add('nameOriginalLetter', TextType::class)
             ->add('acronym', TextType::class)
-            ->add('programId', TextType::class)
+            ->add('program', EntityType::class, ['class' => 'AppBundle:Program', 'choice_label' => 'name' ])
             ->add('status', TextType::class)
             ->add('scope', TextType::class)
             ->add('applicationYear')

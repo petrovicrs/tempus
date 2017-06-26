@@ -18,10 +18,10 @@
                 <tbody>
                 {% for key,value in result %}
                     <tr>
-                        <td> <a href="/project/{{ value.id }}"> {{ value.name }} </a> </td>
+                        <td> <a href="/project/{{ value.id }}"> {{ value.nameEng }} </a> </td>
                         <td> {{ value.referenceNumber }} </td>
                         <td> {{ value.applicationYear }} </td>
-                        <td> {{ value.programId }} </td>
+                        <td> {{ value.program.name }} </td>
                         <td> Partners-test </td>
                     </tr>
                 {% endfor %}

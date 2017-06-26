@@ -32,3 +32,8 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\Institutions
+    doctrine_entity_repository.program:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\Program

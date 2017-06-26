@@ -4,7 +4,8 @@
 <section id="main">
     <div class="container-fluid">
         <div class="page-header">
-            <h1>Project: <b>{{ project.name }}</b></h1>
+            <h1>Project: <b>{{ project.nameEng }}</b></h1>
+            <h3>Original letter: {{ project.nameOriginalLetter }}</h3>
         </div>
 
         <a href="/project/edit/{{ project.id }}" class="btn btn-warning pull-right" role="button">Edit</a>
@@ -72,7 +73,7 @@
         <h2 class="programme">Programme</h2>
         <dl>
             <dt>Programme</dt>
-            <dd>{{ project.programId }} </dd>
+            <dd>{{ project.program.name }} </dd>
         </dl>
     </div>
 </section>

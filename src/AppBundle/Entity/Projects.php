@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectsRepository")
  * @ORM\Table(name="projects")
@@ -24,9 +25,17 @@ class Projects extends AbstractAuditable
      * @var string $name
      * @Assert\NotBlank()
      * @Assert\Type("string")
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name_eng", type="string", length=255)
      */
-    protected $name;
+    protected $nameEng;
+
+    /**
+     * @var string $name
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
+     * @ORM\Column(name="name_srb", type="string", length=255)
+     */
+    protected $nameSrb;
 
     /**
      * @var string $description
@@ -48,7 +57,7 @@ class Projects extends AbstractAuditable
      * @var string $nameOriginalLetter
      * @Assert\NotBlank()
      * @Assert\Type("string")
-     * @ORM\Column(name="nameOriginalLetter", type="string", length=255)
+     * @ORM\Column(name="name_original_letter", type="string", length=255)
      */
     protected $nameOriginalLetter;
 
@@ -60,13 +69,16 @@ class Projects extends AbstractAuditable
      */
     protected $acronym;
 
+
     /**
-     * @var integer $programId
-     * @Assert\NotBlank()
-     * @Assert\Type("numeric")
-     * @Column(type="integer", name="programId", options={"unsigned":true})
+     * @ORM\ManyToOne(
+     *      targetEntity="Program",
+     *      inversedBy="projects"
+     * )
+     * @ORM\JoinColumn(name="programId", referencedColumnName="id")
      */
-    protected $programId;
+    protected $program;
+
 
     /**
      * @var integer $status
@@ -86,7 +98,7 @@ class Projects extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     *
+     * @Column(type="integer", name="application_year")
      * @var integer $applicationYear
      */
     protected $applicationYear;
@@ -177,28 +189,38 @@ class Projects extends AbstractAuditable
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Projects
+     * @return string
      */
-    public function setName($name)
+    public function getNameEng()
     {
-        $this->name = $name;
-
-        return $this;
+        return $this->nameEng;
     }
 
     /**
-     * Get name
-     *
+     * @param string $nameEng
+     */
+    public function setNameEng($nameEng)
+    {
+        $this->nameEng = $nameEng;
+    }
+
+    /**
      * @return string
      */
-    public function getName()
+    public function getNameSrb()
     {
-        return $this->name;
+        return $this->nameSrb;
     }
+
+    /**
+     * @param string $nameSrb
+     */
+    public function setNameSrb($nameSrb)
+    {
+        $this->nameSrb = $nameSrb;
+    }
+
+
 
     /**
      * Set description
@@ -297,28 +319,29 @@ class Projects extends AbstractAuditable
     }
 
     /**
-     * Set programId
+     * Set program
      *
-     * @param integer $programId
+     * @param Program $program
      *
      * @return Projects
      */
-    public function setProgramId($programId)
+    public function setProgram($program)
     {
-        $this->programId = $programId;
+        $this->program = $program;
 
         return $this;
     }
 
     /**
-     * Get programId
+     * Get program
      *
-     * @return int
+     * @return Program
      */
-    public function getProgramId()
+    public function getProgram()
     {
-        return $this->programId;
+        return $this->program;
     }
+
 
     /**
      * Set status
@@ -631,5 +654,7 @@ class Projects extends AbstractAuditable
     {
         return $this->markExplanation;
     }
+
+
 }
 

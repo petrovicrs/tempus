@@ -44,7 +44,7 @@ class ProjectForm extends AbstractType
             ->add('totalProjectValue', TextType::class)
             ->add('mark', TextType::class)
             ->add('markExplanation', TextType::class)
-            ->add('submit', SubmitType::class, array('label' => 'Create'));
+            ->add('submit', SubmitType::class, array('label' => $options['submit_button_label']));
     }
 
     /**
@@ -53,7 +53,8 @@ class ProjectForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Projects'
+            'data_class' => 'AppBundle\Entity\Projects',
+            'submit_button_label' => 'Create'
         ));
     }
 

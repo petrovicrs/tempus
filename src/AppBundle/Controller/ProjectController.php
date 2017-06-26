@@ -66,7 +66,8 @@ class ProjectController extends Controller
 
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_edit', ['projectId' => $projectId]),
-            'method' => 'POST'
+            'method' => 'POST',
+            'submit_button_label' => 'Save'
         ]);
 
         $projectForm->handleRequest($request);

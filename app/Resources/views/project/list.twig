@@ -20,7 +20,7 @@
                     <tr>
                         <td> <a href="/project/{{ value.id }}"> {{ value.name }} </a> </td>
                         <td> {{ value.referenceNumber }} </td>
-                        <td> {{ value.applicationYear.format('Y-m-d') }} </td>
+                        <td> {{ value.applicationYear }} </td>
                         <td> {{ value.programId }} </td>
                         <td> Partners-test </td>
                     </tr>
@@ -31,6 +31,8 @@
 
 
             <a href="{{ path('project_create') }}">Add Project</a>
+            <a href="{{ path('person_create') }}">Add Person</a>
+            <a href="{{ path('person_contacts_create_form', {'personId': 1}) }}">Add Person Contact</a>
 
         </div>
     <div>

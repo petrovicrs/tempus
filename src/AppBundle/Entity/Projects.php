@@ -6,16 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectsRepository")
  * @ORM\Table(name="projects")
  */
-class Projects
+class Projects extends AbstractAuditable
 {
     /**
      * @var int
      *
      * @ORM\Id
-     * @ORM\Column(type="numeric")
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -108,20 +108,20 @@ class Projects
     protected $duration;
 
     /**
-     * @var \DateTime $endDatetime
      * @Assert\NotBlank()
+     * @ORM\Column(name="endDatetime", type="datetime")
      */
     protected $endDatetime;
 
     /**
-     * @var \DateTime $startDatetime
      * @Assert\NotBlank()
+     * @ORM\Column(name="startDatetime", type="datetime")
      */
     protected $startDatetime;
 
     /**
-     * @var \DateTime $extendedTime
      * @Assert\NotBlank()
+     * @ORM\Column(name="extendedTime", type="datetime")
      */
     protected $extendedTime;
 

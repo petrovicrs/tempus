@@ -1,12 +1,20 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: jovanmijatovic
+ * Date: 6/4/17
+ * Time: 9:39 AM
+ */
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class ApplicationType extends AbstractType
+class PersonForm extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -14,22 +22,18 @@ class ApplicationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName')
-            ->add('lastName')
-            ->add('emailAddress')
-            ->add('coverLetter')
-            ->add('uniqness')
-            ->add('cv')
-            ->add('portfolio');
+            ->add('name')
+            ->add('surname')
+            ->add('submit', SubmitType::class, array('label' => 'Create'));
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Application'
+            'data_class' => 'AppBundle\Entity\Persons'
         ));
     }
 
@@ -38,8 +42,6 @@ class ApplicationType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_application';
+        return 'appbundle_project';
     }
-
-
 }

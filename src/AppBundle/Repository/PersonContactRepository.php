@@ -5,7 +5,7 @@ namespace AppBundle\Repository;
 /**
  * PersonContactsRepository
  */
-class PersonContactsRepository extends \Doctrine\ORM\EntityRepository
+class PersonContactRepository extends \Doctrine\ORM\EntityRepository
 {
     public function saveContact($contact) {
 

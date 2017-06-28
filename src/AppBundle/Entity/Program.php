@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProgramRepository")
- * @ORM\Table(name="programs")
+ * @ORM\Table(name="program")
  */
 class Program extends AbstractAuditable
 {
@@ -33,12 +33,8 @@ class Program extends AbstractAuditable
      */
     protected $name;
 
-
-
-
-
     /**
-     * @ORM\OneToMany(targetEntity="Projects", mappedBy="program")
+     * @ORM\OneToMany(targetEntity="Project", mappedBy="program")
      */
     protected $projects;
 

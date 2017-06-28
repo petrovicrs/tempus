@@ -12,26 +12,26 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\Application
-    doctrine_entity_repository.projects:
+    doctrine_entity_repository.project:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
-            - AppBundle\Entity\Projects
-    doctrine_entity_repository.persons:
+            - AppBundle\Entity\Project
+    doctrine_entity_repository.person:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
-            - AppBundle\Entity\Persons
-    doctrine_entity_repository.person_contacts:
+            - AppBundle\Entity\Person
+    doctrine_entity_repository.person_contact:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
-            - AppBundle\Entity\PersonContacts
-    doctrine_entity_repository.institutions:
+            - AppBundle\Entity\PersonContact
+    doctrine_entity_repository.institution:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
-            - AppBundle\Entity\Institutions
+            - AppBundle\Entity\Institution
     doctrine_entity_repository.program:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

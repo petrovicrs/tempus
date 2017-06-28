@@ -3,9 +3,9 @@
 namespace AppBundle\Repository;
 
 /**
- * PersonsRepository
+ * PersonRepository
  */
-class PersonsRepository extends \Doctrine\ORM\EntityRepository
+class PersonRepository extends \Doctrine\ORM\EntityRepository
 {
     public function savePerson($person) {
 

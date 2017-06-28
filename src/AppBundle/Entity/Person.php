@@ -8,10 +8,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonsRepository")
- * @ORM\Table(name="persons")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonRepository")
+ * @ORM\Table(name="person")
  */
-class Persons extends AbstractAuditable
+class Person extends AbstractAuditable
 {
     /**
      *
@@ -34,12 +34,12 @@ class Persons extends AbstractAuditable
     protected $surname;
 
     /**
-     * @ORM\OneToMany(targetEntity="PersonContacts", mappedBy="person")
+     * @ORM\OneToMany(targetEntity="PersonContact", mappedBy="person")
      */
     protected $contacts;
 
     /**
-     * @ORM\OneToOne(targetEntity="Institutions")
+     * @ORM\OneToOne(targetEntity="Institution")
      */
     protected $person;
 
@@ -64,7 +64,7 @@ class Persons extends AbstractAuditable
      *
      * @param string $name
      *
-     * @return Persons
+     * @return Person
      */
     public function setName($name)
     {
@@ -88,7 +88,7 @@ class Persons extends AbstractAuditable
      *
      * @param string $surname
      *
-     * @return Persons
+     * @return Person
      */
     public function setSurname($surname)
     {

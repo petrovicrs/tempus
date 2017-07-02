@@ -4,21 +4,21 @@
 <section id="main">
     <div class="container-fluid">
         <div class="page-header">
-            <h1>Project: <b>{{ project.nameEng }}</b></h1>
-            <h3>Original letter: {{ project.nameOriginalLetter }}</h3>
+            <h1>{% trans %}Project{% endtrans %}: <b>{{ project.name(app.request.getLocale()) }}</b></h1>
+            <h3>{% trans %}Original letter{% endtrans %}: {{ project.nameOriginalLetter }}</h3>
         </div>
 
-        <a href="/project/edit/{{ project.id }}" class="btn btn-warning pull-right" role="button">Edit</a>
+        <a href="{{ localizedPath('project_edit', {'projectId':project.id }) }}" class="btn btn-warning pull-right" role="button">{% trans %}Edit{% endtrans %}</a>
         <table class="table project" id="general_info">
             <thead>
                 <tr>
-                    <th class="acronym">Acronym</th>
-                    <th class="application_year">Application year</th>
-                    <th class="tempus_grant">Grant</th>
-                    <th class="reference_number">Reference number</th>
-                    <th class="duration">Duration</th>
-                    <th class="scope">Scope</th>
-                    <th class="status">Project Status</th>
+                    <th class="acronym">{% trans %}Acronym{% endtrans %}</th>
+                    <th class="application_year">{% trans %}Application year{% endtrans %}</th>
+                    <th class="tempus_grant">{% trans %}Grant{% endtrans %}</th>
+                    <th class="reference_number">{% trans %}Reference number{% endtrans %}</th>
+                    <th class="duration">{% trans %}Duration{% endtrans %}</th>
+                    <th class="scope">{% trans %}Scope{% endtrans %}</th>
+                    <th class="status">{% trans %}Project Status{% endtrans %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,11 +35,11 @@
 
             <thead>
                 <tr>
-                    <th class="eligibility">Eligibility period start</th>
-                    <th class="eligibility">Eligibility period end</th>
-                    <th class="extended_until">Extended until</th>
-                    <th class="website" colspan="2">Website</th>
-                    <th class="fb_link" colspan="2">Facebook</th>
+                    <th class="eligibility">{% trans %}Eligibility period start{% endtrans %}</th>
+                    <th class="eligibility">{% trans %}Eligibility period end{% endtrans %}</th>
+                    <th class="extended_until">{% trans %}Extended until{% endtrans %}</th>
+                    <th class="website" colspan="2">{% trans %}Website{% endtrans %}</th>
+                    <th class="fb_link" colspan="2">{% trans %}Facebook{% endtrans %}</th>
                 </tr>
             </thead>
 
@@ -64,15 +64,15 @@
         {#used programmeId should be programme#}
         </table>
 
-        <h2 id="summary">Project Summary</h2>
+        <h2 id="summary">{% trans %}Project Summary{% endtrans %}</h2>
         <div class="summary">{{ project.description }}</div>
 
-        <h2 id="objectives">Objectives</h2>
+        <h2 id="objectives">{% trans %}Objectives{% endtrans %}</h2>
         <div>{{ project.goals }}</div>
 
-        <h2 class="programme">Programme</h2>
+        <h2 class="programme">{% trans %}Programme{% endtrans %}</h2>
         <dl>
-            <dt>Programme</dt>
+            <dt>{% trans %}Programme{% endtrans %}</dt>
             <dd>{{ project.program.name }} </dd>
         </dl>
     </div>

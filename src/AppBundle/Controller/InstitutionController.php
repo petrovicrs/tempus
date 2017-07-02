@@ -18,20 +18,20 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
-class InstitutionController extends Controller
+class InstitutionController extends AbstractController
 {
-    /**
-     * @Route("institution/list", name="institution_list")
-     */
-    public function listAction()
-    {
-        $institutions = $this->getInstitutionsRepository()->findAll();
+//    /**
+//     * @Route("/{locale}/institution/list", name="institution_list", requirements={"locale": "%app.locales%"})
+//     */
+//    public function listAction()
+//    {
+//        $institutions = $this->getInstitutionsRepository()->findAll();
+//
+//        return $this->render('institution/list.twig', ['institutions' => $institutions]);
+//    }
 
-        return $this->render('institution/list.twig', ['institutions' => $institutions]);
-    }
-
     /**
-     * @Route("/institution/create", name="institution_create")
+     * @Route("/{locale}/institution/create", name="institution_create", requirements={"locale": "%app.locales%"})
      *
      */
     public function createAction(Request $request)
@@ -40,7 +40,7 @@ class InstitutionController extends Controller
 
         $institutionForm = $this->createForm(InstitutionsForm::class, $institutions, [
             'action' => $this->generateUrl('institution_create'),
-            'method' => 'POST',
+            'method' => 'POST'
         ]);
 
 
@@ -56,15 +56,15 @@ class InstitutionController extends Controller
         return $this->render('institution/create.twig', ['my_form' => $institutionForm->createView()]);
     }
 
-    /**
-     * @Route("institution/view/{institutionId}", name="institution_view", requirements={"institutionId": "\d+"})
-     */
-    public function viewAction($institutionId)
-    {
-        $institution = $this->getInstitutionsRepository()->findOneBy(['id' => $institutionId]);
-
-        return $this->render('institution/view.twig', ['institution' => $institution]);
-    }
+//    /**
+//     * @Route("/{locale}/institution/view/{institutionId}", name="institution_view", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
+//     */
+//    public function viewAction($institutionId)
+//    {
+//        $institution = $this->getInstitutionsRepository()->findOneBy(['id' => $institutionId]);
+//
+//        return $this->render('institution/view.twig', ['institution' => $institution]);
+//    }
 
     /**
      * @return InstitutionsRepository

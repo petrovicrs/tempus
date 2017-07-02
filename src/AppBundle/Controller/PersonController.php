@@ -19,10 +19,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
-class PersonController extends Controller
+class PersonController extends AbstractController
 {
     /**
-     * @Route("person/list", name="person_list")
+     * @Route("/{locale}/person/list", name="person_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction()
     {
@@ -32,7 +32,7 @@ class PersonController extends Controller
     }
 
     /**
-     * @Route("/person/create", name="person_create")
+     * @Route("/{locale}/person/create", name="person_create", requirements={"locale": "%app.locales%"})
      *
      */
     public function createAction(Request $request)
@@ -58,7 +58,7 @@ class PersonController extends Controller
     }
 
     /**
-     * @Route("person/view/{personId}", name="person_view", requirements={"personId": "\d+"})
+     * @Route("/{locale}/person/view/{personId}", name="person_view", requirements={"personId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($personId)
     {

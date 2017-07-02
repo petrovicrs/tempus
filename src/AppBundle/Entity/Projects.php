@@ -655,6 +655,20 @@ class Projects extends AbstractAuditable
         return $this->markExplanation;
     }
 
+    /**
+     * @param mixed $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
 
+
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->nameSrb;
+        }
+        return $this->nameEng;
+    }
 }
 

@@ -1,28 +1,28 @@
-{% extends 'base.html.twig' %}
+{#{% extends 'base.html.twig' %}#}
 
-{% block body %}
-    <section id="main">
-        <div class="container-fluid">
+{#{% block body %}#}
+    {#<section id="main">#}
+        {#<div class="container-fluid">#}
 
-            <table class="table table-hover" data-toggle="table">
-                <thead>
-                <tr class="table-header">
-                    <th class="sortable" data-field="project_title" data-sortable="true">Name</th>
-                    <th class="sortable" data-sortable="true">Surname</th>
-                </tr>
-                </thead>
+            {#<table class="table table-hover" data-toggle="table">#}
+                {#<thead>#}
+                {#<tr class="table-header">#}
+                    {#<th class="sortable" data-field="project_title" data-sortable="true">Name</th>#}
+                    {#<th class="sortable" data-sortable="true">Surname</th>#}
+                {#</tr>#}
+                {#</thead>#}
 
-                <tbody>
-                {% for key,value in persons %}
-                    <tr>
-                        <td> <a href="{{ path('person_view', {'personId':value.id}) }}" >{{ value.name }} </a></td>
-                        <td> {{ value.surname }} </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
+                {#<tbody>#}
+                {#{% for key,value in persons %}#}
+                    {#<tr>#}
+                        {#<td> <a href="{{ path('person_view', {'personId':value.id}) }}" >{{ value.name }} </a></td>#}
+                        {#<td> {{ value.surname }} </td>#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+                {#</tbody>#}
 
-            </table>
+            {#</table>#}
 
-        </div>
-    <div>
-{% endblock %}
+        {#</div>#}
+    {#<div>#}
+{#{% endblock %}#}

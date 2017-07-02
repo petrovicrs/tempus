@@ -20,20 +20,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
-class PersonContactsController extends Controller
+class PersonContactsController extends AbstractController
 {
-    /**
-     * @Route("person-contacts/list/{person}", name="person_contacts_list", requirements={"person": "\d+"})
-     */
-    public function listAction($person)
-    {
-        $result = $this->getPersonContactsRepository()->findBy(['personId' => $person]);
-
-        return $this->render('person/list.twig', ['result' => $result]);
-    }
 
     /**
-     * @Route("/person-contacts/create", name="person_contacts_create_action")
+     * @Route("/{locale}/person-contacts/create", name="person_contacts_create_action", requirements={"locale": "%app.locales%"})
      *
      */
     public function createAction(Request $request)
@@ -61,10 +52,10 @@ class PersonContactsController extends Controller
     }
 
     /**
-     * @Route("/person-contacts/create/{personId}", name="person_contacts_create_form", requirements={"personId": "\d+"})
+     * @Route("/{locale}/person-contacts/create/{personId}", name="person_contacts_create_form", requirements={"personId": "\d+", "locale": "%app.locales%"})
      *
      */
-    public function createPersonAction($personId)
+    public function createPersonAction(Request $request, $personId)
     {
         $personContacts = new PersonContacts();
 

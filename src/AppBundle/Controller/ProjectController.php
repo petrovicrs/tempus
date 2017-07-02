@@ -7,20 +7,21 @@
  */
 namespace AppBundle\Controller;
 
+use PhpOption\Tests\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Form\ProjectForm;
 use AppBundle\Entity\Projects;
 use AppBundle\Repository\ProjectsRepository;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
 
-class ProjectController extends Controller
+use Symfony\Component\HttpFoundation\Request;
+
+class ProjectController extends AbstractController
 {
     /**
-     * @Route("project/list", name="project_list")
+     * @Route("/", name="default_route")
+     * @Route("/{locale}/project/list", name="project_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction()
     {
@@ -30,7 +31,7 @@ class ProjectController extends Controller
     }
 
     /**
-     * @Route("/project/create", name="project_create")
+     * @Route("/{locale}/project/create", name="project_create", requirements={"locale": "%app.locales%"})
      *
      */
     public function createAction(Request $request)
@@ -39,7 +40,7 @@ class ProjectController extends Controller
 
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_create'),
-            'method' => 'POST',
+            'method' => 'POST'
             ]);
 
 
@@ -57,7 +58,7 @@ class ProjectController extends Controller
     }
 
     /**
-     * @Route("/project/edit/{projectId}", name="project_edit", requirements={"projectId": "\d+"})
+     * @Route("/{locale}/project/edit/{projectId}", name="project_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function editAction(Request $request, $projectId)
@@ -83,11 +84,11 @@ class ProjectController extends Controller
     }
 
     /**
-     * @Route("/project/{projectId}", name="project_view", requirements={"projectId": "\d+"})
+     * @Route("/{locale}/project/{projectId}", name="project_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      * }
      */
-    public function viewProjectAction($projectId)
+    public function viewProjectAction(Request $request, $projectId)
     {
         $em = $this->getDoctrine()->getManager();
 

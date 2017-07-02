@@ -7,18 +7,18 @@
             <table class="table table-hover" data-toggle="table">
                 <thead>
                 <tr class="table-header">
-                    <th class="sortable" data-field="project_title" data-sortable="true">Project title</th>
-                    <th class="sortable">Reference number</th>
-                    <th class="sortable">Application year</th>
-                    <th>Programe</th>
-                    <th>Partners</th>
+                    <th class="sortable" data-field="project_title" data-sortable="true">{% trans %}Project title{% endtrans %}</th>
+                    <th class="sortable">{% trans %}Reference number{% endtrans %}</th>
+                    <th class="sortable">{% trans %}Application year{% endtrans %}</th>
+                    <th>{% trans %}Programe{% endtrans %}</th>
+                    <th>{% trans %}Partners{% endtrans %}</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 {% for key,value in result %}
                     <tr>
-                        <td> <a href="/project/{{ value.id }}"> {{ value.nameEng }} </a> </td>
+                        <td> <a href="{{ localizedPath('project_view', {'projectId':value.id }) }}"> {{ value.nameEng }} </a> </td>
                         <td> {{ value.referenceNumber }} </td>
                         <td> {{ value.applicationYear }} </td>
                         <td> {{ value.program.name }} </td>
@@ -29,10 +29,9 @@
 
             </table>
 
-
-            <a href="{{ path('project_create') }}">Add Project</a>
-            <a href="{{ path('person_create') }}">Add Person</a>
-            <a href="{{ path('institution_create') }}">Add Institution</a>
+            <a href="{{ localizedPath('project_create') }}">{% trans %}Add Project{% endtrans %}</a>
+            <a href="{{ localizedPath('person_create') }}">{% trans %}Add Person{% endtrans %}</a>
+            <a href="{{ localizedPath('institution_create') }}">{% trans %}Add Institution{% endtrans %}</a>
         </div>
     <div>
 {% endblock %}

@@ -2,29 +2,24 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-lucky:
-    path: /lucky/number/{max}
-    defaults: {_controller: AppBundle:Lucky:number}
-    requirements:
-      max: '\d+'
 
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix: "/doc"
 
-api:
-    type: rest
-    resource: "routing_api.yml"
-
-list:
-    path: /
-    defaults: {_controller: AppBundle:Project:list}
-
-project_create:
-    path:     /project/create
-    defaults: { _controller: AppBundle:Project:create }
-
-project_edit:
-    resource: "@AppBundle/Controller"
-    type:     annotation
+#api:
+#    type: rest
+#    resource: "routing_api.yml"
+#
+#list:
+#    path: /
+#    defaults: {_controller: AppBundle:Project:list}
+#
+#project_create:
+#    path:     /project/create
+#    defaults: { _controller: AppBundle:Project:create }
+#
+#project_edit:
+#    resource: "@AppBundle/Controller"
+#    type:     annotation
 #    defaults: { _controller: AppBundle:Project:edit }

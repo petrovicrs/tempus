@@ -4,9 +4,16 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    my.twig.extension:
+        class: AppBundle\Twig\LocalizedPath
+        arguments: [ "@service_container" ]
+        tags:
+           - { name: twig.extension }
+    listener.requestresponse:
+        class: AppBundle\EventListener\KernelListener
+        arguments: [ "@service_container" ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
     doctrine_entity_repository.application:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

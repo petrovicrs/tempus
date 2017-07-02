@@ -24,10 +24,6 @@ project_create:
     path:     /project/create
     defaults: { _controller: AppBundle:Project:create }
 
-user_routes:
-    resource: "@UserBundle/Controller"
-    type: annotation
-
 project_edit:
     resource: "@AppBundle/Controller"
     type:     annotation

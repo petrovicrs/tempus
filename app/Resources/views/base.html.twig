@@ -32,7 +32,13 @@
         </nav>
     </head>
     <body class="home project">
-
+    <ul>
+        {% if is_granted('ROLE_USER') %}
+        <li><a href="{{ path('security_logout') }}">Logout</a></li>
+        {% else %}
+        <li><a href="{{ path('security_login') }}">Login</a></li>
+        {% endif %}
+    </ul>
 
         {% block body %}
         {% endblock %}

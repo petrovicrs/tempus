@@ -16,11 +16,13 @@ use AppBundle\Repository\ProjectRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ProjectController extends Controller
 {
     /**
      * @Route("project/list", name="project_list")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function listAction()
     {

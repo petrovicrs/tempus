@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonContactsRepository")
- * @ORM\Table(name="person_contacts")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonContactRepository")
+ * @ORM\Table(name="person_contact")
  */
-class PersonContacts extends AbstractAuditable
+class PersonContact extends AbstractAuditable
 {
     /**
      * @ORM\Id
@@ -21,7 +21,7 @@ class PersonContacts extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="Persons",
+     *      targetEntity="Person",
      *      inversedBy="contacts"
      * )
      * @ORM\JoinColumn(onDelete="CASCADE")
@@ -31,13 +31,13 @@ class PersonContacts extends AbstractAuditable
     /**
      * @Assert\NotBlank()
      * @Assert\Type("numeric")
-     * @ORM\Column(name="contactType", type="integer")
+     * @ORM\Column(name="contact_type", type="integer")
      */
     protected $contactType;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="contactValue", type="string")
+     * @ORM\Column(name="contact_value", type="string")
      */
     protected $contactValue;
 
@@ -57,7 +57,7 @@ class PersonContacts extends AbstractAuditable
      *
      * @param $person
      *
-     * @return PersonContacts
+     * @return PersonContact
      */
     public function setPerson($person)
     {
@@ -81,7 +81,7 @@ class PersonContacts extends AbstractAuditable
      *
      * @param integer $contactType
      *
-     * @return PersonContacts
+     * @return PersonContact
      */
     public function setContactType($contactType)
     {
@@ -105,7 +105,7 @@ class PersonContacts extends AbstractAuditable
      *
      * @param integer $contactValue
      *
-     * @return PersonContacts
+     * @return PersonContact
      */
     public function setContactValue($contactValue)
     {

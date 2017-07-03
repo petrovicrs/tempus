@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectsRepository")
- * @ORM\Table(name="projects")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectRepository")
+ * @ORM\Table(name="project")
  */
-class Projects extends AbstractAuditable
+class Project extends AbstractAuditable
 {
     /**
      * @var int
@@ -75,7 +75,7 @@ class Projects extends AbstractAuditable
      *      targetEntity="Program",
      *      inversedBy="projects"
      * )
-     * @ORM\JoinColumn(name="programId", referencedColumnName="id")
+     * @ORM\JoinColumn(name="program_id", referencedColumnName="id")
      */
     protected $program;
 
@@ -107,7 +107,7 @@ class Projects extends AbstractAuditable
      * @var string $referenceNumber
      * @Assert\NotBlank()
      * @Assert\Type("string")
-     * @ORM\Column(name="referenceNumber", type="string", length=255)
+     * @ORM\Column(name="reference_number", type="string", length=255)
      */
     protected $referenceNumber;
 
@@ -121,19 +121,19 @@ class Projects extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="endDatetime", type="datetime")
+     * @ORM\Column(name="end_datetime", type="datetime")
      */
     protected $endDatetime;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="startDatetime", type="datetime")
+     * @ORM\Column(name="start_datetime", type="datetime")
      */
     protected $startDatetime;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="extendedTime", type="datetime")
+     * @ORM\Column(name="extended_time", type="datetime")
      */
     protected $extendedTime;
 
@@ -141,7 +141,7 @@ class Projects extends AbstractAuditable
      * @var string $grantAmount
      * @Assert\NotBlank()
      * @Assert\Type("numeric")
-     * @ORM\Column(name="grantAmount", type="string", length=255)
+     * @ORM\Column(name="grant_amount", type="string", length=255)
      */
     protected $grantAmount;
 
@@ -149,7 +149,7 @@ class Projects extends AbstractAuditable
      * @var string $coFinancingAmount
      * @Assert\NotBlank()
      * @Assert\Type("numeric")
-     * @ORM\Column(name="coFinancingAmount", type="string", length=255)
+     * @ORM\Column(name="co_financing_amount", type="string", length=255)
      */
     protected $coFinancingAmount;
 
@@ -157,7 +157,7 @@ class Projects extends AbstractAuditable
      * @var string $totalProjectValue
      * @Assert\NotBlank()
      * @Assert\Type("numeric")
-     * @ORM\Column(name="totalProjectValue", type="string", length=255)
+     * @ORM\Column(name="total_project_value", type="string", length=255)
      */
     protected $totalProjectValue;
 
@@ -173,7 +173,7 @@ class Projects extends AbstractAuditable
      * @var string $markExplanation
      * @Assert\NotBlank()
      * @Assert\Type("string")
-     * @ORM\Column(name="markExplanation", type="string", length=255)
+     * @ORM\Column(name="mark_explanation", type="string", length=255)
      */
     protected $markExplanation;
 
@@ -227,7 +227,7 @@ class Projects extends AbstractAuditable
      *
      * @param string $description
      *
-     * @return Projects
+     * @return Project
      */
     public function setDescription($description)
     {
@@ -251,7 +251,7 @@ class Projects extends AbstractAuditable
      *
      * @param string $goals
      *
-     * @return Projects
+     * @return Project
      */
     public function setGoals($goals)
     {
@@ -275,7 +275,7 @@ class Projects extends AbstractAuditable
      *
      * @param string $nameOriginalLetter
      *
-     * @return Projects
+     * @return Project
      */
     public function setNameOriginalLetter($nameOriginalLetter)
     {
@@ -299,7 +299,7 @@ class Projects extends AbstractAuditable
      *
      * @param string $acronym
      *
-     * @return Projects
+     * @return Project
      */
     public function setAcronym($acronym)
     {
@@ -323,7 +323,7 @@ class Projects extends AbstractAuditable
      *
      * @param Program $program
      *
-     * @return Projects
+     * @return Project
      */
     public function setProgram($program)
     {
@@ -348,7 +348,7 @@ class Projects extends AbstractAuditable
      *
      * @param integer $status
      *
-     * @return Projects
+     * @return Project
      */
     public function setStatus($status)
     {
@@ -372,7 +372,7 @@ class Projects extends AbstractAuditable
      *
      * @param integer $scope
      *
-     * @return Projects
+     * @return Project
      */
     public function setScope($scope)
     {
@@ -396,7 +396,7 @@ class Projects extends AbstractAuditable
      *
      * @param integer $applicationYear
      *
-     * @return Projects
+     * @return Project
      */
     public function setApplicationYear($applicationYear)
     {
@@ -420,7 +420,7 @@ class Projects extends AbstractAuditable
      *
      * @param string $referenceNumber
      *
-     * @return Projects
+     * @return Project
      */
     public function setReferenceNumber($referenceNumber)
     {
@@ -444,7 +444,7 @@ class Projects extends AbstractAuditable
      *
      * @param integer $duration
      *
-     * @return Projects
+     * @return Project
      */
     public function setDuration($duration)
     {
@@ -468,7 +468,7 @@ class Projects extends AbstractAuditable
      *
      * @param \DateTime $endDatetime
      *
-     * @return Projects
+     * @return Project
      */
     public function setEndDatetime($endDatetime)
     {
@@ -492,7 +492,7 @@ class Projects extends AbstractAuditable
      *
      * @param \DateTime $startDatetime
      *
-     * @return Projects
+     * @return Project
      */
     public function setStartDatetime($startDatetime)
     {
@@ -516,7 +516,7 @@ class Projects extends AbstractAuditable
      *
      * @param \DateTime $extendedTime
      *
-     * @return Projects
+     * @return Project
      */
     public function setExtendedTime($extendedTime)
     {
@@ -540,7 +540,7 @@ class Projects extends AbstractAuditable
      *
      * @param integer $grantAmount
      *
-     * @return Projects
+     * @return Project
      */
     public function setGrantAmount($grantAmount)
     {
@@ -564,7 +564,7 @@ class Projects extends AbstractAuditable
      *
      * @param string $coFinancingAmount
      *
-     * @return Projects
+     * @return Project
      */
     public function setCoFinancingAmount($coFinancingAmount)
     {
@@ -588,7 +588,7 @@ class Projects extends AbstractAuditable
      *
      * @param string $totalProjectValue
      *
-     * @return Projects
+     * @return Project
      */
     public function setTotalProjectValue($totalProjectValue)
     {
@@ -612,7 +612,7 @@ class Projects extends AbstractAuditable
      *
      * @param integer $mark
      *
-     * @return Projects
+     * @return Project
      */
     public function setMark($mark)
     {
@@ -636,7 +636,7 @@ class Projects extends AbstractAuditable
      *
      * @param string $markExplanation
      *
-     * @return Projects
+     * @return Project
      */
     public function setMarkExplanation($markExplanation)
     {

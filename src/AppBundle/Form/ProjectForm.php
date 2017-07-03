@@ -53,7 +53,7 @@ class ProjectForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Projects',
+            'data_class' => 'AppBundle\Entity\Project',
             'submit_button_label' => 'Create'
         ));
     }

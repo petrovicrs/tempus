@@ -3,9 +3,9 @@
 namespace AppBundle\Repository;
 
 /**
- * ProjectsRepository
+ * ProjectRepository
  */
-class ProjectsRepository extends \Doctrine\ORM\EntityRepository
+class ProjectRepository extends \Doctrine\ORM\EntityRepository
 {
     public function saveProject($project) {
 

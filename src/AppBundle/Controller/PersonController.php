@@ -8,13 +8,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Repository\InstitutionRepository;
-use AppBundle\Repository\PersonsRepository;
+use AppBundle\Repository\PersonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Form\PersonForm;
-use AppBundle\Entity\Persons;
-use AppBundle\Repository\ProjectsRepository;
+use AppBundle\Entity\Person;
+use AppBundle\Repository\ProjectRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +26,7 @@ class PersonController extends AbstractController
      */
     public function listAction()
     {
-        $persons = $this->getPersonsRepository()->findAll();
+        $persons = $this->getPersonRepository()->findAll();
 
         return $this->render('person/list.twig', ['persons' => $persons]);
     }
@@ -37,7 +37,7 @@ class PersonController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $persons = new Persons();
+        $persons = new Person();
 
         $personForm = $this->createForm(PersonForm::class, $persons, [
             'action' => $this->generateUrl('person_create'),
@@ -48,7 +48,7 @@ class PersonController extends AbstractController
         $personForm->handleRequest($request);
 
         if ($personForm->isSubmitted() && $personForm->isValid()) {
-            $this->getPersonsRepository()->savePerson($persons);
+            $this->getPersonRepository()->savePerson($persons);
 
             return $this->redirectToRoute('person_list');
 
@@ -62,18 +62,18 @@ class PersonController extends AbstractController
      */
     public function viewAction($personId)
     {
-        $person = $this->getPersonsRepository()->findOneBy(['id' => $personId]);
+        $person = $this->getPersonRepository()->findOneBy(['id' => $personId]);
 
-        $contacts = $this->get('doctrine_entity_repository.person_contacts')->findBy(['person' => $personId]);
+        $contacts = $this->get('doctrine_entity_repository.person_contact')->findBy(['person' => $personId]);
 
         return $this->render('person/view.twig', ['person' => $person, 'contacts' => $contacts]);
     }
 
     /**
-     * @return PersonsRepository
+     * @return PersonRepository
      */
-    private function getPersonsRepository() {
+    private function getPersonRepository() {
 
-        return $this->get('doctrine_entity_repository.persons');
+        return $this->get('doctrine_entity_repository.person');
     }
 }

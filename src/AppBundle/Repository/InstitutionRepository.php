@@ -5,7 +5,7 @@ namespace AppBundle\Repository;
 /**
  * InstitutionRepository
  */
-class InstitutionsRepository extends \Doctrine\ORM\EntityRepository
+class InstitutionRepository extends \Doctrine\ORM\EntityRepository
 {
     public function save($institution) {
 

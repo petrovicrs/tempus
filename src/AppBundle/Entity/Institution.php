@@ -13,10 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\InstitutionsRepository")
- * @ORM\Table(name="institutions")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\InstitutionRepository")
+ * @ORM\Table(name="institution")
  */
-class Institutions extends AbstractAuditable
+class Institution extends AbstractAuditable
 {
     /**
      * @ORM\Id
@@ -61,7 +61,7 @@ class Institutions extends AbstractAuditable
     protected $legalRepresentative;
 
     /**
-     * @ORM\OneToOne(targetEntity="Persons", inversedBy="person")
+     * @ORM\OneToOne(targetEntity="Person", inversedBy="person")
      * @ORM\JoinColumn(name="contact_person", referencedColumnName="id")
      */
     protected $contactPerson;

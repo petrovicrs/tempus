@@ -30,7 +30,7 @@ class InstitutionsForm extends AbstractType
             ->add('founderOriginalLetter', TextType::class, ['label_format' => 'Founder Original Letter'])
             ->add('legalRepresentative', TextType::class, ['label_format' => 'Legal Representative'])
             ->add('contactPerson', EntityType::class, [
-                'class' => 'AppBundle:Persons',
+                'class' => 'AppBundle:Person',
                 'choice_label' => 'name',
                 'label_format' => 'Contact Person'
             ])
@@ -61,7 +61,7 @@ class InstitutionsForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Institutions'
+            'data_class' => 'AppBundle\Entity\Institution'
         ));
     }
 

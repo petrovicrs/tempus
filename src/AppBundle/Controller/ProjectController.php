@@ -12,20 +12,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Form\ProjectForm;
-use AppBundle\Entity\Projects;
-use AppBundle\Repository\ProjectsRepository;
-
+use AppBundle\Entity\Project;
+use AppBundle\Repository\ProjectRepository;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ProjectController extends AbstractController
 {
     /**
      * @Route("/", name="default_route")
      * @Route("/{locale}/project/list", name="project_list", requirements={"locale": "%app.locales%"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function listAction()
     {
-        $result = $this->getProjectsRepository()->findAll();
+        $result = $this->getProjectRepository()->findAll();
 
         return $this->render('project/list.twig', ['result' => $result]);
     }
@@ -36,11 +39,11 @@ class ProjectController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $project = new Projects();
+        $project = new Project();
 
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_create'),
-            'method' => 'POST'
+            'method' => 'POST',
             ]);
 
 
@@ -48,7 +51,7 @@ class ProjectController extends AbstractController
 
         if ($projectForm->isSubmitted() && $projectForm->isValid())
         {
-            $this->getProjectsRepository()->saveProject($project);
+            $this->getProjectRepository()->saveProject($project);
 
             return $this->redirectToRoute('project_list');
 
@@ -63,7 +66,7 @@ class ProjectController extends AbstractController
      */
     public function editAction(Request $request, $projectId)
     {
-        $project = $this->getProjectsRepository()->findOneBy(['id' => $projectId]);
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_edit', ['projectId' => $projectId]),
@@ -75,7 +78,7 @@ class ProjectController extends AbstractController
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
 
-            $this->getProjectsRepository()->saveProject($project);
+            $this->getProjectRepository()->saveProject($project);
 
             return $this->redirectToRoute('project_list');
         }
@@ -88,11 +91,11 @@ class ProjectController extends AbstractController
      *
      * }
      */
-    public function viewProjectAction(Request $request, $projectId)
+    public function viewProjectAction($projectId)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $project = $this->getProjectsRepository()->find($projectId);
+        $project = $this->getProjectRepository()->find($projectId);
 
         if (!$project) {
             throw $this->createNotFoundException(
@@ -104,11 +107,11 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @return ProjectsRepository
+     * @return ProjectRepository
      */
-    private function getProjectsRepository() {
+    private function getProjectRepository() {
 
-        return $this->get('doctrine_entity_repository.projects');
+        return $this->get('doctrine_entity_repository.project');
     }
 
 }

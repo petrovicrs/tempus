@@ -7,13 +7,13 @@
  */
 namespace AppBundle\Controller;
 
-use AppBundle\Repository\InstitutionsRepository;
+use AppBundle\Repository\InstitutionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Form\InstitutionsForm;
-use AppBundle\Entity\Institutions;
-use AppBundle\Repository\ProjectsRepository;
+use AppBundle\Entity\Institution;
+use AppBundle\Repository\ProjectRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,7 +36,7 @@ class InstitutionController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $institutions = new Institutions();
+        $institutions = new Institution();
 
         $institutionForm = $this->createForm(InstitutionsForm::class, $institutions, [
             'action' => $this->generateUrl('institution_create'),
@@ -47,7 +47,7 @@ class InstitutionController extends AbstractController
         $institutionForm->handleRequest($request);
 
         if ($institutionForm->isSubmitted() && $institutionForm->isValid()) {
-            $this->getInstitutionsRepository()->save($institutions);
+            $this->getInstitutionRepository()->save($institutions);
 
             return $this->redirectToRoute('project_list');
 
@@ -67,10 +67,10 @@ class InstitutionController extends AbstractController
 //    }
 
     /**
-     * @return InstitutionsRepository
+     * @return InstitutionRepository
      */
-    private function getInstitutionsRepository() {
+    private function getInstitutionRepository() {
 
-        return $this->get('doctrine_entity_repository.institutions');
+        return $this->get('doctrine_entity_repository.institution');
     }
 }

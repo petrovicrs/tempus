@@ -22,10 +22,10 @@ class PersonContactsForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('person', HiddenType::class)
-            ->add('contactType', TextType::class)
-            ->add('contactValue', TextType::class)
-            ->add('submit', SubmitType::class, array('label' => 'Create'));
+            ->add('person', HiddenType::class, ['label_format' => 'Person'])
+            ->add('contactType', TextType::class, ['label_format' => 'Contact Type'])
+            ->add('contactValue', TextType::class, ['label_format' => 'Value'])
+            ->add('submit', SubmitType::class, ['label_format' => 'Submit']);
     }
 
     /**

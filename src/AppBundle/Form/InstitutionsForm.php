@@ -23,35 +23,36 @@ class InstitutionsForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('parentInstitution', TextType::class)
-            ->add('name', TextType::class)
-            ->add('founder', TextType::class)
-            ->add('nameOriginalLetter', TextType::class)
-            ->add('founderOriginalLetter', TextType::class)
-            ->add('legalRepresentative', TextType::class)
+            ->add('parentInstitution', TextType::class, ['label_format' => 'Parent Institution'])
+            ->add('name', TextType::class, ['label_format' => 'Name'])
+            ->add('founder', TextType::class, ['label_format' => 'Founder'])
+            ->add('nameOriginalLetter', TextType::class, ['label_format' => 'Name Original Letter'])
+            ->add('founderOriginalLetter', TextType::class, ['label_format' => 'Founder Original Letter'])
+            ->add('legalRepresentative', TextType::class, ['label_format' => 'Legal Representative'])
             ->add('contactPerson', EntityType::class, [
                 'class' => 'AppBundle:Persons',
                 'choice_label' => 'name',
+                'label_format' => 'Contact Person'
             ])
-            ->add('picNumber', TextType::class)
-            ->add('registrationNumber', TextType::class)
-            ->add('vatNumber', TextType::class)
-            ->add('hierarchyLevel', TextType::class)
-            ->add('institutionType', TextType::class)
-            ->add('country', TextType::class)
-            ->add('founderType', TextType::class)
-            ->add('founderCountry', TextType::class)
-            ->add('address', TextType::class)
-            ->add('postalCode', TextType::class)
-            ->add('city', TextType::class)
-            ->add('webSite', TextType::class)
-            ->add('belongingToGroup', TextType::class)
-            ->add('note', TextType::class)
-            ->add('accreditation', TextType::class)
-            ->add('accreditationValidFrom', DateType::class)
-            ->add('accreditationValidTo', DateType::class)
-            ->add('accreditor', TextType::class)
-            ->add('submit', SubmitType::class, array('label' => 'Create'));
+            ->add('picNumber', TextType::class, ['label_format' => 'pic Number'])
+            ->add('registrationNumber', TextType::class, ['label_format' => 'Registration Number'])
+            ->add('vatNumber', TextType::class, ['label_format' => 'VAT Number'])
+            ->add('hierarchyLevel', TextType::class, ['label_format' => 'Hierarchy Level'])
+            ->add('institutionType', TextType::class, ['label_format' => 'Institution Type'])
+            ->add('country', TextType::class, ['label_format' => 'Country'])
+            ->add('founderType', TextType::class, ['label_format' => 'Founder Type'])
+            ->add('founderCountry', TextType::class, ['label_format' => 'Founder Country'])
+            ->add('address', TextType::class, ['label_format' => 'Address'])
+            ->add('postalCode', TextType::class, ['label_format' => 'Postal Code'])
+            ->add('city', TextType::class, ['label_format' => 'City'])
+            ->add('webSite', TextType::class, ['label_format' => 'web Site'])
+            ->add('belongingToGroup', TextType::class, ['label_format' => 'Belonging To Group'])
+            ->add('note', TextType::class, ['label_format' => 'Note'])
+            ->add('accreditation', TextType::class, ['label_format' => 'Accreditation'])
+            ->add('accreditationValidFrom', DateType::class, ['label_format' => 'Accreditation Valid From'])
+            ->add('accreditationValidTo', DateType::class, ['label_format' => 'Accreditation Valid To'])
+            ->add('accreditor', TextType::class, ['label_format' => 'Accreditor'])
+            ->add('submit', SubmitType::class, ['label_format' => 'Submit']);
     }
 
     /**

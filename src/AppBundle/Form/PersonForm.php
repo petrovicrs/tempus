@@ -22,9 +22,9 @@ class PersonForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('surname')
-            ->add('submit', SubmitType::class, array('label' => 'Create'));
+            ->add('name', null, ['label_format' => 'name'])
+            ->add('surname', null, ['label_format' => 'surname'])
+            ->add('submit', SubmitType::class, ['label_format' => 'submit']);
     }
 
     /**

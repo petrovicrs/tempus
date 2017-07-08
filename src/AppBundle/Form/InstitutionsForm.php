@@ -7,6 +7,7 @@
  */
 namespace AppBundle\Form;
 
+use AppBundle\Repository\PicNumberRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AppBundle\Entity\PicNumber;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class InstitutionsForm extends AbstractType
 {
@@ -23,10 +26,18 @@ class InstitutionsForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('nameEn', TextType::class, ['label_format' => 'Organisation name English'])
+            ->add('nameSr', TextType::class, ['label_format' => 'Organisation name Serbian'])
+            ->add('nameOriginalLetter', TextType::class, ['label_format' => 'Organisation name Original Alphabet'])
+            ->add('registrationNumber', TextType::class, ['label_format' => 'National Registration Number'])
+            ->add('vatNumber', TextType::class, ['label_format' => 'Vat/Tax Number'])
+            ->add('acronym', TextType::class, ['label_format' => 'Acronym'])
+            ->add('picNumber', CollectionType::class, [
+                'entry_type' => PicNumber::class,
+                'allow_add'    => true
+                ])
             ->add('parentInstitution', TextType::class, ['label_format' => 'Parent Institution'])
-            ->add('name', TextType::class, ['label_format' => 'Name'])
             ->add('founder', TextType::class, ['label_format' => 'Founder'])
-            ->add('nameOriginalLetter', TextType::class, ['label_format' => 'Name Original Letter'])
             ->add('founderOriginalLetter', TextType::class, ['label_format' => 'Founder Original Letter'])
             ->add('legalRepresentative', TextType::class, ['label_format' => 'Legal Representative'])
             ->add('contactPerson', EntityType::class, [
@@ -35,8 +46,6 @@ class InstitutionsForm extends AbstractType
                 'label_format' => 'Contact Person'
             ])
             ->add('picNumber', TextType::class, ['label_format' => 'pic Number'])
-            ->add('registrationNumber', TextType::class, ['label_format' => 'Registration Number'])
-            ->add('vatNumber', TextType::class, ['label_format' => 'VAT Number'])
             ->add('hierarchyLevel', TextType::class, ['label_format' => 'Hierarchy Level'])
             ->add('institutionType', TextType::class, ['label_format' => 'Institution Type'])
             ->add('country', TextType::class, ['label_format' => 'Country'])
@@ -45,7 +54,7 @@ class InstitutionsForm extends AbstractType
             ->add('address', TextType::class, ['label_format' => 'Address'])
             ->add('postalCode', TextType::class, ['label_format' => 'Postal Code'])
             ->add('city', TextType::class, ['label_format' => 'City'])
-            ->add('webSite', TextType::class, ['label_format' => 'web Site'])
+            ->add('webSite', TextType::class, ['label_format' => 'Web Site'])
             ->add('belongingToGroup', TextType::class, ['label_format' => 'Belonging To Group'])
             ->add('note', TextType::class, ['label_format' => 'Note'])
             ->add('accreditation', TextType::class, ['label_format' => 'Accreditation'])

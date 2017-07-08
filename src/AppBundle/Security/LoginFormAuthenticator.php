@@ -12,6 +12,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Translation\Translator;
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -19,23 +20,26 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     private $em;
     private $router;
     private $passwordEncoder;
+    private $translator;
 
-    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, RouterInterface $router, UserPasswordEncoder $passwordEncoder)
+    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, RouterInterface $router, UserPasswordEncoder $passwordEncoder, Translator $translator)
     {
         $this->formFactory = $formFactory;
         $this->em = $em;
         $this->router = $router;
         $this->passwordEncoder = $passwordEncoder;
+        $this->translator = $translator;
     }
 
     protected function getLoginUrl()
     {
+
         return $this->router->generate('security_login');
     }
 
     protected function getDefaultSuccessRedirectUrl()
     {
-        return $this->router->generate('project_list');
+        return $this->router->generate('project_list',  ['locale' => $this->translator->getLocale()]);
     }
 
     public function getCredentials(Request $request)

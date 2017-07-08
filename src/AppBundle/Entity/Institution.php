@@ -32,9 +32,21 @@ class Institution extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="name", type="string")
+     * @ORM\Column(name="nameEn", type="string")
      */
-    protected $name;
+    protected $nameEn;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="nameSr", type="string")
+     */
+    protected $nameSr;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="acronym", type="string")
+     */
+    protected $acronym;
 
     /**
      * @Assert\NotBlank()
@@ -170,6 +182,11 @@ class Institution extends AbstractAuditable
      * @ORM\Column(name="accreditor", type="string")
      */
     protected $accreditor;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PicNumber", mappedBy="institution")
+     */
+    protected $picNumbers;
 
     /**
      * @return integer
@@ -579,5 +596,61 @@ class Institution extends AbstractAuditable
         $this->accreditor = $accreditor;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getNameEn()
+    {
+        return $this->nameEn;
+    }
 
+    /**
+     * @param mixed $nameEn
+     */
+    public function setNameEn($nameEn)
+    {
+        $this->nameEn = $nameEn;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNameSr()
+    {
+        return $this->nameSr;
+    }
+
+    /**
+     * @param mixed $nameSr
+     */
+    public function setNameSr($nameSr)
+    {
+        $this->nameSr = $nameSr;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAcronym()
+    {
+        return $this->acronym;
+    }
+
+    /**
+     * @param mixed $acronym
+     */
+    public function setAcronym($acronym)
+    {
+        $this->acronym = $acronym;
+    }
+
+    public function getPicNumbers()
+    {
+        return $this->picNumbers;
+    }
+
+    public function setPicNumbers(ArrayCollection $picNumbers)
+    {
+        $this->picNumbers = $picNumbers;
+    }
 }

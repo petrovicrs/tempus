@@ -48,11 +48,10 @@ class Institution extends AbstractAuditable
      */
     protected $acronym;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="founder", type="string")
-     */
-    protected $founder;
+//    /**
+//     * @ORM\Column(name="founder", type="string")
+//     */
+//    protected $founder;
 
     /**
      * @Assert\NotBlank()
@@ -65,19 +64,19 @@ class Institution extends AbstractAuditable
      * @ORM\Column(name="founder_original_letter", type="string")
      */
     protected $founderOriginalLetter;
+//
+//    /**
+//     * @Assert\NotBlank()
+//     * @ORM\Column(name="legal_representative", type="string")
+//     */
+//    protected $legalRepresentative;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="legal_representative", type="string")
-     */
-    protected $legalRepresentative;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Person", inversedBy="person")
-     * @ORM\JoinColumn(name="contact_person", referencedColumnName="id")
-     */
-    protected $contactPerson;
-
+//    /**
+//     * @ORM\OneToOne(targetEntity="Person", inversedBy="person")
+//     * @ORM\JoinColumn(name="contact_person", referencedColumnName="id")
+//     */
+//    protected $contactPerson;
+//
     /**
      * @Assert\NotBlank()
      * @ORM\Column(name="pic_number", type="string")
@@ -86,9 +85,9 @@ class Institution extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="registration_number", type="string")
+     * @ORM\Column(name="national_registration_number", type="string")
      */
-    protected $registrationNumber;
+    protected $nationalRegistrationNumber;
 
     /**
      * @Assert\NotBlank()
@@ -96,11 +95,11 @@ class Institution extends AbstractAuditable
      */
     protected $vatNumber;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="hierarchy_level", type="string")
-     */
-    protected $hierarchyLevel;
+//    /**
+//     * @Assert\NotBlank()
+//     * @ORM\Column(name="hierarchy_level", type="string")
+//     */
+//    protected $hierarchyLevel;
 
     /**
      * @Assert\NotBlank()
@@ -108,41 +107,41 @@ class Institution extends AbstractAuditable
      */
     protected $institutionType;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="country", type="string")
-     */
-    protected $country;
+//    /**
+//     * @Assert\NotBlank()
+//     * @ORM\Column(name="country", type="string")
+//     */
+//    protected $country;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="founder_type", type="string")
-     */
-    protected $founderType;
+//    /**
+//     * @Assert\NotBlank()
+//     * @ORM\Column(name="founder_type", type="string")
+//     */
+//    protected $founderType;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="founder_country", type="string")
-     */
-    protected $founderCountry;
-
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="address", type="string")
-     */
-    protected $address;
-
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="postal_code", type="string")
-     */
-    protected $postalCode;
-
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="city", type="string")
-     */
-    protected $city;
+//    /**
+//     * @Assert\NotBlank()
+//     * @ORM\Column(name="founder_country", type="string")
+//     */
+//    protected $founderCountry;
+//
+//    /**
+//     * @Assert\NotBlank()
+//     * @ORM\Column(name="address", type="string")
+//     */
+//    protected $address;
+//
+//    /**
+//     * @Assert\NotBlank()
+//     * @ORM\Column(name="postal_code", type="string")
+//     */
+//    protected $postalCode;
+//
+//    /**
+//     * @Assert\NotBlank()
+//     * @ORM\Column(name="city", type="string")
+//     */
+//    protected $city;
 
     /**
      * @Assert\NotBlank()
@@ -150,11 +149,11 @@ class Institution extends AbstractAuditable
      */
     protected $webSite;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="belonging_to_group", type="string")
-     */
-    protected $belongingToGroup;
+//    /**
+//     * @Assert\NotBlank()
+//     * @ORM\Column(name="belonging_to_group", type="string")
+//     */
+//    protected $belongingToGroup;
 
     /**
      * @Assert\NotBlank()
@@ -162,26 +161,26 @@ class Institution extends AbstractAuditable
      */
     protected $note;
 
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="accreditation", type="string")
-     */
-    protected $accreditation;
-
-    /**
-     * @ORM\Column(name="accreditation_valid_from", type="datetime", nullable=true)
-     */
-    protected $accreditationValidFrom;
-
-    /**
-     * @ORM\Column(name="accreditation_valid_to", type="datetime", nullable=true)
-     */
-    protected $accreditationValidTo;
-
-    /**@Assert\NotBlank()
-     * @ORM\Column(name="accreditor", type="string")
-     */
-    protected $accreditor;
+//    /**
+//     * @Assert\NotBlank()
+//     * @ORM\Column(name="accreditation", type="string")
+//     */
+//    protected $accreditation;
+//
+//    /**
+//     * @ORM\Column(name="accreditation_valid_from", type="datetime", nullable=true)
+//     */
+//    protected $accreditationValidFrom;
+//
+//    /**
+//     * @ORM\Column(name="accreditation_valid_to", type="datetime", nullable=true)
+//     */
+//    protected $accreditationValidTo;
+//
+//    /**@Assert\NotBlank()
+//     * @ORM\Column(name="accreditor", type="string")
+//     */
+//    protected $accreditor;
 
     /**
      * @ORM\OneToMany(targetEntity="PicNumber", mappedBy="institution")
@@ -212,37 +211,22 @@ class Institution extends AbstractAuditable
         $this->parentInstitution = $parentInstitution;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFounder()
-    {
-        return $this->founder;
-    }
-
-    /**
-     * @param mixed $founder
-     */
-    public function setFounder($founder)
-    {
-        $this->founder = $founder;
-    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getFounder()
+//    {
+//        return $this->founder;
+//    }
+//
+//    /**
+//     * @param mixed $founder
+//     */
+//    public function setFounder($founder)
+//    {
+//        $this->founder = $founder;
+//    }
 
     /**
      * @return mixed
@@ -276,38 +260,38 @@ class Institution extends AbstractAuditable
         $this->founderOriginalLetter = $founderOriginalLetter;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLegalRepresentative()
-    {
-        return $this->legalRepresentative;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getLegalRepresentative()
+//    {
+//        return $this->legalRepresentative;
+//    }
+//
+//    /**
+//     * @param mixed $legalRepresentative
+//     */
+//    public function setLegalRepresentative($legalRepresentative)
+//    {
+//        $this->legalRepresentative = $legalRepresentative;
+//    }
 
-    /**
-     * @param mixed $legalRepresentative
-     */
-    public function setLegalRepresentative($legalRepresentative)
-    {
-        $this->legalRepresentative = $legalRepresentative;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getContactPerson()
-    {
-        return $this->contactPerson;
-    }
-
-    /**
-     * @param mixed $contactPerson
-     */
-    public function setContactPerson($contactPerson)
-    {
-        $this->contactPerson = $contactPerson;
-    }
-
+//    /**
+//     * @return mixed
+//     */
+//    public function getContactPerson()
+//    {
+//        return $this->contactPerson;
+//    }
+//
+//    /**
+//     * @param mixed $contactPerson
+//     */
+//    public function setContactPerson($contactPerson)
+//    {
+//        $this->contactPerson = $contactPerson;
+//    }
+//
     /**
      * @return mixed
      */
@@ -327,17 +311,17 @@ class Institution extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getRegistrationNumber()
+    public function getNationalRegistrationNumber()
     {
-        return $this->registrationNumber;
+        return $this->nationalRegistrationNumber;
     }
 
     /**
      * @param mixed $registrationNumber
      */
-    public function setRegistrationNumber($registrationNumber)
+    public function setNationalRegistrationNumber($nationalRegistrationNumber)
     {
-        $this->registrationNumber = $registrationNumber;
+        $this->nationalRegistrationNumber = $nationalRegistrationNumber;
     }
 
     /**
@@ -355,22 +339,22 @@ class Institution extends AbstractAuditable
     {
         $this->vatNumber = $vatNumber;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getHierarchyLevel()
-    {
-        return $this->hierarchyLevel;
-    }
-
-    /**
-     * @param mixed $hierarchyLevel
-     */
-    public function setHierarchyLevel($hierarchyLevel)
-    {
-        $this->hierarchyLevel = $hierarchyLevel;
-    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getHierarchyLevel()
+//    {
+//        return $this->hierarchyLevel;
+//    }
+//
+//    /**
+//     * @param mixed $hierarchyLevel
+//     */
+//    public function setHierarchyLevel($hierarchyLevel)
+//    {
+//        $this->hierarchyLevel = $hierarchyLevel;
+//    }
 
     /**
      * @return mixed
@@ -387,102 +371,102 @@ class Institution extends AbstractAuditable
     {
         $this->institutionType = $institutionType;
     }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getCountry()
+//    {
+//        return $this->country;
+//    }
+//
+//    /**
+//     * @param mixed $country
+//     */
+//    public function setCountry($country)
+//    {
+//        $this->country = $country;
+//    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getFounderType()
+//    {
+//        return $this->founderType;
+//    }
+//
+//    /**
+//     * @param mixed $founderType
+//     */
+//    public function setFounderType($founderType)
+//    {
+//        $this->founderType = $founderType;
+//    }
 
-    /**
-     * @return mixed
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getFounderCountry()
+//    {
+//        return $this->founderCountry;
+//    }
+//
+//    /**
+//     * @param mixed $founderCountry
+//     */
+//    public function setFounderCountry($founderCountry)
+//    {
+//        $this->founderCountry = $founderCountry;
+//    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getAddress()
+//    {
+//        return $this->address;
+//    }
+//
+//    /**
+//     * @param mixed $address
+//     */
+//    public function setAddress($address)
+//    {
+//        $this->address = $address;
+//    }
 
-    /**
-     * @param mixed $country
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFounderType()
-    {
-        return $this->founderType;
-    }
-
-    /**
-     * @param mixed $founderType
-     */
-    public function setFounderType($founderType)
-    {
-        $this->founderType = $founderType;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFounderCountry()
-    {
-        return $this->founderCountry;
-    }
-
-    /**
-     * @param mixed $founderCountry
-     */
-    public function setFounderCountry($founderCountry)
-    {
-        $this->founderCountry = $founderCountry;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * @param mixed $address
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPostalCode()
-    {
-        return $this->postalCode;
-    }
-
-    /**
-     * @param mixed $postalCode
-     */
-    public function setPostalCode($postalCode)
-    {
-        $this->postalCode = $postalCode;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param mixed $city
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getPostalCode()
+//    {
+//        return $this->postalCode;
+//    }
+//
+//    /**
+//     * @param mixed $postalCode
+//     */
+//    public function setPostalCode($postalCode)
+//    {
+//        $this->postalCode = $postalCode;
+//    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getCity()
+//    {
+//        return $this->city;
+//    }
+//
+//    /**
+//     * @param mixed $city
+//     */
+//    public function setCity($city)
+//    {
+//        $this->city = $city;
+//    }
 
     /**
      * @return mixed
@@ -500,21 +484,21 @@ class Institution extends AbstractAuditable
         $this->webSite = $webSite;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBelongingToGroup()
-    {
-        return $this->belongingToGroup;
-    }
-
-    /**
-     * @param mixed $belongingToGroup
-     */
-    public function setBelongingToGroup($belongingToGroup)
-    {
-        $this->belongingToGroup = $belongingToGroup;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getBelongingToGroup()
+//    {
+//        return $this->belongingToGroup;
+//    }
+//
+//    /**
+//     * @param mixed $belongingToGroup
+//     */
+//    public function setBelongingToGroup($belongingToGroup)
+//    {
+//        $this->belongingToGroup = $belongingToGroup;
+//    }
 
     /**
      * @return mixed
@@ -531,70 +515,70 @@ class Institution extends AbstractAuditable
     {
         $this->note = $note;
     }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getAccreditation()
+//    {
+//        return $this->accreditation;
+//    }
+//
+//    /**
+//     * @param mixed $accreditation
+//     */
+//    public function setAccreditation($accreditation)
+//    {
+//        $this->accreditation = $accreditation;
+//    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getAccreditationValidFrom()
+//    {
+//        return $this->accreditationValidFrom;
+//    }
+//
+//    /**
+//     * @param mixed $accreditationValidFrom
+//     */
+//    public function setAccreditationValidFrom($accreditationValidFrom)
+//    {
+//        $this->accreditationValidFrom = $accreditationValidFrom;
+//    }
 
-    /**
-     * @return mixed
-     */
-    public function getAccreditation()
-    {
-        return $this->accreditation;
-    }
-
-    /**
-     * @param mixed $accreditation
-     */
-    public function setAccreditation($accreditation)
-    {
-        $this->accreditation = $accreditation;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAccreditationValidFrom()
-    {
-        return $this->accreditationValidFrom;
-    }
-
-    /**
-     * @param mixed $accreditationValidFrom
-     */
-    public function setAccreditationValidFrom($accreditationValidFrom)
-    {
-        $this->accreditationValidFrom = $accreditationValidFrom;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAccreditationValidTo()
-    {
-        return $this->accreditationValidTo;
-    }
-
-    /**
-     * @param mixed $accreditationValidTo
-     */
-    public function setAccreditationValidTo($accreditationValidTo)
-    {
-        $this->accreditationValidTo = $accreditationValidTo;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAccreditor()
-    {
-        return $this->accreditor;
-    }
-
-    /**
-     * @param mixed $accreditor
-     */
-    public function setAccreditor($accreditor)
-    {
-        $this->accreditor = $accreditor;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getAccreditationValidTo()
+//    {
+//        return $this->accreditationValidTo;
+//    }
+//
+//    /**
+//     * @param mixed $accreditationValidTo
+//     */
+//    public function setAccreditationValidTo($accreditationValidTo)
+//    {
+//        $this->accreditationValidTo = $accreditationValidTo;
+//    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getAccreditor()
+//    {
+//        return $this->accreditor;
+//    }
+//
+//    /**
+//     * @param mixed $accreditor
+//     */
+//    public function setAccreditor($accreditor)
+//    {
+//        $this->accreditor = $accreditor;
+//    }
 
     /**
      * @return mixed
@@ -652,5 +636,13 @@ class Institution extends AbstractAuditable
     public function setPicNumbers(ArrayCollection $picNumbers)
     {
         $this->picNumbers = $picNumbers;
+    }
+
+
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->nameSr;
+        }
+        return $this->nameEn;
     }
 }

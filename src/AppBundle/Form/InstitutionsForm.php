@@ -29,7 +29,7 @@ class InstitutionsForm extends AbstractType
             ->add('nameEn', TextType::class, ['label_format' => 'Organisation name English'])
             ->add('nameSr', TextType::class, ['label_format' => 'Organisation name Serbian'])
             ->add('nameOriginalLetter', TextType::class, ['label_format' => 'Organisation name Original Alphabet'])
-            ->add('registrationNumber', TextType::class, ['label_format' => 'National Registration Number'])
+            ->add('nationalRegistrationNumber', TextType::class, ['label_format' => 'National Registration Number'])
             ->add('vatNumber', TextType::class, ['label_format' => 'Vat/Tax Number'])
             ->add('acronym', TextType::class, ['label_format' => 'Acronym'])
             ->add('picNumber', CollectionType::class, [
@@ -37,30 +37,33 @@ class InstitutionsForm extends AbstractType
                 'allow_add'    => true
                 ])
             ->add('parentInstitution', TextType::class, ['label_format' => 'Parent Institution'])
-            ->add('founder', TextType::class, ['label_format' => 'Founder'])
-            ->add('founderOriginalLetter', TextType::class, ['label_format' => 'Founder Original Letter'])
-            ->add('legalRepresentative', TextType::class, ['label_format' => 'Legal Representative'])
-            ->add('contactPerson', EntityType::class, [
-                'class' => 'AppBundle:Person',
-                'choice_label' => 'name',
-                'label_format' => 'Contact Person'
-            ])
+//            ->add('founder', TextType::class, ['label_format' => 'Founder'])
+//            ->add('founderOriginalLetter', TextType::class, ['label_format' => 'Founder Original Letter'])
+//            ->add('legalRepresentative', TextType::class, ['label_format' => 'Legal Representative'])
+//            ->add('contactPerson', EntityType::class, [
+//                'class' => 'AppBundle:Person',
+//                'choice_label' => 'name',
+//                'label_format' => 'Contact Person'
+//            ])
             ->add('picNumber', TextType::class, ['label_format' => 'pic Number'])
-            ->add('hierarchyLevel', TextType::class, ['label_format' => 'Hierarchy Level'])
+//            ->add('hierarchyLevel', TextType::class, ['label_format' => 'Hierarchy Level'])
             ->add('institutionType', TextType::class, ['label_format' => 'Institution Type'])
-            ->add('country', TextType::class, ['label_format' => 'Country'])
-            ->add('founderType', TextType::class, ['label_format' => 'Founder Type'])
-            ->add('founderCountry', TextType::class, ['label_format' => 'Founder Country'])
-            ->add('address', TextType::class, ['label_format' => 'Address'])
-            ->add('postalCode', TextType::class, ['label_format' => 'Postal Code'])
-            ->add('city', TextType::class, ['label_format' => 'City'])
+//            ->add('country', TextType::class, ['label_format' => 'Country'])
+//            ->add('founderType', TextType::class, ['label_format' => 'Founder Type'])
+//            ->add('founderCountry', TextType::class, ['label_format' => 'Founder Country'])
+//            ->add('address', TextType::class, ['label_format' => 'Address'])
+//            ->add('postalCode', TextType::class, ['label_format' => 'Postal Code'])
+//            ->add('city', TextType::class, ['label_format' => 'City'])
             ->add('webSite', TextType::class, ['label_format' => 'Web Site'])
-            ->add('belongingToGroup', TextType::class, ['label_format' => 'Belonging To Group'])
+//            ->add('belongingToGroup', TextType::class, ['label_format' => 'Belonging To Group'])
             ->add('note', TextType::class, ['label_format' => 'Note'])
-            ->add('accreditation', TextType::class, ['label_format' => 'Accreditation'])
-            ->add('accreditationValidFrom', DateType::class, ['label_format' => 'Accreditation Valid From'])
-            ->add('accreditationValidTo', DateType::class, ['label_format' => 'Accreditation Valid To'])
-            ->add('accreditor', TextType::class, ['label_format' => 'Accreditor'])
+//            ->add('accreditation', TextType::class, ['label_format' => 'Accreditation'])
+//            ->add('accreditationValidFrom', DateType::class, ['label_format' => 'Accreditation Valid From'])
+//            ->add('accreditationValidTo', DateType::class, ['label_format' => 'Accreditation Valid To'])
+//            ->add('accredditation', TextType::class, ['label_format' => 'Accreditation'])
+//            ->add('accreditationValidFrom', DateType::class, ['label_format' => 'Accreditation Valid From'])
+//            ->add('accreditationValidTo', DateType::class, ['label_format' => 'Accreditation Valid To'])
+//            ->add('accreditor', TextType::class, ['label_format' => 'Accreditor'])
             ->add('submit', SubmitType::class, ['label_format' => 'Submit']);
     }
 

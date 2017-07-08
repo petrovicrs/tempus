@@ -3,17 +3,46 @@
 {% block body %}
     <section id="main">
         <div class="container-fluid">
+            <div class="page-header">
+                <h1>{% trans %}Add Institution{% endtrans %}</h1>
+            </div>
+
+
             <div class="row">
-                <div class="col-md-12">
-                    <div class="page-header">
-                        <h1>{% trans %}Add Institution{% endtrans %}</h1>
+                {{ form_start(my_form) }}
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {{ form_label(my_form.name, 'Organization Name English'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.name, {'attr': {'class': 'form-control'}})  }}
+                        </div>
                     </div>
-                    <div>
-                        {{ form(my_form) }}
-                        {{ form_errors(my_form) }}
-                        {{ form_rest(my_form) }}
-                    </div><br/><br/>
+                    {#<div class="form-group">#}
+                        {#{{ form_label(my_form.nameSrb, 'Organization Name Serbian'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}#}
+                        {#<div class="form-inline">#}
+                            {#{{ form_widget(my_form.nameSrb, {'attr': {'class': 'form-control'}})  }}#}
+                        {#</div>#}
+                    {#</div>#}
+                    <div class="form-group">
+                        {{ form_label(my_form.nameOriginalLetter, 'Organization Name Original Alphabet'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.nameOriginalLetter, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
                 </div>
+
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {{ form_label(my_form.registrationNumber, 'National Registration Number'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.registrationNumber, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                </div>
+
+                {{ form_end(my_form) }}
             </div>
         </div>
     </section>

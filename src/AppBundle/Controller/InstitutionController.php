@@ -38,9 +38,10 @@ class InstitutionController extends AbstractController
     {
         $institutions = new Institution();
 
-        $institutionForm = $this->createForm(InstitutionsForm::class, $institutions, [
+        $institutionForm = $this->createForm(InstitutionsForm::class, [], [
             'action' => $this->generateUrl('institution_create'),
-            'method' => 'POST'
+            'method' => 'POST',
+            'locale' => $request->getLocale(),
         ]);
 
 

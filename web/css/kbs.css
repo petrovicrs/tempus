@@ -9191,3 +9191,12 @@ body.home ul.attachments li {
     padding: 0 6px;
     font-size: 13px
 }
+.entry:not(:first-of-type)
+{
+    margin-top: 10px;
+}
+
+.glyphicon
+{
+    font-size: 12px;
+}

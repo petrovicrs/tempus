@@ -39,16 +39,16 @@
         <li><a href="{{ path('security_login') }}">Login</a></li>
         {% endif %}
     </ul>
+    {% block javascripts %}
+    {% javascripts '@jquery' '@bootstrap_js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 
+    {% endblock %}
         {% block body %}
         {% endblock %}
-        {% block javascripts %}
-            {% javascripts '@jquery' '@bootstrap_js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-            <!-- Latest compiled and minified JavaScript -->
-            <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 
-        {% endblock %}
     </body>
 </html>

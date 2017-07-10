@@ -15,6 +15,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use AppBundle\Entity\ContactType;
+
 use AppBundle\Entity\PicNumber;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -25,6 +29,7 @@ class InstitutionsForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('nameEn', TextType::class, ['label_format' => 'Organisation name English'])
             ->add('nameSr', TextType::class, ['label_format' => 'Organisation name Serbian'])
@@ -32,10 +37,24 @@ class InstitutionsForm extends AbstractType
             ->add('nationalRegistrationNumber', TextType::class, ['label_format' => 'National Registration Number'])
             ->add('vatNumber', TextType::class, ['label_format' => 'Vat/Tax Number'])
             ->add('acronym', TextType::class, ['label_format' => 'Acronym'])
-            ->add('picNumber', CollectionType::class, [
-                'entry_type' => PicNumber::class,
-                'allow_add'    => true
-                ])
+            ->add('picNumber', TextType::class)
+            ->add('picValidated', CheckboxType::class)
+            ->add('picPrimary', RadioType::class)
+            ->add('streetAndNumber', TextType::class)
+            ->add('town', TextType::class)
+            ->add('post_code', TextType::class)
+            ->add('contactType', EntityType::class, [
+                'class' => 'AppBundle:ContactType',
+                'choice_label' => 'type' . ucfirst($options['locale'])
+            ])
+
+
+
+
+
+
+
+
             ->add('parentInstitution', TextType::class, ['label_format' => 'Parent Institution'])
 //            ->add('founder', TextType::class, ['label_format' => 'Founder'])
 //            ->add('founderOriginalLetter', TextType::class, ['label_format' => 'Founder Original Letter'])
@@ -45,7 +64,6 @@ class InstitutionsForm extends AbstractType
 //                'choice_label' => 'name',
 //                'label_format' => 'Contact Person'
 //            ])
-            ->add('picNumber', TextType::class, ['label_format' => 'pic Number'])
 //            ->add('hierarchyLevel', TextType::class, ['label_format' => 'Hierarchy Level'])
             ->add('institutionType', TextType::class, ['label_format' => 'Institution Type'])
 //            ->add('country', TextType::class, ['label_format' => 'Country'])
@@ -70,18 +88,16 @@ class InstitutionsForm extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Institution'
-        ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'appbundle_project';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'locale' => 'en'
+        ]);
+
     }
 }

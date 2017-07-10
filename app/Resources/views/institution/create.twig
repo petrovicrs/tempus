@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
+<script type="text/javascript" src="{{ asset('/js/organisation.js')}}" ></script>
     <section id="main">
         <div class="container-fluid">
             <div class="page-header">
@@ -9,6 +9,7 @@
 
 
             <div class="row">
+                <div class="controls">
                 {{ form_start(my_form) }}
 
                 <div class="col-sm-6">
@@ -66,7 +67,52 @@
                 </div>
             </div>
 
+            <div class="entry input-group col-xs-3">
+                VAT/Tax Number<input class="form-control" name="vat[]" type="text"/>
+                Validated?<input type="checkbox" name="validated[]"/>
+                Primary<input type="radio" name="primary[]"/>
+                <span class="input-group-btn">
+                    <button class="btn btn-success btn-add" type="button">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </span>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    {{ form_label(my_form.contactType, 'Contact Type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.contactType, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+            </div>
+
+
+            <!--<div class="row">-->
+                <!--<div class="col-sm-6 form-group">-->
+                    <!--{{ form_label(my_form.picNumber, 'PIC'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}-->
+                    <!--<div class="form-inline">-->
+                        <!--{{ form_widget(my_form.picNumber, {'attr': {'class': 'form-control'}})  }}-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--<div class="col-sm-6 form-group">-->
+                    <!--{{ form_label(my_form.picValidated, 'Validated?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}-->
+                    <!--<div class="form-inline">-->
+                        <!--{{ form_widget(my_form.picValidated, {'attr': {'class': 'form-control'}})  }}-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--<div class="col-sm-6 form-group">-->
+                    <!--{{ form_label(my_form.picPrimary, 'Primary?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}-->
+                    <!--<div class="form-inline">-->
+                        <!--{{ form_widget(my_form.picPrimary, {'attr': {'class': 'form-control'}})  }}-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
             {{ form_end(my_form) }}
+            </div>
         </div>
     </section>
 {% endblock %}

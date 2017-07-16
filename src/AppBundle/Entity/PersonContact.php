@@ -29,9 +29,7 @@ class PersonContact extends AbstractAuditable
     protected $person;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Type("numeric")
-     * @ORM\Column(name="contact_type", type="integer")
+     * @ORM\ManyToOne(targetEntity="ContactType")
      */
     protected $contactType;
 
@@ -41,6 +39,24 @@ class PersonContact extends AbstractAuditable
      */
     protected $contactValue;
 
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="note", type="string")
+     */
+    protected $note;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="is_public", type="boolean")
+     */
+    protected $isPublic;
+
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="is_primary", type="boolean")
+     */
+    protected $isPrimary;
 
     /**
      * Get id
@@ -77,28 +93,22 @@ class PersonContact extends AbstractAuditable
     }
 
     /**
-     * Set contactType
-     *
-     * @param integer $contactType
-     *
-     * @return PersonContact
-     */
-    public function setContactType($contactType)
-    {
-        $this->contactType = $contactType;
-
-        return $this;
-    }
-
-    /**
-     * Get contactType
-     *
-     * @return integer
+     * @return mixed
      */
     public function getContactType()
     {
         return $this->contactType;
     }
+
+    /**
+     * @param mixed $contactType
+     */
+    public function setContactType($contactType)
+    {
+        $this->contactType = $contactType;
+    }
+
+
 
     /**
      * Set contactValue
@@ -123,5 +133,59 @@ class PersonContact extends AbstractAuditable
     {
         return $this->contactValue;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param mixed $note
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsPublic()
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * @param mixed $isPublic
+     */
+    public function setIsPublic($isPublic)
+    {
+        $this->isPublic = $isPublic;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsPrimary()
+    {
+        return $this->isPrimary;
+    }
+
+    /**
+     * @param mixed $isPrimary
+     */
+    public function setIsPrimary($isPrimary)
+    {
+        $this->isPrimary = $isPrimary;
+    }
+
+
+    public function __toString() {
+        return "clue";
+    }
+
 }
 

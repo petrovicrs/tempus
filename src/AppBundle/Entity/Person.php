@@ -23,36 +23,101 @@ class Person extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="first_name_en", type="string", length=255)
      */
-    protected $name;
+    protected $firstNameEn;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="surname", type="string", length=255)
+     * @ORM\Column(name="first_name_sr", type="string", length=255)
      */
-    protected $surname;
+    protected $firstNameSr;
 
     /**
-     * @ORM\OneToMany(targetEntity="PersonContact", mappedBy="person")
+     * @Assert\NotBlank()
+     * @ORM\Column(name="first_name_original_letter", type="string", length=255)
+     */
+    protected $firstNameOriginalLetter;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="last_name_en", type="string", length=255)
+     */
+    protected $lastNameEn;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="last_name_sr", type="string", length=255)
+     */
+    protected $lastNameSr;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="last_name_original_letter", type="string", length=255)
+     */
+    protected $lastNameOriginalLetter;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="initials", type="string", length=255)
+     */
+    protected $initials;
+
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="title_prefix", type="string", length=255)
+     */
+    protected $titlePrefix;
+
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="title_suffix", type="string", length=255)
+     */
+    protected $titleSuffix;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Gender")
+     */
+    protected $gender;
+
+    /**
+     * @ORM\Column(name="has_disability", type="boolean")
+     */
+    protected $hasDisability;
+
+    /**
+     * @ORM\Column(name="has_fewer_opportunities", type="boolean")
+     */
+    protected $hasFewerOpportunities;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PersonContact", mappedBy="person", cascade={"persist"})
      */
     protected $contacts;
 
     /**
-     * @ORM\OneToOne(targetEntity="Institution")
+     * @ORM\OneToMany(targetEntity="PersonAddress", mappedBy="person", cascade={"persist"})
      */
-    protected $person;
+    protected $addresses;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PersonNote", mappedBy="person", cascade={"persist"})
+     *
+     */
+    protected $personNotes;
 
     public function __construct()
     {
         parent::__construct();
         $this->contacts = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
+        $this->personNotes = new ArrayCollection();
     }
 
     /**
-     * Get id
-     *
-     * @return int
+     * @return mixed
      */
     public function getId()
     {
@@ -60,62 +125,267 @@ class Person extends AbstractAuditable
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Person
+     * @return mixed
      */
-    public function setName($name)
+    public function getFirstNameEn()
     {
-        $this->name = $name;
-
-        return $this;
+        return $this->firstNameEn;
     }
 
     /**
-     * Get name
-     *
-     * @return string
+     * @param mixed $firstNameEn
      */
-    public function getName()
+    public function setFirstNameEn($firstNameEn)
     {
-        return $this->name;
+        $this->firstNameEn = $firstNameEn;
     }
 
     /**
-     * Set surname
-     *
-     * @param string $surname
-     *
-     * @return Person
+     * @return mixed
      */
-    public function setSurname($surname)
+    public function getFirstNameSr()
     {
-        $this->surname = $surname;
-
-        return $this;
+        return $this->firstNameSr;
     }
 
     /**
-     * Get surname
-     *
-     * @return string
+     * @param mixed $firstNameSr
      */
-    public function getSurname()
+    public function setFirstNameSr($firstNameSr)
     {
-        return $this->surname;
+        $this->firstNameSr = $firstNameSr;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFirstNameOriginalLetter()
+    {
+        return $this->firstNameOriginalLetter;
+    }
 
+    /**
+     * @param mixed $firstNameOriginalLetter
+     */
+    public function setFirstNameOriginalLetter($firstNameOriginalLetter)
+    {
+        $this->firstNameOriginalLetter = $firstNameOriginalLetter;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastNameEn()
+    {
+        return $this->lastNameEn;
+    }
+
+    /**
+     * @param mixed $lastNameEn
+     */
+    public function setLastNameEn($lastNameEn)
+    {
+        $this->lastNameEn = $lastNameEn;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastNameSr()
+    {
+        return $this->lastNameSr;
+    }
+
+    /**
+     * @param mixed $lastNameSr
+     */
+    public function setLastNameSr($lastNameSr)
+    {
+        $this->lastNameSr = $lastNameSr;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastNameOriginalLetter()
+    {
+        return $this->lastNameOriginalLetter;
+    }
+
+    /**
+     * @param mixed $lastNameOriginalLetter
+     */
+    public function setLastNameOriginalLetter($lastNameOriginalLetter)
+    {
+        $this->lastNameOriginalLetter = $lastNameOriginalLetter;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInitials()
+    {
+        return $this->initials;
+    }
+
+    /**
+     * @param mixed $initials
+     */
+    public function setInitials($initials)
+    {
+        $this->initials = $initials;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitlePrefix()
+    {
+        return $this->titlePrefix;
+    }
+
+    /**
+     * @param mixed $titlePrefix
+     */
+    public function setTitlePrefix($titlePrefix)
+    {
+        $this->titlePrefix = $titlePrefix;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitleSuffix()
+    {
+        return $this->titleSuffix;
+    }
+
+    /**
+     * @param mixed $titleSuffix
+     */
+    public function setTitleSuffix($titleSuffix)
+    {
+        $this->titleSuffix = $titleSuffix;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param mixed $gender
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHasDisability()
+    {
+        return $this->hasDisability;
+    }
+
+    /**
+     * @param mixed $hasDisability
+     */
+    public function setHasDisability($hasDisability)
+    {
+        $this->hasDisability = $hasDisability;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHasFewerOpportunities()
+    {
+        return $this->hasFewerOpportunities;
+    }
+
+    /**
+     * @param mixed $hasFewerOpportunities
+     */
+    public function setHasFewerOpportunities($hasFewerOpportunities)
+    {
+        $this->hasFewerOpportunities = $hasFewerOpportunities;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getContacts()
     {
         return $this->contacts;
     }
 
-    public function setContacts(ArrayCollection $contacts)
+    /**
+     * @param mixed $contacts
+     */
+    public function setContacts($contacts)
     {
         $this->contacts = $contacts;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
+
+    /**
+     * @param mixed $addresses
+     */
+    public function setAddresses($addresses)
+    {
+        $this->addresses = $addresses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPersonNotes()
+    {
+        return $this->personNotes;
+    }
+
+    /**
+     * @param mixed $personNotes
+     */
+    public function setPersonNotes($personNotes)
+    {
+        $this->personNotes = $personNotes;
+    }
+
+    public function getFirstName($locale) {
+        if ($locale == "sr"){
+            return $this->firstNameSr;
+        }
+        return $this->firstNameEn;
+    }
+
+    public function getLastName($locale) {
+        if ($locale == "sr"){
+            return $this->lastNameSr;
+        }
+        return $this->lastNameEn;
+    }
+
+
+    public function addContact(PersonContact $personContact)
+    {
+        $this->contacts->add($personContact);
+    }
+
+    public function removeContact(PersonContact $personContact)
+    {
+        $this->contacts->removeElement($personContact);
+    }
 }

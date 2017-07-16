@@ -67,23 +67,51 @@
                 </div>
             </div>
 
-            <div class="entry input-group col-xs-3">
-                VAT/Tax Number<input class="form-control" name="vat[]" type="text"/>
-                Validated?<input type="checkbox" name="validated[]"/>
-                Primary<input type="radio" name="primary[]"/>
-                <span class="input-group-btn">
-                    <button class="btn btn-success btn-add" type="button">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </button>
-                </span>
+            <div id="vat-fields">
+                <div class="entry input-group col-xs-3">
+                    VAT/Tax Number<input class="form-control" id="form-control-vat-0" name="vat[]" type="text"/>
+                    Validated?<input type="checkbox" class="validated-vat" id="validated-vat-0" name="validated[]"/>
+                    Primary<input type="radio" class="radio-vat" id="radio-vat-0" name="primary[]"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-success btn-add" type="button">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </span>
+                </div>
             </div>
-
-            <div class="row">
-                <div class="col-sm-6 form-group">
-                    {{ form_label(my_form.contactType, 'Contact Type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.contactType, {'attr': {'class': 'form-control'}})  }}
+            <div id="contact-fields">
+                <div class="entry input-group col-xs-3">
+                    <div class="col-sm-6 form-group">
+                        {{ form_label(my_form.contactType, 'Contact Type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.contactType, {'attr': {'class': 'form-control'}})  }}
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        {{ form_label(my_form.contact, 'Contact'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.contact, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(my_form.note, 'Note'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.note, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        {{ form_label(my_form.public, 'Public'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.public, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <span class="input-group-btn">
+                        <button class="btn btn-success btn-add-contact" type="button">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </span>
                 </div>
             </div>
 

@@ -47,6 +47,9 @@ class InstitutionsForm extends AbstractType
                 'class' => 'AppBundle:ContactType',
                 'choice_label' => 'type' . ucfirst($options['locale'])
             ])
+            ->add('contact', TextType::class)
+            ->add('note', TextType::class)
+            ->add('public', CheckboxType::class)
 
 
 

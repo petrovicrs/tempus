@@ -39,6 +39,56 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\Institution
+    doctrine_entity_repository.institution_type:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionType
+    doctrine_entity_repository.institution_contact:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionContact
+    doctrine_entity_repository.institution_note_type:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionNoteType
+    doctrine_entity_repository.institution_note:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionNote
+    doctrine_entity_repository.institution_accreditation_type:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionAccreditationType
+    doctrine_entity_repository.institution_accreditation:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionAccreditation
+    doctrine_entity_repository.institution_address:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionAddress
+    doctrine_entity_repository.institution_founder_type:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionFounderType
+    doctrine_entity_repository.institution_level:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionLevel
+    doctrine_entity_repository.institution_legal_representative:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionLegalRepresentative
     doctrine_entity_repository.program:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

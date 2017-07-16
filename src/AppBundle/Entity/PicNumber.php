@@ -15,7 +15,7 @@ use \Doctrine\DBAL\Types\BooleanType;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PicNumberRepository")
- * @ORM\Table(name="pic_number")
+ * @ORM\Table(name="pic_numbers")
  */
 class PicNumber extends AbstractAuditable
 {

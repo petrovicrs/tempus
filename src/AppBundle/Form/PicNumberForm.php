@@ -16,9 +16,9 @@ class PicNumberForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('number');
-//            ->add('validated', CheckboxType::class)
-//            ->add('primary', CheckboxType::class);
+            ->add('number')
+            ->add('validated', CheckboxType::class)
+            ->add('primary', CheckboxType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -31,60 +31,50 @@ class InstitutionsForm extends AbstractType
     {
 
         $builder
-            ->add('nameEn', TextType::class, ['label_format' => 'Organisation name English'])
-            ->add('nameSr', TextType::class, ['label_format' => 'Organisation name Serbian'])
-            ->add('nameOriginalLetter', TextType::class, ['label_format' => 'Organisation name Original Alphabet'])
-            ->add('nationalRegistrationNumber', TextType::class, ['label_format' => 'National Registration Number'])
-            ->add('vatNumber', TextType::class, ['label_format' => 'Vat/Tax Number'])
-            ->add('acronym', TextType::class, ['label_format' => 'Acronym'])
-            ->add('picNumber', TextType::class)
-            ->add('picValidated', CheckboxType::class)
-            ->add('picPrimary', RadioType::class)
-            ->add('streetAndNumber', TextType::class)
-            ->add('town', TextType::class)
-            ->add('post_code', TextType::class)
-            ->add('contactType', EntityType::class, [
-                'class' => 'AppBundle:ContactType',
-                'choice_label' => 'type' . ucfirst($options['locale'])
+            ->add('nameEn', TextType::class)
+            ->add('nameSr', TextType::class)
+            ->add('nameOriginalLetter', TextType::class)
+            ->add('founderOriginalLetterEn', TextType::class)
+            ->add('founderOriginalLetterSr', TextType::class)
+            ->add('founderOriginalLetter', TextType::class)
+            ->add('institutionFounderType', EntityType::class, [
+                'class' => 'AppBundle:InstitutionFounderType',
+                'choice_label' => 'name' . ucfirst($options['locale'])
             ])
-            ->add('contact', TextType::class)
-            ->add('note', TextType::class)
-            ->add('public', CheckboxType::class)
-
-
-
-
-
-
-
-
-            ->add('parentInstitution', TextType::class, ['label_format' => 'Parent Institution'])
-//            ->add('founder', TextType::class, ['label_format' => 'Founder'])
-//            ->add('founderOriginalLetter', TextType::class, ['label_format' => 'Founder Original Letter'])
-//            ->add('legalRepresentative', TextType::class, ['label_format' => 'Legal Representative'])
-//            ->add('contactPerson', EntityType::class, [
-//                'class' => 'AppBundle:Person',
-//                'choice_label' => 'name',
-//                'label_format' => 'Contact Person'
+            ->add('institutionType', EntityType::class, [
+                'class' => 'AppBundle:InstitutionType',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('institutionLevel', EntityType::class, [
+                'class' => 'AppBundle:InstitutionLevel',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('parentInstitution', EntityType::class, [
+                'class' => 'AppBundle:Institution',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('publicBody', TextType::class)
+            ->add('nonProfit', TextType::class)
+            ->add('country', TextType::class)
+            ->add('originCountry', TextType::class)
+            ->add('nationalRegistrationNumber', TextType::class)
+            ->add('vatNumber', TextType::class)
+            ->add('webSite', TextType::class)
+//            ->add('acronym', TextType::class, ['label_format' => 'Acronym'])
+//            ->add('picNumber', TextType::class)
+//            ->add('picValidated', CheckboxType::class)
+//            ->add('picPrimary', RadioType::class)
+//            ->add('streetAndNumber', TextType::class)
+//            ->add('town', TextType::class)
+//            ->add('post_code', TextType::class)
+//            ->add('contactType', EntityType::class, [
+//                'class' => 'AppBundle:ContactType',
+//                'choice_label' => 'type' . ucfirst($options['locale'])
 //            ])
-//            ->add('hierarchyLevel', TextType::class, ['label_format' => 'Hierarchy Level'])
-            ->add('institutionType', TextType::class, ['label_format' => 'Institution Type'])
-//            ->add('country', TextType::class, ['label_format' => 'Country'])
-//            ->add('founderType', TextType::class, ['label_format' => 'Founder Type'])
-//            ->add('founderCountry', TextType::class, ['label_format' => 'Founder Country'])
-//            ->add('address', TextType::class, ['label_format' => 'Address'])
-//            ->add('postalCode', TextType::class, ['label_format' => 'Postal Code'])
-//            ->add('city', TextType::class, ['label_format' => 'City'])
-            ->add('webSite', TextType::class, ['label_format' => 'Web Site'])
-//            ->add('belongingToGroup', TextType::class, ['label_format' => 'Belonging To Group'])
-            ->add('note', TextType::class, ['label_format' => 'Note'])
-//            ->add('accreditation', TextType::class, ['label_format' => 'Accreditation'])
-//            ->add('accreditationValidFrom', DateType::class, ['label_format' => 'Accreditation Valid From'])
-//            ->add('accreditationValidTo', DateType::class, ['label_format' => 'Accreditation Valid To'])
-//            ->add('accredditation', TextType::class, ['label_format' => 'Accreditation'])
-//            ->add('accreditationValidFrom', DateType::class, ['label_format' => 'Accreditation Valid From'])
-//            ->add('accreditationValidTo', DateType::class, ['label_format' => 'Accreditation Valid To'])
-//            ->add('accreditor', TextType::class, ['label_format' => 'Accreditor'])
+//            ->add('contact', TextType::class)
+//            ->add('note', TextType::class)
+//            ->add('public', CheckboxType::class)
+
             ->add('submit', SubmitType::class, ['label_format' => 'Submit']);
     }
 

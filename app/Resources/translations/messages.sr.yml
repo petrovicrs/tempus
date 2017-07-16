@@ -1,64 +1,62 @@
 'Symfony is great': '__Symfony is great'
 'Project title': 'Ime Projekta'
-Programe: 'Program'
-Partners: 'Partneri'
+Programe: Program
+Partners: Partneri
 'Add Project': 'Dodaj projekat'
 'Add Person': 'Dodaj novu osobu'
 'Add Institution': 'Dodaj instituciju'
 'Create project': 'Kreiranje Projekta'
 'Edit project': 'Izmeni projekat'
-Project: 'Projekat'
+Project: Projekat
 'Original letter': '__Original letter'
-Edit:
+Edit: __Edit
 Grant: __Grant
 'Project Status': 'Status projekta'
 'Eligibility period start': '__Eligibility period start'
 'Eligibility period end': '__Eligibility period end'
 'Extended until': '__Extended until'
-Website: Veb Strana
+Website: 'Veb Strana'
 Facebook: __Facebook
 'Project Summary': '__Project Summary'
 Objectives: __Objectives
 Programme: __Programme
 Welcome: 'Dobro dosli'
 'Add person': 'Dodaj novu osobu'
-Name: 'Ime'
-Surname: 'Prezime'
-Person: 'Osoba'
+Name: Ime
+Surname: Prezime
+Person: Osoba
 'Person contact': 'Kontakt osoba'
-Type: 'Tip'
+Type: Tip
 'Add new contact': 'Dodaj novi kontakt'
 'Add person contact': 'Dodaj novu kontakt osobu'
-'name': 'Ime'
-'surname': 'Prezime'
-'submit': 'Kreiraj'
+name: Ime
+surname: Prezime
+submit: Kreiraj
 'Name English': 'Ime Engleski'
 'Name Serbian': 'Ime Srpski'
-'Description': 'Opis'
-'Goals': 'Ciljevi'
+Description: Opis
+Goals: Ciljevi
 'Organisation name Original Alphabet': 'Originalni Naziv Organizacije'
-'Acronym': 'Akronim'
-'Program': 'Program'
-'Status': 'Status'
-'Scope': 'Opseg'
+Acronym: Akronim
+Program: Program
+Status: Status
+Scope: Opseg
 'Application Year': 'Godina apliciranja'
 'Reference Number': 'Referentni broj'
-'Duration': 'Trajanje'
+Duration: Trajanje
 'End Datetime': 'Datum zavrsetka'
 'Start Datetime': 'Datum pocetka'
 'Extended Time': 'Produzeno vreme'
-'Grant Amount': 'Vrednost'
+'Grant Amount': Vrednost
 'coFinancing Amount': 'Vrednost kofinansiranja'
 'Total Project Value': 'Ukupna vrednost projekta'
-'Mark': 'Ocena'
+Mark: Ocena
 'Mark Explanation': 'Objasnjenje ocene'
-'Submit': 'Napravi'
-'Person': 'Osoba'
+Submit: Napravi
 'Contact Type': 'Tip kontakta'
-'Value': 'Vrednost'
-'Submit': 'Kreiraj'
+Value: Vrednost
 'Parent Institution': 'Maticna institucija'
-'Founder': 'Osnivac'
+Founder: Osnivac
 'Founder Original Letter': 'Originalan naziv osnivaca'
 'Legal Representative': 'Zvanican predstavnik'
 'Contact Person': 'Kontakt osoba'
@@ -67,18 +65,43 @@ Type: 'Tip'
 'Vat/Tax Number': 'Poreski broj'
 'Hierarchy Level': 'Hijerarhijski nivo'
 'Institution Type': 'Tip institucije'
-'Country': 'Drzava'
+Country: Drzava
 'Founder Type': 'Tip osnivaca'
 'Founder Country': 'Zemlja osnivac'
-'Address': 'Adresa'
+Address: Adresa
 'Postal Code': 'Postanski broj'
-'City': 'Grad'
+City: Grad
 'Web Site': 'Web Strana'
 'Belonging To Group': 'Pripada grupi'
-'Note': 'Beleska'
-'Accreditation': 'Akreditacija'
+Note: Beleska
+Accreditation: Akreditacija
 'Accreditation Valid From': 'Akreditacija vazi od'
 'Accreditation Valid To': 'Akreditacija vazi do'
-'Accreditor': 'Akreditor'
+Accreditor: Akreditor
 'Organisation name English': 'Ime Organizacije na Engleskom'
 'Organisation name Serbian': 'Ime Organizacije na Srpskom'
+'Organization Name English': '__Organization Name English'
+'Organization Name Serbian': '__Organization Name Serbian'
+'Organization Name Original Alphabet': '__Organization Name Original Alphabet'
+'National Registration Nr': '__National Registration Nr'
+'VAT/Tax Nr': '__VAT/Tax Nr'
+Contact: __Contact
+Public: __Public
+PIC: __PIC
+'Validated?': '__Validated?'
+'Primary?': '__Primary?'
+'First name Eng': '__First name Eng'
+'First name Srb': '__First name Srb'
+'First name Original alphabet': '__First name Original alphabet'
+'Last name Eng': '__Last name Eng'
+'Last name Srb': '__Last name Srb'
+'Last name Original alphabet': '__Last name Original alphabet'
+Initials: __Initials
+'Title (prefix)': '__Title (prefix)'
+'Title (suffix)': '__Title (suffix)'
+Gender: __Gender
+'Person with disabilities': '__Person with disabilities'
+'Person with fewer opportunities': '__Person with fewer opportunities'
+Create: __Create
+'Application year': '__Application year'
+'Reference number': '__Reference number'

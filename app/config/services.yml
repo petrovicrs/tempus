@@ -94,7 +94,7 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\Program
-    doctrine_entity_repository.picNumber:
+    doctrine_entity_repository.pic_number:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:

@@ -7,17 +7,14 @@
  */
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Person;
-use AppBundle\Entity\PersonContact;
+use AppBundle\Entity\InstitutionContact;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class PersonContactForm extends AbstractType
+class InstitutionContactForm extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -31,8 +28,7 @@ class PersonContactForm extends AbstractType
             ])
             ->add('contactValue')
             ->add('note')
-            ->add('isPublic', CheckboxType::class, array('required' => false))
-            ->add('isPrimary', CheckboxType::class, array('required' => false));
+            ->add('isPublic', CheckboxType::class, array('required' => false));
     }
 
     /**
@@ -48,7 +44,7 @@ class PersonContactForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => PersonContact::class,
+            'data_class' => InstitutionContact::class,
         ]);
 
     }

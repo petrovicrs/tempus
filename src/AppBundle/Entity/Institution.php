@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\PicNumber;
+use AppBundle\Entity\InstitutionContact;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InstitutionRepository")
@@ -33,37 +35,37 @@ class Institution extends AbstractAuditable
     protected $parentInstitution;
 
     /**
-     * @Assert\NotBlank()
+     *  
      * @ORM\Column(name="name_en", type="string")
      */
     protected $nameEn;
 
     /**
-     * @Assert\NotBlank()
+     *  
      * @ORM\Column(name="name_sr", type="string")
      */
     protected $nameSr;
 
     /**
-     * @Assert\NotBlank()
+     *  
      * @ORM\Column(name="name_original_letter", type="string")
      */
     protected $nameOriginalLetter;
 
     /**
-     * @Assert\NotBlank()
+     *  
      * @ORM\Column(name="founder_original_letter_en", type="string")
      */
     protected $founderOriginalLetterEn;
 
     /**
-     * @Assert\NotBlank()
+     *  
      * @ORM\Column(name="founder_original_letter_sr", type="string")
      */
     protected $founderOriginalLetterSr;
 
     /**
-     * @Assert\NotBlank()
+     *  
      * @ORM\Column(name="founder_original_letter", type="string")
      */
     protected $founderOriginalLetter;
@@ -83,55 +85,63 @@ class Institution extends AbstractAuditable
     protected $institutionLevel;
 
     /**
-     * @Assert\NotBlank()
+     *  
      * @ORM\Column(name="national_registration_number", type="string")
      */
     protected $nationalRegistrationNumber;
 
     /**
-     * @Assert\NotBlank()
+     *  
      * @ORM\Column(name="vat_number", type="string")
      */
     protected $vatNumber;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="institution_type", type="integer")
+     * @ORM\OneToMany(targetEntity="PicNumber", mappedBy="institution", cascade={"persist"})
+     */
+    protected $picNumber;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="InstitutionType"
+     * )
      */
     protected $institutionType;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="public_body", type="integer")
+     *  
+     * @ORM\Column(name="public_body", type="boolean")
      */
     protected $publicBody;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="non_profit", type="integer")
+     *  
+     * @ORM\Column(name="non_profit", type="boolean")
      */
     protected $nonProfit;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="country", type="integer")
+     * @ORM\ManyToOne(
+     *      targetEntity="Country"
+     * )
      */
     protected $country;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="origin_country", type="integer")
+     * @ORM\ManyToOne(
+     *      targetEntity="Country"
+     * )
      */
     protected $originCountry;
 
     /**
-     * @Assert\NotBlank()
+     *  
      * @ORM\Column(name="web_site", type="string")
      */
     protected $webSite;
 
     /**
-     * @ORM\OneToMany(targetEntity="InstitutionContact", mappedBy="institution")
+     * @ORM\OneToMany(targetEntity="InstitutionContact", mappedBy="institution", cascade={"persist"})
      */
     protected $contacts;
 
@@ -163,6 +173,7 @@ class Institution extends AbstractAuditable
         $this->legalRepresentatives = new ArrayCollection();
         $this->accreditations = new ArrayCollection();
         $this->addresses = new ArrayCollection();
+        $this->picNumber = new ArrayCollection();
     }
 
     /**
@@ -455,6 +466,16 @@ class Institution extends AbstractAuditable
         $this->contacts = $contacts;
     }
 
+    public function addContacts(InstitutionContact $contact)
+    {
+        $this->contacts->add($contact);
+    }
+
+    public function removeContacts(InstitutionContact $contact)
+    {
+        $this->contacts->removeElement($contact);
+    }
+
     public function getNotes()
     {
         return $this->notes;
@@ -513,5 +534,29 @@ class Institution extends AbstractAuditable
         $this->addresses = $addresses;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPicNumber()
+    {
+        return $this->picNumber;
+    }
 
+    /**
+     * @param mixed $picNumber
+     */
+    public function setPicNumber(ArrayCollection $picNumber)
+    {
+        $this->picNumber = $picNumber;
+    }
+
+    public function addPicNumber(PicNumber $picNumber)
+    {
+        $this->picNumber->add($picNumber);
+    }
+
+    public function removePicNumber(PicNumber $picNumber)
+    {
+        $this->picNumber->removeElement($picNumber);
+    }
 }

@@ -1,34 +1,32 @@
-var $addContactLink = $('<a href="#" class="add_contact_link">Add a contact</a>');
-var $newLinkLi = $('<li></li>').append($addContactLink);
+var $addPicNumberLink = $('<a href="#" class="btn btn-add btn-success "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
+var $newLinkDiv = $('<li></li>').append($addPicNumberLink);
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of tags
-    var $collectionHolder = $('ul.contacts');
+    var $collectionHolder = $('ul.picNumber');
 
     // add a delete link to all of the existing tag form li elements
     $collectionHolder.find('li').each(function() {
-        addContactFormDeleteLink($(this));
+        addPicNumberFormDeleteLink($(this));
     });
 
     // add the "add a tag" anchor and li to the tags ul
-    $collectionHolder.append($newLinkLi);
+    $collectionHolder.append($newLinkDiv);
 
     // count the current form inputs we have (e.g. 2), use that as the new
     // index when inserting a new item (e.g. 2)
     $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
-    $addContactLink.on('click', function(e) {
+    $addPicNumberLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
 
         // add a new tag form (see code block below)
-        addContactForm($collectionHolder, $newLinkLi);
+        addPicNumberForm($collectionHolder, $newLinkDiv);
     });
-
-
 });
 
-function addContactForm($collectionHolder, $newLinkLi) {
+function addPicNumberForm($collectionHolder, $newLinkDiv) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
 
@@ -43,15 +41,15 @@ function addContactForm($collectionHolder, $newLinkLi) {
     $collectionHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a tag" link li
-    var $newFormLi = $('<li></li>').append(newForm);
+    var $newFormDiv = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormLi.append('<a href="#" class="remove-contact">x</a>');
+    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>');
 
-    $newLinkLi.before($newFormLi);
+    $newLinkDiv.before($newFormDiv);
 
     // handle the removal, just for this example
-    $('.remove-contact').click(function(e) {
+    $('.btn-remove').click(function(e) {
         e.preventDefault();
 
         $(this).parent().remove();
@@ -60,15 +58,15 @@ function addContactForm($collectionHolder, $newLinkLi) {
     });
 }
 
-function addContactFormDeleteLink($contactFormLi) {
+function addPicNumberFormDeleteLink($contactFormDiv) {
     var $removeFormA = $('<a href="#">delete this contact</a>');
-    $contactFormLi.append($removeFormA);
+    $contactFormDiv.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
 
         // remove the li for the tag form
-        $contactFormLi.remove();
+        $contactFormDiv.remove();
     });
 }

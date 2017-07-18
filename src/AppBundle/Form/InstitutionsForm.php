@@ -13,14 +13,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
-use AppBundle\Entity\ContactType;
-
-use AppBundle\Entity\PicNumber;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use AppBundle\Form\PicNumberForm;
 
 class InstitutionsForm extends AbstractType
 {
@@ -53,13 +51,41 @@ class InstitutionsForm extends AbstractType
                 'class' => 'AppBundle:Institution',
                 'choice_label' => 'name' . ucfirst($options['locale'])
             ])
-            ->add('publicBody', TextType::class)
-            ->add('nonProfit', TextType::class)
-            ->add('country', TextType::class)
-            ->add('originCountry', TextType::class)
+            ->add('publicBody', ChoiceType::class, array(
+                'choices'  => array(
+                    'Yes' => true,
+                    'No' => false,
+                ),
+            ))
+            ->add('nonProfit', ChoiceType::class, array(
+                'choices'  => array(
+                    'Yes' => true,
+                    'No' => false,
+                ),
+            ))
+            ->add('country',EntityType::class, [
+                'class' => 'AppBundle:Country',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('originCountry',EntityType::class, [
+                'class' => 'AppBundle:Country',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
             ->add('nationalRegistrationNumber', TextType::class)
             ->add('vatNumber', TextType::class)
+            ->add('picNumber', CollectionType::class, array(
+                'entry_type'  => PicNumberForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
             ->add('webSite', TextType::class)
+            ->add('contacts', CollectionType::class, array(
+                'entry_type'  => InstitutionContactForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
 //            ->add('acronym', TextType::class, ['label_format' => 'Acronym'])
 //            ->add('picNumber', TextType::class)
 //            ->add('picValidated', CheckboxType::class)

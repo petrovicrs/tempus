@@ -184,7 +184,7 @@ class PersonContact extends AbstractAuditable
 
 
     public function __toString() {
-        return "clue";
+        return "";
     }
 
 }

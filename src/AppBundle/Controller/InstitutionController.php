@@ -7,7 +7,11 @@
  */
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\InstitutionContact;
+use AppBundle\Entity\PicNumber;
+use AppBundle\Repository\InstitutionContactRepository;
 use AppBundle\Repository\InstitutionRepository;
+use AppBundle\Repository\PicNumberRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -38,7 +42,7 @@ class InstitutionController extends AbstractController
     {
         $institutions = new Institution();
 
-        $institutionForm = $this->createForm(InstitutionsForm::class, [], [
+        $institutionForm = $this->createForm(InstitutionsForm::class, $institutions, [
             'action' => $this->generateUrl('institution_create'),
             'method' => 'POST',
             'locale' => $request->getLocale(),
@@ -49,6 +53,18 @@ class InstitutionController extends AbstractController
 
         if ($institutionForm->isSubmitted() && $institutionForm->isValid()) {
             $this->getInstitutionRepository()->save($institutions);
+
+            /** @var PicNumber $picNumber */
+            foreach($institutions->getPicNumber() as $picNumber){
+                $picNumber->setInstitution($institutions);
+                $this->getPicNumberRepository()->save($picNumber);
+            }
+
+            /** @var InstitutionContact $contact */
+            foreach($institutions->getContacts() as $contact){
+                $contact->setInstitution($institutions);
+                $this->getInstitutionContactRepository()->save($contact);
+            }
 
             return $this->redirectToRoute('project_list');
 
@@ -73,5 +89,21 @@ class InstitutionController extends AbstractController
     private function getInstitutionRepository() {
 
         return $this->get('doctrine_entity_repository.institution');
+    }
+
+    /**
+     * @return PicNumberRepository
+     */
+    private function getPicNumberRepository() {
+
+        return $this->get('doctrine_entity_repository.pic_number');
+    }
+
+    /**
+     * @return InstitutionContactRepository
+     */
+    private function getInstitutionContactRepository() {
+
+        return $this->get('doctrine_entity_repository.institution_contact');
     }
 }

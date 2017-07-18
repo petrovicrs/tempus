@@ -13,6 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Entity\PicNumber;
 use AppBundle\Entity\InstitutionContact;
+use AppBundle\Entity\InstitutionAddress;
+use AppBundle\Entity\InstitutionAccreditation;
+use AppBundle\Entity\InstitutionLegalRepresentative;
+use AppBundle\Entity\InstitutionNote;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InstitutionRepository")
@@ -146,22 +150,22 @@ class Institution extends AbstractAuditable
     protected $contacts;
 
     /**
-     * @ORM\OneToMany(targetEntity="InstitutionNote", mappedBy="institution")
+     * @ORM\OneToMany(targetEntity="InstitutionNote", mappedBy="institution", cascade={"persist"})
      */
     protected $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity="InstitutionLegalRepresentative", mappedBy="institution")
+     * @ORM\OneToMany(targetEntity="InstitutionLegalRepresentative", mappedBy="institution", cascade={"persist"})
      */
     protected $legalRepresentatives;
 
     /**
-     * @ORM\OneToMany(targetEntity="InstitutionAccreditation", mappedBy="institution")
+     * @ORM\OneToMany(targetEntity="InstitutionAccreditation", mappedBy="institution", cascade={"persist"})
      */
     protected $accreditations;
 
     /**
-     * @ORM\OneToMany(targetEntity="InstitutionAddress", mappedBy="institution")
+     * @ORM\OneToMany(targetEntity="InstitutionAddress", mappedBy="institution", cascade={"persist"})
      */
     protected $addresses;
 
@@ -486,6 +490,16 @@ class Institution extends AbstractAuditable
         $this->notes = $notes;
     }
 
+    public function addNotes(InstitutionNote $notes)
+    {
+        $this->notes->add($notes);
+    }
+
+    public function removeNotes(InstitutionNote $notes)
+    {
+        $this->notes->removeElement($notes);
+    }
+
     /**
      * @return mixed
      */
@@ -500,6 +514,16 @@ class Institution extends AbstractAuditable
     public function setLegalRepresentatives(ArrayCollection $legalRepresentatives)
     {
         $this->legalRepresentatives = $legalRepresentatives;
+    }
+
+    public function addLegalRepresentatives(InstitutionLegalRepresentative $legalRepresentatives)
+    {
+        $this->legalRepresentatives->add($legalRepresentatives);
+    }
+
+    public function removeLegalRepresentatives(InstitutionLegalRepresentative $legalRepresentatives)
+    {
+        $this->legalRepresentatives->removeElement($legalRepresentatives);
     }
 
     /**
@@ -518,6 +542,16 @@ class Institution extends AbstractAuditable
         $this->accreditations = $accreditations;
     }
 
+    public function addAccreditations(InstitutionAccreditation $accreditation)
+    {
+        $this->accreditations->add($accreditation);
+    }
+
+    public function removeAccreditations(InstitutionAccreditation $accreditation)
+    {
+        $this->accreditations->removeElement($accreditation);
+    }
+
     /**
      * @return mixed
      */
@@ -532,6 +566,16 @@ class Institution extends AbstractAuditable
     public function setAddresses(ArrayCollection $addresses)
     {
         $this->addresses = $addresses;
+    }
+
+    public function addAddresses(InstitutionAddress $address)
+    {
+        $this->addresses->add($address);
+    }
+
+    public function removeAddresses(InstitutionAddress $address)
+    {
+        $this->addresses->removeElement($address);
     }
 
     /**

@@ -13,10 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\InstitutionNoteTypeRepository")
- * @ORM\Table(name="institution_note_types")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\InstitutionLegalRepresentativePositionRepository")
+ * @ORM\Table(name="institution_legal_representative_position")
  */
-class InstitutionNoteType extends AbstractAuditable
+class InstitutionLegalRepresentativePosition extends AbstractAuditable
 {
     /**
      * @ORM\Id
@@ -74,5 +74,6 @@ class InstitutionNoteType extends AbstractAuditable
     {
         $this->nameSr = $nameSr;
     }
+
 
 }

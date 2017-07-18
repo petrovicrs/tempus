@@ -7,11 +7,19 @@
  */
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\InstitutionAccreditation;
+use AppBundle\Entity\InstitutionAddress;
 use AppBundle\Entity\InstitutionContact;
+use AppBundle\Entity\InstitutionLegalRepresentative;
+use AppBundle\Entity\InstitutionNote;
 use AppBundle\Entity\PicNumber;
 use AppBundle\Repository\InstitutionContactRepository;
 use AppBundle\Repository\InstitutionRepository;
 use AppBundle\Repository\PicNumberRepository;
+use AppBundle\Repository\InstitutionNoteRepository;
+use AppBundle\Repository\InstitutionAddressRepository;
+use AppBundle\Repository\InstitutionLegalRepresentativeRepository;
+use AppBundle\Repository\InstitutionAccreditationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -66,6 +74,29 @@ class InstitutionController extends AbstractController
                 $this->getInstitutionContactRepository()->save($contact);
             }
 
+            /** @var InstitutionAccreditation $accreditation */
+            foreach($institutions->getAddresses() as $accreditation){
+                $accreditation->setInstitution($institutions);
+                $this->getInstitutionAccreditationRepository()->save($accreditation);
+            }
+
+            /** @var InstitutionAddress $address */
+            foreach($institutions->getAddresses() as $address){
+                $address->setInstitution($institutions);
+                $this->getInstitutionAddressRepository()->save($address);
+            }
+
+            /** @var InstitutionNote $note */
+            foreach($institutions->getNotes() as $note){
+                $note->setInstitution($institutions);
+                $this->getInstitutionNoteRepository()->save($note);
+            }
+
+            /** @var InstitutionLegalRepresentative $legalRepresentative */
+            foreach($institutions->getLegalRepresentatives() as $legalRepresentative){
+                $legalRepresentative->setInstitution($institutions);
+                $this->getInstitutionLegalRepresentativeRepository()->save($legalRepresentative);
+            }
             return $this->redirectToRoute('project_list');
 
         }
@@ -105,5 +136,37 @@ class InstitutionController extends AbstractController
     private function getInstitutionContactRepository() {
 
         return $this->get('doctrine_entity_repository.institution_contact');
+    }
+
+    /**
+     * @return InstitutionAccreditationRepository
+     */
+    private function getInstitutionAccreditationRepository() {
+
+        return $this->get('doctrine_entity_repository.institution_accreditation');
+    }
+
+    /**
+     * @return InstitutionAddressRepository
+     */
+    private function getInstitutionAddressRepository() {
+
+        return $this->get('doctrine_entity_repository.institution_address');
+    }
+
+    /**
+     * @return InstitutionNoteRepository
+     */
+    private function getInstitutionNoteRepository() {
+
+        return $this->get('doctrine_entity_repository.institution_note');
+    }
+
+    /**
+     * @return InstitutionLegalRepresentativeRepository
+     */
+    private function getInstitutionLegalRepresentativeRepository() {
+
+        return $this->get('doctrine_entity_repository.institution_legal_representative');
     }
 }

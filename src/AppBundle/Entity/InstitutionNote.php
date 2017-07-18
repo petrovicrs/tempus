@@ -36,7 +36,6 @@ class InstitutionNote extends AbstractAuditable
     protected $institutionNoteType;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(name="note", type="string")
      */
     protected $note;

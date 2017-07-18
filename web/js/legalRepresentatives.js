@@ -1,44 +1,44 @@
-var $addPicNumberLink = $('<a href="#" class="btn btn-add btn-success "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
-var $newPicNumberDiv = $('<li></li>').append($addPicNumberLink);
+var $addInstitutionLegalRepresentativeLink = $('<a href="#" class="btn btn-add btn-success "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
+var $newInstitutionLegalRepresentativeLinkDiv = $('<li></li>').append($addInstitutionLegalRepresentativeLink);
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of tags
-    var $picNumberHolder = $('ul.picNumber');
+    var $collectionInstitutionLegalRepresentativeHolder = $('ul.legalRepresentatives');
 
     // add a delete link to all of the existing tag form li elements
-    $picNumberHolder.find('li').each(function() {
-        addPicNumberFormDeleteLink($(this));
+    $collectionInstitutionLegalRepresentativeHolder.find('li').each(function() {
+        $addInstitutionLegalRepresentativeFormDeleteLink($(this));
     });
 
     // add the "add a tag" anchor and li to the tags ul
-    $picNumberHolder.append($newPicNumberDiv);
+    $collectionInstitutionLegalRepresentativeHolder.append($newInstitutionLegalRepresentativeLinkDiv);
 
     // count the current form inputs we have (e.g. 2), use that as the new
     // index when inserting a new item (e.g. 2)
-    $picNumberHolder.data('index', $picNumberHolder.find(':input').length);
+    $collectionInstitutionLegalRepresentativeHolder.data('index', $collectionInstitutionLegalRepresentativeHolder.find(':input').length);
 
-    $addPicNumberLink.on('click', function(e) {
+    $addInstitutionLegalRepresentativeLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
 
         // add a new tag form (see code block below)
-        addPicNumberForm($picNumberHolder, $newPicNumberDiv);
+        $addInstitutionLegalRepresentativeForm($collectionInstitutionLegalRepresentativeHolder, $newInstitutionLegalRepresentativeLinkDiv);
     });
 });
 
-function addPicNumberForm($picNumberHolder, $newPicNumberDiv) {
+function $addInstitutionLegalRepresentativeForm($collectionInstitutionLegalRepresentativeHolder, $newInstitutionLegalRepresentativeLinkDiv) {
     // Get the data-prototype explained earlier
-    var prototype = $picNumberHolder.data('prototype');
+    var prototype = $collectionInstitutionLegalRepresentativeHolder.data('prototype');
 
     // get the new index
-    var index = $picNumberHolder.data('index');
+    var index = $collectionInstitutionLegalRepresentativeHolder.data('index');
 
-    // Replace '$$name$$' in the prototype's HTML to
+    // Replace '$name$' in the prototype's HTML to
     // instead be a number based on how many items we have
     var newForm = prototype.replace(/__name__/g, index);
 
     // increase the index with one for the next item
-    $picNumberHolder.data('index', index + 1);
+    $collectionInstitutionLegalRepresentativeHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a tag" link li
     var $newFormDiv = $('<li></li>').append(newForm);
@@ -46,7 +46,7 @@ function addPicNumberForm($picNumberHolder, $newPicNumberDiv) {
     // also add a remove button, just for this example
     $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>');
 
-    $newPicNumberDiv.before($newFormDiv);
+    $newInstitutionLegalRepresentativeLinkDiv.before($newFormDiv);
 
     // handle the removal, just for this example
     $('.btn-remove').click(function(e) {
@@ -58,7 +58,7 @@ function addPicNumberForm($picNumberHolder, $newPicNumberDiv) {
     });
 }
 
-function addPicNumberFormDeleteLink($contactFormDiv) {
+function $addInstitutionLegalRepresentativeFormDeleteLink($contactFormDiv) {
     var $removeFormA = $('<a href="#">delete this contact</a>');
     $contactFormDiv.append($removeFormA);
 

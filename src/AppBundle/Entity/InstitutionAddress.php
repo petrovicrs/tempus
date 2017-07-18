@@ -29,25 +29,32 @@ class InstitutionAddress extends AbstractAuditable
     protected $institution;
 
     /**
-     * @Assert\NotBlank()
+     * 
      * @ORM\Column(name="street_and_number", type="string")
      */
     protected $streetAndNumber;
 
     /**
-     * @Assert\NotBlank()
+     * 
      * @ORM\Column(name="town", type="string")
      */
     protected $town;
 
     /**
-     * @Assert\NotBlank()
+     * 
      * @ORM\Column(name="postal_code", type="string")
      */
     protected $postalCode;
 
     /**
-     * @Assert\NotBlank()
+     * @ORM\ManyToOne(
+     *      targetEntity="Country"
+     * )
+     */
+    protected $country;
+
+    /**
+     * 
      * @ORM\Column(name="different_mailing_address", type="boolean")
      */
     protected $differentMailingAddress;
@@ -138,6 +145,22 @@ class InstitutionAddress extends AbstractAuditable
     public function setDifferentMailingAddress($differentMailingAddress)
     {
         $this->differentMailingAddress = $differentMailingAddress;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param mixed $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
     }
 
 }

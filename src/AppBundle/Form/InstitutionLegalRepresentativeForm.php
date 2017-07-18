@@ -11,10 +11,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class InstitutionNoteForm extends AbstractType
+class InstitutionLegalRepresentativeForm extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,11 +21,14 @@ class InstitutionNoteForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('institutionNoteType', EntityType::class, [
-                'class' => 'AppBundle:InstitutionNoteType',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+            ->add('person', EntityType::class, [
+                'class' => 'AppBundle:Person',
+                'choice_label' => 'first_name_' . ucfirst($options['locale'])
             ])
-            ->add('note', TextType::class);
+            ->add('position', EntityType::class, [
+                'class' => 'AppBundle:InstitutionLegalRepresentativePosition',
+                'choice_label' => 'name_' . ucfirst($options['locale'])
+            ]);
     }
 
     /**
@@ -35,7 +37,7 @@ class InstitutionNoteForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\InstitutionNote',
+            'data_class' => 'AppBundle\Entity\InstitutionLegalRepresentative',
             'locale' => 'en',
         ));
     }

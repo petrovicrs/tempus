@@ -29,6 +29,20 @@ class InstitutionLegalRepresentative extends AbstractAuditable
     protected $institution;
 
     /**
+     * @ORM\ManyToOne(
+     *      targetEntity="Person"
+     * )
+     */
+    protected $person;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="InstitutionLegalRepresentativePosition"
+     * )
+     */
+    protected $position;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -51,6 +65,39 @@ class InstitutionLegalRepresentative extends AbstractAuditable
     {
         $this->institution = $institution;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPerson()
+    {
+        return $this->person;
+    }
+
+    /**
+     * @param mixed $person
+     */
+    public function setPerson($person)
+    {
+        $this->person = $person;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param mixed $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
+
 
 }
 

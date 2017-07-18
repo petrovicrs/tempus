@@ -86,20 +86,30 @@ class InstitutionsForm extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
             ))
-//            ->add('acronym', TextType::class, ['label_format' => 'Acronym'])
-//            ->add('picNumber', TextType::class)
-//            ->add('picValidated', CheckboxType::class)
-//            ->add('picPrimary', RadioType::class)
-//            ->add('streetAndNumber', TextType::class)
-//            ->add('town', TextType::class)
-//            ->add('post_code', TextType::class)
-//            ->add('contactType', EntityType::class, [
-//                'class' => 'AppBundle:ContactType',
-//                'choice_label' => 'type' . ucfirst($options['locale'])
-//            ])
-//            ->add('contact', TextType::class)
-//            ->add('note', TextType::class)
-//            ->add('public', CheckboxType::class)
+            ->add('addresses', CollectionType::class, array(
+                'entry_type'  => InstitutionAddressForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('accreditations', CollectionType::class, array(
+                'entry_type'  => InstitutionAccreditationForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('legalRepresentatives', CollectionType::class, array(
+                'entry_type'  => InstitutionLegalRepresentativeForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('notes', CollectionType::class, array(
+                'entry_type'  => InstitutionNoteForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
 
             ->add('submit', SubmitType::class, ['label_format' => 'Submit']);
     }

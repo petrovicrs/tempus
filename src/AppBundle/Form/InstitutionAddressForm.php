@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class InstitutionAddressForm extends AbstractType
 {
@@ -24,8 +25,11 @@ class InstitutionAddressForm extends AbstractType
             ->add('streetAndNumber', TextType::class)
             ->add('town', TextType::class)
             ->add('postalCode', TextType::class)
-            ->add('country', TextType::class)
-            ->add('differentMailingAddress', CheckboxType::class);
+            ->add('country', EntityType::class, [
+                'class' => 'AppBundle:Country',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('differentMailingAddress', CheckboxType::class, ['required' => false]);
     }
 
     /**
@@ -34,7 +38,8 @@ class InstitutionAddressForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\InstitutionAddress'
+            'data_class' => 'AppBundle\Entity\InstitutionAddress',
+            'locale' => 'en',
         ));
     }
 

@@ -2,6 +2,10 @@
 {% block body %}
 <script type="text/javascript" src="{{ asset('/js/pic_numbers.js')}}" ></script>
 <script type="text/javascript" src="{{ asset('/js/institution_contacts.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/addresses.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/accreditations.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/legalRepresentatives.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/notes.js')}}" ></script>
     <section id="main">
         <div class="container-fluid">
             <div class="page-header">
@@ -118,9 +122,20 @@
                             {{ form_widget(my_form.webSite, {'attr': {'class': 'form-control'}})  }}
                         </div>
                     </div>
-
                     <ul class="contacts" data-prototype="{{ include('/institution/includes/contacts.html.twig',
                                 {'form': my_form.contacts.vars.prototype })|e }}">
+                    </ul>
+                    <ul class="addresses" data-prototype="{{ include('/institution/includes/addresses.html.twig',
+                                    {'form': my_form.addresses.vars.prototype })|e }}">
+                    </ul>
+                    <ul class="accreditations" data-prototype="{{ include('/institution/includes/accreditations.html.twig',
+                                        {'form': my_form.accreditations.vars.prototype })|e }}">
+                    </ul>
+                    <ul class="legalRepresentatives" data-prototype="{{ include('/institution/includes/legalRepresentatives.html.twig',
+                                            {'form': my_form.legalRepresentatives.vars.prototype })|e }}">
+                    </ul>
+                    <ul class="notes" data-prototype="{{ include('/institution/includes/notes.html.twig',
+                                                {'form': my_form.notes.vars.prototype })|e }}">
                     </ul>
                 {{ form_end(my_form) }}
             </div>

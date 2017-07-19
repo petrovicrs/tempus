@@ -11,10 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\PicNumber;
+use AppBundle\Entity\InstitutionContact;
+use AppBundle\Entity\InstitutionAddress;
+use AppBundle\Entity\InstitutionAccreditation;
+use AppBundle\Entity\InstitutionLegalRepresentative;
+use AppBundle\Entity\InstitutionNote;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InstitutionRepository")
- * @ORM\Table(name="institution")
+ * @ORM\Table(name="institutions")
  */
 class Institution extends AbstractAuditable
 {
@@ -26,169 +32,156 @@ class Institution extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\Column(name="parent_institution", type="string")
+     * @ORM\ManyToOne(
+     *      targetEntity="Institution"
+     * )
      */
     protected $parentInstitution;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="nameEn", type="string")
+     *  
+     * @ORM\Column(name="name_en", type="string")
      */
     protected $nameEn;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="nameSr", type="string")
+     *  
+     * @ORM\Column(name="name_sr", type="string")
      */
     protected $nameSr;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="acronym", type="string")
-     */
-    protected $acronym;
-
-//    /**
-//     * @ORM\Column(name="founder", type="string")
-//     */
-//    protected $founder;
-
-    /**
-     * @Assert\NotBlank()
+     *  
      * @ORM\Column(name="name_original_letter", type="string")
      */
     protected $nameOriginalLetter;
 
     /**
-     * @Assert\NotBlank()
+     *  
+     * @ORM\Column(name="founder_original_letter_en", type="string")
+     */
+    protected $founderOriginalLetterEn;
+
+    /**
+     *  
+     * @ORM\Column(name="founder_original_letter_sr", type="string")
+     */
+    protected $founderOriginalLetterSr;
+
+    /**
+     *  
      * @ORM\Column(name="founder_original_letter", type="string")
      */
     protected $founderOriginalLetter;
-//
-//    /**
-//     * @Assert\NotBlank()
-//     * @ORM\Column(name="legal_representative", type="string")
-//     */
-//    protected $legalRepresentative;
 
-//    /**
-//     * @ORM\OneToOne(targetEntity="Person", inversedBy="person")
-//     * @ORM\JoinColumn(name="contact_person", referencedColumnName="id")
-//     */
-//    protected $contactPerson;
-//
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="pic_number", type="string")
+     * @ORM\ManyToOne(
+     *      targetEntity="InstitutionFounderType"
+     * )
      */
-    protected $picNumber;
+    protected $institutionFounderType;
 
     /**
-     * @Assert\NotBlank()
+     * @ORM\ManyToOne(
+     *      targetEntity="InstitutionLevel"
+     * )
+     */
+    protected $institutionLevel;
+
+    /**
+     *  
      * @ORM\Column(name="national_registration_number", type="string")
      */
     protected $nationalRegistrationNumber;
 
     /**
-     * @Assert\NotBlank()
+     *  
      * @ORM\Column(name="vat_number", type="string")
      */
     protected $vatNumber;
 
-//    /**
-//     * @Assert\NotBlank()
-//     * @ORM\Column(name="hierarchy_level", type="string")
-//     */
-//    protected $hierarchyLevel;
+    /**
+     * @ORM\OneToMany(targetEntity="PicNumber", mappedBy="institution", cascade={"persist"})
+     */
+    protected $picNumber;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="institution_type", type="string")
+     * @ORM\ManyToOne(
+     *      targetEntity="InstitutionType"
+     * )
      */
     protected $institutionType;
 
-//    /**
-//     * @Assert\NotBlank()
-//     * @ORM\Column(name="country", type="string")
-//     */
-//    protected $country;
-
-//    /**
-//     * @Assert\NotBlank()
-//     * @ORM\Column(name="founder_type", type="string")
-//     */
-//    protected $founderType;
-
-//    /**
-//     * @Assert\NotBlank()
-//     * @ORM\Column(name="founder_country", type="string")
-//     */
-//    protected $founderCountry;
-//
-//    /**
-//     * @Assert\NotBlank()
-//     * @ORM\Column(name="address", type="string")
-//     */
-//    protected $address;
-//
-//    /**
-//     * @Assert\NotBlank()
-//     * @ORM\Column(name="postal_code", type="string")
-//     */
-//    protected $postalCode;
-//
-//    /**
-//     * @Assert\NotBlank()
-//     * @ORM\Column(name="city", type="string")
-//     */
-//    protected $city;
+    /**
+     *  
+     * @ORM\Column(name="public_body", type="boolean")
+     */
+    protected $publicBody;
 
     /**
-     * @Assert\NotBlank()
+     *  
+     * @ORM\Column(name="non_profit", type="boolean")
+     */
+    protected $nonProfit;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="Country"
+     * )
+     */
+    protected $country;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="Country"
+     * )
+     */
+    protected $originCountry;
+
+    /**
+     *  
      * @ORM\Column(name="web_site", type="string")
      */
     protected $webSite;
 
-//    /**
-//     * @Assert\NotBlank()
-//     * @ORM\Column(name="belonging_to_group", type="string")
-//     */
-//    protected $belongingToGroup;
-
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="note", type="string")
+     * @ORM\OneToMany(targetEntity="InstitutionContact", mappedBy="institution", cascade={"persist"})
      */
-    protected $note;
-
-//    /**
-//     * @Assert\NotBlank()
-//     * @ORM\Column(name="accreditation", type="string")
-//     */
-//    protected $accreditation;
-//
-//    /**
-//     * @ORM\Column(name="accreditation_valid_from", type="datetime", nullable=true)
-//     */
-//    protected $accreditationValidFrom;
-//
-//    /**
-//     * @ORM\Column(name="accreditation_valid_to", type="datetime", nullable=true)
-//     */
-//    protected $accreditationValidTo;
-//
-//    /**@Assert\NotBlank()
-//     * @ORM\Column(name="accreditor", type="string")
-//     */
-//    protected $accreditor;
+    protected $contacts;
 
     /**
-     * @ORM\OneToMany(targetEntity="PicNumber", mappedBy="institution")
+     * @ORM\OneToMany(targetEntity="InstitutionNote", mappedBy="institution", cascade={"persist"})
      */
-    protected $picNumbers;
+    protected $notes;
 
     /**
-     * @return integer
+     * @ORM\OneToMany(targetEntity="InstitutionLegalRepresentative", mappedBy="institution", cascade={"persist"})
+     */
+    protected $legalRepresentatives;
+
+    /**
+     * @ORM\OneToMany(targetEntity="InstitutionAccreditation", mappedBy="institution", cascade={"persist"})
+     */
+    protected $accreditations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="InstitutionAddress", mappedBy="institution", cascade={"persist"})
+     */
+    protected $addresses;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->contacts = new ArrayCollection();
+        $this->notes = new ArrayCollection();
+        $this->legalRepresentatives = new ArrayCollection();
+        $this->accreditations = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
+        $this->picNumber = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
      */
     public function getId()
     {
@@ -210,375 +203,6 @@ class Institution extends AbstractAuditable
     {
         $this->parentInstitution = $parentInstitution;
     }
-
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getFounder()
-//    {
-//        return $this->founder;
-//    }
-//
-//    /**
-//     * @param mixed $founder
-//     */
-//    public function setFounder($founder)
-//    {
-//        $this->founder = $founder;
-//    }
-
-    /**
-     * @return mixed
-     */
-    public function getNameOriginalLetter()
-    {
-        return $this->nameOriginalLetter;
-    }
-
-    /**
-     * @param mixed $nameOriginalLetter
-     */
-    public function setNameOriginalLetter($nameOriginalLetter)
-    {
-        $this->nameOriginalLetter = $nameOriginalLetter;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFounderOriginalLetter()
-    {
-        return $this->founderOriginalLetter;
-    }
-
-    /**
-     * @param mixed $founderOriginalLetter
-     */
-    public function setFounderOriginalLetter($founderOriginalLetter)
-    {
-        $this->founderOriginalLetter = $founderOriginalLetter;
-    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getLegalRepresentative()
-//    {
-//        return $this->legalRepresentative;
-//    }
-//
-//    /**
-//     * @param mixed $legalRepresentative
-//     */
-//    public function setLegalRepresentative($legalRepresentative)
-//    {
-//        $this->legalRepresentative = $legalRepresentative;
-//    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getContactPerson()
-//    {
-//        return $this->contactPerson;
-//    }
-//
-//    /**
-//     * @param mixed $contactPerson
-//     */
-//    public function setContactPerson($contactPerson)
-//    {
-//        $this->contactPerson = $contactPerson;
-//    }
-//
-    /**
-     * @return mixed
-     */
-    public function getPicNumber()
-    {
-        return $this->picNumber;
-    }
-
-    /**
-     * @param mixed $picNumber
-     */
-    public function setPicNumber($picNumber)
-    {
-        $this->picNumber = $picNumber;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNationalRegistrationNumber()
-    {
-        return $this->nationalRegistrationNumber;
-    }
-
-    /**
-     * @param mixed $registrationNumber
-     */
-    public function setNationalRegistrationNumber($nationalRegistrationNumber)
-    {
-        $this->nationalRegistrationNumber = $nationalRegistrationNumber;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVatNumber()
-    {
-        return $this->vatNumber;
-    }
-
-    /**
-     * @param mixed $vatNumber
-     */
-    public function setVatNumber($vatNumber)
-    {
-        $this->vatNumber = $vatNumber;
-    }
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getHierarchyLevel()
-//    {
-//        return $this->hierarchyLevel;
-//    }
-//
-//    /**
-//     * @param mixed $hierarchyLevel
-//     */
-//    public function setHierarchyLevel($hierarchyLevel)
-//    {
-//        $this->hierarchyLevel = $hierarchyLevel;
-//    }
-
-    /**
-     * @return mixed
-     */
-    public function getInstitutionType()
-    {
-        return $this->institutionType;
-    }
-
-    /**
-     * @param mixed $institutionType
-     */
-    public function setInstitutionType($institutionType)
-    {
-        $this->institutionType = $institutionType;
-    }
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getCountry()
-//    {
-//        return $this->country;
-//    }
-//
-//    /**
-//     * @param mixed $country
-//     */
-//    public function setCountry($country)
-//    {
-//        $this->country = $country;
-//    }
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getFounderType()
-//    {
-//        return $this->founderType;
-//    }
-//
-//    /**
-//     * @param mixed $founderType
-//     */
-//    public function setFounderType($founderType)
-//    {
-//        $this->founderType = $founderType;
-//    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getFounderCountry()
-//    {
-//        return $this->founderCountry;
-//    }
-//
-//    /**
-//     * @param mixed $founderCountry
-//     */
-//    public function setFounderCountry($founderCountry)
-//    {
-//        $this->founderCountry = $founderCountry;
-//    }
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getAddress()
-//    {
-//        return $this->address;
-//    }
-//
-//    /**
-//     * @param mixed $address
-//     */
-//    public function setAddress($address)
-//    {
-//        $this->address = $address;
-//    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getPostalCode()
-//    {
-//        return $this->postalCode;
-//    }
-//
-//    /**
-//     * @param mixed $postalCode
-//     */
-//    public function setPostalCode($postalCode)
-//    {
-//        $this->postalCode = $postalCode;
-//    }
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getCity()
-//    {
-//        return $this->city;
-//    }
-//
-//    /**
-//     * @param mixed $city
-//     */
-//    public function setCity($city)
-//    {
-//        $this->city = $city;
-//    }
-
-    /**
-     * @return mixed
-     */
-    public function getWebSite()
-    {
-        return $this->webSite;
-    }
-
-    /**
-     * @param mixed $webSite
-     */
-    public function setWebSite($webSite)
-    {
-        $this->webSite = $webSite;
-    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getBelongingToGroup()
-//    {
-//        return $this->belongingToGroup;
-//    }
-//
-//    /**
-//     * @param mixed $belongingToGroup
-//     */
-//    public function setBelongingToGroup($belongingToGroup)
-//    {
-//        $this->belongingToGroup = $belongingToGroup;
-//    }
-
-    /**
-     * @return mixed
-     */
-    public function getNote()
-    {
-        return $this->note;
-    }
-
-    /**
-     * @param mixed $note
-     */
-    public function setNote($note)
-    {
-        $this->note = $note;
-    }
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getAccreditation()
-//    {
-//        return $this->accreditation;
-//    }
-//
-//    /**
-//     * @param mixed $accreditation
-//     */
-//    public function setAccreditation($accreditation)
-//    {
-//        $this->accreditation = $accreditation;
-//    }
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getAccreditationValidFrom()
-//    {
-//        return $this->accreditationValidFrom;
-//    }
-//
-//    /**
-//     * @param mixed $accreditationValidFrom
-//     */
-//    public function setAccreditationValidFrom($accreditationValidFrom)
-//    {
-//        $this->accreditationValidFrom = $accreditationValidFrom;
-//    }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getAccreditationValidTo()
-//    {
-//        return $this->accreditationValidTo;
-//    }
-//
-//    /**
-//     * @param mixed $accreditationValidTo
-//     */
-//    public function setAccreditationValidTo($accreditationValidTo)
-//    {
-//        $this->accreditationValidTo = $accreditationValidTo;
-//    }
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getAccreditor()
-//    {
-//        return $this->accreditor;
-//    }
-//
-//    /**
-//     * @param mixed $accreditor
-//     */
-//    public function setAccreditor($accreditor)
-//    {
-//        $this->accreditor = $accreditor;
-//    }
 
     /**
      * @return mixed
@@ -615,34 +239,368 @@ class Institution extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getAcronym()
+    public function getNameOriginalLetter()
     {
-        return $this->acronym;
+        return $this->nameOriginalLetter;
     }
 
     /**
-     * @param mixed $acronym
+     * @param mixed $nameOriginalLetter
      */
-    public function setAcronym($acronym)
+    public function setNameOriginalLetter($nameOriginalLetter)
     {
-        $this->acronym = $acronym;
+        $this->nameOriginalLetter = $nameOriginalLetter;
     }
 
-    public function getPicNumbers()
+    /**
+     * @return mixed
+     */
+    public function getFounderOriginalLetterEn()
     {
-        return $this->picNumbers;
+        return $this->founderOriginalLetterEn;
     }
 
-    public function setPicNumbers(ArrayCollection $picNumbers)
+    /**
+     * @param mixed $founderOriginalLetterEn
+     */
+    public function setFounderOriginalLetterEn($founderOriginalLetterEn)
     {
-        $this->picNumbers = $picNumbers;
+        $this->founderOriginalLetterEn = $founderOriginalLetterEn;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFounderOriginalLetterSr()
+    {
+        return $this->founderOriginalLetterSr;
+    }
 
-    public function getName($locale) {
-        if ($locale == "sr"){
-            return $this->nameSr;
-        }
-        return $this->nameEn;
+    /**
+     * @param mixed $founderOriginalLetterSr
+     */
+    public function setFounderOriginalLetterSr($founderOriginalLetterSr)
+    {
+        $this->founderOriginalLetterSr = $founderOriginalLetterSr;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFounderOriginalLetter()
+    {
+        return $this->founderOriginalLetter;
+    }
+
+    /**
+     * @param mixed $founderOriginalLetter
+     */
+    public function setFounderOriginalLetter($founderOriginalLetter)
+    {
+        $this->founderOriginalLetter = $founderOriginalLetter;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstitutionFounderType()
+    {
+        return $this->institutionFounderType;
+    }
+
+    /**
+     * @param mixed $institutionFounderType
+     */
+    public function setInstitutionFounderType($institutionFounderType)
+    {
+        $this->institutionFounderType = $institutionFounderType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstitutionLevel()
+    {
+        return $this->institutionLevel;
+    }
+
+    /**
+     * @param mixed $institutionLevel
+     */
+    public function setInstitutionLevel($institutionLevel)
+    {
+        $this->institutionLevel = $institutionLevel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNationalRegistrationNumber()
+    {
+        return $this->nationalRegistrationNumber;
+    }
+
+    /**
+     * @param mixed $nationalRegistrationNumber
+     */
+    public function setNationalRegistrationNumber($nationalRegistrationNumber)
+    {
+        $this->nationalRegistrationNumber = $nationalRegistrationNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVatNumber()
+    {
+        return $this->vatNumber;
+    }
+
+    /**
+     * @param mixed $vatNumber
+     */
+    public function setVatNumber($vatNumber)
+    {
+        $this->vatNumber = $vatNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstitutionType()
+    {
+        return $this->institutionType;
+    }
+
+    /**
+     * @param mixed $institutionType
+     */
+    public function setInstitutionType($institutionType)
+    {
+        $this->institutionType = $institutionType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPublicBody()
+    {
+        return $this->publicBody;
+    }
+
+    /**
+     * @param mixed $publicBody
+     */
+    public function setPublicBody($publicBody)
+    {
+        $this->publicBody = $publicBody;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNonProfit()
+    {
+        return $this->nonProfit;
+    }
+
+    /**
+     * @param mixed $nonProfit
+     */
+    public function setNonProfit($nonProfit)
+    {
+        $this->nonProfit = $nonProfit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param mixed $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOriginCountry()
+    {
+        return $this->originCountry;
+    }
+
+    /**
+     * @param mixed $originCountry
+     */
+    public function setOriginCountry($originCountry)
+    {
+        $this->originCountry = $originCountry;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWebSite()
+    {
+        return $this->webSite;
+    }
+
+    /**
+     * @param mixed $webSite
+     */
+    public function setWebSite($webSite)
+    {
+        $this->webSite = $webSite;
+    }
+
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
+
+    public function setContacts(ArrayCollection $contacts)
+    {
+        $this->contacts = $contacts;
+    }
+
+    public function addContacts(InstitutionContact $contact)
+    {
+        $this->contacts->add($contact);
+    }
+
+    public function removeContacts(InstitutionContact $contact)
+    {
+        $this->contacts->removeElement($contact);
+    }
+
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    public function setNotes(ArrayCollection $notes)
+    {
+        $this->notes = $notes;
+    }
+
+    public function addNotes(InstitutionNote $notes)
+    {
+        $this->notes->add($notes);
+    }
+
+    public function removeNotes(InstitutionNote $notes)
+    {
+        $this->notes->removeElement($notes);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLegalRepresentatives()
+    {
+        return $this->legalRepresentatives;
+    }
+
+    /**
+     * @param mixed $legalRepresentatives
+     */
+    public function setLegalRepresentatives(ArrayCollection $legalRepresentatives)
+    {
+        $this->legalRepresentatives = $legalRepresentatives;
+    }
+
+    public function addLegalRepresentatives(InstitutionLegalRepresentative $legalRepresentatives)
+    {
+        $this->legalRepresentatives->add($legalRepresentatives);
+    }
+
+    public function removeLegalRepresentatives(InstitutionLegalRepresentative $legalRepresentatives)
+    {
+        $this->legalRepresentatives->removeElement($legalRepresentatives);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAccreditations()
+    {
+        return $this->accreditations;
+    }
+
+    /**
+     * @param mixed $accreditations
+     */
+    public function setAccreditations(ArrayCollection $accreditations)
+    {
+        $this->accreditations = $accreditations;
+    }
+
+    public function addAccreditations(InstitutionAccreditation $accreditation)
+    {
+        $this->accreditations->add($accreditation);
+    }
+
+    public function removeAccreditations(InstitutionAccreditation $accreditation)
+    {
+        $this->accreditations->removeElement($accreditation);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
+
+    /**
+     * @param mixed $addresses
+     */
+    public function setAddresses(ArrayCollection $addresses)
+    {
+        $this->addresses = $addresses;
+    }
+
+    public function addAddresses(InstitutionAddress $address)
+    {
+        $this->addresses->add($address);
+    }
+
+    public function removeAddresses(InstitutionAddress $address)
+    {
+        $this->addresses->removeElement($address);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPicNumber()
+    {
+        return $this->picNumber;
+    }
+
+    /**
+     * @param mixed $picNumber
+     */
+    public function setPicNumber(ArrayCollection $picNumber)
+    {
+        $this->picNumber = $picNumber;
+    }
+
+    public function addPicNumber(PicNumber $picNumber)
+    {
+        $this->picNumber->add($picNumber);
+    }
+
+    public function removePicNumber(PicNumber $picNumber)
+    {
+        $this->picNumber->removeElement($picNumber);
     }
 }

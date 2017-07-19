@@ -1,145 +1,143 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<script type="text/javascript" src="{{ asset('/js/organisation.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/pic_numbers.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/institution_contacts.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/addresses.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/accreditations.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/legalRepresentatives.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/notes.js')}}" ></script>
     <section id="main">
         <div class="container-fluid">
             <div class="page-header">
                 <h1>{% trans %}Add Institution{% endtrans %}</h1>
             </div>
 
-
-            <div class="row">
-                <div class="controls">
+            <div class="controls">
                 {{ form_start(my_form) }}
 
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        {{ form_label(my_form.nameEn, 'Organization Name English'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div>
+                        {{ form_label(my_form.nameEn, 'Title English'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
                             {{ form_widget(my_form.nameEn, {'attr': {'class': 'form-control'}})  }}
                         </div>
                     </div>
-                    <div class="form-group">
-                        {{ form_label(my_form.nameSr, 'Organization Name Serbian'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div>
+                        {{ form_label(my_form.nameSr, 'Title Serbian'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
                             {{ form_widget(my_form.nameSr, {'attr': {'class': 'form-control'}})  }}
                         </div>
                     </div>
-                    <div class="form-group">
-                        {{ form_label(my_form.nameOriginalLetter, 'Organization Name Original Alphabet'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div>
+                        {{ form_label(my_form.nameOriginalLetter, 'Title Original Alphabet'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
                             {{ form_widget(my_form.nameOriginalLetter, {'attr': {'class': 'form-control'}})  }}
                         </div>
                     </div>
-                </div>
-
-
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        {{ form_label(my_form.nationalRegistrationNumber, 'National Registration Nr'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div>
+                        {{ form_label(my_form.founderOriginalLetterEn, 'Founder Name English'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.founderOriginalLetterEn, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.founderOriginalLetterSr, 'Founder Name Serbian'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.founderOriginalLetterSr, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.founderOriginalLetter, 'Founder Name Original Alphabet'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.founderOriginalLetter, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.institutionFounderType, 'Founder Type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.institutionFounderType, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.institutionType, 'Type of Institution/Organisation'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.institutionType, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.institutionLevel, 'Level'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.institutionLevel, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.parentInstitution, 'Parent Institution/Organisation'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.parentInstitution, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.publicBody, 'Public body'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.publicBody, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.nonProfit, 'Non-Profit'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.nonProfit, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.country, 'Country'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.country, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.originCountry, 'Country of Origin'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.originCountry, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.nationalRegistrationNumber, 'National RegNr'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
                             {{ form_widget(my_form.nationalRegistrationNumber, {'attr': {'class': 'form-control'}})  }}
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        {{ form_label(my_form.vatNumber, 'VAT/Tax Nr'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div>
+                        {{ form_label(my_form.vatNumber, 'Vat/Tax Nr'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
                             {{ form_widget(my_form.vatNumber, {'attr': {'class': 'form-control'}})  }}
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-sm-6 form-group">
-                    {{ form_label(my_form.acronym, 'Acronym'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.acronym, {'attr': {'class': 'form-control'}})  }}
-                    </div>
-                </div>
+                    <ul class="picNumber" data-prototype="{{ include('/institution/includes/pic-number.html.twig',
+                            {'form': my_form.picNumber.vars.prototype })|e }}">
+                    </ul>
 
-                <div class="col-sm-6 form-group">
-                    {{ form_label(my_form.webSite, 'Website'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.webSite, {'attr': {'class': 'form-control'}})  }}
-                    </div>
-                </div>
-            </div>
-
-            <div id="vat-fields">
-                <div class="entry input-group col-xs-3">
-                    VAT/Tax Number<input class="form-control" id="form-control-vat-0" name="vat[]" type="text"/>
-                    Validated?<input type="checkbox" class="validated-vat" id="validated-vat-0" name="validated[]"/>
-                    Primary<input type="radio" class="radio-vat" id="radio-vat-0" name="primary[]"/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-success btn-add" type="button">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div id="contact-fields">
-                <div class="entry input-group col-xs-3">
-                    <div class="col-sm-6 form-group">
-                        {{ form_label(my_form.contactType, 'Contact Type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div>
+                        {{ form_label(my_form.webSite, 'Website'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
-                            {{ form_widget(my_form.contactType, {'attr': {'class': 'form-control'}})  }}
+                            {{ form_widget(my_form.webSite, {'attr': {'class': 'form-control'}})  }}
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        {{ form_label(my_form.contact, 'Contact'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.contact, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        {{ form_label(my_form.note, 'Note'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.note, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-                    </div>
-                    <div class="col-sm-6 form-group">
-                        {{ form_label(my_form.public, 'Public'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.public, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-                    </div>
-                    <span class="input-group-btn">
-                        <button class="btn btn-success btn-add-contact" type="button">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </button>
-                    </span>
-                </div>
-            </div>
-
-
-            <!--<div class="row">-->
-                <!--<div class="col-sm-6 form-group">-->
-                    <!--{{ form_label(my_form.picNumber, 'PIC'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}-->
-                    <!--<div class="form-inline">-->
-                        <!--{{ form_widget(my_form.picNumber, {'attr': {'class': 'form-control'}})  }}-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="col-sm-6 form-group">-->
-                    <!--{{ form_label(my_form.picValidated, 'Validated?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}-->
-                    <!--<div class="form-inline">-->
-                        <!--{{ form_widget(my_form.picValidated, {'attr': {'class': 'form-control'}})  }}-->
-                    <!--</div>-->
-                <!--</div>-->
-
-                <!--<div class="col-sm-6 form-group">-->
-                    <!--{{ form_label(my_form.picPrimary, 'Primary?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}-->
-                    <!--<div class="form-inline">-->
-                        <!--{{ form_widget(my_form.picPrimary, {'attr': {'class': 'form-control'}})  }}-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            {{ form_end(my_form) }}
+                    <ul class="contacts" data-prototype="{{ include('/institution/includes/contacts.html.twig',
+                                {'form': my_form.contacts.vars.prototype })|e }}">
+                    </ul>
+                    <ul class="addresses" data-prototype="{{ include('/institution/includes/addresses.html.twig',
+                                    {'form': my_form.addresses.vars.prototype })|e }}">
+                    </ul>
+                    <ul class="accreditations" data-prototype="{{ include('/institution/includes/accreditations.html.twig',
+                                        {'form': my_form.accreditations.vars.prototype })|e }}">
+                    </ul>
+                    <ul class="legalRepresentatives" data-prototype="{{ include('/institution/includes/legalRepresentatives.html.twig',
+                                            {'form': my_form.legalRepresentatives.vars.prototype })|e }}">
+                    </ul>
+                    <ul class="notes" data-prototype="{{ include('/institution/includes/notes.html.twig',
+                                                {'form': my_form.notes.vars.prototype })|e }}">
+                    </ul>
+                {{ form_end(my_form) }}
             </div>
         </div>
     </section>

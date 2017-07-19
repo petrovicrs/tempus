@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonContactRepository")
- * @ORM\Table(name="person_contact")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\InstitutionContactRepository")
+ * @ORM\Table(name="institution_contacts")
  */
-class PersonContact extends AbstractAuditable
+class InstitutionContact extends AbstractAuditable
 {
     /**
      * @ORM\Id
@@ -21,15 +21,17 @@ class PersonContact extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="Person",
+     *      targetEntity="Institution",
      *      inversedBy="contacts"
      * )
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    protected $person;
+    protected $institution;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ContactType")
+     * @ORM\ManyToOne(
+     *      targetEntity="ContactType"
+     * )
      */
     protected $contactType;
 
@@ -40,28 +42,18 @@ class PersonContact extends AbstractAuditable
     protected $contactValue;
 
     /**
+     * @ORM\Column(name="is_public", type="boolean")
+     */
+    protected $isPublic;
+
+    /**
      * @Assert\NotBlank()
      * @ORM\Column(name="note", type="string")
      */
     protected $note;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="is_public", type="boolean")
-     */
-    protected $isPublic;
-
-
-    /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="is_primary", type="boolean")
-     */
-    protected $isPrimary;
-
-    /**
-     * Get id
-     *
-     * @return int
+     * @return mixed
      */
     public function getId()
     {
@@ -69,27 +61,27 @@ class PersonContact extends AbstractAuditable
     }
 
     /**
-     * Set person
-     *
-     * @param $person
-     *
-     * @return PersonContact
+     * @param mixed $id
      */
-    public function setPerson($person)
+    public function setId($id)
     {
-        $this->person = $person;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get person
-     *
-     * @return integer
+     * @return mixed
      */
-    public function getPerson()
+    public function getInstitution()
     {
-        return $this->person;
+        return $this->institution;
+    }
+
+    /**
+     * @param mixed $institution
+     */
+    public function setInstitution($institution)
+    {
+        $this->institution = $institution;
     }
 
     /**
@@ -108,26 +100,8 @@ class PersonContact extends AbstractAuditable
         $this->contactType = $contactType;
     }
 
-
-
     /**
-     * Set contactValue
-     *
-     * @param integer $contactValue
-     *
-     * @return PersonContact
-     */
-    public function setContactValue($contactValue)
-    {
-        $this->contactValue = $contactValue;
-
-        return $this;
-    }
-
-    /**
-     * Get contactValue
-     *
-     * @return integer
+     * @return mixed
      */
     public function getContactValue()
     {
@@ -135,19 +109,11 @@ class PersonContact extends AbstractAuditable
     }
 
     /**
-     * @return mixed
+     * @param mixed $contactValue
      */
-    public function getNote()
+    public function setContactValue($contactValue)
     {
-        return $this->note;
-    }
-
-    /**
-     * @param mixed $note
-     */
-    public function setNote($note)
-    {
-        $this->note = $note;
+        $this->contactValue = $contactValue;
     }
 
     /**
@@ -169,22 +135,17 @@ class PersonContact extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getIsPrimary()
+    public function getNote()
     {
-        return $this->isPrimary;
+        return $this->note;
     }
 
     /**
-     * @param mixed $isPrimary
+     * @param mixed $note
      */
-    public function setIsPrimary($isPrimary)
+    public function setNote($note)
     {
-        $this->isPrimary = $isPrimary;
-    }
-
-
-    public function __toString() {
-        return "";
+        $this->note = $note;
     }
 
 }

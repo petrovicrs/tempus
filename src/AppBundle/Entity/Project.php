@@ -5,10 +5,11 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectRepository")
- * @ORM\Table(name="project")
+ * @ORM\Table(name="projects")
  */
 class Project extends AbstractAuditable
 {
@@ -23,7 +24,6 @@ class Project extends AbstractAuditable
 
     /**
      * @var string $name
-     * @Assert\NotBlank()
      * @Assert\Type("string")
      * @ORM\Column(name="name_eng", type="string", length=255)
      */
@@ -31,31 +31,13 @@ class Project extends AbstractAuditable
 
     /**
      * @var string $name
-     * @Assert\NotBlank()
      * @Assert\Type("string")
      * @ORM\Column(name="name_srb", type="string", length=255)
      */
     protected $nameSrb;
 
     /**
-     * @var string $description
-     * @Assert\NotBlank()
-     * @Assert\Type("string")
-     * @ORM\Column(name="description", type="string", length=255)
-     */
-    protected $description;
-
-    /**
-     * @var string $goals
-     * @Assert\NotBlank()
-     * @Assert\Type("string")
-     * @ORM\Column(name="goals", type="string", length=255)
-     */
-    protected $goals;
-
-    /**
      * @var string $nameOriginalLetter
-     * @Assert\NotBlank()
      * @Assert\Type("string")
      * @ORM\Column(name="name_original_letter", type="string", length=255)
      */
@@ -63,127 +45,150 @@ class Project extends AbstractAuditable
 
     /**
      * @var string $acronym
-     * @Assert\NotBlank()
      * @Assert\Type("string")
      * @ORM\Column(name="acronym", type="string", length=255)
      */
     protected $acronym;
 
-
     /**
-     * @ORM\ManyToOne(
-     *      targetEntity="Program",
-     *      inversedBy="projects"
-     * )
-     * @ORM\JoinColumn(name="program_id", referencedColumnName="id")
-     */
-    protected $program;
-
-
-    /**
-     * @var integer $status
-     * @Assert\NotBlank()
-     * @Assert\Type("numeric")
-     * @Column(type="integer", name="status", options={"unsigned":true})
-     */
-    protected $status;
-
-    /**
-     * @var integer $scope
-     * @Assert\NotBlank()
-     * @Assert\Type("numeric")
-     * @Column(type="integer", name="scope", options={"unsigned":true})
-     */
-    protected $scope;
-
-    /**
-     * @Assert\NotBlank()
-     * @Column(type="integer", name="application_year")
-     * @var integer $applicationYear
-     */
-    protected $applicationYear;
-
-    /**
-     * @var string $referenceNumber
-     * @Assert\NotBlank()
+     * @var string $projectNumber
      * @Assert\Type("string")
-     * @ORM\Column(name="reference_number", type="string", length=255)
+     * @ORM\Column(name="project_number", type="string", length=255)
      */
-    protected $referenceNumber;
+    protected $projectNumber;
 
     /**
-     * @var integer $duration
-     * @Assert\NotBlank()
-     * @Assert\Type("numeric")
-     * @Column(type="integer", name="duration", options={"unsigned":true})
+     * @var string $projectSummary
+     * @Assert\Type("string")
+     * @ORM\Column(name="project_summary", type="string", length=255)
      */
-    protected $duration;
+    protected $projectSummary;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(name="end_datetime", type="datetime")
      */
     protected $endDatetime;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(name="start_datetime", type="datetime")
      */
     protected $startDatetime;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="extended_time", type="datetime")
-     */
-    protected $extendedTime;
+    * @var integer $durationMonths
+    * @Assert\Type("numeric")
+    * @Column(type="integer", name="duration_months", options={"unsigned":true})
+    */
+    protected $durationMonths;
 
     /**
-     * @var string $grantAmount
-     * @Assert\NotBlank()
-     * @Assert\Type("numeric")
-     * @ORM\Column(name="grant_amount", type="string", length=255)
+     * @ORM\Column(name="audited", type="boolean")
      */
-    protected $grantAmount;
+    protected $audited;
 
     /**
-     * @var string $coFinancingAmount
-     * @Assert\NotBlank()
-     * @Assert\Type("numeric")
-     * @ORM\Column(name="co_financing_amount", type="string", length=255)
+     * @ORM\Column(name="on_going", type="boolean")
      */
-    protected $coFinancingAmount;
+    protected $onGoing;
 
     /**
-     * @var string $totalProjectValue
-     * @Assert\NotBlank()
-     * @Assert\Type("numeric")
-     * @ORM\Column(name="total_project_value", type="string", length=255)
+     * @ORM\Column(name="participant_fewer_options", type="boolean")
      */
-    protected $totalProjectValue;
+    protected $participantFewerOptions;
 
     /**
-     * @var integer $mark
-     * @Assert\NotBlank()
-     * @Assert\Type("numeric")
-     * @Column(type="integer", name="mark")
+     * @ORM\OneToMany(targetEntity="projectProgramme", mappedBy="institution", cascade={"persist"})
      */
-    protected $mark;
+    protected $programmes;
 
     /**
-     * @var string $markExplanation
-     * @Assert\NotBlank()
-     * @Assert\Type("string")
-     * @ORM\Column(name="mark_explanation", type="string", length=255)
+     * @ORM\OneToMany(targetEntity="projectKeyAction", mappedBy="institution", cascade={"persist"})
      */
-    protected $markExplanation;
-
+    protected $keyActions;
 
     /**
-     * Get id
-     *
+     * @ORM\OneToMany(targetEntity="projectAction", mappedBy="institution", cascade={"persist"})
+     */
+    protected $actions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectCall", mappedBy="institution", cascade={"persist"})
+     */
+    protected $calls;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectRound", mappedBy="institution", cascade={"persist"})
+     */
+    protected $rounds;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectNotes", mappedBy="institution", cascade={"persist"})
+     */
+    protected $notes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectApplicantOrganisation", mappedBy="institution", cascade={"persist"})
+     */
+    protected $applicantOrganisations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectPartnerOrganisation", mappedBy="institution", cascade={"persist"})
+     */
+    protected $partnerOrganisations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectTypeOfLimitation", mappedBy="institution", cascade={"persist"})
+     */
+    protected $typeOfLimitations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectContactPerson", mappedBy="institution", cascade={"persist"})
+     */
+    protected $contactPersons;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectTopics", mappedBy="institution", cascade={"persist"})
+     */
+    protected $topics;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectSubjectAreas", mappedBy="institution", cascade={"persist"})
+     */
+    protected $subjectAreas;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectFtOfficer", mappedBy="institution", cascade={"persist"})
+     */
+    protected $ftOfficers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectEaceaOfficer", mappedBy="institution", cascade={"persist"})
+     */
+    protected $eaceaOfficers;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->eaceaOfficers = new ArrayCollection();
+        $this->ftOfficers = new ArrayCollection();
+        $this->subjectAreas = new ArrayCollection();
+        $this->topics = new ArrayCollection();
+        $this->contactPersons = new ArrayCollection();
+        $this->typeOfLimitations = new ArrayCollection();
+        $this->partnerOrganisations = new ArrayCollection();
+        $this->applicantOrganisations = new ArrayCollection();
+        $this->notes = new ArrayCollection();
+        $this->rounds = new ArrayCollection();
+        $this->calls = new ArrayCollection();
+        $this->actions = new ArrayCollection();
+        $this->keyActions = new ArrayCollection();
+        $this->programmes = new ArrayCollection();
+    }
+
+    /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -191,7 +196,7 @@ class Project extends AbstractAuditable
     /**
      * @return string
      */
-    public function getNameEng()
+    public function getNameEng(): string
     {
         return $this->nameEng;
     }
@@ -199,7 +204,7 @@ class Project extends AbstractAuditable
     /**
      * @param string $nameEng
      */
-    public function setNameEng($nameEng)
+    public function setNameEng(string $nameEng)
     {
         $this->nameEng = $nameEng;
     }
@@ -207,7 +212,7 @@ class Project extends AbstractAuditable
     /**
      * @return string
      */
-    public function getNameSrb()
+    public function getNameSrb(): string
     {
         return $this->nameSrb;
     }
@@ -215,272 +220,77 @@ class Project extends AbstractAuditable
     /**
      * @param string $nameSrb
      */
-    public function setNameSrb($nameSrb)
+    public function setNameSrb(string $nameSrb)
     {
         $this->nameSrb = $nameSrb;
     }
 
-
-
     /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Project
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
      * @return string
      */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set goals
-     *
-     * @param string $goals
-     *
-     * @return Project
-     */
-    public function setGoals($goals)
-    {
-        $this->goals = $goals;
-
-        return $this;
-    }
-
-    /**
-     * Get goals
-     *
-     * @return string
-     */
-    public function getGoals()
-    {
-        return $this->goals;
-    }
-
-    /**
-     * Set nameOriginalLetter
-     *
-     * @param string $nameOriginalLetter
-     *
-     * @return Project
-     */
-    public function setNameOriginalLetter($nameOriginalLetter)
-    {
-        $this->nameOriginalLetter = $nameOriginalLetter;
-
-        return $this;
-    }
-
-    /**
-     * Get nameOriginalLetter
-     *
-     * @return string
-     */
-    public function getNameOriginalLetter()
+    public function getNameOriginalLetter(): string
     {
         return $this->nameOriginalLetter;
     }
 
     /**
-     * Set acronym
-     *
-     * @param string $acronym
-     *
-     * @return Project
+     * @param string $nameOriginalLetter
      */
-    public function setAcronym($acronym)
+    public function setNameOriginalLetter(string $nameOriginalLetter)
     {
-        $this->acronym = $acronym;
-
-        return $this;
+        $this->nameOriginalLetter = $nameOriginalLetter;
     }
 
     /**
-     * Get acronym
-     *
      * @return string
      */
-    public function getAcronym()
+    public function getAcronym(): string
     {
         return $this->acronym;
     }
 
     /**
-     * Set program
-     *
-     * @param Program $program
-     *
-     * @return Project
+     * @param string $acronym
      */
-    public function setProgram($program)
+    public function setAcronym(string $acronym)
     {
-        $this->program = $program;
-
-        return $this;
+        $this->acronym = $acronym;
     }
 
     /**
-     * Get program
-     *
-     * @return Program
-     */
-    public function getProgram()
-    {
-        return $this->program;
-    }
-
-
-    /**
-     * Set status
-     *
-     * @param integer $status
-     *
-     * @return Project
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return int
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set scope
-     *
-     * @param integer $scope
-     *
-     * @return Project
-     */
-    public function setScope($scope)
-    {
-        $this->scope = $scope;
-
-        return $this;
-    }
-
-    /**
-     * Get scope
-     *
-     * @return int
-     */
-    public function getScope()
-    {
-        return $this->scope;
-    }
-
-    /**
-     * Set applicationYear
-     *
-     * @param integer $applicationYear
-     *
-     * @return Project
-     */
-    public function setApplicationYear($applicationYear)
-    {
-        $this->applicationYear = $applicationYear;
-
-        return $this;
-    }
-
-    /**
-     * Get applicationYear
-     *
-     * @return integer
-     */
-    public function getApplicationYear()
-    {
-        return $this->applicationYear;
-    }
-
-    /**
-     * Set referenceNumber
-     *
-     * @param string $referenceNumber
-     *
-     * @return Project
-     */
-    public function setReferenceNumber($referenceNumber)
-    {
-        $this->referenceNumber = $referenceNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get referenceNumber
-     *
      * @return string
      */
-    public function getReferenceNumber()
+    public function getProjectNumber(): string
     {
-        return $this->referenceNumber;
+        return $this->projectNumber;
     }
 
     /**
-     * Set duration
-     *
-     * @param integer $duration
-     *
-     * @return Project
+     * @param string $projectNumber
      */
-    public function setDuration($duration)
+    public function setProjectNumber(string $projectNumber)
     {
-        $this->duration = $duration;
-
-        return $this;
+        $this->projectNumber = $projectNumber;
     }
 
     /**
-     * Get duration
-     *
-     * @return integer
+     * @return string
      */
-    public function getDuration()
+    public function getProjectSummary(): string
     {
-        return $this->duration;
+        return $this->projectSummary;
     }
 
     /**
-     * Set endDatetime
-     *
-     * @param \DateTime $endDatetime
-     *
-     * @return Project
+     * @param string $projectSummary
      */
-    public function setEndDatetime($endDatetime)
+    public function setProjectSummary(string $projectSummary)
     {
-        $this->endDatetime = $endDatetime;
-
-        return $this;
+        $this->projectSummary = $projectSummary;
     }
 
     /**
-     * Get endDatetime
-     *
-     * @return \DateTime
+     * @return mixed
      */
     public function getEndDatetime()
     {
@@ -488,23 +298,15 @@ class Project extends AbstractAuditable
     }
 
     /**
-     * Set startDatetime
-     *
-     * @param \DateTime $startDatetime
-     *
-     * @return Project
+     * @param mixed $endDatetime
      */
-    public function setStartDatetime($startDatetime)
+    public function setEndDatetime($endDatetime)
     {
-        $this->startDatetime = $startDatetime;
-
-        return $this;
+        $this->endDatetime = $endDatetime;
     }
 
     /**
-     * Get startDatetime
-     *
-     * @return \DateTime
+     * @return mixed
      */
     public function getStartDatetime()
     {
@@ -512,163 +314,439 @@ class Project extends AbstractAuditable
     }
 
     /**
-     * Set extendedTime
-     *
-     * @param \DateTime $extendedTime
-     *
-     * @return Project
+     * @param mixed $startDatetime
      */
-    public function setExtendedTime($extendedTime)
+    public function setStartDatetime($startDatetime)
     {
-        $this->extendedTime = $extendedTime;
-
-        return $this;
+        $this->startDatetime = $startDatetime;
     }
 
     /**
-     * Get extendedTime
-     *
-     * @return \DateTime
-     */
-    public function getExtendedTime()
-    {
-        return $this->extendedTime;
-    }
-
-    /**
-     * Set grantAmount
-     *
-     * @param integer $grantAmount
-     *
-     * @return Project
-     */
-    public function setGrantAmount($grantAmount)
-    {
-        $this->grantAmount = $grantAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get grantAmount
-     *
      * @return int
      */
-    public function getGrantAmount()
+    public function getDurationMonths(): int
     {
-        return $this->grantAmount;
+        return $this->durationMonths;
     }
 
     /**
-     * Set coFinancingAmount
-     *
-     * @param string $coFinancingAmount
-     *
-     * @return Project
+     * @param int $durationMonths
      */
-    public function setCoFinancingAmount($coFinancingAmount)
+    public function setDurationMonths(int $durationMonths)
     {
-        $this->coFinancingAmount = $coFinancingAmount;
-
-        return $this;
+        $this->durationMonths = $durationMonths;
     }
 
     /**
-     * Get coFinancingAmount
-     *
-     * @return string
+     * @return mixed
      */
-    public function getCoFinancingAmount()
+    public function getAudited()
     {
-        return $this->coFinancingAmount;
+        return $this->audited;
     }
 
     /**
-     * Set totalProjectValue
-     *
-     * @param string $totalProjectValue
-     *
-     * @return Project
+     * @param mixed $audited
      */
-    public function setTotalProjectValue($totalProjectValue)
+    public function setAudited($audited)
     {
-        $this->totalProjectValue = $totalProjectValue;
-
-        return $this;
+        $this->audited = $audited;
     }
 
     /**
-     * Get totalProjectValue
-     *
-     * @return string
+     * @return mixed
      */
-    public function getTotalProjectValue()
+    public function getOnGoing()
     {
-        return $this->totalProjectValue;
+        return $this->onGoing;
     }
 
     /**
-     * Set mark
-     *
-     * @param integer $mark
-     *
-     * @return Project
+     * @param mixed $onGoing
      */
-    public function setMark($mark)
+    public function setOnGoing($onGoing)
     {
-        $this->mark = $mark;
-
-        return $this;
+        $this->onGoing = $onGoing;
     }
 
     /**
-     * Get mark
-     *
-     * @return int
+     * @return mixed
      */
-    public function getMark()
+    public function getParticipantFewerOptions()
     {
-        return $this->mark;
+        return $this->participantFewerOptions;
     }
 
     /**
-     * Set markExplanation
-     *
-     * @param string $markExplanation
-     *
-     * @return Project
+     * @param mixed $participantFewerOptions
      */
-    public function setMarkExplanation($markExplanation)
+    public function setParticipantFewerOptions($participantFewerOptions)
     {
-        $this->markExplanation = $markExplanation;
-
-        return $this;
+        $this->participantFewerOptions = $participantFewerOptions;
     }
 
     /**
-     * Get markExplanation
-     *
-     * @return string
+     * @return mixed
      */
-    public function getMarkExplanation()
+    public function getProgrammes()
     {
-        return $this->markExplanation;
+        return $this->programmes;
     }
 
     /**
-     * @param mixed $locale
+     * @param mixed $programmes
      */
-    public function setLocale($locale)
+    public function setProgrammes(ArrayCollection $programmes)
     {
-        $this->locale = $locale;
+        $this->programmes = $programmes;
     }
 
+    public function addProgrammes(PicNumber $programme)
+    {
+        $this->programmes->add($programme);
+    }
 
-    public function getName($locale) {
-        if ($locale == "sr"){
-            return $this->nameSrb;
-        }
-        return $this->nameEng;
+    public function removeProgrammes(PicNumber $programme)
+    {
+        $this->programmes->removeElement($programme);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKeyActions()
+    {
+        return $this->keyActions;
+    }
+
+    /**
+     * @param mixed $keyActions
+     */
+    public function setKeyActions(ArrayCollection $keyActions)
+    {
+        $this->keyActions = $keyActions;
+    }
+
+    public function addKeyAction(PicNumber $keyAction)
+    {
+        $this->keyActions->add($keyAction);
+    }
+
+    public function removeKeyAction(PicNumber $keyAction)
+    {
+        $this->keyActions->removeElement($keyAction);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActions()
+    {
+        return $this->actions;
+    }
+
+    /**
+     * @param mixed $actions
+     */
+    public function setActions(ArrayCollection $actions)
+    {
+        $this->actions = $actions;
+    }
+
+    public function addActions(PicNumber $call)
+    {
+        $this->actions->add($call);
+    }
+
+    public function removeActions(PicNumber $call)
+    {
+        $this->actions->removeElement($call);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCalls()
+    {
+        return $this->calls;
+    }
+
+    /**
+     * @param mixed $calls
+     */
+    public function setCalls(ArrayCollection $calls)
+    {
+        $this->calls = $calls;
+    }
+
+    public function addCalls(PicNumber $call)
+    {
+        $this->calls->add($call);
+    }
+
+    public function removeCalls(PicNumber $call)
+    {
+        $this->calls->removeElement($call);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRounds()
+    {
+        return $this->rounds;
+    }
+
+    /**
+     * @param mixed $rounds
+     */
+    public function setRounds(ArrayCollection $rounds)
+    {
+        $this->rounds = $rounds;
+    }
+
+    public function addRounds(PicNumber $round)
+    {
+        $this->rounds->add($round);
+    }
+
+    public function removeRounds(PicNumber $round)
+    {
+        $this->rounds->removeElement($round);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * @param mixed $notes
+     */
+    public function setNotes(ArrayCollection $notes)
+    {
+        $this->notes = $notes;
+    }
+
+    public function addNotes(PicNumber $note)
+    {
+        $this->notes->add($note);
+    }
+
+    public function removeNotes(PicNumber $note)
+    {
+        $this->notes->removeElement($note);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApplicantOrganisations()
+    {
+        return $this->applicantOrganisations;
+    }
+
+    /**
+     * @param mixed $applicantOrganisations
+     */
+    public function setApplicantOrganisations(ArrayCollection $applicantOrganisations)
+    {
+        $this->applicantOrganisations = $applicantOrganisations;
+    }
+
+    public function addApplicantOrganisations(PicNumber $applicantOrganisation)
+    {
+        $this->applicantOrganisations->add($applicantOrganisation);
+    }
+
+    public function removeApplicantOrganisations(PicNumber $applicantOrganisation)
+    {
+        $this->applicantOrganisations->removeElement($applicantOrganisation);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPartnerOrganisations()
+    {
+        return $this->partnerOrganisations;
+    }
+
+    /**
+     * @param mixed $partnerOrganisations
+     */
+    public function setPartnerOrganisations(ArrayCollection $partnerOrganisations)
+    {
+        $this->partnerOrganisations = $partnerOrganisations;
+    }
+
+    public function addPartnerOrganisations(PicNumber $partnerOrganisation)
+    {
+        $this->partnerOrganisations->add($partnerOrganisation);
+    }
+
+    public function removePartnerOrganisations(PicNumber $partnerOrganisation)
+    {
+        $this->partnerOrganisations->removeElement($partnerOrganisation);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTypeOfLimitations()
+    {
+        return $this->typeOfLimitations;
+    }
+
+    /**
+     * @param mixed $typeOfLimitations
+     */
+    public function setTypeOfLimitations(ArrayCollection $typeOfLimitations)
+    {
+        $this->typeOfLimitations = $typeOfLimitations;
+    }
+
+    public function addTypeOfLimitations(PicNumber $typeOfLimitation)
+    {
+        $this->typeOfLimitations->add($typeOfLimitation);
+    }
+
+    public function removeTypeOfLimitations(PicNumber $typeOfLimitation)
+    {
+        $this->typeOfLimitations->removeElement($typeOfLimitation);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContactPersons()
+    {
+        return $this->contactPersons;
+    }
+
+    /**
+     * @param mixed $contactPersons
+     */
+    public function setContactPersons(ArrayCollection $contactPersons)
+    {
+        $this->contactPersons = $contactPersons;
+    }
+
+    public function addContactPersons(PicNumber $contactPerson)
+    {
+        $this->contactPersons->add($contactPerson);
+    }
+
+    public function removeContactPersons(PicNumber $contactPerson)
+    {
+        $this->contactPersons->removeElement($contactPerson);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTopics()
+    {
+        return $this->topics;
+    }
+
+    /**
+     * @param mixed $topics
+     */
+    public function setTopics(ArrayCollection $topics)
+    {
+        $this->topics = $topics;
+    }
+
+    public function addTopics(PicNumber $topic)
+    {
+        $this->topics->add($topic);
+    }
+
+    public function removeTopics(PicNumber $topic)
+    {
+        $this->topics->removeElement($topic);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubjectAreas()
+    {
+        return $this->subjectAreas;
+    }
+
+    /**
+     * @param mixed $subjectAreas
+     */
+    public function setSubjectAreas(ArrayCollection $subjectAreas)
+    {
+        $this->subjectAreas = $subjectAreas;
+    }
+
+    public function addSubjectAreas(PicNumber $subjectArea)
+    {
+        $this->subjectAreas->add($subjectArea);
+    }
+
+    public function removeSubjectAreas(PicNumber $subjectArea)
+    {
+        $this->subjectAreas->removeElement($subjectArea);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFtOfficers()
+    {
+        return $this->ftOfficers;
+    }
+
+    /**
+     * @param mixed $ftOfficers
+     */
+    public function setFtOfficers(ArrayCollection $ftOfficers)
+    {
+        $this->ftOfficers = $ftOfficers;
+    }
+
+    public function addFtOfficers(PicNumber $ftOfficer)
+    {
+        $this->ftOfficers->add($ftOfficer);
+    }
+
+    public function removeFtOfficers(PicNumber $ftOfficer)
+    {
+        $this->ftOfficers->removeElement($ftOfficer);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEaceaOfficers()
+    {
+        return $this->eaceaOfficers;
+    }
+
+    /**
+     * @param mixed $eaceaOfficers
+     */
+    public function setEaceaOfficers(ArrayCollection $eaceaOfficers)
+    {
+        $this->eaceaOfficers = $eaceaOfficers;
+    }
+
+    public function addEaceaOfficers(PicNumber $eaceaOfficer)
+    {
+        $this->eaceaOfficers->add($eaceaOfficer);
+    }
+
+    public function removeEaceaOfficers(PicNumber $eaceaOfficer)
+    {
+        $this->eaceaOfficers->removeElement($eaceaOfficer);
     }
 }
 

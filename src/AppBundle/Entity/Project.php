@@ -6,6 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Entity\ProjectProgramme;
+use AppBundle\Entity\ProjectKeyAction;
+use AppBundle\Entity\ProjectAction;
+use AppBundle\Entity\ProjectCall;
+use AppBundle\Entity\ProjectRound;
+
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectRepository")
@@ -401,12 +407,12 @@ class Project extends AbstractAuditable
         $this->programmes = $programmes;
     }
 
-    public function addProgrammes(PicNumber $programme)
+    public function addProgrammes(ProjectProgramme $programme)
     {
         $this->programmes->add($programme);
     }
 
-    public function removeProgrammes(PicNumber $programme)
+    public function removeProgrammes(ProjectProgramme $programme)
     {
         $this->programmes->removeElement($programme);
     }
@@ -427,12 +433,12 @@ class Project extends AbstractAuditable
         $this->keyActions = $keyActions;
     }
 
-    public function addKeyAction(PicNumber $keyAction)
+    public function addKeyAction(ProjectKeyAction $keyAction)
     {
         $this->keyActions->add($keyAction);
     }
 
-    public function removeKeyAction(PicNumber $keyAction)
+    public function removeKeyAction(ProjectKeyAction $keyAction)
     {
         $this->keyActions->removeElement($keyAction);
     }
@@ -453,12 +459,12 @@ class Project extends AbstractAuditable
         $this->actions = $actions;
     }
 
-    public function addActions(PicNumber $call)
+    public function addActions(ProjectAction $call)
     {
         $this->actions->add($call);
     }
 
-    public function removeActions(PicNumber $call)
+    public function removeActions(ProjectAction $call)
     {
         $this->actions->removeElement($call);
     }
@@ -479,12 +485,12 @@ class Project extends AbstractAuditable
         $this->calls = $calls;
     }
 
-    public function addCalls(PicNumber $call)
+    public function addCalls(ProjectCall $call)
     {
         $this->calls->add($call);
     }
 
-    public function removeCalls(PicNumber $call)
+    public function removeCalls(ProjectCall $call)
     {
         $this->calls->removeElement($call);
     }
@@ -505,12 +511,12 @@ class Project extends AbstractAuditable
         $this->rounds = $rounds;
     }
 
-    public function addRounds(PicNumber $round)
+    public function addRounds(ProjectRound $round)
     {
         $this->rounds->add($round);
     }
 
-    public function removeRounds(PicNumber $round)
+    public function removeRounds(ProjectRound $round)
     {
         $this->rounds->removeElement($round);
     }

@@ -7,6 +7,7 @@
  */
 namespace AppBundle\Form;
 
+use AppBundle\Entity\FieldOfExpertise;
 use AppBundle\Entity\Person;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -43,6 +44,40 @@ class PersonForm extends AbstractType
             ->add('hasFewerOpportunities', CheckboxType::class, array('required' => false))
             ->add('contacts', CollectionType::class, array(
                 'entry_type'   => PersonContactForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('addresses', CollectionType::class, array(
+                'entry_type'   => PersonAddressForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('personNotes', CollectionType::class, array(
+                'entry_type'   => PersonNoteForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('personDocuments', CollectionType::class, array(
+                'entry_type'   => PersonDocumentForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('personInstitutionRelationships', CollectionType::class, array(
+                'entry_type'   => PersonInstitutionRelationshipForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('fieldOfExpertise', EntityType::class, array(
+                'class'   => 'AppBundle:FieldOfExpertise',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ))
+            ->add('personFacingSituations', CollectionType::class, array(
+                'entry_type'   => PersonFacingSituationForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,

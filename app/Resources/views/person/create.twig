@@ -74,10 +74,41 @@
                             {{ form_widget(my_form.hasFewerOpportunities, {'label': 'Person with fewer opportunities'|trans})  }}
                         </div>
 
+                        {{ form_label(my_form.fieldOfExpertise, 'Field of expertise'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.fieldOfExpertise, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+
                         <ul class="contacts" data-prototype="{{ include('/person/includes/person-contact.html.twig',
                         {'form': my_form.contacts.vars.prototype })|e }}">
 
                         </ul>
+
+                        <ul class="addresses" data-prototype="{{ include('/person/includes/person-address.html.twig',
+                        {'form': my_form.addresses.vars.prototype })|e }}">
+
+                        </ul>
+
+                        <ul class="person-notes" data-prototype="{{ include('/person/includes/person-note.html.twig',
+                        {'form': my_form.personNotes.vars.prototype })|e }}">
+
+                        </ul>
+
+                        <ul class="person-documents" data-prototype="{{ include('/person/includes/person-document.html.twig',
+                        {'form': my_form.personDocuments.vars.prototype })|e }}">
+
+                        </ul>
+
+                        <ul class="person-institution-relationships" data-prototype="{{ include('/person/includes/person-institution-relationship.html.twig',
+                        {'form': my_form.personInstitutionRelationships.vars.prototype })|e }}">
+
+                        </ul>
+
+                        <ul class="person-facing-situations" data-prototype="{{ include('/person/includes/person-facing-situation.html.twig',
+                        {'form': my_form.personFacingSituations.vars.prototype })|e }}">
+
+                        </ul>
+
 
                         <div class="form-inline">
                             {{ form_widget(my_form.submit, { 'label': 'Create'|trans}, {'attr': {'class': 'form-control'}})  }}

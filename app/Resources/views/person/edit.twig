@@ -74,10 +74,51 @@
                                 {{ form_widget(my_form.hasFewerOpportunities, {'label': 'Person with fewer opportunities'|trans})  }}
                             </div>
 
+                            {{ form_label(my_form.fieldOfExpertise, 'Field of expertise'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.fieldOfExpertise, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+
                             <ul class="contacts" data-prototype="{{ include('/person/includes/person-contact.html.twig',
                             {'form': my_form.contacts.vars.prototype })|e }}">
                                 {% for contact in my_form.contacts %}
                                     <li>{{ include('/person/includes/person-contact.html.twig', {'form': contact }) }}</li>
+                                {% endfor %}
+                            </ul>
+
+                            <ul class="addresses" data-prototype="{{ include('/person/includes/person-address.html.twig',
+                            {'form': my_form.addresses.vars.prototype })|e }}">
+                                {% for address in my_form.addresses %}
+                                    <li>{{ include('/person/includes/person-address.html.twig', {'form': address }) }}</li>
+                                {% endfor %}
+                            </ul>
+
+                            <ul class="person-notes" data-prototype="{{ include('/person/includes/person-note.html.twig',
+                            {'form': my_form.personNotes.vars.prototype })|e }}">
+                                {% for personNote in my_form.personNotes %}
+                                    <li>{{ include('/person/includes/person-note.html.twig', {'form': personNote }) }}</li>
+                                {% endfor %}
+                            </ul>
+
+                            <ul class="person-documents" data-prototype="{{ include('/person/includes/person-document.html.twig',
+                            {'form': my_form.personDocuments.vars.prototype })|e }}">
+                                {% for personDocument in my_form.personDocuments %}
+                                    <li>{{ include('/person/includes/person-document.html.twig', {'form': personDocument }) }}</li>
+                                {% endfor %}
+                            </ul>
+
+
+                            <ul class="person-institution-relationships" data-prototype="{{ include('/person/includes/person-institution-relationship.html.twig',
+                            {'form': my_form.personInstitutionRelationships.vars.prototype })|e }}">
+                                {% for personInstitutionrelationship in my_form.personInstitutionRelationships %}
+                                    <li>{{ include('/person/includes/person-institution-relationship.html.twig', {'form': personInstitutionrelationship }) }}</li>
+                                {% endfor %}
+                            </ul>
+
+                            <ul class="person-facing-situations" data-prototype="{{ include('/person/includes/person-facing-situation.html.twig',
+                            {'form': my_form.personFacingSituations.vars.prototype })|e }}">
+                                {% for personFacingSituation in my_form.personFacingSituations %}
+                                    <li>{{ include('/person/includes/person-facing-situation.html.twig', {'form': personFacingSituation }) }}</li>
                                 {% endfor %}
                             </ul>
 

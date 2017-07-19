@@ -13,10 +13,10 @@ use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ContactTypeRepository")
- * @ORM\Table(name="contact_type")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PersonDocumentTypeRepository")
+ * @ORM\Table(name="person_document_type")
  */
-class ContactType extends AbstractAuditable
+class PersonDocumentType extends AbstractAuditable
 {
     /**
      *
@@ -39,14 +39,13 @@ class ContactType extends AbstractAuditable
     protected $typeSr;
 
     /**
-     * Get id
-     *
-     * @return int
+     * @return mixed
      */
     public function getId()
     {
         return $this->id;
     }
+
 
     /**
      * @return mixed
@@ -80,6 +79,7 @@ class ContactType extends AbstractAuditable
         $this->typeSr = $typeSr;
     }
 
+
     /**
      * @param $locale
      * @return String
@@ -90,6 +90,5 @@ class ContactType extends AbstractAuditable
         }
         return $this->typeEn;
     }
-
 
 }

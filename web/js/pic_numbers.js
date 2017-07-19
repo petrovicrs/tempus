@@ -1,4 +1,4 @@
-var $addPicNumberLink = $('<a href="#" class="btn btn-add btn-success "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
+var $addPicNumberLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add pic number</a>');
 var $newPicNumberDiv = $('<li></li>').append($addPicNumberLink);
 
 jQuery(document).ready(function() {
@@ -44,7 +44,7 @@ function addPicNumberForm($picNumberHolder, $newPicNumberDiv) {
     var $newFormDiv = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>');
+    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove pic number</a>');
 
     $newPicNumberDiv.before($newFormDiv);
 

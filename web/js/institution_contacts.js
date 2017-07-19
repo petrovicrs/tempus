@@ -1,4 +1,4 @@
-var $addInstitutionContactLink = $('<a href="#" class="btn btn-add btn-success "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
+var $addInstitutionContactLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add contact</a>');
 var $newInstitutionContactLinkDiv = $('<li></li>').append($addInstitutionContactLink);
 
 jQuery(document).ready(function() {
@@ -44,7 +44,7 @@ function addInstitutionContactsForm($collectionInstitutionContactHolder, $newIns
     var $newFormDiv = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>');
+    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove contact</a>');
 
     $newInstitutionContactLinkDiv.before($newFormDiv);
 

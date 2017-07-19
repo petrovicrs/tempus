@@ -1,4 +1,4 @@
-var $addAccreditationLink = $('<a href="#" class="btn btn-add btn-success "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
+var $addAccreditationLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add accreditation</a>');
 var $newAccreditationLinkDiv = $('<li></li>').append($addAccreditationLink);
 
 jQuery(document).ready(function() {
@@ -44,7 +44,7 @@ function $addAccreditationForm($collectionAccreditationHolder, $newAccreditation
     var $newFormDiv = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>');
+    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove accreditation</a>');
 
     $newAccreditationLinkDiv.before($newFormDiv);
 

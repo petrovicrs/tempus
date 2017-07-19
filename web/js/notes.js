@@ -1,4 +1,4 @@
-var $addNotesLink = $('<a href="#" class="btn btn-add btn-success "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
+var $addNotesLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add note</a>');
 var $addNotesLinkDiv = $('<li></li>').append($addNotesLink);
 
 jQuery(document).ready(function() {
@@ -44,7 +44,7 @@ function $addNotesForm($collectionNotesHolder, $addNotesLinkDiv) {
     var $newFormDiv = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>');
+    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove note</a>');
 
     $addNotesLinkDiv.before($newFormDiv);
 

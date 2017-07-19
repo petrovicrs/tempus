@@ -1,4 +1,4 @@
-var $addAddressLink = $('<a href="#" class="btn btn-add btn-success "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
+var $addAddressLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add address</a>');
 var $newAddressLinkDiv = $('<li></li>').append($addAddressLink);
 
 jQuery(document).ready(function() {
@@ -44,7 +44,7 @@ function $addAddressesForm($collectionAddressHolder, $newAddressLinkDiv) {
     var $newFormDiv = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>');
+    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove address</a>');
 
     $newAddressLinkDiv.before($newFormDiv);
 

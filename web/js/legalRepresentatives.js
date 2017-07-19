@@ -1,4 +1,4 @@
-var $addInstitutionLegalRepresentativeLink = $('<a href="#" class="btn btn-add btn-success "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>');
+var $addInstitutionLegalRepresentativeLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add legal representative</a>');
 var $newInstitutionLegalRepresentativeLinkDiv = $('<li></li>').append($addInstitutionLegalRepresentativeLink);
 
 jQuery(document).ready(function() {
@@ -44,7 +44,7 @@ function $addInstitutionLegalRepresentativeForm($collectionInstitutionLegalRepre
     var $newFormDiv = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>');
+    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove legal representative</a>');
 
     $newInstitutionLegalRepresentativeLinkDiv.before($newFormDiv);
 

@@ -13,10 +13,10 @@ use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ContactTypeRepository")
- * @ORM\Table(name="contact_type")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FieldOfExpertiseRepository")
+ * @ORM\Table(name="field_of_expertise")
  */
-class ContactType extends AbstractAuditable
+class FieldOfExpertise extends AbstractAuditable
 {
     /**
      *
@@ -30,18 +30,16 @@ class ContactType extends AbstractAuditable
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
-    protected $typeEn;
+    protected $nameEn;
 
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
      */
-    protected $typeSr;
+    protected $nameSr;
 
     /**
-     * Get id
-     *
-     * @return int
+     * @return mixed
      */
     public function getId()
     {
@@ -51,44 +49,45 @@ class ContactType extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getTypeEn()
+    public function getNameEn()
     {
-        return $this->typeEn;
+        return $this->nameEn;
     }
 
     /**
-     * @param mixed $typeEn
+     * @param mixed $nameEn
      */
-    public function setTypeEn($typeEn)
+    public function setNameEn($nameEn)
     {
-        $this->typeEn = $typeEn;
+        $this->nameEn = $nameEn;
     }
 
     /**
      * @return mixed
      */
-    public function getTypeSr()
+    public function getNameSr()
     {
-        return $this->typeSr;
+        return $this->nameSr;
     }
 
     /**
-     * @param mixed $typeSr
+     * @param mixed $nameSr
      */
-    public function setTypeSr($typeSr)
+    public function setNameSr($nameSr)
     {
-        $this->typeSr = $typeSr;
+        $this->nameSr = $nameSr;
     }
+
 
     /**
      * @param $locale
      * @return String
      */
-    public function getType($locale) {
+    public function getName($locale) {
         if ($locale == "sr"){
-            return $this->typeSr;
+            return $this->nameSr;
         }
-        return $this->typeEn;
+        return $this->nameEn;
     }
 
 

@@ -1,28 +1,166 @@
 {% extends 'base.html.twig' %}
-        {% block body %}
-        <section id="main">
-            <div class="container-fluid">
-                <div class="page-header">
-                    <h1>{% trans %}Person{% endtrans %}: <b>{{ person.name }} {{ person.surname }}</b></h1>
-                </div>
-                <h2>{% trans %}Person contact{% endtrans %}:</h2>
-                <table class="table table-hover" data-toggle="table">
-                    <thead>
-                        <tr class="table-header">
-                            <th class="sortable" data-field="project_title" data-sortable="true">{% trans %}Type{% endtrans %}</th>
-                            <th class="sortable" data-sortable="true">{% trans %}Value{% endtrans %}</th>
-                        </tr>
-                    </thead>
-                    {% for contact in contacts %}
-                        <tr>
-                            <td>{{ contact.contactType }}</td>
-                            <td>{{ contact.contactValue }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
+{% block body %}
+<section id="main">
+    <div class="container-fluid">
+        <div class="page-header">
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                    <tr class="table-header">
+                        <th></th>
+                        <th>{% trans %}English{% endtrans %}</th>
+                        <th>{% trans %}Serbian{% endtrans %}</th>
+                        <th>{% trans %}Original Alphabet{% endtrans %}</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td><b>{% trans %}Name{% endtrans %}</b></td>
+                    <td>{{ person.firstNameEn }}</td>
+                    <td>{{ person.firstNameSr }}</td>
+                    <td>{{ person.firstNameOriginalLetter }}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Surname{% endtrans %}</b></td>
+                    <td>{{ person.lastNameEn }}</td>
+                    <td>{{ person.lastNameSr }}</td>
+                    <td>{{ person.firstNameOriginalLetter }}</td>
+                </tr>
+            </table>
+        </div>
 
-                <a href="{{ localizedPath('person_contacts_create_form', {'personId':person.id}) }}">{% trans %}Add new contact{% endtrans %}</a>
+        <div>
+            <b>{% trans %}Initials{% endtrans %}</b>: {{ person.initials }} <br/>
+            <b>{% trans %}Title (prefix){% endtrans %}</b>: {{ person.titlePrefix }} <br/>
+            <b>{% trans %}Title (suffix){% endtrans %}</b>: {{ person.titleSuffix }} <br/>
+            <b>{% trans %}Gender{% endtrans %}</b>: {{ person.gender.name(app.request.getLocale()) }} <br/>
+            <b>{% trans %}Field of expertise{% endtrans %}</b>: {{ person.fieldOfExpertise.name(app.request.getLocale()) }} <br/>
+            <b>{% trans %}Person with fewer opportunities{% endtrans %}</b>:
+                {%  if(person.hasFewerOpportunities == 1) %}
+                    {% trans %}Yes{% endtrans %}
+                {% else %}
+                    {% trans %}No{% endtrans %}
+                {% endif  %}
+            <br/>
+            <b>{% trans %}Person with disabilities{% endtrans %}</b>:
+            {%  if(person.hasDisability == 1) %}
+                {% trans %}Yes{% endtrans %}
+            {% else %}
+                {% trans %}No{% endtrans %}
+            {% endif  %}
+            <br/>
+        </div>
 
-            </div>
-        </section>
-        {% endblock %}
+        <h2>{% trans %}Person documents{% endtrans %}:</h2>
+        <table class="table table-hover" data-toggle="table">
+            <thead>
+            <tr class="table-header">
+                <th>{% trans %}Document type{% endtrans %}</th>
+                <th>{% trans %}ID number{% endtrans %}</th>
+            </tr>
+            </thead>
+            {% for document in person.personDocuments %}
+                <tr>
+                    <td>{{ document.personDocumentType.type(app.request.getLocale()) }}</td>
+                    <td>{{ document.value }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+
+        <h2>{% trans %}Person contact{% endtrans %}:</h2>
+        <table class="table table-hover" data-toggle="table">
+            <thead>
+                <tr class="table-header">
+                    <th>{% trans %}Contact type{% endtrans %}</th>
+                    <th>{% trans %}Contact{% endtrans %}</th>
+                    <th>{% trans %}Public?{% endtrans %}</th>
+                    <th>{% trans %}Primary{% endtrans %}</th>
+                    <th>{% trans %}Note{% endtrans %}</th>
+                </tr>
+            </thead>
+            {% for contact in person.contacts %}
+                <tr>
+                    <td>{{ contact.contactType.type(app.request.getLocale()) }}</td>
+                    <td>{{ contact.contactValue }}</td>
+                    <td>{%  if(contact.isPublic == 1) %}
+                        {% trans %}Yes{% endtrans %}
+                        {% else %}
+                            {% trans %}No{% endtrans %}
+                        {% endif  %}</td>
+                    <td>{%  if(contact.isPrimary == 1) %}
+                        {% trans %}Yes{% endtrans %}
+                        {% else %}
+                            {% trans %}No{% endtrans %}
+                        {% endif  %}</td>
+                    <td>{{ contact.note }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        {#<a href="{{ localizedPath('person_contacts_create_form', {'personId':person.id}) }}">{% trans %}Add new contact{% endtrans %}</a>#}
+
+        <h2>{% trans %}Type of situation person is facing{% endtrans %}:</h2>
+        <table class="table table-hover" data-toggle="table">
+            <thead>
+            <tr class="table-header">
+                <th>{% trans %}Type of situation person is facing{% endtrans %}</th>
+            </thead>
+            {% for facingSituation in person.personFacingSituations %}
+                <tr>
+                    <td>{{ facingSituation.facingSituation.name(app.request.getLocale()) }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>{% trans %}Person addresses{% endtrans %}:</h2>
+        <table class="table table-hover" data-toggle="table">
+            <thead>
+            <tr class="table-header">
+                <th>{% trans %}Street and number{% endtrans %}</th>
+                <th>{% trans %}Town{% endtrans %}</th>
+                <th>{% trans %}Postal code{% endtrans %}</th>
+                <th>{% trans %}Country{% endtrans %}</th>
+                <th>{% trans %}Different mailing address{% endtrans %}</th>
+            </thead>
+            {% for address in person.addresses %}
+            <tr>
+                <td>{{ address.streetAndNumber }}</td>
+                <td>{{ address.town }}</td>
+                <td>{{ address.postalCode }}</td>
+                <td>{{ address.country.name(app.request.getLocale()) }}</td>
+                <td>{% if address.differentMailingAddress %}{% trans %}Yes{% endtrans %}{% else %}{% trans %}No{% endtrans %}{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h2>{% trans %}In connection with institution/organization{% endtrans %}:</h2>
+        <table class="table table-hover" data-toggle="table">
+            <thead>
+            <tr class="table-header">
+                <th>{% trans %}In connection with institution/organization{% endtrans %}</th>
+                <th>{% trans %}Type of connection{% endtrans %}</th>
+            </thead>
+            {% for personInstitutionRelationship in person.personInstitutionRelationships %}
+                <tr>
+                    <td>{{ personInstitutionRelationship.streetAndNumber }}</td>
+                    <td>{{ personInstitutionRelationship.personInstitutionRelationshipType.type(app.request.getLocale()) }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+
+        <h2>{% trans %}Notes{% endtrans %}:</h2>
+        <table class="table table-hover" data-toggle="table">
+            <thead>
+            <tr class="table-header">
+                <th>{% trans %}Note type{% endtrans %}</th>
+                <th>{% trans %}Note{% endtrans %}</th>
+            </thead>
+            {% for personNote in person.personNotes %}
+                <tr>
+                    <td>{{ personNote.personNoteType.name(app.request.getLocale()) }}</td>
+                    <td>{{ personNote.note }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</section>
+{% endblock %}

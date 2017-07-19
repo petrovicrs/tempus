@@ -34,11 +34,66 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\PersonContact
+    doctrine_entity_repository.person_address:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\PersonAddress
+    doctrine_entity_repository.person_note:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\PersonNote
+    doctrine_entity_repository.person_note_type:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\PersonNoteType
+    doctrine_entity_repository.person_document_type:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\PersonDocumentType
+    doctrine_entity_repository.person_document:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\PersonDocument
     doctrine_entity_repository.institution:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\Institution
+    doctrine_entity_repository.person_institution_relationship_type:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\PersonInstitutionRelationshipType
+    doctrine_entity_repository.person_institution_relationship:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\PersonInstitutionRelationship
+    doctrine_entity_repository.person_field_of_expertise:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\PersonFieldOfExpertise
+    doctrine_entity_repository.field_of_expertise:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\FieldOfExpertise
+    doctrine_entity_repository.facing_situation:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\FacingSituation
+    doctrine_entity_repository.person_facing_situation:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\PersonFacingSituation
     doctrine_entity_repository.program:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

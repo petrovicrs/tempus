@@ -108,12 +108,39 @@ class Person extends AbstractAuditable
      */
     protected $personNotes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PersonDocument", mappedBy="person", cascade={"persist"})
+     *
+     */
+    protected $personDocuments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PersonInstitutionRelationship", mappedBy="person", cascade={"persist"})
+     *
+     */
+    protected $personInstitutionRelationships;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="FieldOfExpertise")
+     *
+     */
+    protected $fieldOfExpertise;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PersonFacingSituation", mappedBy="person", cascade={"persist"})
+     *
+     */
+    protected $personFacingSituations;
+
     public function __construct()
     {
         parent::__construct();
         $this->contacts = new ArrayCollection();
         $this->addresses = new ArrayCollection();
         $this->personNotes = new ArrayCollection();
+        $this->personDocuments = new ArrayCollection();
+        $this->personInstitutionRelationships = new ArrayCollection();
+        $this->personFacingSituations = new ArrayCollection();
     }
 
     /**
@@ -387,5 +414,120 @@ class Person extends AbstractAuditable
     public function removeContact(PersonContact $personContact)
     {
         $this->contacts->removeElement($personContact);
+    }
+
+    public function addAddress(PersonAddress $personAddress)
+    {
+        $this->addresses->add($personAddress);
+    }
+
+    public function removeAddress(PersonAddress $personAddress)
+    {
+        $this->addresses->removeElement($personAddress);
+    }
+
+    public function addPersonNote(PersonNote $personNote)
+    {
+        $this->personNotes->add($personNote);
+    }
+
+    public function removePersonNote(PersonNote $personNote)
+    {
+        $this->personNotes->removeElement($personNote);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPersonDocuments()
+    {
+        return $this->personDocuments;
+    }
+
+    /**
+     * @param mixed $personDocuments
+     */
+    public function setPersonDocuments($personDocuments)
+    {
+        $this->personDocuments = $personDocuments;
+    }
+
+    public function addPersonDocument(PersonDocument $personDocument)
+    {
+        $this->personDocuments->add($personDocument);
+    }
+
+    public function removePersonDocument(PersonDocument $personDocument)
+    {
+        $this->personDocuments->removeElement($personDocument);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPersonInstitutionRelationships()
+    {
+        return $this->personInstitutionRelationships;
+    }
+
+    /**
+     * @param mixed $personInstitutionRelationships
+     */
+    public function setPersonInstitutionRelationships($personInstitutionRelationships)
+    {
+        $this->personInstitutionRelationships = $personInstitutionRelationships;
+    }
+
+
+    public function addPersonInstitutionRelationship(PersonInstitutionRelationship $personInstitutionRelationship)
+    {
+        $this->personInstitutionRelationships->add($personInstitutionRelationship);
+    }
+
+    public function removePersonInstitutionRelationship(PersonInstitutionRelationship $personInstitutionRelationship)
+    {
+        $this->personInstitutionRelationships->removeElement($personInstitutionRelationship);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFieldOfExpertise()
+    {
+        return $this->fieldOfExpertise;
+    }
+
+    /**
+     * @param mixed $fieldOfExpertise
+     */
+    public function setFieldOfExpertise($fieldOfExpertise)
+    {
+        $this->fieldOfExpertise = $fieldOfExpertise;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPersonFacingSituations()
+    {
+        return $this->personFacingSituations;
+    }
+
+    /**
+     * @param mixed $personFacingSituations
+     */
+    public function setPersonFacingSituations($personFacingSituations)
+    {
+        $this->personFacingSituations = $personFacingSituations;
+    }
+
+    public function addPersonFacingSituation(PersonFacingSituation $personFacingSituation)
+    {
+        $this->personFacingSituations->add($personFacingSituation);
+    }
+
+    public function removePersonFacingSituation(PersonFacingSituation $personFacingSituation)
+    {
+        $this->personFacingSituations->removeElement($personFacingSituation);
     }
 }

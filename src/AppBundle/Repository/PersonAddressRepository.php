@@ -4,7 +4,6 @@ namespace AppBundle\Repository;
 
 /**
  * Class PersonAddressRepository
- * @package AppBundle\Repository
  */
 class PersonAddressRepository extends \Doctrine\ORM\EntityRepository
 {

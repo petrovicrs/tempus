@@ -11,6 +11,10 @@ use AppBundle\Entity\ProjectKeyAction;
 use AppBundle\Entity\ProjectAction;
 use AppBundle\Entity\ProjectCall;
 use AppBundle\Entity\ProjectRound;
+use AppBundle\Entity\ProjectNote;
+use AppBundle\Entity\ProjectTopic;
+use AppBundle\Entity\ProjectSubjectArea;
+use AppBundle\Entity\ProjectLimitation;
 
 
 /**
@@ -103,32 +107,56 @@ class Project extends AbstractAuditable
     protected $participantFewerOptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectProgramme", mappedBy="institution", cascade={"persist"})
+     * @ORM\ManyToOne(
+     *      targetEntity="projectProgramme"
+     * )
      */
     protected $programmes;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectKeyAction", mappedBy="institution", cascade={"persist"})
+     * @ORM\ManyToOne(
+     *      targetEntity="projectKeyAction"
+     * )
      */
     protected $keyActions;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectAction", mappedBy="institution", cascade={"persist"})
+     * @ORM\ManyToOne(
+     *      targetEntity="projectAction"
+     * )
      */
     protected $actions;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectCall", mappedBy="institution", cascade={"persist"})
+     * @ORM\ManyToOne(
+     *      targetEntity="projectCall"
+     * )
      */
     protected $calls;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectRound", mappedBy="institution", cascade={"persist"})
+     * @ORM\ManyToOne(
+     *      targetEntity="projectRound"
+     * )
      */
     protected $rounds;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectNotes", mappedBy="institution", cascade={"persist"})
+     * @ORM\ManyToOne(
+     *      targetEntity="projectFtOfficer"
+     * )
+     */
+    protected $ftOfficers;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="projectEaceaOfficer"
+     * )
+     */
+    protected $eaceaOfficers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="projectNote", mappedBy="institution", cascade={"persist"})
      */
     protected $notes;
 
@@ -143,9 +171,9 @@ class Project extends AbstractAuditable
     protected $partnerOrganisations;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectTypeOfLimitation", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="projectLimitation", mappedBy="institution", cascade={"persist"})
      */
-    protected $typeOfLimitations;
+    protected $limitations;
 
     /**
      * @ORM\OneToMany(targetEntity="projectContactPerson", mappedBy="institution", cascade={"persist"})
@@ -153,42 +181,25 @@ class Project extends AbstractAuditable
     protected $contactPersons;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectTopics", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="projectTopic", mappedBy="institution", cascade={"persist"})
      */
     protected $topics;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectSubjectAreas", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="projectSubjectArea", mappedBy="institution", cascade={"persist"})
      */
     protected $subjectAreas;
-
-    /**
-     * @ORM\OneToMany(targetEntity="projectFtOfficer", mappedBy="institution", cascade={"persist"})
-     */
-    protected $ftOfficers;
-
-    /**
-     * @ORM\OneToMany(targetEntity="projectEaceaOfficer", mappedBy="institution", cascade={"persist"})
-     */
-    protected $eaceaOfficers;
 
     public function __construct()
     {
         parent::__construct();
-        $this->eaceaOfficers = new ArrayCollection();
-        $this->ftOfficers = new ArrayCollection();
         $this->subjectAreas = new ArrayCollection();
         $this->topics = new ArrayCollection();
         $this->contactPersons = new ArrayCollection();
-        $this->typeOfLimitations = new ArrayCollection();
+        $this->limitations = new ArrayCollection();
         $this->partnerOrganisations = new ArrayCollection();
         $this->applicantOrganisations = new ArrayCollection();
         $this->notes = new ArrayCollection();
-        $this->rounds = new ArrayCollection();
-        $this->calls = new ArrayCollection();
-        $this->actions = new ArrayCollection();
-        $this->keyActions = new ArrayCollection();
-        $this->programmes = new ArrayCollection();
     }
 
     /**
@@ -394,6 +405,38 @@ class Project extends AbstractAuditable
     /**
      * @return mixed
      */
+    public function getFtOfficers()
+    {
+        return $this->ftOfficers;
+    }
+
+    /**
+     * @param mixed $ftOfficers
+     */
+    public function setFtOfficers($ftOfficers)
+    {
+        $this->ftOfficers = $ftOfficers;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEaceaOfficers()
+    {
+        return $this->eaceaOfficers;
+    }
+
+    /**
+     * @param mixed $eaceaOfficers
+     */
+    public function setEaceaOfficers($eaceaOfficers)
+    {
+        $this->eaceaOfficers = $eaceaOfficers;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getProgrammes()
     {
         return $this->programmes;
@@ -402,19 +445,9 @@ class Project extends AbstractAuditable
     /**
      * @param mixed $programmes
      */
-    public function setProgrammes(ArrayCollection $programmes)
+    public function setProgrammes($programmes)
     {
         $this->programmes = $programmes;
-    }
-
-    public function addProgrammes(ProjectProgramme $programme)
-    {
-        $this->programmes->add($programme);
-    }
-
-    public function removeProgrammes(ProjectProgramme $programme)
-    {
-        $this->programmes->removeElement($programme);
     }
 
     /**
@@ -428,19 +461,9 @@ class Project extends AbstractAuditable
     /**
      * @param mixed $keyActions
      */
-    public function setKeyActions(ArrayCollection $keyActions)
+    public function setKeyActions($keyActions)
     {
         $this->keyActions = $keyActions;
-    }
-
-    public function addKeyAction(ProjectKeyAction $keyAction)
-    {
-        $this->keyActions->add($keyAction);
-    }
-
-    public function removeKeyAction(ProjectKeyAction $keyAction)
-    {
-        $this->keyActions->removeElement($keyAction);
     }
 
     /**
@@ -454,19 +477,9 @@ class Project extends AbstractAuditable
     /**
      * @param mixed $actions
      */
-    public function setActions(ArrayCollection $actions)
+    public function setActions($actions)
     {
         $this->actions = $actions;
-    }
-
-    public function addActions(ProjectAction $call)
-    {
-        $this->actions->add($call);
-    }
-
-    public function removeActions(ProjectAction $call)
-    {
-        $this->actions->removeElement($call);
     }
 
     /**
@@ -480,19 +493,9 @@ class Project extends AbstractAuditable
     /**
      * @param mixed $calls
      */
-    public function setCalls(ArrayCollection $calls)
+    public function setCalls($calls)
     {
         $this->calls = $calls;
-    }
-
-    public function addCalls(ProjectCall $call)
-    {
-        $this->calls->add($call);
-    }
-
-    public function removeCalls(ProjectCall $call)
-    {
-        $this->calls->removeElement($call);
     }
 
     /**
@@ -506,19 +509,9 @@ class Project extends AbstractAuditable
     /**
      * @param mixed $rounds
      */
-    public function setRounds(ArrayCollection $rounds)
+    public function setRounds($rounds)
     {
         $this->rounds = $rounds;
-    }
-
-    public function addRounds(ProjectRound $round)
-    {
-        $this->rounds->add($round);
-    }
-
-    public function removeRounds(ProjectRound $round)
-    {
-        $this->rounds->removeElement($round);
     }
 
     /**
@@ -537,12 +530,12 @@ class Project extends AbstractAuditable
         $this->notes = $notes;
     }
 
-    public function addNotes(PicNumber $note)
+    public function addNotes(ProjectNote $note)
     {
         $this->notes->add($note);
     }
 
-    public function removeNotes(PicNumber $note)
+    public function removeNotes(ProjectNote $note)
     {
         $this->notes->removeElement($note);
     }
@@ -602,27 +595,27 @@ class Project extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getTypeOfLimitations()
+    public function getLimitations()
     {
-        return $this->typeOfLimitations;
+        return $this->limitations;
     }
 
     /**
-     * @param mixed $typeOfLimitations
+     * @param mixed $limitations
      */
-    public function setTypeOfLimitations(ArrayCollection $typeOfLimitations)
+    public function setLimitations(ArrayCollection $limitation)
     {
-        $this->typeOfLimitations = $typeOfLimitations;
+        $this->limitations = $limitation;
     }
 
-    public function addTypeOfLimitations(PicNumber $typeOfLimitation)
+    public function addLimitations(ProjectLimitation $limitation)
     {
-        $this->typeOfLimitations->add($typeOfLimitation);
+        $this->limitations->add($limitation);
     }
 
-    public function removeTypeOfLimitations(PicNumber $typeOfLimitation)
+    public function removeLimitations(ProjectLimitation $limitation)
     {
-        $this->typeOfLimitations->removeElement($typeOfLimitation);
+        $this->limitations->removeElement($limitation);
     }
 
     /**
@@ -667,12 +660,12 @@ class Project extends AbstractAuditable
         $this->topics = $topics;
     }
 
-    public function addTopics(PicNumber $topic)
+    public function addTopics(ProjectTopic $topic)
     {
         $this->topics->add($topic);
     }
 
-    public function removeTopics(PicNumber $topic)
+    public function removeTopics(ProjectTopic $topic)
     {
         $this->topics->removeElement($topic);
     }
@@ -693,66 +686,15 @@ class Project extends AbstractAuditable
         $this->subjectAreas = $subjectAreas;
     }
 
-    public function addSubjectAreas(PicNumber $subjectArea)
+    public function addSubjectAreas(ProjectSubjectArea $subjectArea)
     {
         $this->subjectAreas->add($subjectArea);
     }
 
-    public function removeSubjectAreas(PicNumber $subjectArea)
+    public function removeSubjectAreas(ProjectSubjectArea $subjectArea)
     {
         $this->subjectAreas->removeElement($subjectArea);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFtOfficers()
-    {
-        return $this->ftOfficers;
-    }
-
-    /**
-     * @param mixed $ftOfficers
-     */
-    public function setFtOfficers(ArrayCollection $ftOfficers)
-    {
-        $this->ftOfficers = $ftOfficers;
-    }
-
-    public function addFtOfficers(PicNumber $ftOfficer)
-    {
-        $this->ftOfficers->add($ftOfficer);
-    }
-
-    public function removeFtOfficers(PicNumber $ftOfficer)
-    {
-        $this->ftOfficers->removeElement($ftOfficer);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEaceaOfficers()
-    {
-        return $this->eaceaOfficers;
-    }
-
-    /**
-     * @param mixed $eaceaOfficers
-     */
-    public function setEaceaOfficers(ArrayCollection $eaceaOfficers)
-    {
-        $this->eaceaOfficers = $eaceaOfficers;
-    }
-
-    public function addEaceaOfficers(PicNumber $eaceaOfficer)
-    {
-        $this->eaceaOfficers->add($eaceaOfficer);
-    }
-
-    public function removeEaceaOfficers(PicNumber $eaceaOfficer)
-    {
-        $this->eaceaOfficers->removeElement($eaceaOfficer);
-    }
 }
 

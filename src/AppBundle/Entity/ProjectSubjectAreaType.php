@@ -13,10 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectKeyActionRepository")
- * @ORM\Table(name="project_key_actions")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectSubjectAreaTypeRepository")
+ * @ORM\Table(name="project_subject_area_types")
  */
-class ProjectKeyAction extends AbstractAuditable
+class ProjectSubjectAreaType extends AbstractAuditable
 {
     /**
      * @ORM\Id

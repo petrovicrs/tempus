@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jovanmijatovic
- * Date: 7/16/17
- * Time: 2:44 PM
- */
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -13,10 +8,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectKeyActionRepository")
- * @ORM\Table(name="project_key_actions")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectEaceaOfficerRepository")
+ * @ORM\Table(name="project_eacea_officers")
  */
-class ProjectKeyAction extends AbstractAuditable
+class ProjectEaceaOfficer extends AbstractAuditable
 {
     /**
      * @ORM\Id

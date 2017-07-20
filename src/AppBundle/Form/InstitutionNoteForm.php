@@ -10,11 +10,11 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class PersonContactsForm extends AbstractType
+class InstitutionNoteForm extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,10 +22,11 @@ class PersonContactsForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('person', HiddenType::class)
-            ->add('contactType', TextType::class)
-            ->add('contactValue', TextType::class)
-            ->add('submit', SubmitType::class);
+            ->add('institutionNoteType', EntityType::class, [
+                'class' => 'AppBundle:InstitutionNoteType',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('note', TextType::class);
     }
 
     /**
@@ -34,7 +35,8 @@ class PersonContactsForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\PersonContact'
+            'data_class' => 'AppBundle\Entity\InstitutionNote',
+            'locale' => 'en',
         ));
     }
 

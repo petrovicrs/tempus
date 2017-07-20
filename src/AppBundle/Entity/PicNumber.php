@@ -15,7 +15,7 @@ use \Doctrine\DBAL\Types\BooleanType;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PicNumberRepository")
- * @ORM\Table(name="pic_number")
+ * @ORM\Table(name="pic_numbers")
  */
 class PicNumber extends AbstractAuditable
 {
@@ -38,14 +38,14 @@ class PicNumber extends AbstractAuditable
     protected $validated;
 
     /**
-     * @ORM\Column(name="primary", type="boolean")
+     * @ORM\Column(name="primary_number", type="boolean")
      */
     protected $primary;
 
     /**
      * @ORM\ManyToOne(
      *      targetEntity="Institution",
-     *      inversedBy="picNumbers"
+     *      inversedBy="picNumber"
      * )
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
@@ -107,5 +107,20 @@ class PicNumber extends AbstractAuditable
         $this->primary = $primary;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getInstitution()
+    {
+        return $this->institution;
+    }
+
+    /**
+     * @param mixed $institution
+     */
+    public function setInstitution($institution)
+    {
+        $this->institution = $institution;
+    }
 
 }

@@ -47,11 +47,11 @@ twig:
 doctrine:
     dbal:
         driver:   pdo_mysql
-        host:     "kbs_db"
+        host:     "kbs-tempus.ce10gci2cp94.eu-west-2.rds.amazonaws.com"
         port:     "3306"
         dbname:   "tempus"
-        user:     "tempus"
-        password: "123456"
+        user:     "root"
+        password: "kbstempus"
         charset:  UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml

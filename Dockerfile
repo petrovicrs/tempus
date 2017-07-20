@@ -51,7 +51,7 @@ ADD ./conf/supervisord.conf /etc/supervisord.conf
 ADD ./scripts/start.sh /start.sh
 RUN chmod 755 /start.sh
 
-ADD . /site
+ADD . /usr/share/nginx/www
 ADD ./configuration /configuration
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"

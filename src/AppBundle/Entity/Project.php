@@ -205,7 +205,7 @@ class Project extends AbstractAuditable
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -213,7 +213,7 @@ class Project extends AbstractAuditable
     /**
      * @return string
      */
-    public function getNameEng(): string
+    public function getNameEng()
     {
         return $this->nameEng;
     }
@@ -221,7 +221,7 @@ class Project extends AbstractAuditable
     /**
      * @param string $nameEng
      */
-    public function setNameEng(string $nameEng)
+    public function setNameEng($nameEng)
     {
         $this->nameEng = $nameEng;
     }
@@ -229,7 +229,7 @@ class Project extends AbstractAuditable
     /**
      * @return string
      */
-    public function getNameSrb(): string
+    public function getNameSrb()
     {
         return $this->nameSrb;
     }
@@ -237,7 +237,7 @@ class Project extends AbstractAuditable
     /**
      * @param string $nameSrb
      */
-    public function setNameSrb(string $nameSrb)
+    public function setNameSrb($nameSrb)
     {
         $this->nameSrb = $nameSrb;
     }
@@ -245,7 +245,7 @@ class Project extends AbstractAuditable
     /**
      * @return string
      */
-    public function getNameOriginalLetter(): string
+    public function getNameOriginalLetter()
     {
         return $this->nameOriginalLetter;
     }
@@ -253,7 +253,7 @@ class Project extends AbstractAuditable
     /**
      * @param string $nameOriginalLetter
      */
-    public function setNameOriginalLetter(string $nameOriginalLetter)
+    public function setNameOriginalLetter($nameOriginalLetter)
     {
         $this->nameOriginalLetter = $nameOriginalLetter;
     }
@@ -261,7 +261,7 @@ class Project extends AbstractAuditable
     /**
      * @return string
      */
-    public function getAcronym(): string
+    public function getAcronym()
     {
         return $this->acronym;
     }
@@ -269,7 +269,7 @@ class Project extends AbstractAuditable
     /**
      * @param string $acronym
      */
-    public function setAcronym(string $acronym)
+    public function setAcronym($acronym)
     {
         $this->acronym = $acronym;
     }
@@ -277,7 +277,7 @@ class Project extends AbstractAuditable
     /**
      * @return string
      */
-    public function getProjectNumber(): string
+    public function getProjectNumber()
     {
         return $this->projectNumber;
     }
@@ -285,7 +285,7 @@ class Project extends AbstractAuditable
     /**
      * @param string $projectNumber
      */
-    public function setProjectNumber(string $projectNumber)
+    public function setProjectNumber($projectNumber)
     {
         $this->projectNumber = $projectNumber;
     }
@@ -293,7 +293,7 @@ class Project extends AbstractAuditable
     /**
      * @return string
      */
-    public function getProjectSummary(): string
+    public function getProjectSummary()
     {
         return $this->projectSummary;
     }
@@ -301,7 +301,7 @@ class Project extends AbstractAuditable
     /**
      * @param string $projectSummary
      */
-    public function setProjectSummary(string $projectSummary)
+    public function setProjectSummary($projectSummary)
     {
         $this->projectSummary = $projectSummary;
     }
@@ -341,7 +341,7 @@ class Project extends AbstractAuditable
     /**
      * @return int
      */
-    public function getDurationMonths(): int
+    public function getDurationMonths()
     {
         return $this->durationMonths;
     }
@@ -349,7 +349,7 @@ class Project extends AbstractAuditable
     /**
      * @param int $durationMonths
      */
-    public function setDurationMonths(int $durationMonths)
+    public function setDurationMonths($durationMonths)
     {
         $this->durationMonths = $durationMonths;
     }

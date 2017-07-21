@@ -108,85 +108,85 @@ class Project extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="projectProgramme"
+     *      targetEntity="ProjectProgramme"
      * )
      */
     protected $programmes;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="projectKeyAction"
+     *      targetEntity="ProjectKeyAction"
      * )
      */
     protected $keyActions;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="projectAction"
+     *      targetEntity="ProjectAction"
      * )
      */
     protected $actions;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="projectCall"
+     *      targetEntity="ProjectCall"
      * )
      */
     protected $calls;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="projectRound"
+     *      targetEntity="ProjectRound"
      * )
      */
     protected $rounds;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="projectFtOfficer"
+     *      targetEntity="ProjectFtOfficer"
      * )
      */
     protected $ftOfficers;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="projectEaceaOfficer"
+     *      targetEntity="ProjectEaceaOfficer"
      * )
      */
     protected $eaceaOfficers;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectNote", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectNote", mappedBy="institution", cascade={"persist"})
      */
     protected $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectApplicantOrganisation", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectApplicantOrganisation", mappedBy="institution", cascade={"persist"})
      */
     protected $applicantOrganisations;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectPartnerOrganisation", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectPartnerOrganisation", mappedBy="institution", cascade={"persist"})
      */
     protected $partnerOrganisations;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectLimitation", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectLimitation", mappedBy="institution", cascade={"persist"})
      */
     protected $limitations;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectContactPerson", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectContactPerson", mappedBy="institution", cascade={"persist"})
      */
     protected $contactPersons;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectTopic", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectTopic", mappedBy="institution", cascade={"persist"})
      */
     protected $topics;
 
     /**
-     * @ORM\OneToMany(targetEntity="projectSubjectArea", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectSubjectArea", mappedBy="institution", cascade={"persist"})
      */
     protected $subjectAreas;
 

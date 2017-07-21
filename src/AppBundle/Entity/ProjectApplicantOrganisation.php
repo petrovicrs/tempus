@@ -34,14 +34,14 @@ class ProjectApplicantOrganisation extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="institution"
+     *      targetEntity="Institution"
      * )
      */
     protected $organisation;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="project"
+     *      targetEntity="Project"
      * )
      */
     protected $project;

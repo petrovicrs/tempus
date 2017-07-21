@@ -24,14 +24,14 @@ class ProjectSubjectArea extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="projectSubjectAreaType"
+     *      targetEntity="ProjectSubjectAreaType"
      * )
      */
     protected $areaType;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="project"
+     *      targetEntity="Project"
      * )
      */
     protected $project;

@@ -21,14 +21,14 @@ class ProjectNote extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="project"
+     *      targetEntity="Project"
      * )
      */
     protected $project;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="projectNoteType"
+     *      targetEntity="ProjectNoteType"
      * )
      */
     protected $noteType;

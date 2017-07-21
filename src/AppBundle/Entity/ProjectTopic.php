@@ -24,14 +24,14 @@ class ProjectTopic extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="person"
+     *      targetEntity="Person"
      * )
      */
     protected $person;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="projectTopicType"
+     *      targetEntity="ProjectTopicType"
      * )
      */
     protected $topic;

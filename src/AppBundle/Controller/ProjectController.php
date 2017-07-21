@@ -24,10 +24,9 @@ class ProjectController extends AbstractController
     /**
      * @Route("/", name="default_route")
      * @Route("/{locale}/project/list", name="project_list", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function listAction()
-    {
+    {//* @Security("is_granted('ROLE_ADMIN')")
         $result = $this->getProjectRepository()->findAll();
 
         return $this->render('project/list.twig', ['result' => $result]);

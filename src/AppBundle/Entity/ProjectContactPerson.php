@@ -34,14 +34,14 @@ class ProjectContactPerson extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="person"
+     *      targetEntity="Person"
      * )
      */
     protected $person;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="project"
+     *      targetEntity="Project"
      * )
      */
     protected $project;

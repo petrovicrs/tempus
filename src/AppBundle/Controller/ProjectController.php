@@ -43,6 +43,7 @@ class ProjectController extends AbstractController
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_create'),
             'method' => 'POST',
+            'locale' => $request->getLocale(),
             ]);
 
 

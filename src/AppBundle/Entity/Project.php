@@ -107,6 +107,11 @@ class Project extends AbstractAuditable
     protected $participantFewerOptions;
 
     /**
+     * @ORM\Column(name="consortium", type="boolean")
+     */
+    protected $consortium;
+
+    /**
      * @ORM\ManyToOne(
      *      targetEntity="ProjectProgramme"
      * )
@@ -400,6 +405,22 @@ class Project extends AbstractAuditable
     public function setParticipantFewerOptions($participantFewerOptions)
     {
         $this->participantFewerOptions = $participantFewerOptions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConsortium()
+    {
+        return $this->consortium;
+    }
+
+    /**
+     * @param mixed $consortium
+     */
+    public function setConsortium($consortium)
+    {
+        $this->consortium = $consortium;
     }
 
     /**

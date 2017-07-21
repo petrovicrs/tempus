@@ -13,6 +13,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -24,26 +27,88 @@ class ProjectForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nameEng', TextType::class, ['label_format' => 'Name English'])
-            ->add('nameSrb', TextType::class, ['label_format' => 'Name Serbian'])
-            ->add('description', TextType::class, ['label_format' => 'Description'])
-            ->add('goals', TextType::class, ['label_format' => 'Goals'])
-            ->add('nameOriginalLetter', TextType::class, ['label_format' => 'Name Original Letter'])
-            ->add('acronym', TextType::class, ['label_format' => 'Acronym'])
-            ->add('program', EntityType::class, ['class' => 'AppBundle:Program', 'choice_label' => 'name', 'label_format' => 'Program'])
-            ->add('status', TextType::class, ['label_format' => 'Status'])
-            ->add('scope', TextType::class, ['label_format' => 'Scope'])
-            ->add('applicationYear', null, ['label_format' => 'Application Year'])
-            ->add('referenceNumber', TextType::class, ['label_format' => 'Reference Number'])
-            ->add('duration', TextType::class, ['label_format' => 'Duration'])
-            ->add('endDatetime', null, ['label_format' => 'End Datetime'])
-            ->add('startDatetime', null, ['label_format' => 'Start Datetime'])
-            ->add('extendedTime', null, ['label_format' => 'Extended Time'])
-            ->add('grantAmount', TextType::class, ['label_format' => 'Grant Amount'])
-            ->add('coFinancingAmount', TextType::class, ['label_format' => 'coFinancing Amount'])
-            ->add('totalProjectValue', TextType::class, ['label_format' => 'Total Project Value'])
-            ->add('mark', TextType::class, ['label_format' => 'Mark'])
-            ->add('markExplanation', TextType::class, ['label_format' => 'Mark Explanation'])
+            ->add('programmes', EntityType::class, [
+                'class' => 'AppBundle:ProjectProgramme',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('keyActions', EntityType::class, [
+                'class' => 'AppBundle:ProjectKeyAction',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('actions', EntityType::class, [
+                'class' => 'AppBundle:ProjectAction',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('calls', EntityType::class, [
+                'class' => 'AppBundle:ProjectCall',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('rounds', EntityType::class, [
+                'class' => 'AppBundle:ProjectRound',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('nameEng', TextType::class)
+            ->add('nameSrb', TextType::class)
+            ->add('nameOriginalLetter', TextType::class)
+            ->add('acronym', TextType::class)
+            ->add('endDatetime', DateTimeType::class)
+            ->add('startDatetime', DateTimeType::class)
+            ->add('projectNumber', TextType::class)
+            ->add('durationMonths', TextType::class)
+            ->add('audited', CheckboxType::class, array('required' => false))
+            ->add('onGoing', CheckboxType::class, array('required' => false))
+            ->add('applicantOrganisations', CollectionType::class, array(
+                'entry_type'  => ProjectApplicantOrganisationForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('participantFewerOptions', CheckboxType::class, array('required' => false))
+            ->add('consortium', CheckboxType::class, array('required' => false))
+            ->add('partnerOrganisations', CollectionType::class, array(
+                'entry_type'  => ProjectParnerOrganisationForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('limitations', CollectionType::class, array(
+                'entry_type'  => ProjectLimitationsForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('contactPersons', CollectionType::class, array(
+                'entry_type'  => ProjectContactPersonForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('topics', CollectionType::class, array(
+                'entry_type'  => ProjectTopicsForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('subjectAreas', CollectionType::class, array(
+                'entry_type'  => ProjectSubjectAreasForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
+            ->add('calls', EntityType::class, [
+                'class' => 'AppBundle:ProjectFtOfficer',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('rounds', EntityType::class, [
+                'class' => 'AppBundle:ProjectEaceaOfficer',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('notes', CollectionType::class, array(
+                'entry_type'  => ProjectNoteForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+            ))
             ->add('submit', SubmitType::class, array('label_format' => 'Submit'));
     }
 
@@ -52,10 +117,9 @@ class ProjectForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Project',
-            'submit_button_label' => 'Create'
-        ));
+        $resolver->setDefaults([
+            'locale' => 'en'
+        ]);
     }
 
     /**

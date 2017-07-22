@@ -25,8 +25,10 @@ jQuery(document).ready(function() {
     // index when inserting a new item (e.g. 2)
     $actionDetailsCollectionHolder.data('index', $actionDetailsCollectionHolder.find(':input').length);
 
-    // Load one on page load
-    addForm($actionDetailsCollectionHolder, $newActionDetailsLinkLi);
+    // Load one on page load if not edit
+    if($actionDetailsCollectionHolder.data('purpose') !== 'edit') {
+        addForm($actionDetailsCollectionHolder, $newActionDetailsLinkLi);
+    }
 
     $addActionDetailsLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL

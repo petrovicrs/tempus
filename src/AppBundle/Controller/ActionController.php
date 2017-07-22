@@ -15,6 +15,7 @@ use AppBundle\Form\ActionDetailsForm;
 use AppBundle\Form\ActionForm;
 use AppBundle\Form\ActivityForm;
 use AppBundle\Repository\ActivityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpOption\Tests\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -32,9 +33,14 @@ class ActionController extends AbstractController
     public function listAction(Request $request)
     {
         $activities = $this->getActivityRepository()->findAll();
+        $totals = [];
+
+        foreach ($activities as $activity) {
+            $totals[$activity->getId()] = $this->getTotals($activity->getActionDetails());
+        }
 //        var_dump($activities[0]->getActionDetails());die;
 
-        return $this->render('action/list.twig', ['activities' => $activities]);
+        return $this->render('action/list.twig', ['activities' => $activities, 'totals' => $totals]);
     }
 
     /**
@@ -65,6 +71,46 @@ class ActionController extends AbstractController
         }
 
         return $this->render('action/create.twig', ['my_form' => $activityForm->createView()]);
+    }
+
+    /**
+     * @Route("/{locale}/action/edit/{activityId}", name="action_edit", requirements={"activityId": "\d+", "locale": "%app.locales%"})
+     *
+     */
+    public function editAction(Request $request, $activityId)
+    {
+        $activity = $this->getActivityRepository()->findOneBy(['id' => $activityId]);
+
+        $activityForm = $this->createForm(ActivityForm::class, $activity, [
+            'action' => $this->generateUrl('action_edit', ['activityId' => $activityId]),
+            'method' => 'POST',
+            'locale' => $request->getLocale()
+        ]);
+
+        $actionDetails = new ArrayCollection();
+
+        foreach ($activity->getActionDetails() as $action) {
+            $actionDetails->add($action);
+        }
+
+        $activityForm->handleRequest($request);
+
+        if ($activityForm->isSubmitted() && $activityForm->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            // remove the relationship between the tag and the Task
+            foreach ($actionDetails as $action) {
+                if (false === $activity->getActionDetails()->contains($action)) {
+                    $em->remove($action);
+                }
+            }
+
+            $this->getActivityRepository()->saveActivity($activity);
+
+            return $this->redirectToRoute('action_list');
+        }
+
+        return $this->render('action/edit.twig', ['my_form' => $activityForm->createView()]);
     }
 
     /**

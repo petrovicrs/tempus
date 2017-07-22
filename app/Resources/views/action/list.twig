@@ -3,29 +3,81 @@
 {% block body %}
     <section id="main">
         <div class="container-fluid">
+            {% for key,value in activities %}
+                <h2><b>{% trans %}Activity{% endtrans %}: </b><a href="{{ localizedPath('action_view', {'activityId': value.id}) }}">{{ value.activityType.name(app.request.locale) }} </a></h2>
 
-            <table class="table table-hover" data-toggle="table">
-                <thead>
-                <tr class="table-header">
-                    <th class="sortable" data-field="action_title" data-sortable="true">{% trans %}Activity{% endtrans %}</th>
-                    <th class="sortable" data-sortable="true">{% trans %}ActionDetails{% endtrans %}</th>
-                </tr>
-                </thead>
+                <h2>{% trans %}Totals{% endtrans %}:</h2>
+                <table class="table table-hover" data-toggle="table">
+                    <thead>
+                        <tr class="table-header">
+                            <th>{% trans %}Days excluding travel days{% endtrans %}</th>
+                            <th>{% trans %}Travel days{% endtrans %}</th>
+                            <th>{% trans %}Total days{% endtrans %}</th>
+                            <th>{% trans %}Participants with special needs{% endtrans %}</th>
+                            <th>{% trans %}Participants with fewer opportunities{% endtrans %}</th>
+                            <th>{% trans %}Accompanying persons{% endtrans %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ totals[value.id]['daysWithoutTravel'] }}</td>
+                            <td>{{ totals[value.id]['travelDays'] }}</td>
+                            <td>{{ totals[value.id]['totalDays'] }}</td>
+                            <td>{{ totals[value.id]['withSpecialNeeds'] }}</td>
+                            <td>{{ totals[value.id]['withFewerOpportunities'] }}</td>
+                            <td>{{ totals[value.id]['accompanyingPersons'] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>{% trans %}Action Details{% endtrans %}:</h2>
+                <table class="table table-hover" data-toggle="table">
+                    {% for action in value.actionDetails %}
+                        <tr>
+                            <td><b>{% trans %}Person{% endtrans %}:</b> {{ action.person.name(app.request.getLocale()) }}</td>
+                            {% if action.institution %}
+                                <td><b>{% trans %}From Institution / Organization{% endtrans %}:</b> {{ action.institution.name(app.request.getLocale()) }}</td>
+                            {% endif %}
 
-                <tbody>
-                {% for key,value in activities %}
-
-                    <tr>
-                        {% for action in value.actionDetails %}
-                            <td> <a href="{{ localizedPath('action_view', {'activityId': value.id}) }}" >{{ value.activityType.name(app.request.locale) }} </a></td>
-                            <td>{{ action.person.firstName(app.request.locale) }} {{ action.person.lastName(app.request.locale) }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-
-            </table>
-
+                            <td><b>{% trans %}Country of origin{% endtrans %}:</b> {{ action.originCountry.name(app.request.getLocale()) }}</td>
+                            <td><b>{% trans %}Country of destination{% endtrans %}:</b> {{ action.destinationCountry.name(app.request.getLocale()) }}</td>
+                            <td><b>{% trans %}City{% endtrans %}:</b> {{ action.city }}</td>
+                            <td><b>{% trans %}Distance{% endtrans %}:</b> {{ action.distance }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>{% trans %}Start date{% endtrans %}:</b> {{ action.startDate | date('d/m/y') }}</td>
+                            <td><b>{% trans %}End date{% endtrans %}:</b> {{ action.EndDate | date('d/m/y') }}</td>
+                            <td><b>{% trans %}Days excluding travel days{% endtrans %}:</b> {{ action.daysWithoutTravel }}</td>
+                            <td><b>{% trans %}Travel days{% endtrans %}:</b> {{ action.travelDays }}</td>
+                            <td><b>{% trans %}Total days{% endtrans %}:</b> {{ action.totalDays }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>{% trans %}Participants with special needs{% endtrans %}:</b>
+                                {%  if(action.hasSpecialNeeds == 1) %}
+                                    {% trans %}Yes{% endtrans %}
+                                {% else %}
+                                    {% trans %}No{% endtrans %}
+                                {% endif  %}
+                            </td>
+                            <td><b>{% trans %}Participants with fewer opportunities{% endtrans %}:</b>
+                                {%  if(action.hasFewerOptions == 1) %}
+                                    {% trans %}Yes{% endtrans %}
+                                {% else %}
+                                    {% trans %}No{% endtrans %}
+                                {% endif  %}
+                            </td>
+                            <td><b>{% trans %}Accompanying persons{% endtrans %}:</b>
+                                {%  if(action.isAccompanyingPerson == 1) %}
+                                    {% trans %}Yes{% endtrans %}
+                                {% else %}
+                                    {% trans %}No{% endtrans %}
+                                {% endif  %}
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endfor %}
         </div>
     <div>
 {% endblock %}

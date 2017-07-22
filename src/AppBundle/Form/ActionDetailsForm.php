@@ -59,7 +59,7 @@ class ActionDetailsForm extends AbstractType
             ->add('totalDays', IntegerType::class, ['label_format' => 'Total days'])
             ->add('hasSpecialNeeds', CheckboxType::class, ['required' => false])
             ->add('hasFewerOptions', CheckboxType::class, ['required' => false])
-            ->add('accompanyingPerson', CheckboxType::class, ['required' => false])
+            ->add('isAccompanyingPerson', CheckboxType::class, ['required' => false])
             ->add('isLongTerm', CheckboxType::class, ['required' => false]);
     }
 

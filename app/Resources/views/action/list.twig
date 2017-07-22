@@ -17,8 +17,8 @@
 
                     <tr>
                         {% for action in value.actionDetails %}
-                            <td> <a href="#" >{{ value.activityType.name(app.request.locale) }} </a></td>
-                            <td><a href="">{{ action.person.firstName(app.request.locale) }} {{ action.person.lastName(app.request.locale) }}</a></td>
+                            <td> <a href="{{ localizedPath('action_view', {'activityId': value.id}) }}" >{{ value.activityType.name(app.request.locale) }} </a></td>
+                            <td>{{ action.person.firstName(app.request.locale) }} {{ action.person.lastName(app.request.locale) }}</td>
                         {% endfor %}
                     </tr>
                 {% endfor %}

@@ -68,6 +68,51 @@ class ActionController extends AbstractController
     }
 
     /**
+     * @Route("/{locale}/action/view/{activityId}", name="action_view", requirements={"activityId": "\d+", "locale": "%app.locales%"})
+     */
+    public function viewAction($activityId)
+    {
+        $activity = $this->getActivityRepository()->findOneBy(['id' => $activityId]);
+        $actionDetails = $this->get('doctrine_entity_repository.action_details')->findBy(['activity' => $activityId]);
+
+        $activityTotals = $this->getTotals($actionDetails);
+//        $contacts = $this->get('doctrine_entity_repository.activity_contact')->findBy(['activity' => $activityId]);
+
+        return $this->render('action/view.twig', ['activity' => $activity, 'totals' => $activityTotals]);
+    }
+
+    private function getTotals($actions) {
+        $totals = [
+            'daysWithoutTravel'      => 0,
+            'travelDays'             => 0,
+            'totalDays'              => 0,
+            'withSpecialNeeds'       => 0,
+            'withFewerOpportunities' => 0,
+            'accompanyingPersons'    => 0
+        ];
+
+        for($i = 0; $i < count($actions); $i++) {
+            $actionDetails = $actions[$i];
+
+            $totals['daysWithoutTravel'] += $actionDetails->getDaysWithoutTravel();
+            $totals['travelDays'] += $actionDetails->getTravelDays();
+            $totals['totalDays'] += $totals['daysWithoutTravel'] + $totals['travelDays'];
+
+            if($actionDetails->getHasSpecialNeeds()) {
+               $totals['withSpecialNeeds'] += 1;
+            }
+            if($actionDetails->getHasFewerOptions()) {
+                $totals['withFewerOpportunities'] += 1;
+            }
+            if($actionDetails->getIsAccompanyingPerson()) {
+                $totals['accompanyingPersons'] += 1;
+            }
+        }
+
+        return $totals;
+    }
+
+    /**
      * @return ActivityRepository
      */
     private function getActivityRepository() {

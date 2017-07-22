@@ -118,9 +118,9 @@ class ActionDetails extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="accompanying_person", type="boolean")
+     * @ORM\Column(name="is_accompanying_person", type="boolean")
      */
-    protected $accompanyingPerson;
+    protected $isAccompanyingPerson;
 
     /**
      * @Assert\NotBlank()
@@ -371,17 +371,17 @@ class ActionDetails extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getAccompanyingPerson()
+    public function getIsAccompanyingPerson()
     {
-        return $this->accompanyingPerson;
+        return $this->isAccompanyingPerson;
     }
 
     /**
-     * @param mixed $accompanyingPerson
+     * @param mixed $isAccompanyingPerson
      */
-    public function setAccompanyingPerson($accompanyingPerson)
+    public function setIsAccompanyingPerson($isAccompanyingPerson)
     {
-        $this->accompanyingPerson = $accompanyingPerson;
+        $this->isAccompanyingPerson = $isAccompanyingPerson;
     }
 
     /**

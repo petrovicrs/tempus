@@ -3,10 +3,10 @@
 namespace AppBundle\Repository;
 
 /**
- * Class ProjectLimitationRepository
+ * Class ProjectLimitationTypeRepository
  * @package AppBundle\Repository
  */
-class ProjectLimitationRepository extends \Doctrine\ORM\EntityRepository
+class ProjectLimitationTypeRepository extends \Doctrine\ORM\EntityRepository
 {
     public function save($personNoteType) {
 

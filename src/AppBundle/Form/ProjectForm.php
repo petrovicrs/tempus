@@ -109,6 +109,7 @@ class ProjectForm extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
             ))
+            ->add('projectSummary', TextType::class)
             ->add('submit', SubmitType::class, array('label_format' => 'Submit'));
     }
 

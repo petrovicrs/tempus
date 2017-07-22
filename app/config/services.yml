@@ -159,6 +159,36 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\ContactType
+    doctrine_entity_repository.project_applicant_organisation:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectApplicantOrganisation
+    doctrine_entity_repository.project_partner_organisation:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectPartnerOrganisation
+    doctrine_entity_repository.project_contact_persons:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectContactPerson
+    doctrine_entity_repository.project_topics:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectTopic
+    doctrine_entity_repository.project_subject_areas:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectSubjectArea
+    doctrine_entity_repository.project_notes:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectNote
     app.security.login_form_authenticator:
         class: AppBundle\Security\LoginFormAuthenticator
         autowire: true

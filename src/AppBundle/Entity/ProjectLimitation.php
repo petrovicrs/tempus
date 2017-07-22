@@ -24,7 +24,7 @@ class ProjectLimitation extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="Institution"
+     *      targetEntity="ProjectLimitationType"
      * )
      */
     protected $limitation;

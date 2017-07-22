@@ -1,19 +1,174 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<section id="main">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="page-header">
-                    <h1>{% trans %}Edit project{% endtrans %}</h1>
-                </div>
+    <script type="text/javascript" src="{{ asset('/js/projectApplicantOrganisations.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecPartnerOrganisations.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecLimitations.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecContactPersons.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecTopics.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecSubjectAreas.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecNotes.js')}}" ></script>
+    <section id="main">
+        <div class="container-fluid">
+            <div class="page-header">
+                <h1>{% trans %}Edit Project{% endtrans %}</h1>
+            </div>
+
+            <div class="controls">
+                {{ form_start(my_form) }}
 
                 <div>
-                    {{ form(my_form) }}
+                    {{ form_label(my_form.programmes, 'Programme'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.programmes, {'attr': {'class': 'form-control'}})  }}
+                    </div>
                 </div>
+                <div>
+                    {{ form_label(my_form.keyActions, 'Key Action'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.keyActions, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.actions, 'Action'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.actions, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.calls, 'Call'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.calls, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.rounds, 'Round'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.rounds, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.nameEng, 'English'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.nameEng, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.nameSrb, 'Srebian'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.nameSrb, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.nameOriginalLetter, 'Original letter'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.nameOriginalLetter, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.acronym, 'Acronym'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.acronym, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.startDatetime, 'Start date'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.startDatetime)  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.endDatetime, 'End date'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.endDatetime)  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.projectNumber, 'Project nr.'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.projectNumber, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.durationMonths, 'Duration in months'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.durationMonths, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.audited, 'Audited'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.audited, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.onGoing, 'On-going'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.onGoing, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <ul class="applicantOrganisations" data-prototype="{{ include('/project/includes/applicantOrganisations.html.twig',
+                {'form': my_form.applicantOrganisations.vars.prototype })|e }}">
+                    {% for applicantOrganisation in my_form.applicantOrganisations %}
+                        <li>{{ include('/project/includes/applicantOrganisations.html.twig', {'form': applicantOrganisation }) }}</li>
+                    {% endfor %}
+                </ul>
+                <div>
+                    {{ form_label(my_form.participantFewerOptions, 'Participan with fewer options'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.participantFewerOptions, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(my_form.consortium, 'Consortium?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.consortium, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                <ul class="partnerOrganisations" data-prototype="{{ include('/project/includes/partnerOrganisations.html.twig',
+                {'form': my_form.partnerOrganisations.vars.prototype})|e }}">
+                    {% for partnerOrganisation in my_form.partnerOrganisations %}
+                        <li>{{ include('/project/includes/partnerOrganisations.html.twig', {'form': partnerOrganisation }) }}</li>
+                    {% endfor %}
+                </ul>
+                <ul class="limitations" data-prototype="{{ include('/project/includes/limitations.html.twig',
+                {'form': my_form.limitations.vars.prototype })|e }}">
+                    {% for limitation in my_form.limitations %}
+                        <li>{{ include('/project/includes/limitations.html.twig', {'form': limitation }) }}</li>
+                    {% endfor %}
+                </ul>
+                <ul class="contactPersons" data-prototype="{{ include('/project/includes/contactPersons.html.twig',
+                {'form': my_form.contactPersons.vars.prototype })|e }}">
+                    {% for contactPerson in my_form.contactPersons %}
+                        <li>{{ include('/project/includes/contactPersons.html.twig', {'form': contactPerson }) }}</li>
+                    {% endfor %}
+                </ul>
+                <ul class="topics" data-prototype="{{ include('/project/includes/topics.html.twig',
+                {'form': my_form.topics.vars.prototype })|e }}">
+                    {% for topic in my_form.topics %}
+                        <li>{{ include('/project/includes/topics.html.twig', {'form': topic }) }}</li>
+                    {% endfor %}
+                </ul>
+                <ul class="subjectAreas" data-prototype="{{ include('/project/includes/subjectAreas.html.twig',
+                {'form': my_form.subjectAreas.vars.prototype })|e }}">
+                    {% for subjectArea in my_form.subjectAreas %}
+                        <li>{{ include('/project/includes/subjectAreas.html.twig', {'form': subjectArea }) }}</li>
+                    {% endfor %}
+                </ul>
+                <ul class="notes" data-prototype="{{ include('/project/includes/notes.html.twig',
+                {'form': my_form.notes.vars.prototype })|e }}">
+                    {% for note in my_form.notes %}
+                        <li>{{ include('/project/includes/notes.html.twig', {'form': note }) }}</li>
+                    {% endfor %}
+                </ul>
+                <div>
+                    {{ form_label(my_form.projectSummary, 'Project Summary'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                    <div class="form-inline">
+                        {{ form_widget(my_form.projectSummary, {'attr': {'class': 'form-control'}})  }}
+                    </div>
+                </div>
+                {{ form_end(my_form) }}
             </div>
         </div>
-    </div>
-</section>
+    </section>
 {% endblock %}

@@ -405,6 +405,12 @@ class Person extends AbstractAuditable
         return $this->lastNameEn;
     }
 
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->firstNameSr . ' ' . $this->lastNameSr;
+        }
+        return $this->firstNameEn . ' ' . $this->lastNameEn;
+    }
 
     public function addContact(PersonContact $personContact)
     {

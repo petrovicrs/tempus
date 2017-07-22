@@ -26,11 +26,6 @@
             </table>
             <h2>{% trans %}Action Details{% endtrans %}:</h2>
             <table class="table table-hover" data-toggle="table">
-                <thead>
-                <tr class="table-header">
-                    <th></th>
-                </tr>
-                </thead>
                 {% for action in activity.actionDetails %}
                     <tr>
                         <td><b>{% trans %}Person{% endtrans %}:</b> {{ action.person.name(app.request.getLocale()) }}</td>

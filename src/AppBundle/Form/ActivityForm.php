@@ -28,13 +28,14 @@ class ActivityForm extends AbstractType
         $builder
             ->add('activityType', EntityType::class, [
                 'class'         => 'AppBundle\Entity\ActivityType',
-                'choice_label'  => 'name' . ucfirst($options['locale'])
+                'choice_label'  => 'name' . ucfirst($options['locale']),
             ])
             ->add('actionDetails', CollectionType::class, array(
                 'entry_type'   => ActionDetailsForm::class,
                 'allow_add'    => true,
                 'by_reference' => false,
-                'allow_delete' => true
+                'allow_delete' => true,
+                'label'        => false
             ))
             ->add('submit', SubmitType::class);
     }

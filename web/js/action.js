@@ -57,7 +57,7 @@ function addForm($collectionHolder, $newLinkLi) {
     var $newFormLi = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormLi.append('<a href="#" class="remove-btn">x</a>');
+    $newFormLi.append('<a href="#" class="remove-action">x</a>');
 
     $newLinkLi.before($newFormLi);
 

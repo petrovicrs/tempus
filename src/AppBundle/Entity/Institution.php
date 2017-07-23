@@ -603,4 +603,11 @@ class Institution extends AbstractAuditable
     {
         $this->picNumber->removeElement($picNumber);
     }
+
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->nameSr;
+        }
+        return $this->nameEn;
+    }
 }

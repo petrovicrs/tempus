@@ -23,7 +23,7 @@ class ProjectLimitationsForm extends AbstractType
     {
         $builder
             ->add('limitation', EntityType::class, [
-                'class' => 'AppBundle:ProjectLimitation',
+                'class' => 'AppBundle:ProjectLimitationType',
                 'choice_label' => 'name' . ucfirst($options['locale'])
             ]);
     }

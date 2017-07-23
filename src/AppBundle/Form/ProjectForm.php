@@ -102,14 +102,14 @@ class ProjectForm extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ))
-            ->add('calls', EntityType::class, [
-                'class' => 'AppBundle:ProjectFtOfficer',
-                'choice_label' => 'name' . ucfirst($options['locale'])
-            ])
-            ->add('rounds', EntityType::class, [
-                'class' => 'AppBundle:ProjectEaceaOfficer',
-                'choice_label' => 'name' . ucfirst($options['locale'])
-            ])
+//            ->add('calls', EntityType::class, [
+//                'class' => 'AppBundle:ProjectFtOfficer',
+//                'choice_label' => 'name' . ucfirst($options['locale'])
+//            ])
+//            ->add('rounds', EntityType::class, [
+//                'class' => 'AppBundle:ProjectEaceaOfficer',
+//                'choice_label' => 'name' . ucfirst($options['locale'])
+//            ])
             ->add('notes', CollectionType::class, array(
                 'entry_type'  => ProjectNoteForm::class,
                 'allow_add' => true,

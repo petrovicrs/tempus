@@ -75,4 +75,11 @@ class ProjectTopicType extends AbstractAuditable
         $this->nameSr = $nameSr;
     }
 
+
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->nameSr;
+        }
+        return $this->nameEn;
+    }
 }

@@ -10,11 +10,13 @@ class InstitutionAccreditationsLoad implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $accreditationType = new InstitutionAccreditationType();
-        $accreditationType->setName('tip1');
+        $accreditationType->setNameEn('type 1');
+        $accreditationType->setNameSr('тип 1');
         $manager->persist($accreditationType);
 
         $accreditationType = new InstitutionAccreditationType();
-        $accreditationType->setName('tip2');
+        $accreditationType->setNameEn('type 2');
+        $accreditationType->setNameSr('тип 2');
         $manager->persist($accreditationType);
 
         // the queries aren't done until now

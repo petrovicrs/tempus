@@ -114,7 +114,10 @@
                 </div>
 
                 <ul class="picNumber" data-prototype="{{ include('/institution/includes/pic-number.html.twig',
-                {'form': my_form.picNumber.vars.prototype })|e }}">
+                    {'form': my_form.picNumber.vars.prototype })|e }}">
+                    {% for picNumber in my_form.picNumber %}
+                        <li>{{ include('/institution/includes/pic-number.html.twig', {'form': picNumber }) }}</li>
+                    {% endfor %}
                 </ul>
 
                 <div>
@@ -124,19 +127,34 @@
                     </div>
                 </div>
                 <ul class="contacts" data-prototype="{{ include('/institution/includes/contacts.html.twig',
-                {'form': my_form.contacts.vars.prototype })|e }}">
+                    {'form': my_form.contacts.vars.prototype })|e }}">
+                    {% for contact in my_form.contacts %}
+                        <li>{{ include('/institution/includes/contacts.html.twig', {'form': contact }) }}</li>
+                    {% endfor %}
                 </ul>
                 <ul class="addresses" data-prototype="{{ include('/institution/includes/addresses.html.twig',
-                {'form': my_form.addresses.vars.prototype })|e }}">
+                    {'form': my_form.addresses.vars.prototype })|e }}">
+                    {% for address in my_form.addresses %}
+                        <li>{{ include('/institution/includes/addresses.html.twig', {'form': address }) }}</li>
+                    {% endfor %}
                 </ul>
                 <ul class="accreditations" data-prototype="{{ include('/institution/includes/accreditations.html.twig',
-                {'form': my_form.accreditations.vars.prototype })|e }}">
+                    {'form': my_form.accreditations.vars.prototype })|e }}">
+                    {% for accreditation in my_form.accreditations %}
+                        <li>{{ include('/institution/includes/accreditations.html.twig', {'form': accreditation }) }}</li>
+                    {% endfor %}
                 </ul>
                 <ul class="legalRepresentatives" data-prototype="{{ include('/institution/includes/legalRepresentatives.html.twig',
-                {'form': my_form.legalRepresentatives.vars.prototype })|e }}">
+                    {'form': my_form.legalRepresentatives.vars.prototype })|e }}">
+                    {% for legalRepresentative in my_form.legalRepresentatives %}
+                        <li>{{ include('/institution/includes/legalRepresentatives.html.twig', {'form': legalRepresentative }) }}</li>
+                    {% endfor %}
                 </ul>
                 <ul class="notes" data-prototype="{{ include('/institution/includes/notes.html.twig',
-                {'form': my_form.notes.vars.prototype })|e }}">
+                    {'form': my_form.notes.vars.prototype })|e }}">
+                    {% for note in my_form.notes %}
+                        <li>{{ include('/institution/includes/notes.html.twig', {'form': note }) }}</li>
+                    {% endfor %}
                 </ul>
                 {{ form_end(my_form) }}
             </div>

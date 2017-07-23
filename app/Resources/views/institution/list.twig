@@ -1,28 +1,61 @@
-{#{% extends 'base.html.twig' %}#}
+{% extends 'base.html.twig' %}
 
-{#{% block body %}#}
-    {#<section id="main">#}
-        {#<div class="container-fluid">#}
+{% block body %}
+    <section id="main">
+        <div class="container-fluid">
 
-            {#<table class="table table-hover" data-toggle="table">#}
-                {#<thead>#}
-                {#<tr class="table-header">#}
-                    {#<th class="sortable" data-field="project_title" data-sortable="true">Name</th>#}
-                    {#<th class="sortable" data-sortable="true">Surname</th>#}
-                {#</tr>#}
-                {#</thead>#}
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                <tr class="table-header">
+                    <th class="sortable" data-field="project_id" data-sortable="true">{% trans %}Nr.{% endtrans %}</th>
+                    <th class="sortable">{% trans %}Name{% endtrans %}</th>
+                    <th class="sortable">{% trans %}Type{% endtrans %}</th>
+                    <th>{% trans %}Level{% endtrans %}</th>
+                    <th>{% trans %}Parent{% endtrans %}</th>
+                    <th>{% trans %}Country{% endtrans %}</th>
+                    <th>{% trans %}Town{% endtrans %}</th>
+                    <th>{% trans %}Reg. Nr.{% endtrans %}</th>
+                    <th>{% trans %}Vat/Tax{% endtrans %}</th>
+                    <th>{% trans %}PIC{% endtrans %}</th>
+                    <th>{% trans %}Public Body{% endtrans %}</th>
+                    <th>{% trans %}Non-Profit{% endtrans %}</th>
+                    {#<th>{% trans %}View{% endtrans %}</th>#}
+                    <th>{% trans %}Edit{% endtrans %}</th>
+                </tr>
+                </thead>
 
-                {#<tbody>#}
-                {#{% for key,value in persons %}#}
-                    {#<tr>#}
-                        {#<td> <a href="{{ path('person_view', {'personId':value.id}) }}" >{{ value.name }} </a></td>#}
-                        {#<td> {{ value.surname }} </td>#}
-                    {#</tr>#}
-                {#{% endfor %}#}
-                {#</tbody>#}
+                <tbody>
+                {% for key,value in result %}
+                    <tr>
+                        <td> {{ value.id }} </td>
+                        <td> {{ value.name(app.request.getLocale()) }} </td>
+                        <td> {{ value.institutionType ? value.institutionType.name(app.request.getLocale()) }} </td>
+                        <td> {{ value.institutionLevel ? value.institutionLevel.name(app.request.getLocale()) }} </td>
+                        <td> {{ value.parentInstitution ? value.parentInstitution.name(app.request.getLocale()) }} </td>
+                        <td> {{ value.country ? value.country.name(app.request.getLocale()) }} </td>
+                        <td> {% for address_key, address in value.addresses %}
+                                {% if address_key == 0 %}
+                                    {{ address.town  }}
+                                {% endif %}
+                            {% endfor %}  </td>
+                        <td> {{ value.nationalRegistrationNumber }} </td>
+                        <td> {{ value.vatNumber }} </td>
+                        <td> ﻿{% for pic_key, pic in value.picNumber %}
+                                {% if pic_key == 0 %}
+                                    {{ pic.number  }}
+                                {% endif %}
+                              {% endfor %}
+                        </td>
+                        <td> {{ value.publicBody ? 'Yes' : 'No' }} </td>
+                        <td> {{ value.nonProfit ? 'Yes' : 'No' }} </td>
+                        {#<td> <a href="{{ localizedPath('project_view', {'projectId':value.id }) }}"> View </a> </td>#}
+                        <td> <a href="{{ localizedPath('institution_edit', {'institutionId':value.id }) }}"> Edit </a> </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
 
-            {#</table>#}
+            </table>
 
-        {#</div>#}
-    {#<div>#}
-{#{% endblock %}#}
+        </div>
+    <div>
+{% endblock %}

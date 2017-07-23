@@ -28,19 +28,20 @@ use AppBundle\Entity\Institution;
 use AppBundle\Repository\ProjectRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 
 class InstitutionController extends AbstractController
 {
-//    /**
-//     * @Route("/{locale}/institution/list", name="institution_list", requirements={"locale": "%app.locales%"})
-//     */
-//    public function listAction()
-//    {
-//        $institutions = $this->getInstitutionsRepository()->findAll();
-//
-//        return $this->render('institution/list.twig', ['institutions' => $institutions]);
-//    }
+    /**
+     * @Route("/{locale}/institution/list", name="institution_list", requirements={"locale": "%app.locales%"})
+     */
+    public function listAction()
+    {
+        $institutions = $this->getInstitutionRepository()->findAll();
+
+        return $this->render('institution/list.twig', ['result' => $institutions]);
+    }
 
     /**
      * @Route("/{locale}/institution/create", name="institution_create", requirements={"locale": "%app.locales%"})
@@ -104,15 +105,166 @@ class InstitutionController extends AbstractController
         return $this->render('institution/create.twig', ['my_form' => $institutionForm->createView()]);
     }
 
-//    /**
-//     * @Route("/{locale}/institution/view/{institutionId}", name="institution_view", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
-//     */
-//    public function viewAction($institutionId)
-//    {
-//        $institution = $this->getInstitutionsRepository()->findOneBy(['id' => $institutionId]);
-//
-//        return $this->render('institution/view.twig', ['institution' => $institution]);
-//    }
+    /**
+     * @Route("/{locale}/institution/edit/{institutionId}", name="institution_edit", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
+     *
+     */
+    public function editAction(Request $request, $institutionId)
+    {
+        /** @var Institution $institution */
+        $institution = $this->getInstitutionRepository()->findOneBy(['id' => $institutionId]);
+
+        $institutionForm = $this->createForm(InstitutionsForm::class, $institution, [
+            'action' => $this->generateUrl('institution_edit', ['institutionId' => $institutionId]),
+            'method' => 'POST',
+        ]);
+
+        $originalPicNumbers = new ArrayCollection();
+        $originalContacts = new ArrayCollection();
+        $originalAddresses = new ArrayCollection();
+        $originalAccreditations = new ArrayCollection();
+        $originalNotes = new ArrayCollection();
+        $originalLegalRepresentatives = new ArrayCollection();
+
+        foreach ($institution->getPicNumber() as $picNumber) {
+            $originalPicNumbers->add($picNumber);
+        }
+
+        foreach ($institution->getContacts() as $contact){
+            $originalContacts->add($contact);
+        }
+
+        foreach ($institution->getAddresses() as $address){
+            $originalAddresses->add($address);
+        }
+
+        foreach ($institution->getAccreditations() as $accreditation){
+            $originalAccreditations->add($accreditation);
+        }
+
+        foreach ($institution->getNotes() as $note){
+            $originalNotes->add($note);
+        }
+
+        foreach ($institution->getLegalRepresentatives() as $legalRepresentative){
+            $originalLegalRepresentatives->add($legalRepresentative);
+        }
+
+        $institutionForm->handleRequest($request);
+
+        if ($institutionForm->isSubmitted() && $institutionForm->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($originalPicNumbers as $picNumber) {
+                if (false === $institution->getPicNumber()->contains($picNumber)) {
+                    $em->remove($picNumber);
+                }
+            }
+
+            /** @var PicNumber $picNumber */
+            foreach ($institution->getPicNumber() as $picNumber) {
+                if (false === $originalPicNumbers->contains($picNumber)) {
+                    $picNumber->setInstitution($institution);
+                    $this->getPicNumberRepository()->save($picNumber);
+                }
+            }
+
+            foreach ($originalContacts as $originalContact) {
+                if (false === $institution->getContacts()->contains($originalContact)) {
+                    $em->remove($originalContact);
+                }
+            }
+
+            /** @var InstitutionContact $contact */
+            foreach ($institution->getContacts() as $contact) {
+                if (false === $originalContacts->contains($contact)) {
+                    $contact->setInstitution($institution);
+                    $this->getInstitutionContactRepository()->save($contact);
+                }
+            }
+
+            foreach ($originalAddresses as $originalAddress) {
+                if (false === $institution->getAddresses()->contains($originalAddress)) {
+                    $em->remove($originalAddress);
+                }
+            }
+
+            /** @var InstitutionAddress $address */
+            foreach ($institution->getAddresses() as $address) {
+                if (false === $originalNotes->contains($address)) {
+                    $address->setInstitution($institution);
+                    $this->getInstitutionAddressRepository()->save($address);
+                }
+            }
+
+            foreach ($originalAccreditations as $originalAccreditation) {
+                if (false === $institution->getAccreditations()->contains($originalAccreditation)) {
+                    $em->remove($originalAccreditation);
+                }
+            }
+
+            /** @var InstitutionAccreditation $accreditation */
+            foreach ($institution->getAccreditations() as $accreditation) {
+                if (false === $originalAccreditations->contains($accreditation)) {
+                    $accreditation->setInstitution($institution);
+                    $this->getInstitutionAccreditationRepository()->save($accreditation);
+                }
+            }
+
+            foreach ($originalNotes as $note) {
+                if (false === $institution->getNotes()->contains($note)) {
+                    $em->remove($note);
+                }
+            }
+
+            /** @var InstitutionNote $note */
+            foreach ($institution->getNotes() as $note) {
+                if (false === $originalNotes->contains($note)) {
+                    $note->setInstitution($institution);
+                    $this->getInstitutionNoteRepository()->save($note);
+                }
+            }
+
+            foreach ($originalLegalRepresentatives as $originalLegalRepresentative) {
+                if (false === $institution->getLegalRepresentatives()->contains($originalLegalRepresentative)) {
+                    $em->remove($originalLegalRepresentative);
+                }
+            }
+
+            /** @var InstitutionLegalRepresentative $legalRepresentative */
+            foreach ($institution->getLegalRepresentatives() as $legalRepresentative) {
+                if (false === $originalLegalRepresentatives->contains($legalRepresentative)) {
+                    $legalRepresentative->setInstitution($institution);
+                    $this->getInstitutionLegalRepresentativeRepository()->save($legalRepresentative);
+                }
+            }
+
+            $this->getInstitutionRepository()->save($institution);
+
+            return $this->redirectToRoute('institution_list');
+        }
+
+        return $this->render('institution/edit.twig', ['my_form' => $institutionForm->createView()]);
+    }
+
+    /**
+     * @Route("/{locale}/institution/view/{institutionId}", name="institution_view", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
+     */
+    public function viewAction($institutionId)
+    {
+        $institution = $this->getInstitutionRepository()->findOneBy(['id' => $institutionId]);
+
+        $picNumbers = $this->getPicNumberRepository()->findBy(['institution' => $institutionId]);
+        $contacts = $this->getInstitutionContactRepository()->findBy(['institution' => $institutionId]);
+        $addresses = $this->getInstitutionAddressRepository()->findBy(['institution' => $institutionId]);
+        $accreditations = $this->getInstitutionAccreditationRepository()->findBy(['institution' => $institutionId]);
+        $notes = $this->getInstitutionNoteRepository()->findBy(['institution' => $institutionId]);
+        $legalRepresentatives = $this->getInstitutionLegalRepresentativeRepository()->findBy(['institution' => $institutionId]);
+
+        return $this->render('institution/view.twig', ['institution' => $institution, 'picNumbers' => $picNumbers, 'contacts' => $contacts, 'addresses' => $addresses,
+            'accreditations' => $accreditations, 'notes' => $notes, 'legalRepresentatives' => $legalRepresentatives]);
+    }
 
     /**
      * @return InstitutionRepository

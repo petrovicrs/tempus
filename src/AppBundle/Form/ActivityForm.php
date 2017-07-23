@@ -30,6 +30,10 @@ class ActivityForm extends AbstractType
                 'class'         => 'AppBundle\Entity\ActivityType',
                 'choice_label'  => 'name' . ucfirst($options['locale']),
             ])
+            ->add('project', EntityType::class, [
+                'class'         => 'AppBundle\Entity\Project',
+                'choice_label'  => 'name' . ucfirst($options['locale']),
+            ])
             ->add('actionDetails', CollectionType::class, array(
                 'entry_type'   => ActionDetailsForm::class,
                 'allow_add'    => true,

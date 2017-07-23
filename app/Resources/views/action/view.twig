@@ -4,6 +4,7 @@
     {% include 'main-navbar.html.twig' with {'active': 'action'} %}
     <div class="container-fluid">
         <div class="page-header">
+            <a href="{{ localizedPath('action_edit', {'activityId':activity.id})  }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>Edit</a>
             <h2>{% trans %}Totals{% endtrans %}:</h2>
             <table class="table table-hover" data-toggle="table">
                 <thead>

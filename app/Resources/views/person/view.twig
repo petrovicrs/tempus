@@ -143,8 +143,8 @@
             </thead>
             {% for personInstitutionRelationship in person.personInstitutionRelationships %}
                 <tr>
-                    <td>{{ personInstitutionRelationship.streetAndNumber }}</td>
-                    <td>{{ personInstitutionRelationship.personInstitutionRelationshipType.type(app.request.getLocale()) }}</td>
+                    <td>{{ personInstitutionRelationship.institution ? personInstitutionRelationship.institution.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td>{{ personInstitutionRelationship.personInstitutionRelationshipType ? personInstitutionRelationship.personInstitutionRelationshipType.type(app.request.getLocale()) : 'N/A'}}</td>
                 </tr>
             {% endfor %}
         </table>

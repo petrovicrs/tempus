@@ -1,7 +1,7 @@
-var $addActionActivityLink = $('<a href="#" class="action-activity">Add activity</a>');
+var $addActionActivityLink = $('<a href="#" class="action-activity btn btn-add btn-success"><span aria-hidden="true"></span>Add activity</a>');
 var $newLinkLi = $('<li></li>').append($addActionActivityLink);
 
-var $addActionDetailsLink = $('<a href="#" class="action-details">Add a action detail</a>');
+var $addActionDetailsLink = $('<a href="#" class="action-details btn btn-add btn-success"><span aria-hidden="true"></span>Add a action detail</a>');
 var $newActionDetailsLinkLi = $('<li></li>').append($addActionDetailsLink);
 
 jQuery(document).ready(function() {
@@ -57,7 +57,7 @@ function addForm($collectionHolder, $newLinkLi) {
     var $newFormLi = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormLi.append('<a href="#" class="remove-action">x</a>');
+    $newFormLi.append('<a href="#" class="remove-action btn btn-remove btn-danger"><span aria-hidden="true"></span>Remove Action Details</a>');
 
     $newLinkLi.before($newFormLi);
 
@@ -102,7 +102,7 @@ function addActionDetailsForm($collectionHolder, $newLinkLi) {
     var $newFormLi = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormLi.append('<a href="#" class="remove-action">x</a>');
+    $newFormLi.append('<a href="#" class="remove-action btn btn-remove btn-danger">Remove</a>');
 
     $newLinkLi.before($newFormLi);
 

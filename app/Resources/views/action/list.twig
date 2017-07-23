@@ -4,9 +4,10 @@
     <section id="main">
         {% include 'main-navbar.html.twig' with {'active': 'action'} %}
         <div class="container-fluid">
+            <a href="{{ localizedPath('action_create') }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>Add Action</a>
             {% for key,value in activities %}
                 <h2><b>{% trans %}Activity{% endtrans %}: </b><a href="{{ localizedPath('action_view', {'activityId': value.id}) }}">{{ value.activityType.name(app.request.locale) }} </a></h2>
-
+                <h3><b>Project: </b>{{ value.project ? value.project.name(app.request.getLocale()) }}</h3>
                 <h2>{% trans %}Totals{% endtrans %}:</h2>
                 <table class="table table-hover" data-toggle="table">
                     <thead>

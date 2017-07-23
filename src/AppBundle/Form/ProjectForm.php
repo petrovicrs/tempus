@@ -8,6 +8,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -48,12 +49,12 @@ class ProjectForm extends AbstractType
                 'class' => 'AppBundle:ProjectRound',
                 'choice_label' => 'name' . ucfirst($options['locale'])
             ])
-            ->add('nameEng', TextType::class)
-            ->add('nameSrb', TextType::class)
+            ->add('nameEn', TextType::class)
+            ->add('nameSr', TextType::class)
             ->add('nameOriginalLetter', TextType::class)
             ->add('acronym', TextType::class)
-            ->add('endDatetime', DateTimeType::class)
-            ->add('startDatetime', DateTimeType::class)
+            ->add('endDatetime', DateType::class)
+            ->add('startDatetime', DateType::class)
             ->add('projectNumber', TextType::class)
             ->add('durationMonths', TextType::class)
             ->add('audited', CheckboxType::class, array('required' => false))

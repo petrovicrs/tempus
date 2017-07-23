@@ -25,6 +25,11 @@
                             {{ form_widget(my_form.activityType, {'attr': {'class': 'form-control'}})  }}
                         </div>
 
+                        {{ form_label(my_form.project, 'Project'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.project, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+
                         <ul class="action-details" data-prototype="{{ include('/action/includes/action-details.html.twig',
                         {'form': my_form.actionDetails.vars.prototype })|e }}">
                         </ul>

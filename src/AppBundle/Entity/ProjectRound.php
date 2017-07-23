@@ -77,8 +77,8 @@ class ProjectRound extends AbstractAuditable
 
     public function getName($locale) {
         if ($locale == "sr"){
-            return $this->firstNameSr;
+            return $this->nameSr;
         }
-        return $this->firstNameEn;
+        return $this->nameEn;
     }
 }

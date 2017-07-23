@@ -35,6 +35,9 @@ security:
             anonymous: true
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/doc,   roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/,      roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/en/project/list, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, role: ROLE_ADMIN }
+#        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/doc,   roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/,      roles: IS_AUTHENTICATED_ANONYMOUSLY }

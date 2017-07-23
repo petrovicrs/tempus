@@ -37,14 +37,14 @@ class Project extends AbstractAuditable
      * @Assert\Type("string")
      * @ORM\Column(name="name_eng", type="string", length=255)
      */
-    protected $nameEng;
+    protected $nameEn;
 
     /**
      * @var string $name
      * @Assert\Type("string")
      * @ORM\Column(name="name_srb", type="string", length=255)
      */
-    protected $nameSrb;
+    protected $nameSr;
 
     /**
      * @var string $nameOriginalLetter
@@ -218,33 +218,33 @@ class Project extends AbstractAuditable
     /**
      * @return string
      */
-    public function getNameEng()
+    public function getNameEn()
     {
-        return $this->nameEng;
+        return $this->nameEn;
     }
 
     /**
-     * @param string $nameEng
+     * @param string $nameEn
      */
-    public function setNameEng($nameEng)
+    public function setNameEn($nameEn)
     {
-        $this->nameEng = $nameEng;
+        $this->nameEn = $nameEn;
     }
 
     /**
      * @return string
      */
-    public function getNameSrb()
+    public function getNameSr()
     {
-        return $this->nameSrb;
+        return $this->nameSr;
     }
 
     /**
-     * @param string $nameSrb
+     * @param string $nameSr
      */
-    public function setNameSrb($nameSrb)
+    public function setNameSr($nameSr)
     {
-        $this->nameSrb = $nameSrb;
+        $this->nameSr = $nameSr;
     }
 
     /**
@@ -719,9 +719,9 @@ class Project extends AbstractAuditable
 
     public function getName($locale) {
         if ($locale == "sr"){
-            return $this->nameSrb;
+            return $this->nameSr;
         }
-        return $this->nameEng;
+        return $this->nameEn;
     }
 
 }

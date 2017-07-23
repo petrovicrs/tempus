@@ -2,6 +2,7 @@
 
 {% block body %}
     <section id="main">
+        {% include 'main-navbar.html.twig' with {'active': 'institution'} %}
         <div class="container-fluid">
 
             <table class="table table-hover" data-toggle="table">
@@ -19,7 +20,7 @@
                     <th>{% trans %}PIC{% endtrans %}</th>
                     <th>{% trans %}Public Body{% endtrans %}</th>
                     <th>{% trans %}Non-Profit{% endtrans %}</th>
-                    {#<th>{% trans %}View{% endtrans %}</th>#}
+                    <th>{% trans %}View{% endtrans %}</th>
                     <th>{% trans %}Edit{% endtrans %}</th>
                 </tr>
                 </thead>
@@ -48,7 +49,7 @@
                         </td>
                         <td> {{ value.publicBody ? 'Yes' : 'No' }} </td>
                         <td> {{ value.nonProfit ? 'Yes' : 'No' }} </td>
-                        {#<td> <a href="{{ localizedPath('project_view', {'projectId':value.id }) }}"> View </a> </td>#}
+                        <td> <a href="{{ localizedPath('institution_view', {'institutionId':value.id }) }}"> View </a> </td>
                         <td> <a href="{{ localizedPath('institution_edit', {'institutionId':value.id }) }}"> Edit </a> </td>
                     </tr>
                 {% endfor %}

@@ -21,9 +21,15 @@ class InstitutionAccreditationType extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="name", type="string")
+     * @ORM\Column(name="name_en", type="string")
      */
-    protected $name;
+    protected $nameEn;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="name_sr", type="string")
+     */
+    protected $nameSr;
 
     /**
      * @return mixed
@@ -36,17 +42,40 @@ class InstitutionAccreditationType extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getName()
+    public function getNameEn()
     {
-        return $this->name;
+        return $this->nameEn;
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $nameEn
      */
-    public function setName($name)
+    public function setNameEn($nameEn)
     {
-        $this->name = $name;
+        $this->nameEn = $nameEn;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNameSr()
+    {
+        return $this->nameSr;
+    }
+
+    /**
+     * @param mixed $nameSr
+     */
+    public function setNameSr($nameSr)
+    {
+        $this->nameSr = $nameSr;
+    }
+
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->nameSr;
+        }
+        return $this->nameEn;
     }
 
 }

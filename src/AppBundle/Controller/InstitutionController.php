@@ -98,7 +98,7 @@ class InstitutionController extends AbstractController
                 $legalRepresentative->setInstitution($institutions);
                 $this->getInstitutionLegalRepresentativeRepository()->save($legalRepresentative);
             }
-            return $this->redirectToRoute('project_list');
+            return $this->redirectToRoute('institution_list');
 
         }
 

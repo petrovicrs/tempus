@@ -1,4 +1,12 @@
 <div class="block" style="clear: both;">
-    {{ form_row(form.institution) }}
-    {{ form_row(form.personInstitutionRelationshipType) }}
+    {{ form_label(form.institution, 'Institution'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.institution, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
+    {{ form_label(form.personInstitutionRelationshipType, 'Person institution relationship type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.personInstitutionRelationshipType, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
 </div>

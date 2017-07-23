@@ -1,4 +1,14 @@
 <div class="block" style="clear: both;">
-    {{ form_row(form.personDocumentType) }}
+
+    {{ form_label(form.personDocumentType, 'Person document type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.personDocumentType, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
+    {{ form_label(form.value, 'Value'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.value, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
     {{ form_row(form.value) }}
 </div>

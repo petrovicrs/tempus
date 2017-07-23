@@ -1,32 +1,32 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: jovanmijatovic
- * Date: 6/4/17
- * Time: 9:39 AM
+ * User: nemtish
+ * Date: 22.07.17
+ * Time: 12:50
  */
+
 namespace AppBundle\Form;
 
-use AppBundle\Entity\PersonNote;
+
+use AppBundle\Entity\Action;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class PersonNoteForm extends AbstractType
+class ActionForm extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('personNoteType', EntityType::class, [
-                'class' => 'AppBundle:PersonNoteType',
-                'choice_label'  => 'name' . ucfirst($options['locale'])
-            ])
-            ->add('note', TextareaType::class);
+            ->add('activity', CollectionType::class, array(
+                'entry_type'   => ActivityForm::class,
+                'allow_add'    => true,
+                'by_reference' => false,
+                'allow_delete' => true
+            ));
     }
 
     /**
@@ -37,13 +37,11 @@ class PersonNoteForm extends AbstractType
         return 'appbundle_project';
     }
 
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => PersonNote::class,
+            'data_class' => Action::class
         ]);
-
     }
 }

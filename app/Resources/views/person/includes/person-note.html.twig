@@ -1,4 +1,13 @@
 <div class="block" style="clear: both;">
-    {{ form_row(form.personNoteType) }}
-    {{ form_row(form.note) }}
-</div>åç
+
+    {{ form_label(form.personNoteType, 'Person note type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.personNoteType, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
+    {{ form_label(form.note, 'Note'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.note, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
+</div>

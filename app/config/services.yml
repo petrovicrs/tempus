@@ -189,6 +189,17 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\ProjectNote
+
+    doctrine_entity_repository.activity:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\Activity
+    doctrine_entity_repository.action_details:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ActionDetails
     app.security.login_form_authenticator:
         class: AppBundle\Security\LoginFormAuthenticator
         autowire: true

@@ -15,8 +15,8 @@
                 <tbody>
                 {% for key,value in persons %}
                     <tr>
-                        <td> <a href="{{ localizedPath('person_view', {'personId':value.id}) }}" >{{ value.name }} </a></td>
-                        <td> {{ value.surname }} </td>
+                        <td> <a href="{{ localizedPath('person_view', {'personId':value.id}) }}" >{{ value.firstName(app.request.locale) }} </a></td>
+                        <td> {{ value.lastName(app.request.locale) }} </td>
                     </tr>
                 {% endfor %}
                 </tbody>

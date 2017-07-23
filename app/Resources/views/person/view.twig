@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <section id="main">
+
+    {% include 'main-navbar.html.twig' with {'active': 'person'} %}
+
     <div class="container-fluid">
         <div class="page-header">
             <table class="table table-hover" data-toggle="table">

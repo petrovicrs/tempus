@@ -2,6 +2,7 @@
 
 {% block body %}
     <section id="main">
+        {% include 'main-navbar.html.twig' with {'active': 'action'} %}
         <div class="container-fluid">
             {% for key,value in activities %}
                 <h2><b>{% trans %}Activity{% endtrans %}: </b><a href="{{ localizedPath('action_view', {'activityId': value.id}) }}">{{ value.activityType.name(app.request.locale) }} </a></h2>

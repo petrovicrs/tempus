@@ -1,19 +1,19 @@
-var $addContactLink = $('<a href="#" class="add_contact_link">Add a contact</a>');
+var $addContactLink = $('<a href="#" class="add_contact_link btn btn-add btn-success"><span aria-hidden="true"></span>Add a contact</a>');
 var $newLinkLi = $('<li></li>').append($addContactLink);
 
-var $addAddressLink = $('<a href="#" class="add_address_link">Add a address</a>');
+var $addAddressLink = $('<a href="#" class="add_address_link  btn btn-add btn-success"><span aria-hidden="true"></span>Add a address</a>');
 var $newAddressLinkLi = $('<li></li>').append($addAddressLink);
 
-var $addNoteLink = $('<a href="#" class="add_address_link">Add a note</a>');
+var $addNoteLink = $('<a href="#" class="add_address_link  btn btn-add btn-success"><span aria-hidden="true"></span>Add a note</a>');
 var $newNoteLinkLi = $('<li></li>').append($addNoteLink);
 
-var $addDocumentLink = $('<a href="#" class="add_document_link">Add a document</a>');
+var $addDocumentLink = $('<a href="#" class="add_document_link  btn btn-add btn-success"><span aria-hidden="true"></span>Add a document</a>');
 var $newDocumentLinkLi = $('<li></li>').append($addDocumentLink);
 
-var $addInstitutionRelationshipLink = $('<a href="#" class="add_document_link">Add a institution relationship</a>');
+var $addInstitutionRelationshipLink = $('<a href="#" class="add_document_link  btn btn-add btn-success"><span aria-hidden="true"></span>Add a institution relationship</a>');
 var $newInstitutionRelationshipLinkLi = $('<li></li>').append($addInstitutionRelationshipLink);
 
-var $addFacingSituationLink = $('<a href="#" class="add_field_of_expertise_link">Add situation person is facing</a>');
+var $addFacingSituationLink = $('<a href="#" class="add_field_of_expertise_link  btn btn-add btn-success"><span aria-hidden="true"></span>Add situation person is facing</a>');
 var $newFacingSituationLinkLi = $('<li></li>').append($addFacingSituationLink);
 
 jQuery(document).ready(function() {
@@ -49,6 +49,7 @@ jQuery(document).ready(function() {
     $addressesCollectionHolder.append($newAddressLinkLi);
     $addressesCollectionHolder.data('index', $addressesCollectionHolder.find(':input').length);
 
+
     $addAddressLink.on('click', function(e) {
         e.preventDefault();
         addAddressForm($addressesCollectionHolder, $newAddressLinkLi);
@@ -62,6 +63,7 @@ jQuery(document).ready(function() {
     });
     $notesCollectionHolder.append($newNoteLinkLi);
     $notesCollectionHolder.data('index', $notesCollectionHolder.find(':input').length);
+
 
     $addNoteLink.on('click', function(e) {
         e.preventDefault();
@@ -130,7 +132,7 @@ function addContactForm($collectionHolder, $newLinkLi) {
     var $newFormLi = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormLi.append('<a href="#" class="remove-contact">x</a>');
+    $newFormLi.append('<a href="#" class="remove-contact btn btn-remove btn-danger"><span aria-hidden="true"></span>x</a>');
 
     $newLinkLi.before($newFormLi);
 
@@ -145,7 +147,7 @@ function addContactForm($collectionHolder, $newLinkLi) {
 }
 
 function addContactFormDeleteLink($contactFormLi) {
-    var $removeFormA = $('<a href="#">delete this contact</a>');
+    var $removeFormA = $('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>x</a>');
     $contactFormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
@@ -166,7 +168,7 @@ function addAddressForm($collectionHolder, $newLinkLi) {
     var newForm = prototype.replace(/__name__/g, index);
     $collectionHolder.data('index', index + 1);
     var $newFormLi = $('<li></li>').append(newForm);
-    $newFormLi.append('<a href="#" class="remove-address">x</a>');
+    $newFormLi.append('<a href="#" class="remove-address btn btn-remove btn-danger"><span aria-hidden="true"></span>x</a>');
     $newLinkLi.before($newFormLi);
 
     // handle the removal, just for this example
@@ -180,7 +182,7 @@ function addAddressForm($collectionHolder, $newLinkLi) {
 }
 
 function addAddressFormDeleteLink($addressFormLi) {
-    var $removeFormA = $('<a href="#">delete this address</a>');
+    var $removeFormA = $('<a href="#" class="btn btn btn-remove btn-danger"><span aria-hidden="true"></span>x</a>');
     $addressFormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
@@ -196,7 +198,7 @@ function addNoteForm($collectionHolder, $newLinkLi) {
     var newForm = prototype.replace(/__name__/g, index);
     $collectionHolder.data('index', index + 1);
     var $newFormLi = $('<li></li>').append(newForm);
-    $newFormLi.append('<a href="#" class="remove-note">x</a>');
+    $newFormLi.append('<a href="#" class="remove-note btn btn-remove btn-danger"><span aria-hidden="true"></span>x</a>');
     $newLinkLi.before($newFormLi);
 
     // handle the removal, just for this example
@@ -210,7 +212,7 @@ function addNoteForm($collectionHolder, $newLinkLi) {
 }
 
 function addNoteFormDeleteLink($formLi) {
-    var $removeFormA = $('<a href="#">delete this note</a>');
+    var $removeFormA = $('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>x</a>');
     $formLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
@@ -226,7 +228,7 @@ function addDocumentForm($collectionHolder, $newLinkLi) {
     var newForm = prototype.replace(/__name__/g, index);
     $collectionHolder.data('index', index + 1);
     var $newFormLi = $('<li></li>').append(newForm);
-    $newFormLi.append('<a href="#" class="remove-document">x</a>');
+    $newFormLi.append('<a href="#" class="remove-document btn btn-remove btn-danger"><span aria-hidden="true"></span>x</a>');
     $newLinkLi.before($newFormLi);
 
     // handle the removal, just for this example
@@ -240,7 +242,7 @@ function addDocumentForm($collectionHolder, $newLinkLi) {
 }
 
 function addDocumentFormDeleteLink($formLi) {
-    var $removeFormA = $('<a href="#">delete this document</a>');
+    var $removeFormA = $('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>x</a>');
     $formLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
@@ -258,7 +260,7 @@ function addInstitutionRelationshipForm($collectionHolder, $newLinkLi) {
     var newForm = prototype.replace(/__name__/g, index);
     $collectionHolder.data('index', index + 1);
     var $newFormLi = $('<li></li>').append(newForm);
-    $newFormLi.append('<a href="#" class="remove-institution-relationship">x</a>');
+    $newFormLi.append('<a href="#" class="remove-institution-relationship btn btn-remove btn-danger"><span aria-hidden="true"></span>x</a>');
     $newLinkLi.before($newFormLi);
 
     // handle the removal, just for this example
@@ -272,7 +274,7 @@ function addInstitutionRelationshipForm($collectionHolder, $newLinkLi) {
 }
 
 function addInstitutionRelationshipFormDeleteLink($formLi) {
-    var $removeFormA = $('<a href="#">delete this relationship</a>');
+    var $removeFormA = $('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>x</a>');
     $formLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
@@ -290,7 +292,7 @@ function addFacingSituationForm($collectionHolder, $newLinkLi) {
     var newForm = prototype.replace(/__name__/g, index);
     $collectionHolder.data('index', index + 1);
     var $newFormLi = $('<li></li>').append(newForm);
-    $newFormLi.append('<a href="#" class="remove-facing-situation">x</a>');
+    $newFormLi.append('<a href="#" class="remove-facing-situation btn btn-remove btn-danger"><span aria-hidden="true"></span>x</a>');
     $newLinkLi.before($newFormLi);
 
     // handle the removal, just for this example
@@ -304,7 +306,7 @@ function addFacingSituationForm($collectionHolder, $newLinkLi) {
 }
 
 function addFacingSituationFormDeleteLink($formLi) {
-    var $removeFormA = $('<a href="#">remove situation person is facing</a>');
+    var $removeFormA = $('<a href="#" class="btn-remove btn btn-danger"><span aria-hidden="true"></span>x</a>');
     $formLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {

@@ -8,6 +8,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,7 +27,7 @@ class ProjectNoteForm extends AbstractType
                 'class' => 'AppBundle:ProjectNoteType',
                 'choice_label' => 'name' . ucfirst($options['locale'])
             ])
-            ->add('note', TextType::class);
+            ->add('note', TextareaType::class);
     }
 
     /**

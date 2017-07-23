@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <section id="main">
+    {% include 'main-navbar.html.twig' with {'active': 'action'} %}
     <div class="container-fluid">
         <div class="page-header">
             <h2>{% trans %}Totals{% endtrans %}:</h2>

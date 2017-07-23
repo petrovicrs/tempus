@@ -8,6 +8,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -62,6 +63,7 @@ class ProjectForm extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('participantFewerOptions', CheckboxType::class, array('required' => false))
             ->add('consortium', CheckboxType::class, array('required' => false))
@@ -70,30 +72,35 @@ class ProjectForm extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('limitations', CollectionType::class, array(
                 'entry_type'  => ProjectLimitationsForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('contactPersons', CollectionType::class, array(
                 'entry_type'  => ProjectContactPersonForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('topics', CollectionType::class, array(
                 'entry_type'  => ProjectTopicsForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('subjectAreas', CollectionType::class, array(
                 'entry_type'  => ProjectSubjectAreasForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('calls', EntityType::class, [
                 'class' => 'AppBundle:ProjectFtOfficer',
@@ -108,8 +115,9 @@ class ProjectForm extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
-            ->add('projectSummary', TextType::class)
+            ->add('projectSummary', TextareaType::class)
             ->add('submit', SubmitType::class, array('label_format' => 'Submit'));
     }
 

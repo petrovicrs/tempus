@@ -1,7 +1,19 @@
 <div class="block" style="clear: both;">
-    {{ form_row(form.contactType) }}
-    {{ form_row(form.contactValue) }}
-    {{ form_row(form.note) }}
+    {{ form_label(form.contactType, 'Contact type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.contactType, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
+    {{ form_label(form.contactValue, 'Contact value'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.contactValue, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
+    {{ form_label(form.note, 'Note'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.note, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
     {{ form_row(form.isPublic) }}
     {{ form_row(form.isPrimary) }}
 </div>

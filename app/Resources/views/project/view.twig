@@ -5,164 +5,115 @@
         {% include 'main-navbar.html.twig' with {'active': 'project'} %}
         <div class="container-fluid">
             <div class="page-header">
-                <h1>{% trans %}Project {% endtrans %}</h1>
+                <h1>{% trans %}Project{% endtrans %}</h1>
             </div>
+            <table class="table table-hover" data-toggle="table">
+                <tr>
+                    <td><b>{% trans %}Programme{% endtrans %}</b>: {{ project.programmes ? project.programmes.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td><b>{% trans %}Key Action{% endtrans %}</b>: {{ project.keyActions ? project.keyActions.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td><b>{% trans %}Action{% endtrans %}</b>: {{ project.actions ? project.actions.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td><b>{% trans %}Call{% endtrans %}</b>: {{ project.calls ? project.calls.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td><b>{% trans %}Round{% endtrans %}</b>: {{ project.rounds ? project.rounds.name(app.request.getLocale()) : 'N/A'}}</td>
+                </tr>
+            </table>
+            <h2>{% trans %}General information{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                <tr>
+                    <td><b>{% trans %}Project Title En{% endtrans %}</b>: {{ project.nameEng ? project.nameEng : 'N/A'}}</td>
+                    <td><b>{% trans %}Project Title Sr{% endtrans %}</b>: {{ project.nameSrb ? project.nameSrb : 'N/A'}}</td>
+                    <td><b>{% trans %}Project Title Original Letter{% endtrans %}</b>: {{ project.nameOriginalLetter ? project.nameOriginalLetter : 'N/A'}}</td>
+                    <td><b>{% trans %}Acronym{% endtrans %}</b>: {{ project.acronym ? project.acronym : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Project Nr.{% endtrans %}</b>: {{ project.projectNumber ? project.projectNumber : 'N/A'}}</td>
+                    <td><b>{% trans %}Audited{% endtrans %}</b>: {{ project.audited ? 'Yes' : 'No'}}</td>
+                    <td colspan="2"><b>{% trans %}On-Going{% endtrans %}</b>: {{ project.onGoing ? 'Yes' : 'No'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Start Date Nr.{% endtrans %}</b>: {{ project.startDatetime | date('d/m/y')}}</td>
+                    <td><b>{% trans %}End Date{% endtrans %}</b>: {{ project.endDatetime | date('d/m/y')}}</td>
+                    <td colspan="2"><b>{% trans %}Duration in Months{% endtrans %}</b>: {{ project.durationMonths ? project.durationMonths : 'N/A'}}</td>
+                </tr>
+            </table>
+            <h2>{% trans %}Aplicant Organisation{% endtrans %}:</h2>
+            <b>{% trans %}Consortium{% endtrans %}</b>: {{ project.consortium ? 'Yes' : 'No'}} <br/>
+            <b>{% trans %}Applicant with fewer options{% endtrans %}</b>: {{ project.participantFewerOptions ? 'Yes' : 'No'}}
+            <table class="table table-hover" data-toggle="table">
+                {% for applicantOrganisation in project.applicantOrganisations %}
+                    <tr>
+                        <td>
+                            <b>{% trans %}Applicant Organisation{% endtrans %}:</b> {{ applicantOrganisation.organisation.name(app.request.getLocale()) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>{% trans %}Partner Organisation{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for partnerOrganisation in project.partnerOrganisations %}
+                    <tr>
+                        <td>
+                            <b>{% trans %}Partner Organisation{% endtrans %}:</b> {{ partnerOrganisation.organisation.name(app.request.getLocale()) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>{% trans %}Type of limitation{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for limitation in project.limitations %}
+                    <tr>
+                        <td>
+                            <b>{% trans %}Limitations{% endtrans %}:</b> {{ limitation.limitation ? limitation.limitation.name(app.request.getLocale()) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>{% trans %}Contact Persons{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for contactPerson in project.contactPersons %}
+                    <tr>
+                        <td>
+                            <b>{% trans %}Person{% endtrans %}:</b> {{ contactPerson.person ? contactPerson.person.name(app.request.getLocale()) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>{% trans %}Topics{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for topic in project.topics %}
+                    <tr>
+                        <td>
+                            <b>{% trans %}Topic{% endtrans %}:</b> {{ topic.topic ? topic.topic.name(app.request.getLocale()) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>{% trans %}Subject Areas{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for subjectArea in project.subjectAreas %}
+                    <tr>
+                        <td>
+                            <b>{% trans %}Subject Area{% endtrans %}:</b> {{ subjectArea.areaType ? subjectArea.areaType.name(app.request.getLocale()) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <b>{% trans %}FT Officer{% endtrans %}</b>: {{ project.ftOfficers ? project.ftOfficers.name(app.request.getLocale()) : 'N/A'}} <br/>
+            <b>{% trans %}EASCEA Officer{% endtrans %}</b>: {{ project.eaceaOfficers ? project.eaceaOfficers.name(app.request.getLocale()) : 'N/A'}}
+            <h2>{% trans %}Notes{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for note in project.notes %}
+                    <tr>
+                        <td>
+                            <b>{% trans %}Type{% endtrans %}:</b> {{ note.noteType ? note.noteType.name(app.request.getLocale()) : 'N/A' }}
+                        </td>
+                        <td>
+                            <b>{% trans %}Note{% endtrans %}:</b> {{ note.note ? note.note }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
 
-            <div class="controls">
-                {{ form_start(my_form) }}
 
-                <div>
-                    {{ form_label(my_form.programmes, 'Programme'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.programmes, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.keyActions, 'Key Action'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.keyActions, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.actions, 'Action'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.actions, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.calls, 'Call'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.calls, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.rounds, 'Round'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.rounds, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.nameEng, 'English'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.nameEng, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.nameSrb, 'Srebian'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.nameSrb, {'attr': {'class': 'form-control', 'disabled': true, 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.nameOriginalLetter, 'Original letter'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.nameOriginalLetter, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.acronym, 'Acronym'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.acronym, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.startDatetime, 'Start date'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.startDatetime, {'attr': {'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.endDatetime, 'End date'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.endDatetime, {'attr': {'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.projectNumber, 'Project nr.'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.projectNumber, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.durationMonths, 'Duration in months'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.durationMonths, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.audited, 'Audited'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.audited, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.onGoing, 'On-going'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.onGoing, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <ul class="applicantOrganisations" data-prototype="{{ include('/project/includes/applicantOrganisations.html.twig',
-                {'form': my_form.applicantOrganisations.vars.prototype })|e }}">
-                    {% for applicantOrganisation in my_form.applicantOrganisations %}
-                        <li>{{ include('/project/includes/applicantOrganisations.html.twig', {'form': applicantOrganisation }) }}</li>
-                    {% endfor %}
-                </ul>
-                <div>
-                    {{ form_label(my_form.participantFewerOptions, 'Participan with fewer options'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.participantFewerOptions, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <div>
-                    {{ form_label(my_form.consortium, 'Consortium?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.consortium, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                <ul class="partnerOrganisations" data-prototype="{{ include('/project/includes/partnerOrganisations.html.twig',
-                {'form': my_form.partnerOrganisations.vars.prototype})|e }}">
-                    {% for partnerOrganisation in my_form.partnerOrganisations %}
-                        <li>{{ include('/project/includes/partnerOrganisations.html.twig', {'form': partnerOrganisation }) }}</li>
-                    {% endfor %}
-                </ul>
-                <ul class="limitations" data-prototype="{{ include('/project/includes/limitations.html.twig',
-                {'form': my_form.limitations.vars.prototype })|e }}">
-                    {% for limitation in my_form.limitations %}
-                        <li>{{ include('/project/includes/limitations.html.twig', {'form': limitation }) }}</li>
-                    {% endfor %}
-                </ul>
-                <ul class="contactPersons" data-prototype="{{ include('/project/includes/contactPersons.html.twig',
-                {'form': my_form.contactPersons.vars.prototype })|e }}">
-                    {% for contactPerson in my_form.contactPersons %}
-                        <li>{{ include('/project/includes/contactPersons.html.twig', {'form': contactPerson }) }}</li>
-                    {% endfor %}
-                </ul>
-                <ul class="topics" data-prototype="{{ include('/project/includes/topics.html.twig',
-                {'form': my_form.topics.vars.prototype })|e }}">
-                    {% for topic in my_form.topics %}
-                        <li>{{ include('/project/includes/topics.html.twig', {'form': topic }) }}</li>
-                    {% endfor %}
-                </ul>
-                <ul class="subjectAreas" data-prototype="{{ include('/project/includes/subjectAreas.html.twig',
-                {'form': my_form.subjectAreas.vars.prototype })|e }}">
-                    {% for subjectArea in my_form.subjectAreas %}
-                        <li>{{ include('/project/includes/subjectAreas.html.twig', {'form': subjectArea }) }}</li>
-                    {% endfor %}
-                </ul>
-                <ul class="notes" data-prototype="{{ include('/project/includes/notes.html.twig',
-                {'form': my_form.notes.vars.prototype })|e }}">
-                    {% for note in my_form.notes %}
-                        <li>{{ include('/project/includes/notes.html.twig', {'form': note }) }}</li>
-                    {% endfor %}
-                </ul>
-                <div>
-                    {{ form_label(my_form.projectSummary, 'Project Summary'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                    <div class="form-inline">
-                        {{ form_widget(my_form.projectSummary, {'attr': {'class': 'form-control', 'disabled': true}})  }}
-                    </div>
-                </div>
-                {{ form_end(my_form) }}
-            </div>
         </div>
     </section>
 

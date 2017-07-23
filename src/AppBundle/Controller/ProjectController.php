@@ -285,9 +285,6 @@ class ProjectController extends AbstractController
      */
     public function viewProjectAction($projectId)
     {
-        //$em = $this->getDoctrine()->getManager();
-
-        //$project = $this->getProjectRepository()->find($projectId);
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
@@ -296,11 +293,6 @@ class ProjectController extends AbstractController
                 'No project found for id '. $projectId
             );
         }
-
-        $projectForm = $this->createForm(ProjectForm::class, $project, [
-            'action' => $this->generateUrl('project_edit', ['projectId' => $projectId]),
-            'method' => 'POST',
-        ]);
 
         $originalApplicantOrganisations = new ArrayCollection();
         $originalPartnerOrganisations = new ArrayCollection();
@@ -338,7 +330,7 @@ class ProjectController extends AbstractController
             $originalNotes->add($note);
         }
 
-        return $this->render('project/view.twig', ['my_form' => $projectForm->createView()]);
+        return $this->render('project/view.twig', ['project' => $project]);
     }
 
     /**

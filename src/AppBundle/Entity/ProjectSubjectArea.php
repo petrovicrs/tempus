@@ -78,5 +78,11 @@ class ProjectSubjectArea extends AbstractAuditable
         $this->project = $project;
     }
 
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->firstNameSr;
+        }
+        return $this->firstNameEn;
+    }
 }
 

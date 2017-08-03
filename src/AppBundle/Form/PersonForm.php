@@ -47,30 +47,35 @@ class PersonForm extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('addresses', CollectionType::class, array(
                 'entry_type'   => PersonAddressForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('personNotes', CollectionType::class, array(
                 'entry_type'   => PersonNoteForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('personDocuments', CollectionType::class, array(
                 'entry_type'   => PersonDocumentForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('personInstitutionRelationships', CollectionType::class, array(
                 'entry_type'   => PersonInstitutionRelationshipForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('fieldOfExpertise', EntityType::class, array(
                 'class'   => 'AppBundle:FieldOfExpertise',
@@ -81,6 +86,7 @@ class PersonForm extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('submit', SubmitType::class);
     }

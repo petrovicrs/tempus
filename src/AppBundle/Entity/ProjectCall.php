@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectCallsRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectCallRepository")
  * @ORM\Table(name="project_calls")
  */
 class ProjectCall extends AbstractAuditable
@@ -75,4 +75,10 @@ class ProjectCall extends AbstractAuditable
         $this->nameSr = $nameSr;
     }
 
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->nameSr;
+        }
+        return $this->nameEn;
+    }
 }

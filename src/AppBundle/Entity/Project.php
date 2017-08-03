@@ -37,14 +37,14 @@ class Project extends AbstractAuditable
      * @Assert\Type("string")
      * @ORM\Column(name="name_eng", type="string", length=255)
      */
-    protected $nameEng;
+    protected $nameEn;
 
     /**
      * @var string $name
      * @Assert\Type("string")
      * @ORM\Column(name="name_srb", type="string", length=255)
      */
-    protected $nameSrb;
+    protected $nameSr;
 
     /**
      * @var string $nameOriginalLetter
@@ -75,12 +75,12 @@ class Project extends AbstractAuditable
     protected $projectSummary;
 
     /**
-     * @ORM\Column(name="end_datetime", type="datetime")
+     * @ORM\Column(name="end_datetime", type="date")
      */
     protected $endDatetime;
 
     /**
-     * @ORM\Column(name="start_datetime", type="datetime")
+     * @ORM\Column(name="start_datetime", type="date")
      */
     protected $startDatetime;
 
@@ -105,6 +105,11 @@ class Project extends AbstractAuditable
      * @ORM\Column(name="participant_fewer_options", type="boolean")
      */
     protected $participantFewerOptions;
+
+    /**
+     * @ORM\Column(name="consortium", type="boolean")
+     */
+    protected $consortium;
 
     /**
      * @ORM\ManyToOne(
@@ -156,37 +161,37 @@ class Project extends AbstractAuditable
     protected $eaceaOfficers;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProjectNote", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectNote", mappedBy="project", cascade={"persist"})
      */
     protected $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProjectApplicantOrganisation", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectApplicantOrganisation", mappedBy="project", cascade={"persist"})
      */
     protected $applicantOrganisations;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProjectPartnerOrganisation", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectPartnerOrganisation", mappedBy="project", cascade={"persist"})
      */
     protected $partnerOrganisations;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProjectLimitation", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectLimitation", mappedBy="project", cascade={"persist"})
      */
     protected $limitations;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProjectContactPerson", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectContactPerson", mappedBy="project", cascade={"persist"})
      */
     protected $contactPersons;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProjectTopic", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectTopic", mappedBy="project", cascade={"persist"})
      */
     protected $topics;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProjectSubjectArea", mappedBy="institution", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ProjectSubjectArea", mappedBy="project", cascade={"persist"})
      */
     protected $subjectAreas;
 
@@ -213,33 +218,33 @@ class Project extends AbstractAuditable
     /**
      * @return string
      */
-    public function getNameEng()
+    public function getNameEn()
     {
-        return $this->nameEng;
+        return $this->nameEn;
     }
 
     /**
-     * @param string $nameEng
+     * @param string $nameEn
      */
-    public function setNameEng($nameEng)
+    public function setNameEn($nameEn)
     {
-        $this->nameEng = $nameEng;
+        $this->nameEn = $nameEn;
     }
 
     /**
      * @return string
      */
-    public function getNameSrb()
+    public function getNameSr()
     {
-        return $this->nameSrb;
+        return $this->nameSr;
     }
 
     /**
-     * @param string $nameSrb
+     * @param string $nameSr
      */
-    public function setNameSrb($nameSrb)
+    public function setNameSr($nameSr)
     {
-        $this->nameSrb = $nameSrb;
+        $this->nameSr = $nameSr;
     }
 
     /**
@@ -405,6 +410,22 @@ class Project extends AbstractAuditable
     /**
      * @return mixed
      */
+    public function getConsortium()
+    {
+        return $this->consortium;
+    }
+
+    /**
+     * @param mixed $consortium
+     */
+    public function setConsortium($consortium)
+    {
+        $this->consortium = $consortium;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getFtOfficers()
     {
         return $this->ftOfficers;
@@ -525,7 +546,7 @@ class Project extends AbstractAuditable
     /**
      * @param mixed $notes
      */
-    public function setNotes(ArrayCollection $notes)
+    public function setNotes($notes)
     {
         $this->notes = $notes;
     }
@@ -549,19 +570,19 @@ class Project extends AbstractAuditable
     }
 
     /**
-     * @param mixed $applicantOrganisations
+     * @param mixed $applicantOrganisation
      */
-    public function setApplicantOrganisations(ArrayCollection $applicantOrganisations)
+    public function setApplicantOrganisations($applicantOrganisation)
     {
-        $this->applicantOrganisations = $applicantOrganisations;
+        $this->applicantOrganisations = $applicantOrganisation;
     }
 
-    public function addApplicantOrganisations(PicNumber $applicantOrganisation)
+    public function addApplicantOrganisations(ProjectApplicantOrganisation $applicantOrganisation)
     {
         $this->applicantOrganisations->add($applicantOrganisation);
     }
 
-    public function removeApplicantOrganisations(PicNumber $applicantOrganisation)
+    public function removeApplicantOrganisations(ProjectApplicantOrganisation $applicantOrganisation)
     {
         $this->applicantOrganisations->removeElement($applicantOrganisation);
     }
@@ -577,17 +598,17 @@ class Project extends AbstractAuditable
     /**
      * @param mixed $partnerOrganisations
      */
-    public function setPartnerOrganisations(ArrayCollection $partnerOrganisations)
+    public function setPartnerOrganisations($partnerOrganisations)
     {
         $this->partnerOrganisations = $partnerOrganisations;
     }
 
-    public function addPartnerOrganisations(PicNumber $partnerOrganisation)
+    public function addPartnerOrganisations(ProjectPartnerOrganisation $partnerOrganisation)
     {
         $this->partnerOrganisations->add($partnerOrganisation);
     }
 
-    public function removePartnerOrganisations(PicNumber $partnerOrganisation)
+    public function removePartnerOrganisations(ProjectPartnerOrganisation $partnerOrganisation)
     {
         $this->partnerOrganisations->removeElement($partnerOrganisation);
     }
@@ -603,7 +624,7 @@ class Project extends AbstractAuditable
     /**
      * @param mixed $limitations
      */
-    public function setLimitations(ArrayCollection $limitation)
+    public function setLimitations($limitation)
     {
         $this->limitations = $limitation;
     }
@@ -629,7 +650,7 @@ class Project extends AbstractAuditable
     /**
      * @param mixed $contactPersons
      */
-    public function setContactPersons(ArrayCollection $contactPersons)
+    public function setContactPersons($contactPersons)
     {
         $this->contactPersons = $contactPersons;
     }
@@ -655,7 +676,7 @@ class Project extends AbstractAuditable
     /**
      * @param mixed $topics
      */
-    public function setTopics(ArrayCollection $topics)
+    public function setTopics($topics)
     {
         $this->topics = $topics;
     }
@@ -681,7 +702,7 @@ class Project extends AbstractAuditable
     /**
      * @param mixed $subjectAreas
      */
-    public function setSubjectAreas(ArrayCollection $subjectAreas)
+    public function setSubjectAreas($subjectAreas)
     {
         $this->subjectAreas = $subjectAreas;
     }
@@ -694,6 +715,13 @@ class Project extends AbstractAuditable
     public function removeSubjectAreas(ProjectSubjectArea $subjectArea)
     {
         $this->subjectAreas->removeElement($subjectArea);
+    }
+
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->nameSr;
+        }
+        return $this->nameEn;
     }
 
 }

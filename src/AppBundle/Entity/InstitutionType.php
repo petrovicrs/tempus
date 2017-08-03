@@ -78,4 +78,11 @@ class InstitutionType extends AbstractAuditable
     }
 
 
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->nameSr;
+        }
+        return $this->nameEn;
+    }
+
 }

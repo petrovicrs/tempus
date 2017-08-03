@@ -2,37 +2,54 @@
 
 {% block body %}
     <section id="main">
+        {% include 'main-navbar.html.twig' with {'active': 'project'} %}
         <div class="container-fluid">
-
+            {% if app.user %}
+                <a href="{{ localizedPath('project_create') }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>Add Project</a>
+            {% endif %}
             <table class="table table-hover" data-toggle="table">
                 <thead>
                 <tr class="table-header">
-                    <th class="sortable" data-field="project_title" data-sortable="true">{% trans %}Project title{% endtrans %}</th>
-                    <th class="sortable">{% trans %}Reference Number{% endtrans %}</th>
-                    <th class="sortable">{% trans %}Application Year{% endtrans %}</th>
-                    <th>{% trans %}Programe{% endtrans %}</th>
-                    <th>{% trans %}Partners{% endtrans %}</th>
+                    <th class="sortable" data-field="project_id" data-sortable="true">{% trans %}Nr.{% endtrans %}</th>
+                    <th class="sortable">{% trans %}Name{% endtrans %}</th>
+                    <th class="sortable">{% trans %}Acronym{% endtrans %}</th>
+                    <th>{% trans %}Project number{% endtrans %}</th>
+                    <th>{% trans %}Programme{% endtrans %}</th>
+                    <th>{% trans %}Key Action{% endtrans %}</th>
+                    <th>{% trans %}Action{% endtrans %}</th>
+                    <th>{% trans %}Call{% endtrans %}</th>
+                    <th>{% trans %}Round{% endtrans %}</th>
+                    <th>{% trans %}On-going{% endtrans %}</th>
+                    {% if app.user %}
+                        <th>{% trans %}View{% endtrans %}</th>
+                        <th>{% trans %}Edit{% endtrans %}</th>
+                    {% endif %}
                 </tr>
                 </thead>
 
                 <tbody>
                 {% for key,value in result %}
                     <tr>
-                        <td> <a href="{{ localizedPath('project_view', {'projectId':value.id }) }}"> {{ value.nameEng }} </a> </td>
-                        <td> {{ value.referenceNumber }} </td>
-                        <td> {{ value.applicationYear }} </td>
-                        <td> {{ value.program.name }} </td>
-                        <td> Partners-test </td>
+                        <td> {{ value.id }} </td>
+                        <td> {{ value.nameEn }} </td>
+                        <td> {{ value.acronym }} </td>
+                        <td> {{ value.projectNumber }} </td>
+                        <td> {{ value.programmes ? value.programmes.name(app.request.locale) }} </td>
+                        <td> {{ value.keyActions ? value.keyActions.name(app.request.locale) }} </td>
+                        <td> {{ value.actions ? value.actions.name(app.request.locale) }} </td>
+                        <td> {{ value.calls ? value.calls.name(app.request.locale) }} </td>
+                        <td> {{ value.rounds ? value.rounds.name(app.request.locale) }} </td>
+                        <td> {{ value.onGoing ? 'Yes' : 'No' }} </td>
+                        {% if app.user %}
+                            <td> <a href="{{ localizedPath('project_view', {'projectId':value.id }) }}"> View </a> </td>
+                            <td> <a href="{{ localizedPath('project_edit', {'projectId':value.id }) }}"> Edit </a> </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>
 
             </table>
 
-            <a href="{{ localizedPath('project_create') }}">{% trans %}Add Project{% endtrans %}</a>
-            <a href="{{ localizedPath('person_create') }}">{% trans %}Add Person{% endtrans %}</a>
-            <a href="{{ localizedPath('institution_create') }}">{% trans %}Add Institution{% endtrans %}</a>
-            <a href="{{ localizedPath('action_create') }}">{% trans %}Add Action{% endtrans %}</a>
         </div>
     <div>
 {% endblock %}

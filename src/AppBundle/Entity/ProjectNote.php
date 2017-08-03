@@ -21,8 +21,10 @@ class ProjectNote extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="Project"
+     *      targetEntity="Project",
+     *      inversedBy="notes"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $project;
 

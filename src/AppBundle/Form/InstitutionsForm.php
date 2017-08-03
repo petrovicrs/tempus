@@ -49,7 +49,10 @@ class InstitutionsForm extends AbstractType
             ])
             ->add('parentInstitution', EntityType::class, [
                 'class' => 'AppBundle:Institution',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Please choose',
+                'empty_data'  => null,
+                'required' => false
             ])
             ->add('publicBody', ChoiceType::class, array(
                 'choices'  => array(
@@ -78,6 +81,7 @@ class InstitutionsForm extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('webSite', TextType::class)
             ->add('contacts', CollectionType::class, array(
@@ -85,30 +89,35 @@ class InstitutionsForm extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('addresses', CollectionType::class, array(
                 'entry_type'  => InstitutionAddressForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('accreditations', CollectionType::class, array(
                 'entry_type'  => InstitutionAccreditationForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('legalRepresentatives', CollectionType::class, array(
                 'entry_type'  => InstitutionLegalRepresentativeForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
             ->add('notes', CollectionType::class, array(
                 'entry_type'  => InstitutionNoteForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'label' => false
             ))
 
             ->add('submit', SubmitType::class, ['label_format' => 'Submit']);

@@ -24,10 +24,12 @@ class ProjectTopic extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="Person"
+     *      targetEntity="Project",
+     *      inversedBy="topics"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    protected $person;
+    protected $project;
 
     /**
      * @ORM\ManyToOne(
@@ -47,17 +49,17 @@ class ProjectTopic extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getPerson()
+    public function getProject()
     {
-        return $this->person;
+        return $this->project;
     }
 
     /**
-     * @param mixed $person
+     * @param mixed $project
      */
-    public function setPerson($person)
+    public function setProject($project)
     {
-        $this->person = $person;
+        $this->project = $project;
     }
 
     /**

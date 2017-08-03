@@ -31,8 +31,10 @@ class ProjectPartnerOrganisation extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="Project"
+     *      targetEntity="Project",
+     *      inversedBy="partnerOrganisations"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $project;
 

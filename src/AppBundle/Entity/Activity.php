@@ -32,6 +32,11 @@ class Activity extends AbstractAuditable
     protected $activityType;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Project")
+     */
+    protected $project;
+
+    /**
      * @ORM\OneToMany(targetEntity="ActionDetails", mappedBy="activity", cascade={"persist"})
      */
     protected $actionDetails;
@@ -72,6 +77,22 @@ class Activity extends AbstractAuditable
     public function setActivityType($activityType)
     {
         $this->activityType = $activityType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * @param mixed $project
+     */
+    public function setProject($project)
+    {
+        $this->project = $project;
     }
 
     /**

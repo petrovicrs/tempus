@@ -1,28 +1,154 @@
-{#{% extends 'base.html.twig' %}#}
-        {#{% block body %}#}
-        {#<section id="main">#}
-            {#<div class="container-fluid">#}
-                {#<div class="page-header">#}
-                    {#<h1>Person: <b>{{ person.name }} {{ person.surname }}</b></h1>#}
-                {#</div>#}
-                {#<h2>Person contact:</h2>#}
-                {#<table class="table table-hover" data-toggle="table">#}
-                    {#<thead>#}
-                        {#<tr class="table-header">#}
-                            {#<th class="sortable" data-field="project_title" data-sortable="true">Type</th>#}
-                            {#<th class="sortable" data-sortable="true">Value</th>#}
-                        {#</tr>#}
-                    {#</thead>#}
-                    {#{% for contact in contacts %}#}
-                        {#<tr>#}
-                            {#<td>{{ contact.contactType }}</td>#}
-                            {#<td>{{ contact.contactValue }}</td>#}
-                        {#</tr>#}
-                    {#{% endfor %}#}
-                {#</table>#}
+{% extends 'base.html.twig' %}
+{% block body %}
+<section id="main">
+    {% include 'main-navbar.html.twig' with {'active': 'institution'} %}
+    <div class="container-fluid">
+        <div class="page-header">
+            <h2>{% trans %}Institution{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                <tr class="table-header">
+                    <th></th>
+                    <th>{% trans %}English{% endtrans %}</th>
+                    <th>{% trans %}Serbian{% endtrans %}</th>
+                    <th>{% trans %}Original Alphabet{% endtrans %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tr>
+                    <td>Title</td>
+                    <td>{{ institution.nameEn }}</td>
+                    <td>{{ institution.nameSr }}</td>
+                    <td>{{ institution.nameOriginalLetter }}</td>
+                    <td>Founder Type</td>
+                </tr>
+                <tr>
+                    <td>Founder Name</td>
+                    <td>{{ institution.founderOriginalLetterEn }}</td>
+                    <td>{{ institution.founderOriginalLetterSr }}</td>
+                    <td>{{ institution.founderOriginalLetter }}</td>
+                    <td>{{ institution.institutionFounderType ? institution.institutionFounderType.name(app.request.getLocale()) : 'N/A'}}</td>
+                </tr>
+            </table>
 
-                {#<a href="{{ path('person_contacts_create_form', {'personId':person.id}) }}">Add new contact</a>#}
-
-            {#</div>#}
-        {#</section>#}
-        {#{% endblock %}#}
+            <table class="table table-hover" data-toggle="table">
+                <tr>
+                    <td><b>{% trans %}Type of organisation{% endtrans %}:</b> {{ institution.institutionType ? institution.institutionType.name(app.request.getLocale()) : 'N/A' }}</td>
+                    <td><b>{% trans %}Level{% endtrans %}:</b> {{ institution.institutionLevel ? institution.institutionLevel.name(app.request.getLocale()) : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Parent Institution{% endtrans %}:</b> {{ institution.parentInstitution ? institution.parentInstitution.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td><b>{% trans %}Public Body{% endtrans %}:</b> {{ institution.publicBody ? 'Yes' : 'No' }}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Non-Profit{% endtrans %}:</b> {{ institution.nonProfit ? 'Yes' : 'No' }}</td>
+                    <td><b>{% trans %}Country{% endtrans %}:</b> {{ institution.country ? institution.country.name(app.request.getLocale()) : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Country of Origin{% endtrans %}:</b> {{ institution.originCountry ? institution.originCountry.name(app.request.getLocale()) : 'N/A' }}</td>
+                    <td><b>{% trans %}National Reg. Nr.{% endtrans %}:</b> {{ institution.nationalRegistrationNumber ? institution.nationalRegistrationNumber : 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Vat/Tax Nr.{% endtrans %}:</b> {{ institution.vatNumber ? institution.vatNumber : 'N/A' }}</td>
+                    <td><b>{% trans %}Website{% endtrans %}:</b> {{ institution.webSite ? institution.webSite : 'N/A'}}</td>
+                </tr>
+            </table>
+            <h2>{% trans %}Pic Nimbers{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for picNumber in picNumbers %}
+                    <tr>
+                        <td>
+                            {% trans %}Number{% endtrans %}:</b> {{ picNumber.number }}
+                        </td>
+                        <td>
+                            {% trans %}Validated{% endtrans %}:</b> {{ picNumber.validated ? 'Yes' : 'No' }}
+                        </td>
+                        <td>
+                            {% trans %}Validated{% endtrans %}:</b> {{ picNumber.primary ? 'Yes' : 'No' }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </table>
+            <h2>{% trans %}Contacts{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for contact in contacts %}
+                    <tr>
+                        <td>
+                            {% trans %}Type{% endtrans %}:</b> {{ contact.contactType ? contact.contactType.type(app.request.getLocale()) }}
+                        </td>
+                        <td>
+                            {% trans %}Contact{% endtrans %}:</b> {{ contact.contactValue }}
+                        </td>
+                        <td>
+                            {% trans %}Note{% endtrans %}:</b> {{ contact.note }}
+                        </td><td>
+                            {% trans %}Public{% endtrans %}:</b> {{ contact.isPublic ? 'Yes' : 'No' }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>{% trans %}Address{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for address in addresses %}
+                    <tr>
+                        <td>
+                            {% trans %}Street and Number{% endtrans %}:</b> {{ address.streetAndNumber ? address.streetAndNumber ? 'N/A' }}
+                        </td>
+                        <td>
+                            {% trans %}Town{% endtrans %}:</b> {{ address.town }}
+                        </td>
+                        <td>
+                            {% trans %}Postal Code{% endtrans %}:</b> {{ address.postalCode }}
+                        </td>
+                        <td>
+                            {% trans %}Country{% endtrans %}:</b> {{ address.country ? address.country.name(app.request.getLocale()) : 'N/A' }}
+                        </td>
+                        <td>
+                            {% trans %}Different mailing address{% endtrans %}:</b> {{ address.differentMailingAddress ? 'Yes' : 'No' }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>{% trans %}Accreditations{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for accreditation in accreditations %}
+                    <tr>
+                        <td>
+                            {% trans %}Type{% endtrans %}:</b> {{ accreditation.accreditationType ? accreditation.accreditationType.name(app.request.getLocale()) : 'N/A' }}
+                        </td>
+                        <td>
+                            {% trans %}Reference{% endtrans %}:</b> {{ accreditation.accreditationReference ? accreditation.accreditationReference : 'No' }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>{% trans %}Legal Representative{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for legalRepresentative in legalRepresentatives %}
+                    <tr>
+                        <td>
+                            {% trans %}Person{% endtrans %}:</b> {{ legalRepresentative.person ? legalRepresentative.person.name(app.request.getLocale()) : 'N/A' }}
+                        </td>
+                        <td>
+                            {% trans %}Position{% endtrans %}:</b> {{ legalRepresentative.position ? legalRepresentative.position.name(app.request.getLocale()) : 'No' }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>{% trans %}Notes{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for note in notes %}
+                    <tr>
+                        <td>
+                            {% trans %}Type{% endtrans %}:</b> {{ note.institutionNoteType ? note.institutionNoteType.name(app.request.getLocale()) : 'N/A' }}
+                        </td>
+                        <td>
+                            {% trans %}Text{% endtrans %}:</b> {{ note.note ? note.note : 'No' }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -4,6 +4,9 @@
 <script type="text/javascript" src="{{ asset('/js/action.js')}}"></script>
 
 <section id="main">
+
+    {% include 'main-navbar.html.twig' with {'active': 'action'} %}
+
     <div class="container-fluid">
         <div class="page-header">
             <h1>{% trans %}Create action{% endtrans %}</h1>
@@ -20,6 +23,11 @@
                         {{ form_label(my_form.activityType, 'Activity type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
                             {{ form_widget(my_form.activityType, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+
+                        {{ form_label(my_form.project, 'Project'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.project, {'attr': {'class': 'form-control'}})  }}
                         </div>
 
                         <ul class="action-details" data-prototype="{{ include('/action/includes/action-details.html.twig',

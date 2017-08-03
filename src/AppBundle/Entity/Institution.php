@@ -465,7 +465,7 @@ class Institution extends AbstractAuditable
         return $this->contacts;
     }
 
-    public function setContacts(ArrayCollection $contacts)
+    public function setContacts($contacts)
     {
         $this->contacts = $contacts;
     }
@@ -485,7 +485,7 @@ class Institution extends AbstractAuditable
         return $this->notes;
     }
 
-    public function setNotes(ArrayCollection $notes)
+    public function setNotes($notes)
     {
         $this->notes = $notes;
     }
@@ -511,7 +511,7 @@ class Institution extends AbstractAuditable
     /**
      * @param mixed $legalRepresentatives
      */
-    public function setLegalRepresentatives(ArrayCollection $legalRepresentatives)
+    public function setLegalRepresentatives($legalRepresentatives)
     {
         $this->legalRepresentatives = $legalRepresentatives;
     }
@@ -537,7 +537,7 @@ class Institution extends AbstractAuditable
     /**
      * @param mixed $accreditations
      */
-    public function setAccreditations(ArrayCollection $accreditations)
+    public function setAccreditations($accreditations)
     {
         $this->accreditations = $accreditations;
     }
@@ -563,7 +563,7 @@ class Institution extends AbstractAuditable
     /**
      * @param mixed $addresses
      */
-    public function setAddresses(ArrayCollection $addresses)
+    public function setAddresses($addresses)
     {
         $this->addresses = $addresses;
     }
@@ -589,7 +589,7 @@ class Institution extends AbstractAuditable
     /**
      * @param mixed $picNumber
      */
-    public function setPicNumber(ArrayCollection $picNumber)
+    public function setPicNumber($picNumber)
     {
         $this->picNumber = $picNumber;
     }
@@ -602,5 +602,12 @@ class Institution extends AbstractAuditable
     public function removePicNumber(PicNumber $picNumber)
     {
         $this->picNumber->removeElement($picNumber);
+    }
+
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->nameSr;
+        }
+        return $this->nameEn;
     }
 }

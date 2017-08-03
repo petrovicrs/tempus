@@ -23,7 +23,7 @@ class InstitutionAccreditationForm extends AbstractType
         $builder
             ->add('accreditationType', EntityType::class, [
                 'class' => 'AppBundle:InstitutionAccreditationType',
-                'choice_label' => 'name'
+                'choice_label' => 'name'. ucfirst($options['locale'])
             ])
             ->add('accreditationReference', TextType::class);
     }
@@ -34,7 +34,8 @@ class InstitutionAccreditationForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\InstitutionAccreditation'
+            'data_class' => 'AppBundle\Entity\InstitutionAccreditation',
+            'locale' => 'en',
         ));
     }
 

@@ -159,6 +159,51 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\ContactType
+    doctrine_entity_repository.project_applicant_organisation:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectApplicantOrganisation
+    doctrine_entity_repository.project_partner_organisation:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectPartnerOrganisation
+    doctrine_entity_repository.project_call:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectCall
+    doctrine_entity_repository.project_round:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectRound
+    doctrine_entity_repository.project_contact_persons:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectContactPerson
+    doctrine_entity_repository.project_topics:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectTopic
+    doctrine_entity_repository.project_subject_areas:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectSubjectArea
+    doctrine_entity_repository.project_limitation:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectLimitation
+    doctrine_entity_repository.project_notes:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectNote
 
     doctrine_entity_repository.activity:
         class: Doctrine\ORM\EntityRepository

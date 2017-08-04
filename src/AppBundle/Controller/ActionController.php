@@ -59,12 +59,12 @@ class ActionController extends AbstractController
         $activityForm->handleRequest($request);
 
         if ($activityForm->isSubmitted() && $activityForm->isValid()) {
-            $this->getActivityRepository()->saveActivity($activity);
+            $this->getActivityRepository()->save($activity);
 
 
             foreach($activity->getActionDetails() as $action){
                 $action->setActivity($activity);
-                $this->getActionDetailsRepository()->saveAction($action);
+                $this->getActionDetailsRepository()->save($action);
             }
 
             return $this->redirectToRoute('action_list');
@@ -105,7 +105,7 @@ class ActionController extends AbstractController
                 }
             }
 
-            $this->getActivityRepository()->saveActivity($activity);
+            $this->getActivityRepository()->save($activity);
 
             return $this->redirectToRoute('action_list');
         }
@@ -142,7 +142,7 @@ class ActionController extends AbstractController
 
             $totals['daysWithoutTravel'] += $actionDetails->getDaysWithoutTravel();
             $totals['travelDays'] += $actionDetails->getTravelDays();
-            $totals['totalDays'] += $totals['daysWithoutTravel'] + $totals['travelDays'];
+            $totals['totalDays'] += $actionDetails->getTotalDays();
 
             if($actionDetails->getHasSpecialNeeds()) {
                $totals['withSpecialNeeds'] += 1;

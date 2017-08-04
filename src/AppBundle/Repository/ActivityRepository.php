@@ -11,7 +11,7 @@ namespace AppBundle\Repository;
 
 class ActivityRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function saveActivity($activity) {
+    public function save($activity) {
 
         $this->_em->persist($activity);
         $this->_em->flush();

@@ -1,7 +1,10 @@
-var $addProjectTopicsLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add topics</a>');
-var $addProjectTopicsLinkDiv = $('<li></li>').append($addProjectTopicsLink);
 
-jQuery(document).ready(function() {
+jQuery(document).ready(load);
+jQuery(document).ajaxComplete(load);
+
+function load() {
+    var $addProjectTopicsLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add topics</a>');
+    var $addProjectTopicsLinkDiv = $('<li></li>').append($addProjectTopicsLink);
     // Get the ul that holds the collection of tags
     var $collectionProjectTopicsHolder = $('ul.topics');
 
@@ -24,7 +27,7 @@ jQuery(document).ready(function() {
         // add a new tag form (see code block below)
         $addProjectTopicsForm($collectionProjectTopicsHolder, $addProjectTopicsLinkDiv);
     });
-});
+}
 
 function $addProjectTopicsForm($collectionProjectTopicsHolder, $addProjectTopicsLinkDiv) {
     // Get the data-prototype explained earlier

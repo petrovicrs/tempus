@@ -1,7 +1,10 @@
-var $addProjectLimitationsLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add limitation</a>');
-var $addProjectLimitationsLinkDiv = $('<li></li>').append($addProjectLimitationsLink);
 
-jQuery(document).ready(function() {
+jQuery(document).ready(load);
+jQuery(document).ajaxComplete(load);
+
+function load() {
+    var $addProjectLimitationsLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add limitation</a>');
+    var $addProjectLimitationsLinkDiv = $('<li></li>').append($addProjectLimitationsLink);
     // Get the ul that holds the collection of tags
     var $collectionProjectLimitationsHolder = $('ul.limitations');
 
@@ -24,7 +27,7 @@ jQuery(document).ready(function() {
         // add a new tag form (see code block below)
         $addProjectLimitationsForm($collectionProjectLimitationsHolder, $addProjectLimitationsLinkDiv);
     });
-});
+}
 
 function $addProjectLimitationsForm($collectionProjectLimitationsHolder, $addProjectLimitationsLinkDiv) {
     // Get the data-prototype explained earlier

@@ -1,7 +1,10 @@
-var $addProjectContactPersonLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add contact person</a>');
-var $addProjectContactPersonLinkDiv = $('<li></li>').append($addProjectContactPersonLink);
 
-jQuery(document).ready(function() {
+jQuery(document).ready(load);
+jQuery(document).ajaxComplete(load);
+
+function load() {
+    var $addProjectContactPersonLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add contact person</a>');
+    var $addProjectContactPersonLinkDiv = $('<li></li>').append($addProjectContactPersonLink);
     // Get the ul that holds the collection of tags
     var $collectionProjectContactPersonHolder = $('ul.contactPersons');
 
@@ -24,7 +27,7 @@ jQuery(document).ready(function() {
         // add a new tag form (see code block below)
         $addProjectContactPersonForm($collectionProjectContactPersonHolder, $addProjectContactPersonLinkDiv);
     });
-});
+}
 
 function $addProjectContactPersonForm($collectionProjectContactPersonHolder, $addProjectContactPersonLinkDiv) {
     // Get the data-prototype explained earlier

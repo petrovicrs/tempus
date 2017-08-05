@@ -1,7 +1,11 @@
-var $addProjectApplicantOrganisationLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add applicant organisation</a>');
-var $addProjectApplicantOrganisationLinkDiv = $('<li></li>').append($addProjectApplicantOrganisationLink);
 
-jQuery(document).ready(function() {
+jQuery(document).ready(load);
+jQuery(document).ajaxComplete(load);
+
+function load() {
+    var $addProjectApplicantOrganisationLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add applicant organisation</a>');
+    var $addProjectApplicantOrganisationLinkDiv = $('<li></li>').append($addProjectApplicantOrganisationLink);
+
     // Get the ul that holds the collection of tags
     var $collectionProjectApplicantOrganisationHolder = $('ul.applicantOrganisations');
 
@@ -24,10 +28,11 @@ jQuery(document).ready(function() {
         // add a new tag form (see code block below)
         $addProjectApplicantOrganisationForm($collectionProjectApplicantOrganisationHolder, $addProjectApplicantOrganisationLinkDiv);
     });
-});
+}
 
 function $addProjectApplicantOrganisationForm($collectionProjectApplicantOrganisationHolder, $addProjectApplicantOrganisationLinkDiv) {
     // Get the data-prototype explained earlier
+    console.log($collectionProjectApplicantOrganisationHolder);
     var prototype = $collectionProjectApplicantOrganisationHolder.data('prototype');
 
     // get the new index

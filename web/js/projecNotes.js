@@ -1,7 +1,10 @@
-var $addProjectNotesLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add note</a>');
-var $addProjectNotesLinkDiv = $('<li></li>').append($addProjectNotesLink);
 
-jQuery(document).ready(function() {
+jQuery(document).ready(load);
+jQuery(document).ajaxComplete(load);
+
+function load() {
+    var $addProjectNotesLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add note</a>');
+    var $addProjectNotesLinkDiv = $('<li></li>').append($addProjectNotesLink);
     // Get the ul that holds the collection of tags
     var $collectionProjectNotesHolder = $('ul.notes');
 
@@ -24,7 +27,7 @@ jQuery(document).ready(function() {
         // add a new tag form (see code block below)
         $addProjectNotesForm($collectionProjectNotesHolder, $addProjectNotesLinkDiv);
     });
-});
+}
 
 function $addProjectNotesForm($collectionProjectNotesHolder, $addProjectNotesLinkDiv) {
     // Get the data-prototype explained earlier

@@ -1,7 +1,10 @@
-var $addProjectPartnerOrganisationLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add partner organisation</a>');
-var $addProjectPartnerOrganisationLinkDiv = $('<li></li>').append($addProjectPartnerOrganisationLink);
 
-jQuery(document).ready(function() {
+jQuery(document).ready(load);
+jQuery(document).ajaxComplete(load);
+
+function load() {
+    var $addProjectPartnerOrganisationLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add partner organisation</a>');
+    var $addProjectPartnerOrganisationLinkDiv = $('<li></li>').append($addProjectPartnerOrganisationLink);
     // Get the ul that holds the collection of tags
     var $collectionProjectPartnerOrganisationHolder = $('ul.partnerOrganisations');
 
@@ -24,7 +27,7 @@ jQuery(document).ready(function() {
         // add a new tag form (see code block below)
         $addProjectPartnerOrganisationForm($collectionProjectPartnerOrganisationHolder, $addProjectPartnerOrganisationLinkDiv);
     });
-});
+}
 
 function $addProjectPartnerOrganisationForm($collectionProjectPartnerOrganisationHolder, $addProjectPartnerOrganisationLinkDiv) {
     // Get the data-prototype explained earlier

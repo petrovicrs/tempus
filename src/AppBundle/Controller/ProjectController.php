@@ -9,6 +9,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\ProjectApplicantOrganisation;
 use AppBundle\Entity\ProjectContactPerson;
+use AppBundle\Entity\ProjectKeyAction;
 use AppBundle\Entity\ProjectLimitation;
 use AppBundle\Entity\ProjectNote;
 use AppBundle\Entity\ProjectPartnerOrganisation;
@@ -53,13 +54,13 @@ class ProjectController extends AbstractController
     public function createAction(Request $request)
     {
         $project = new Project();
+        $keyActionSelected = $request->request->get('project_key_action');
 
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_create'),
             'method' => 'POST',
             'locale' => $request->getLocale(),
-            ]);
-
+        ]);
 
         $projectForm->handleRequest($request);
 
@@ -113,7 +114,17 @@ class ProjectController extends AbstractController
 
         }
 
-        return $this->render('project/create.twig', ['my_form' => $projectForm->createView()]);
+        $data = [
+            'my_form' => $projectForm->createView()
+        ];
+
+        if(!is_null($keyActionSelected)) {
+            $keyAction = $this->getProjectKeyActionRepository()->findOneBy(['id' => (int) $keyActionSelected]);
+            // TODO check what to pass to form (id, name, or something else)
+            $data['key_action_selected'] = $keyAction->getId();//$keyAction->getName($request->getLocale());
+        }
+
+        return $this->render('project/create.twig', $data);
     }
 
     /**
@@ -339,6 +350,14 @@ class ProjectController extends AbstractController
     private function getProjectRepository() {
 
         return $this->get('doctrine_entity_repository.project');
+    }
+
+    /**
+     * @return ProjectKeyActionRepository
+     */
+    private function getProjectKeyActionRepository() {
+
+        return $this->get('doctrine_entity_repository.project_key_action');
     }
 
     /**

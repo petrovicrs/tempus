@@ -164,6 +164,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\ProjectApplicantOrganisation
+    doctrine_entity_repository.project_key_action:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectKeyAction
     doctrine_entity_repository.project_partner_organisation:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

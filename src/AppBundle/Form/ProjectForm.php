@@ -35,7 +35,8 @@ class ProjectForm extends AbstractType
             ])
             ->add('keyActions', EntityType::class, [
                 'class' => 'AppBundle:ProjectKeyAction',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'data' => 2
             ])
             ->add('actions', EntityType::class, [
                 'class' => 'AppBundle:ProjectAction',

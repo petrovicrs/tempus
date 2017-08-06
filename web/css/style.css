@@ -1,3 +1,24 @@
+
+li {
+    list-style-type: none;
+}
+
+.login a {
+    line-height: 75px;
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+#main {
+    /*padding-top: 0;*/
+}
+
+#menu-list {
+    margin-bottom: 30px;
+}
+
 .loader {
     display: none;
     position: fixed;

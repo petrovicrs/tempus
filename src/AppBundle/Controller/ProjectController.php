@@ -135,6 +135,7 @@ class ProjectController extends AbstractController
     {
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+        $keyActionSelected = $request->request->get('project_key_action');
 
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_edit', ['projectId' => $projectId]),
@@ -286,7 +287,17 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('project_list');
         }
 
-        return $this->render('project/edit.twig', ['my_form' => $projectForm->createView()]);
+        $data = [
+            'my_form' => $projectForm->createView()
+        ];
+
+        if(!is_null($keyActionSelected)) {
+            $keyAction = $this->getProjectKeyActionRepository()->findOneBy(['id' => (int) $keyActionSelected]);
+            // TODO check what to pass to form (id, name, or something else)
+            $data['key_action_selected'] = $keyAction->getId();//$keyAction->getName($request->getLocale());
+        }
+
+        return $this->render('project/edit.twig', $data);
     }
 
     /**

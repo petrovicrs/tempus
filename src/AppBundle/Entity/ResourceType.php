@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: nemtish
- * Date: 22.07.17
+ * Date: 07.08.17
  * Time: 10:48
  */
 
@@ -14,10 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ActivityTypeRepository")
- * @ORM\Table(name="activity_type")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ResourceTypeRepository")
+ * @ORM\Table(name="resource_type")
  */
-class ActivityType extends AbstractAuditable
+class ResourceType extends AbstractAuditable
 {
     /**
      * @ORM\Id
@@ -28,15 +28,15 @@ class ActivityType extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="name_en", type="string")
-     */
-    protected $nameEn;
-
-    /**
-     * @Assert\NotBlank()
      * @ORM\Column(name="name_sr", type="string")
      */
     protected $nameSr;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="name_en", type="string")
+     */
+    protected $nameEn;
 
     /**
      * @return mixed
@@ -57,22 +57,6 @@ class ActivityType extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getNameEn()
-    {
-        return $this->nameEn;
-    }
-
-    /**
-     * @param mixed $nameEn
-     */
-    public function setNameEn($nameEn)
-    {
-        $this->nameEn = $nameEn;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getNameSr()
     {
         return $this->nameSr;
@@ -86,11 +70,29 @@ class ActivityType extends AbstractAuditable
         $this->nameSr = $nameSr;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getNameEn()
+    {
+        return $this->nameEn;
+    }
+
+    /**
+     * @param mixed $nameEn
+     */
+    public function setNameEn($nameEn)
+    {
+        $this->nameEn = $nameEn;
+    }
+
     public function getName($locale)
     {
-        if ($locale == "sr"){
+        if($locale == 'sr') {
             return $this->nameSr;
         }
-        return $this->nameEn;
+        else {
+            return $this->nameEn;
+        }
     }
 }

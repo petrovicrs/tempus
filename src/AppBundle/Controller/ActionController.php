@@ -38,7 +38,6 @@ class ActionController extends AbstractController
         foreach ($activities as $activity) {
             $totals[$activity->getId()] = $this->getTotals($activity->getActionDetails());
         }
-//        var_dump($activities[0]->getActionDetails());die;
 
         return $this->render('action/list.twig', ['activities' => $activities, 'totals' => $totals]);
     }

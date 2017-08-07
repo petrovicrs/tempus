@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+    {% include 'main-navbar.html.twig' with {'active': 'resources'} %}
+    <div class="container-fluid">
+        <a href="{{ localizedPath('resource_edit', {'resourceId': resource.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
+        <h2><b>{% trans %}Resource{% endtrans %}</b></h2>
+
+        <table class="table table-hover" data-toggle="table">
+            <thead>
+            <tr class="table-heleer">
+                <th>{% trans %}Resource title{% endtrans %}</th>
+                <th>{% trans %}Type{% endtrans %}</th>
+                <th>{% trans %}Keywords{% endtrans %}</th>
+                <th>{% trans %}Project{% endtrans %}</th>
+                <th>{% trans %}Public?{% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ resource.title(app.request.getLocale()) }}</td>
+                    <td>{{ resource.resourceType.name(app.request.getLocale()) }}</td>
+                    <td>{{ resource.keywords }}</td>
+                    <td><a href="{{ localizedPath('project_view', {'projectId': resource.project.id}) }}">{{ resource.project.name(app.request.getLocale()) }}</a></td>
+                    {% if resource.isPublic %}
+                        <td class="text-center">{% trans %}Yes{% endtrans %}</td>
+                    {% else %}
+                        <td class="text-center">{% trans %}No{% endtrans %}</td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="col-xs-12 no-padding">
+            <h2>Abstract</h2>
+            <p>{{ resource.abstract }}</p>
+        </div>
+
+        <div class="col-xs-12 no-padding">
+            <h2>Attachments</h2>
+            {# TODO list filest #}
+            <p>Files</p>
+        </div>
+    </div>
+    <div>
+{% endblock %}

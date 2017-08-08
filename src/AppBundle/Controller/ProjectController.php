@@ -22,6 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Form\ProjectForm;
+use AppBundle\Form\ProjectKa2Form;
 use AppBundle\Entity\Project;
 use AppBundle\Repository\ProjectRepository;
 use AppBundle\Repository\ProjectApplicantOrganisationRepository;
@@ -125,6 +126,86 @@ class ProjectController extends AbstractController
         }
 
         return $this->render('project/create.twig', $data);
+    }
+
+    /**
+     * @Route("/{locale}/project-ka2/create", name="project_ka2_create", requirements={"locale": "%app.locales%"})
+     *
+     */
+    public function createKa2Action(Request $request)
+    {
+        $project = new Project();
+        $keyActionSelected = $request->request->get('project_key_action');
+
+        $projectForm = $this->createForm(ProjectKa2Form::class, $project, [
+            'action' => $this->generateUrl('project_ka2_create'),
+            'method' => 'POST',
+            'locale' => $request->getLocale(),
+        ]);
+
+        $projectForm->handleRequest($request);
+
+        if ($projectForm->isSubmitted() && $projectForm->isValid())
+        {
+            $this->getProjectRepository()->saveProject($project);
+
+            /** @var ProjectApplicantOrganisation $applicantOrganisation */
+            foreach($project->getApplicantOrganisations() as $applicantOrganisation){
+                $applicantOrganisation->setProject($project);
+                $this->getApplicantOrganisationRepository()->save($applicantOrganisation);
+            }
+
+            /** @var ProjectPartnerOrganisation $partnerOrganisation */
+            foreach($project->getPartnerOrganisations() as $partnerOrganisation){
+                $partnerOrganisation->setProject($project);
+                $this->getProjectPartnerOrganisationRepository()->save($partnerOrganisation);
+            }
+
+            /** @var ProjectLimitation $limitation */
+            foreach($project->getLimitations() as $limitation){
+                $limitation->setProject($project);
+                $this->getProjectLimitationRepository()->save($limitation);
+            }
+
+            /** @var ProjectContactPerson $contactPerson */
+            foreach($project->getContactPersons() as $contactPerson){
+                $contactPerson->setProject($project);
+                $this->getProjectContactPersonRepository()->save($contactPerson);
+            }
+
+            /** @var ProjectTopic $topic */
+            foreach($project->getTopics() as $topic){
+                $topic->setProject($project);
+                $this->getProjectTopicRepository()->save($topic);
+            }
+
+            /** @var ProjectSubjectArea $subjectArea */
+            foreach($project->getSubjectAreas() as $subjectArea){
+                $subjectArea->setProject($project);
+                $this->getProjectSubjectAreasRepository()->save($subjectArea);
+            }
+
+            /** @var ProjectNote $note */
+            foreach($project->getNotes() as $note){
+                $note->setProject($project);
+                $this->getProjectNotesRepository()->save($note);
+            }
+
+            return $this->redirectToRoute('project_list');
+
+        }
+
+        $data = [
+            'my_form' => $projectForm->createView()
+        ];
+
+        if(!is_null($keyActionSelected)) {
+            $keyAction = $this->getProjectKeyActionRepository()->findOneBy(['id' => (int) $keyActionSelected]);
+            // TODO check what to pass to form (id, name, or something else)
+            $data['key_action_selected'] = $keyAction->getId();//$keyAction->getName($request->getLocale());
+        }
+
+        return $this->render('project/create-ka2.twig', $data);
     }
 
     /**

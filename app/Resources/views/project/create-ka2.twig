@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/projectApplicantOrganisations.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecPartnerOrganisations.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecLimitations.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecContactPersons.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecTopics.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecSubjectAreas.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecNotes.js')}}" ></script>
+
+
+    <section id="main">
+        {% include 'main-navbar.html.twig' with {'active': 'project'} %}
+        <div class="container-fluid">
+            <div class="page-header">
+                <h1>{% trans %}Add Project{% endtrans %}</h1>
+            </div>
+
+            <div class="controls">
+                {{ form_start(my_form) }}
+                    <div>
+                        {{ form_label(my_form.programmes, 'Programme'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.programmes, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.keyActions, 'Key Action'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.keyActions, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.actions, 'Action'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.actions, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.types, 'Project Type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.types, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.calls, 'Call'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.calls, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.rounds, 'Round'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.rounds, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                {# GENERAL INFORMATION #}
+                <div class="general-info">
+
+                    <h2>General information</h2>
+
+                    <div>
+                        {{ form_label(my_form.nameEn, 'English'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.nameEn, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.nameSr, 'Serbian'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.nameSr, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.nameOriginalLetter, 'Original letter'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.nameOriginalLetter, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.acronym, 'Acronym'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.acronym, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.startDatetime, 'Start date'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.startDatetime)  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.endDatetime, 'End date'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.endDatetime)  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.durationMonths, 'Duration in months'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.durationMonths, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.extendedUntil, 'Extended until'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.extendedUntil, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.audited, 'Audited'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.audited, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                </div>
+
+                {{ form_end(my_form) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

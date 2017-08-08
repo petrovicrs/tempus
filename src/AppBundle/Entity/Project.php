@@ -85,6 +85,11 @@ class Project extends AbstractAuditable
     protected $startDatetime;
 
     /**
+     * @ORM\Column(name="extended_until", type="date")
+     */
+    protected $extendedUntil;
+
+    /**
     * @var integer $durationMonths
     * @Assert\Type("numeric")
     * @Column(type="integer", name="duration_months", options={"unsigned":true})
@@ -131,6 +136,13 @@ class Project extends AbstractAuditable
      * )
      */
     protected $actions;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="ProjectType"
+     * )
+     */
+    protected $types;
 
     /**
      * @ORM\ManyToOne(
@@ -344,6 +356,22 @@ class Project extends AbstractAuditable
     }
 
     /**
+     * @return mixed
+     */
+    public function getExtendedUntil()
+    {
+        return $this->extendedUntil;
+    }
+
+    /**
+     * @param mixed $extendedUntil
+     */
+    public function setExtendedUntil($extendedUntil)
+    {
+        $this->extendedUntil = $extendedUntil;
+    }
+
+    /**
      * @return int
      */
     public function getDurationMonths()
@@ -501,6 +529,22 @@ class Project extends AbstractAuditable
     public function setActions($actions)
     {
         $this->actions = $actions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTypes()
+    {
+        return $this->types;
+    }
+
+    /**
+     * @param mixed $types
+     */
+    public function setTypes($type)
+    {
+        $this->types = $type;
     }
 
     /**

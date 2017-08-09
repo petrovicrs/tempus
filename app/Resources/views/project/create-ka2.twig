@@ -104,7 +104,7 @@
                     <div>
                         {{ form_label(my_form.extendedUntil, 'Extended until'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
-                            {{ form_widget(my_form.extendedUntil, {'attr': {'class': 'form-control'}})  }}
+                            {{ form_widget(my_form.extendedUntil)  }}
                         </div>
                     </div>
                     <div>
@@ -113,6 +113,144 @@
                             {{ form_widget(my_form.audited, {'attr': {'class': 'form-control'}})  }}
                         </div>
                     </div>
+                    <div>
+                        {{ form_label(my_form.applicationYear, 'Application year'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.applicationYear, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.projectNumber, 'Project Nr'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.projectNumber, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.website, 'Website'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.website, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.grant, 'Grant'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.grant, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.cofinancing, 'Co-financing'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.cofinancing, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.total, 'Total'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.total, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.horizontalPriorityType, 'Horizontal Priority'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.horizontalPriorityType, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.verticalPriorityType, 'Vertical Priority'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.verticalPriorityType, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.projectStatusType, 'Project status'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.projectStatusType, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.projectScopeType, 'Project scope'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.projectScopeType, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.contactPersonKa2, 'Contact person'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.contactPersonKa2, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    Project Officers
+                    <div>
+                        {{ form_label(my_form.ftOfficers, 'FT Officer'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.ftOfficers, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.eaceaOfficers, 'EACEA Officer'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.eaceaOfficers, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.remarkOfficer, 'Remark'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.remarkOfficer, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    Project Evaulator's grade
+                    <div>
+                        {{ form_label(my_form.projectGradeType, 'Officer Type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.projectGradeType, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.remarkGrade, 'Remark'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.remarkGrade, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    English/Serbian/Native Language
+                    <div>
+                        {{ form_label(my_form.projectSummaryEnglish, 'Project Summary English'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.projectSummaryEnglish, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.projectObjectivesEnglish, 'Project Objectives English'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.projectObjectivesEnglish, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.projectSummarySerbian, 'Project Summary Serbian'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.projectSummarySerbian, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.projectObjectivesSerbian, 'Project Objectives Serbian'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.projectObjectivesSerbian, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.projectSummaryNative, 'Project Summary Native'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.projectSummaryNative, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(my_form.projectObjectivesNative, 'Project Objectives Native'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                        <div class="form-inline">
+                            {{ form_widget(my_form.projectObjectivesNative, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <ul class="projectTargetGroup" data-prototype="{{ include('/project/includes/projectTargetGroup.html.twig',
+                            {'form': my_form.projectTargetGroup.vars.prototype })|e }}">
+                    </ul>
                 </div>
 
                 {{ form_end(my_form) }}

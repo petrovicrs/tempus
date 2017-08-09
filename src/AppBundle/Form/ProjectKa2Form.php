@@ -61,8 +61,61 @@ class ProjectKa2Form extends AbstractType
             ->add('endDatetime', DateType::class)
             ->add('startDatetime', DateType::class)
             ->add('durationMonths', TextType::class)
-            ->add('extendedUntil', TextType::class)
+            ->add('extendedUntil', DateType::class)
             ->add('audited', CheckboxType::class, array('required' => false))
+            ->add('applicationYear', TextType::class)
+            ->add('projectNumber', TextType::class)
+            ->add('website', TextType::class)
+            ->add('grant', TextType::class)
+            ->add('cofinancing', TextType::class)
+            ->add('total', TextType::class)
+            ->add('horizontalPriorityType', EntityType::class, [
+                'class' => 'AppBundle:HorizontalPriorityType',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('verticalPriorityType', EntityType::class, [
+                'class' => 'AppBundle:VerticalPriorityType',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('projectStatusType', EntityType::class, [
+                'class' => 'AppBundle:ProjectStatusType',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('projectScopeType', EntityType::class, [
+                'class' => 'AppBundle:ProjectScopeType',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('contactPersonKa2', EntityType::class, [
+                'class' => 'AppBundle:Person',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('ftOfficers', EntityType::class, [
+                'class' => 'AppBundle:ProjectFtOfficer',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('eaceaOfficers', EntityType::class, [
+                'class' => 'AppBundle:ProjectEaceaOfficer',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('remarkOfficer', TextareaType::class)
+            ->add('projectGradeType', EntityType::class, [
+                'class' => 'AppBundle:ProjectGradeType',
+                'choice_label' => 'name' . ucfirst($options['locale'])
+            ])
+            ->add('remarkGrade', TextareaType::class)
+            ->add('projectSummaryEnglish', TextareaType::class)
+            ->add('projectSummarySerbian', TextareaType::class)
+            ->add('projectSummaryNative', TextareaType::class)
+            ->add('projectObjectivesEnglish', TextareaType::class)
+            ->add('projectObjectivesSerbian', TextareaType::class)
+            ->add('projectObjectivesNative', TextareaType::class)
+            ->add('projectTargetGroup', CollectionType::class, array(
+                'entry_type'  => ProjectTargetGroupForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
 //            ->add('projectNumber', TextType::class)
 //            ->add('onGoing', CheckboxType::class, array('required' => false))
 //            ->add('applicantOrganisations', CollectionType::class, array(

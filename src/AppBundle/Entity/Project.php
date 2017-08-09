@@ -15,6 +15,7 @@ use AppBundle\Entity\ProjectNote;
 use AppBundle\Entity\ProjectTopic;
 use AppBundle\Entity\ProjectSubjectArea;
 use AppBundle\Entity\ProjectLimitation;
+use AppBundle\Entity\ProjectTargetGroup;
 
 
 /**
@@ -73,6 +74,97 @@ class Project extends AbstractAuditable
      * @ORM\Column(name="project_summary", type="string", length=255)
      */
     protected $projectSummary;
+
+    /**
+     * @var string $applicationYear
+     * @Assert\Type("string")
+     * @ORM\Column(name="application_year", type="string", length=255)
+     */
+    protected $applicationYear;
+
+    /**
+     * @var string $website
+     * @Assert\Type("string")
+     * @ORM\Column(name="website", type="string", length=255)
+     */
+    protected $website;
+
+    /**
+     * @var string $grant
+     * @Assert\Type("string")
+     * @ORM\Column(name="grant", type="string", length=255)
+     */
+    protected $grant;
+
+    /**
+     * @var string $cofinancing
+     * @Assert\Type("string")
+     * @ORM\Column(name="cofinancing", type="string", length=255)
+     */
+    protected $cofinancing;
+
+    /**
+     * @var string $total
+     * @Assert\Type("string")
+     * @ORM\Column(name="total", type="string", length=255)
+     */
+    protected $total;
+
+    /**
+     * @var string $remarkOfficer
+     * @Assert\Type("string")
+     * @ORM\Column(name="remarkOfficer", type="string", length=255)
+     */
+    protected $remarkOfficer;
+
+    /**
+     * @var string $remarkGrade
+     * @Assert\Type("string")
+     * @ORM\Column(name="remarkGrade", type="string", length=255)
+     */
+    protected $remarkGrade;
+
+    /**
+     * @var string $projectSummaryEnglish
+     * @Assert\Type("string")
+     * @ORM\Column(name="projectSummaryEnglish", type="string", length=255)
+     */
+    protected $projectSummaryEnglish;
+
+    /**
+     * @var string $projectSummarySerbian
+     * @Assert\Type("string")
+     * @ORM\Column(name="projectSummarySerbian", type="string", length=255)
+     */
+    protected $projectSummarySerbian;
+
+    /**
+     * @var string $projectSummaryNative
+     * @Assert\Type("string")
+     * @ORM\Column(name="projectSummaryNative", type="string", length=255)
+     */
+    protected $projectSummaryNative;
+
+    /**
+     * @var string $projectObjectivesEnglish
+     * @Assert\Type("string")
+     * @ORM\Column(name="projectObjectivesEnglish", type="string", length=255)
+     */
+    protected $projectObjectivesEnglish;
+
+    /**
+     * @var string $projectObjectivesSerbian
+     * @Assert\Type("string")
+     * @ORM\Column(name="projectObjectivesSerbian", type="string", length=255)
+     */
+    protected $projectObjectivesSerbian;
+
+    /**
+     * @var string $projectObjectivesNative
+     * @Assert\Type("string")
+     * @ORM\Column(name="projectObjectivesNative", type="string", length=255)
+     */
+    protected $projectObjectivesNative;
 
     /**
      * @ORM\Column(name="end_datetime", type="date")
@@ -146,6 +238,13 @@ class Project extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
+     *      targetEntity="Person"
+     * )
+     */
+    protected $contactPersonKa2;
+
+    /**
+     * @ORM\ManyToOne(
      *      targetEntity="ProjectCall"
      * )
      */
@@ -171,6 +270,41 @@ class Project extends AbstractAuditable
      * )
      */
     protected $eaceaOfficers;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="HorizontalPriorityType"
+     * )
+     */
+    protected $horizontalPriorityType;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="VerticalPriorityType"
+     * )
+     */
+    protected $verticalPriorityType;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="ProjectStatusType"
+     * )
+     */
+    protected $projectStatusType;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="ProjectGradeType"
+     * )
+     */
+    protected $projectGradeType;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="ProjectScopeType"
+     * )
+     */
+    protected $projectScopeType;
 
     /**
      * @ORM\OneToMany(targetEntity="ProjectNote", mappedBy="project", cascade={"persist"})
@@ -207,6 +341,11 @@ class Project extends AbstractAuditable
      */
     protected $subjectAreas;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ProjectTargetGroup", mappedBy="project", cascade={"persist"})
+     */
+    protected $projectTargetGroup;
+
     public function __construct()
     {
         parent::__construct();
@@ -217,6 +356,7 @@ class Project extends AbstractAuditable
         $this->partnerOrganisations = new ArrayCollection();
         $this->applicantOrganisations = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->projectTargetGroup = new ArrayCollection();
     }
 
     /**
@@ -738,6 +878,32 @@ class Project extends AbstractAuditable
     /**
      * @return mixed
      */
+    public function getProjectTargetGroup()
+    {
+        return $this->projectTargetGroup;
+    }
+
+    /**
+     * @param mixed $projectTargetGroup
+     */
+    public function setProjectTargetGroup($projectTargetGroup)
+    {
+        $this->projectTargetGroup = $projectTargetGroup;
+    }
+
+    public function addProjectTargetGroup(ProjectTargetGroup $group)
+    {
+        $this->topics->add($group);
+    }
+
+    public function removeProjectTargetGroup(ProjectTargetGroup $group)
+    {
+        $this->topics->removeElement($group);
+    }
+
+    /**
+     * @return mixed
+     */
     public function getSubjectAreas()
     {
         return $this->subjectAreas;
@@ -767,6 +933,311 @@ class Project extends AbstractAuditable
         }
         return $this->nameEn;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getApplicationYear()
+    {
+        return $this->applicationYear;
+    }
+
+    /**
+     * @param mixed $applicationYear
+     */
+    public function setApplicationYear($applicationYear)
+    {
+        $this->applicationYear = $applicationYear;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * @param string $website
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGrant()
+    {
+        return $this->grant;
+    }
+
+    /**
+     * @param mixed $grant
+     */
+    public function setGrant($grant)
+    {
+        $this->grant = $grant;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCofinancing()
+    {
+        return $this->cofinancing;
+    }
+
+    /**
+     * @param mixed $cofinancing
+     */
+    public function setCofinancing($cofinancing)
+    {
+        $this->cofinancing = $cofinancing;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
+     * @param mixed $total
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHorizontalPriorityType()
+    {
+        return $this->horizontalPriorityType;
+    }
+
+    /**
+     * @param mixed $horizontalPriorityType
+     */
+    public function setHorizontalPriorityType($horizontalPriorityType)
+    {
+        $this->horizontalPriorityType = $horizontalPriorityType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVerticalPriorityType()
+    {
+        return $this->verticalPriorityType;
+    }
+
+    /**
+     * @param mixed $verticalPriorityType
+     */
+    public function setVerticalPriorityType($verticalPriorityType)
+    {
+        $this->verticalPriorityType = $verticalPriorityType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectStatusType()
+    {
+        return $this->projectStatusType;
+    }
+
+    /**
+     * @param mixed $projectStatusType
+     */
+    public function setProjectStatusType($projectStatusType)
+    {
+        $this->projectStatusType = $projectStatusType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectScopeType()
+    {
+        return $this->projectScopeType;
+    }
+
+    /**
+     * @param mixed $projectScopeType
+     */
+    public function setProjectScopeType($projectScopeType)
+    {
+        $this->projectScopeType = $projectScopeType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContactPersonKa2()
+    {
+        return $this->contactPersonKa2;
+    }
+
+    /**
+     * @param mixed $contactPersonKa2
+     */
+    public function setContactPersonKa2($contactPersonKa2)
+    {
+        $this->contactPersonKa2 = $contactPersonKa2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRemarkOfficer()
+    {
+        return $this->remarkOfficer;
+    }
+
+    /**
+     * @param mixed $remarkOfficer
+     */
+    public function setRemarkOfficer($remarkOfficer)
+    {
+        $this->remarkOfficer = $remarkOfficer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRemarkGrade()
+    {
+        return $this->remarkGrade;
+    }
+
+    /**
+     * @param mixed $remarkGrade
+     */
+    public function setRemarkGrade($remarkGrade)
+    {
+        $this->remarkGrade = $remarkGrade;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectGradeType()
+    {
+        return $this->projectGradeType;
+    }
+
+    /**
+     * @param mixed $projectGradeType
+     */
+    public function setProjectGradeType($projectGradeType)
+    {
+        $this->projectGradeType = $projectGradeType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectSummaryEnglish()
+    {
+        return $this->projectSummaryEnglish;
+    }
+
+    /**
+     * @param mixed $projectSummaryEnglish
+     */
+    public function setProjectSummaryEnglish($projectSummaryEnglish)
+    {
+        $this->projectSummaryEnglish = $projectSummaryEnglish;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProjectSummarySerbian()
+    {
+        return $this->projectSummarySerbian;
+    }
+
+    /**
+     * @param string $projectSummarySerbian
+     */
+    public function setProjectSummarySerbian($projectSummarySerbian)
+    {
+        $this->projectSummarySerbian = $projectSummarySerbian;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectSummaryNative()
+    {
+        return $this->projectSummaryNative;
+    }
+
+    /**
+     * @param mixed $projectSummaryNative
+     */
+    public function setProjectSummaryNative($projectSummaryNative)
+    {
+        $this->projectSummaryNative = $projectSummaryNative;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectObjectivesEnglish()
+    {
+        return $this->projectObjectivesEnglish;
+    }
+
+    /**
+     * @param mixed $projectObjectivesEnglish
+     */
+    public function setProjectObjectivesEnglish($projectObjectivesEnglish)
+    {
+        $this->projectObjectivesEnglish = $projectObjectivesEnglish;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectObjectivesSerbian()
+    {
+        return $this->projectObjectivesSerbian;
+    }
+
+    /**
+     * @param mixed $projectObjectivesSerbian
+     */
+    public function setProjectObjectivesSerbian($projectObjectivesSerbian)
+    {
+        $this->projectObjectivesSerbian = $projectObjectivesSerbian;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectObjectivesNative()
+    {
+        return $this->projectObjectivesNative;
+    }
+
+    /**
+     * @param mixed $projectObjectivesNative
+     */
+    public function setProjectObjectivesNative($projectObjectivesNative)
+    {
+        $this->projectObjectivesNative = $projectObjectivesNative;
+    }
+
 
 }
 

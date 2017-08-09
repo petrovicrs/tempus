@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+    {% include 'main-navbar.html.twig' with {'active': 'intelectual_outputs'} %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls intelectualOutput">
+                <div class="col-xs-12">
+
+                    {{ form_start(my_form) }}
+                        <div class="col-xs-12">
+                            <h2>{% trans %}Add Output{% endtrans %}</h2>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-xs-2">
+                                    {{ form_label(my_form.type, 'Intelectual Output type'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.type, {'attr': {'class': 'form-control'}})  }}
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    {{ form_label(my_form.project, 'Project'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.project, {'attr': {'class': 'form-control'}})  }}
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    {{ form_label(my_form.status, 'Status'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.status, {'attr': {'class': 'form-control'}})  }}
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    {{ form_label(my_form.dueDate, 'Due date'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.dueDate)  }}
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    {{ form_label(my_form.isPublic, 'Public?'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.isPublic) }}
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    {{ form_label(my_form.eLinkAvailable, 'Available on E+Link?'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.eLinkAvailable) }}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xs-12">
+                                {% include 'intelectual-outputs/includes/details.html.twig' with {'form': my_form} %}
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            {{ form_end(my_form) }}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

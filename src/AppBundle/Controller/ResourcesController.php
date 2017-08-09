@@ -25,8 +25,6 @@ class ResourcesController extends AbstractController
     {
         $resources = $this->getResourcesRepository()->findAll();
 
-//        var_dump('USAO');die;
-
         return $this->render('resources/list.twig', ['resources' => $resources]);
     }
 
@@ -71,8 +69,6 @@ class ResourcesController extends AbstractController
         $resourceForm->handleRequest($request);
 
         if ($resourceForm->isSubmitted() && $resourceForm->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
 
             $this->getResourcesRepository()->save($resource);
 

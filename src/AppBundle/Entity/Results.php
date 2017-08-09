@@ -14,10 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ResourcesRepository")
- * @ORM\Table(name="resources")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ResultsRepository")
+ * @ORM\Table(name="results")
  */
-class Resources extends AbstractAuditable
+class Results extends AbstractAuditable
 {
     /**
      * @ORM\Id
@@ -32,20 +32,24 @@ class Resources extends AbstractAuditable
     protected $project;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ResourceType")
+     * @ORM\ManyToOne(targetEntity="ResultType")
      */
-    protected $resourceType;
+    protected $resultType;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="keywords", type="string")
+     * @ORM\ManyToOne(targetEntity="ResultStatus")
      */
-    protected $keywords;
+    protected $resultStatus;
 
     /**
      * @ORM\Column(name="is_public", type="boolean")
      */
     protected $isPublic;
+
+    /**
+     * @ORM\Column(name="show_description", type="boolean")
+     */
+    protected $showDescription;
 
     /**
      * @Assert\NotBlank()
@@ -73,9 +77,9 @@ class Resources extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="abstract", type="text")
+     * @ORM\Column(name="notes", type="text")
      */
-    protected $abstract;
+    protected $notes;
 
     //TODO Add attachment entity
     //protected $atachments;
@@ -115,33 +119,33 @@ class Resources extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getResourceType()
+    public function getResultType()
     {
-        return $this->resourceType;
+        return $this->resultType;
     }
 
     /**
-     * @param mixed $resourceType
+     * @param mixed $resultType
      */
-    public function setResourceType($resourceType)
+    public function setResultType($resultType)
     {
-        $this->resourceType = $resourceType;
+        $this->resultType = $resultType;
     }
 
     /**
      * @return mixed
      */
-    public function getKeywords()
+    public function getResultStatus()
     {
-        return $this->keywords;
+        return $this->resultStatus;
     }
 
     /**
-     * @param mixed $keywords
+     * @param mixed $resultStatus
      */
-    public function setKeywords($keywords)
+    public function setResultStatus($resultStatus)
     {
-        $this->keywords = $keywords;
+        $this->resultStatus = $resultStatus;
     }
 
     /**
@@ -158,6 +162,22 @@ class Resources extends AbstractAuditable
     public function setIsPublic($isPublic)
     {
         $this->isPublic = $isPublic;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowDescription()
+    {
+        return $this->showDescription;
+    }
+
+    /**
+     * @param mixed $showDescription
+     */
+    public function setShowDescription($showDescription)
+    {
+        $this->showDescription = $showDescription;
     }
 
     /**
@@ -227,20 +247,18 @@ class Resources extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getAbstract()
+    public function getNotes()
     {
-        return $this->abstract;
+        return $this->notes;
     }
 
     /**
-     * @param mixed $abstract
+     * @param mixed $notes
      */
-    public function setAbstract($abstract)
+    public function setNotes($notes)
     {
-        $this->abstract = $abstract;
+        $this->notes = $notes;
     }
-
-
 
     public function getTitle($locale)
     {
@@ -249,6 +267,16 @@ class Resources extends AbstractAuditable
         }
         else {
             return $this->titleEn;
+        }
+    }
+
+    public function getDescription($locale)
+    {
+        if($locale == 'sr') {
+            return $this->descriptionSr;
+        }
+        else {
+            return $this->descriptionEn;
         }
     }
 }

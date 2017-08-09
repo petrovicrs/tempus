@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+        {% include 'main-navbar.html.twig' with {'active': 'results'} %}
+        <div class="container-fluid">
+            <a href="{{ localizedPath('results_create') }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Add Result{% endtrans %}</a>
+            <h2><b>{% trans %}Results{% endtrans %}</b></h2>
+
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                    <tr class="table-heleer">
+                        <th>{% trans %}Result title{% endtrans %}</th>
+                        <th>{% trans %}Type{% endtrans %}</th>
+                        <th>{% trans %}Description{% endtrans %}</th>
+                        <th>{% trans %}Project{% endtrans %}</th>
+                        <th>{% trans %}Status{% endtrans %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, result in results %}
+                        {% if result.isPublic %}
+                            <tr>
+                                <td><a href="{{ localizedPath('result_view', {'resultId': result.id}) }}">{{ result.title(app.request.getLocale()) }}</a></td>
+                                <td>{{ result.resultType.name(app.request.getLocale()) }}</td>
+                                {% if result.showDescription %}
+                                    <td>{{ result.description(app.request.getLocale()) }}</td>
+                                {% endif %}
+                                <td><a href="{{ localizedPath('project_view', {'projectId': result.project.id}) }}">{{ result.project.name(app.request.getLocale()) }}</a></td>
+                                <td>{{ result.status }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <div>
+{% endblock %}

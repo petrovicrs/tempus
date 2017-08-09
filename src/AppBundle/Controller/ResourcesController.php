@@ -76,7 +76,7 @@ class ResourcesController extends AbstractController
 
             $this->getResourcesRepository()->save($resource);
 
-            return $this->redirectToRoute('action_list');
+            return $this->redirectToRoute('resources_list');
         }
 
         return $this->render('resources/edit.twig', ['my_form' => $resourceForm->createView()]);

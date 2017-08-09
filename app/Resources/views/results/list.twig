@@ -22,12 +22,26 @@
                         {% if result.isPublic %}
                             <tr>
                                 <td><a href="{{ localizedPath('result_view', {'resultId': result.id}) }}">{{ result.title(app.request.getLocale()) }}</a></td>
-                                <td>{{ result.resultType.name(app.request.getLocale()) }}</td>
+
+                                {% if result.resultType %}
+                                    <td>{{ result.resultType.name(app.request.getLocale()) }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+
                                 {% if result.showDescription %}
                                     <td>{{ result.description(app.request.getLocale()) }}</td>
+                                {% else %}
+                                    <td></td>
                                 {% endif %}
+
                                 <td><a href="{{ localizedPath('project_view', {'projectId': result.project.id}) }}">{{ result.project.name(app.request.getLocale()) }}</a></td>
-                                <td>{{ result.status }}</td>
+
+                                {% if result.resultStatus %}
+                                    <td>{{ result.resultStatus.name(app.request.getLocale()) }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
                             </tr>
                         {% endif %}
                     {% endfor %}

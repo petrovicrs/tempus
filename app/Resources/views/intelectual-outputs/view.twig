@@ -31,7 +31,7 @@
 
                     <td><a href="{{ localizedPath('project_view', {'projectId': intelectualOutput.project.id}) }}">{{ intelectualOutput.project.name(app.request.getLocale()) }}</a></td>
 
-                    <td>{{ intelectualOutput.dueDate }}</td>
+                    <td>{{ intelectualOutput.dueDate | date('d/m/y')}}</td>
 
                     {% if intelectualOutput.status %}
                         <td>{{ intelectualOutput.status.name(app.request.getLocale()) }}</td>

@@ -43,14 +43,14 @@ class IntelectualOutputsController extends AbstractController
         if ($intelectualOutputsForm->isSubmitted() && $intelectualOutputsForm->isValid()) {
             $this->getIntelectualOutputsRepository()->save($intelectualOutputs);
 
-            return $this->redirectToRoute('Itelectual_Outputslist');
+            return $this->redirectToRoute('intelectual_outputs_list');
         }
 
         return $this->render('intelectual-outputs/create.twig', ['my_form' => $intelectualOutputsForm->createView()]);
     }
 
     /**
-     * @Route("/{locale}/intelectual-outputs/edit/{d}", name="intelectual_output_edit", requirements={"id": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/intelectual-outputs/edit/{id}", name="intelectual_output_edit", requirements={"id": "\d+", "locale": "%app.locales%"})
      *
      */
     public function editAction(Request $request, $id)
@@ -58,7 +58,7 @@ class IntelectualOutputsController extends AbstractController
         $intelectualOutput = $this->getIntelectualOutputsRepository()->findOneBy(['id' => $id]);
 
         $intelectualOutputForm = $this->createForm(IntelectualOutputsForm::class, $intelectualOutput, [
-            'action' => $this->generateUrl('intelectual_output_edit', ['resultId' => $id]),
+            'action' => $this->generateUrl('intelectual_output_edit', ['id' => $id]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
@@ -66,7 +66,7 @@ class IntelectualOutputsController extends AbstractController
         $intelectualOutputForm->handleRequest($request);
 
         if ($intelectualOutputForm->isSubmitted() && $intelectualOutputForm->isValid()) {
-            $this->getIntelectualOutputsRepository()->save($result);
+            $this->getIntelectualOutputsRepository()->save($output);
 
             return $this->redirectToRoute('intelectual_outputs_list');
         }

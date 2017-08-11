@@ -31,7 +31,7 @@
 
                                 <td><a href="{{ localizedPath('project_view', {'projectId': output.project.id}) }}">{{ output.project.name(app.request.getLocale()) }}</a></td>
 
-                                <td>{{ output.dueDate }}</td>
+                                <td>{{ output.dueDate | date('d/m/y') }}</td>
 
 
                                 {% if output.status %}

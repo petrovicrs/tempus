@@ -66,7 +66,7 @@ class ProjectKa2Form extends AbstractType
             ->add('applicationYear', TextType::class)
             ->add('projectNumber', TextType::class)
             ->add('website', TextType::class)
-            ->add('grant', TextType::class)
+            ->add('projectGrant', TextType::class)
             ->add('cofinancing', TextType::class)
             ->add('total', TextType::class)
             ->add('horizontalPriorityType', EntityType::class, [
@@ -116,68 +116,27 @@ class ProjectKa2Form extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ))
-//            ->add('projectNumber', TextType::class)
-//            ->add('onGoing', CheckboxType::class, array('required' => false))
-//            ->add('applicantOrganisations', CollectionType::class, array(
-//                'entry_type'  => ProjectApplicantOrganisationForm::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//                'allow_delete' => true,
-//                'label' => false
-//            ))
-//            ->add('participantFewerOptions', CheckboxType::class, array('required' => false))
-//            ->add('consortium', CheckboxType::class, array('required' => false))
-//            ->add('partnerOrganisations', CollectionType::class, array(
-//                'entry_type'  => ProjectParnerOrganisationForm::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//                'allow_delete' => true,
-//                'label' => false
-//            ))
-//            ->add('limitations', CollectionType::class, array(
-//                'entry_type'  => ProjectLimitationsForm::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//                'allow_delete' => true,
-//                'label' => false
-//            ))
-//            ->add('contactPersons', CollectionType::class, array(
-//                'entry_type'  => ProjectContactPersonForm::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//                'allow_delete' => true,
-//                'label' => false
-//            ))
-//            ->add('topics', CollectionType::class, array(
-//                'entry_type'  => ProjectTopicsForm::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//                'allow_delete' => true,
-//                'label' => false
-//            ))
-//            ->add('subjectAreas', CollectionType::class, array(
-//                'entry_type'  => ProjectSubjectAreasForm::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//                'allow_delete' => true,
-//                'label' => false
-//            ))
-////            ->add('calls', EntityType::class, [
-////                'class' => 'AppBundle:ProjectFtOfficer',
-////                'choice_label' => 'name' . ucfirst($options['locale'])
-////            ])
-////            ->add('rounds', EntityType::class, [
-////                'class' => 'AppBundle:ProjectEaceaOfficer',
-////                'choice_label' => 'name' . ucfirst($options['locale'])
-////            ])
-//            ->add('notes', CollectionType::class, array(
-//                'entry_type'  => ProjectNoteForm::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//                'allow_delete' => true,
-//                'label' => false
-//            ))
-//            ->add('projectSummary', TextareaType::class)
+            ->add('subjectAreas', CollectionType::class, array(
+                'entry_type'  => ProjectSubjectAreasForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
+            ->add('projectPriority', CollectionType::class, array(
+                'entry_type'  => ProjectPriorityForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
+            ->add('contacts', CollectionType::class, array(
+                'entry_type'  => ProjectContactForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
             ->add('submit', SubmitType::class, array('label_format' => 'Submit'));
     }
 

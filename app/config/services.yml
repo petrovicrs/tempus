@@ -209,7 +209,26 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\ProjectNote
-
+    doctrine_entity_repository.project_target_group:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectTargetGroup
+    doctrine_entity_repository.project_priority:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectPriority
+    doctrine_entity_repository.project_contact:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectContact
+    doctrine_entity_repository.project_evaluator_grade:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectEvaluatorGrade
     doctrine_entity_repository.activity:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

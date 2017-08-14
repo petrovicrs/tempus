@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class ProjectTargetGroupForm extends AbstractType
+class ProjectPriorityForm extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -22,8 +22,8 @@ class ProjectTargetGroupForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('targetGroup', EntityType::class, [
-                'class' => 'AppBundle:ProjectTargetGroupType',
+            ->add('priority', EntityType::class, [
+                'class' => 'AppBundle:ProjectPriorityType',
                 'choice_label' => 'name' . ucfirst($options['locale'])
             ]);
     }
@@ -34,7 +34,7 @@ class ProjectTargetGroupForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\ProjectTargetGroup',
+            'data_class' => 'AppBundle\Entity\ProjectPriority',
             'locale' => 'en',
         ));
     }

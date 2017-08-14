@@ -25,64 +25,58 @@
                     <td><b>{% trans %}Acronym{% endtrans %}</b>: {{ project.acronym ? project.acronym : 'N/A'}}</td>
                 </tr>
                 <tr>
-                    <td><b>{% trans %}Project Nr.{% endtrans %}</b>: {{ project.projectNumber ? project.projectNumber : 'N/A'}}</td>
-                    <td><b>{% trans %}Audited{% endtrans %}</b>: {{ project.audited ? 'Yes' : 'No'}}</td>
-                    <td colspan="2"><b>{% trans %}On-Going{% endtrans %}</b>: {{ project.onGoing ? 'Yes' : 'No'}}</td>
-                </tr>
-                <tr>
                     <td><b>{% trans %}Start Date Nr.{% endtrans %}</b>: {{ project.startDatetime | date('d/m/y')}}</td>
                     <td><b>{% trans %}End Date{% endtrans %}</b>: {{ project.endDatetime | date('d/m/y')}}</td>
                     <td colspan="2"><b>{% trans %}Duration in Months{% endtrans %}</b>: {{ project.durationMonths ? project.durationMonths : 'N/A'}}</td>
+                    <td><b>{% trans %}Extended Until{% endtrans %}</b>: {{ project.extendedUntil | date('d/m/y')}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Project Nr.{% endtrans %}</b>: {{ project.projectNumber ? project.projectNumber : 'N/A'}}</td>
+                    <td><b>{% trans %}Audited{% endtrans %}</b>: {{ project.audited ? 'Yes' : 'No'}}</td>
+                    <td><b>{% trans %}Application Year{% endtrans %}</b>: {{ project.applicationYear ? project.applicationYear : 'N/A'}}</td>
+                    <td><b>{% trans %}Web Site{% endtrans %}</b>: {{ project.website ? project.website : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Project Status{% endtrans %}</b>: {{ project.projectStatusType ? project.projectStatusType.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td><b>{% trans %}Project Scope{% endtrans %}</b>: {{ project.projectScopeType ? project.projectScopeType.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td><b>{% trans %}Horizontal priority{% endtrans %}</b>: {{ project.horizontalPriorityType ? project.horizontalPriorityType.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td><b>{% trans %}Vertical Priority{% endtrans %}</b>: {{ project.verticalPriorityType ? project.verticalPriorityType.name(app.request.getLocale()) : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Grant{% endtrans %}</b>: {{ project.projectGrant ? project.projectGrant : 'N/A'}}</td>
+                    <td><b>{% trans %}Co-financing{% endtrans %}</b>: {{ project.cofinancing ? project.cofinancing : 'N/A'}}</td>
+                    <td><b>{% trans %}Total{% endtrans %}</b>: {{ project.total ? project.total : 'N/A'}}</td>
+                    <td><b>{% trans %}Contact Person{% endtrans %}</b>: {{ project.contactPersonKa2 ? project.contactPersonKa2.name(app.request.getLocale()) : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}FT Officer{% endtrans %}</b>: {{ project.ftOfficers ? project.ftOfficers.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td><b>{% trans %}EACEA Officer{% endtrans %}</b>: {{ project.eaceaOfficers ? project.eaceaOfficers.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td><b>{% trans %}Remark{% endtrans %}</b>: {{ project.remarkOfficer ? project.remarkOfficer : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Project Grade{% endtrans %}</b>: {{ project.projectGradeType ? project.projectGradeType.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td><b>{% trans %}Remark{% endtrans %}</b>: {{ project.remarkGrade ? project.remarkGrade : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}English Project Summary{% endtrans %}</b>: {{ project.projectSummaryEnglish ? project.projectSummaryEnglish : 'N/A'}}</td>
+                    <td><b>{% trans %}English Project Objectives{% endtrans %}</b>: {{ project.projectObjectivesEnglish ? project.projectObjectivesEnglish : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Serbian Project Summary{% endtrans %}</b>: {{ project.projectSummarySerbian ? project.projectSummarySerbian : 'N/A'}}</td>
+                    <td><b>{% trans %}Serbian Project Objectives{% endtrans %}</b>: {{ project.projectObjectivesSerbian ? project.projectObjectivesSerbian : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Native Language Project Summary{% endtrans %}</b>: {{ project.projectSummaryNative ? project.projectSummaryNative : 'N/A'}}</td>
+                    <td><b>{% trans %}Native Language Project Objectives{% endtrans %}</b>: {{ project.projectObjectivesNative ? project.projectObjectivesNative : 'N/A'}}</td>
                 </tr>
             </table>
-            <h2>{% trans %}Aplicant Organisation{% endtrans %}:</h2>
-            <b>{% trans %}Consortium{% endtrans %}</b>: {{ project.consortium ? 'Yes' : 'No'}} <br/>
-            <b>{% trans %}Applicant with fewer options{% endtrans %}</b>: {{ project.participantFewerOptions ? 'Yes' : 'No'}}
+
+            <h2>{% trans %}Partner Tatger Group{% endtrans %}:</h2>
             <table class="table table-hover" data-toggle="table">
-                {% for applicantOrganisation in project.applicantOrganisations %}
+                {% for projectTargetGroup in project.projectTargetGroup %}
                     <tr>
                         <td>
-                            <b>{% trans %}Applicant Organisation{% endtrans %}:</b> {{ applicantOrganisation.organisation.name(app.request.getLocale()) }}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-            <h2>{% trans %}Partner Organisation{% endtrans %}:</h2>
-            <table class="table table-hover" data-toggle="table">
-                {% for partnerOrganisation in project.partnerOrganisations %}
-                    <tr>
-                        <td>
-                            <b>{% trans %}Partner Organisation{% endtrans %}:</b> {{ partnerOrganisation.organisation.name(app.request.getLocale()) }}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-            <h2>{% trans %}Type of limitation{% endtrans %}:</h2>
-            <table class="table table-hover" data-toggle="table">
-                {% for limitation in project.limitations %}
-                    <tr>
-                        <td>
-                            <b>{% trans %}Limitations{% endtrans %}:</b> {{ limitation.limitation ? limitation.limitation.name(app.request.getLocale()) }}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-            <h2>{% trans %}Contact Persons{% endtrans %}:</h2>
-            <table class="table table-hover" data-toggle="table">
-                {% for contactPerson in project.contactPersons %}
-                    <tr>
-                        <td>
-                            <b>{% trans %}Person{% endtrans %}:</b> {{ contactPerson.person ? contactPerson.person.name(app.request.getLocale()) }}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-            <h2>{% trans %}Topics{% endtrans %}:</h2>
-            <table class="table table-hover" data-toggle="table">
-                {% for topic in project.topics %}
-                    <tr>
-                        <td>
-                            <b>{% trans %}Topic{% endtrans %}:</b> {{ topic.topic ? topic.topic.name(app.request.getLocale()) }}
+                            <b>{% trans %}Project Target Group{% endtrans %}:</b> {{ projectTargetGroup.targetGroup.name(app.request.getLocale()) }}
                         </td>
                     </tr>
                 {% endfor %}
@@ -92,27 +86,37 @@
                 {% for subjectArea in project.subjectAreas %}
                     <tr>
                         <td>
-                            <b>{% trans %}Subject Area{% endtrans %}:</b> {{ subjectArea.areaType ? subjectArea.areaType.name(app.request.getLocale()) }}
+                            <b>{% trans %}Subject Area{% endtrans %}:</b> {{ subjectArea.areaType.name(app.request.getLocale()) }}
                         </td>
                     </tr>
                 {% endfor %}
             </table>
-            <b>{% trans %}FT Officer{% endtrans %}</b>: {{ project.ftOfficers ? project.ftOfficers.name(app.request.getLocale()) : 'N/A'}} <br/>
-            <b>{% trans %}EASCEA Officer{% endtrans %}</b>: {{ project.eaceaOfficers ? project.eaceaOfficers.name(app.request.getLocale()) : 'N/A'}}
-            <h2>{% trans %}Notes{% endtrans %}:</h2>
+            <h2>{% trans %}Project Priorities{% endtrans %}:</h2>
             <table class="table table-hover" data-toggle="table">
-                {% for note in project.notes %}
+                {% for projectPriority in project.projectPriority %}
                     <tr>
                         <td>
-                            <b>{% trans %}Type{% endtrans %}:</b> {{ note.noteType ? note.noteType.name(app.request.getLocale()) : 'N/A' }}
-                        </td>
-                        <td>
-                            <b>{% trans %}Note{% endtrans %}:</b> {{ note.note ? note.note }}
+                            <b>{% trans %}Priority{% endtrans %}:</b> {{ projectPriority.priority ? projectPriority.priority.name(app.request.getLocale()) }}
                         </td>
                     </tr>
                 {% endfor %}
             </table>
-
+            <h2>{% trans %}Project Contacts{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for contact in project.contacts %}
+                    <tr>
+                        <td>
+                            <b>{% trans %}Contact{% endtrans %}:</b> {{ contact.contactValue ? contact.contactValue : 'N/A' }}
+                        </td>
+                        <td>
+                            <b>{% trans %}Contact Type{% endtrans %}:</b> {{ contact.contactType ? contact.contactType.name(app.request.getLocale()) }}
+                        </td>
+                        <td>
+                            <b>{% trans %}Is Public{% endtrans %}:</b> {{ contact.isPublic ? 'Yes' : 'No' }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
 
         </div>
     </section>

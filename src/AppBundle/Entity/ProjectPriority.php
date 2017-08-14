@@ -18,10 +18,10 @@ use AppBundle\Entity\ProjectSubjectArea;
 
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectTargetGroupRepository")
- * @ORM\Table(name="project_target_group")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectPriorityRepository")
+ * @ORM\Table(name="project_priorities")
  */
-class ProjectTargetGroup extends AbstractAuditable
+class ProjectPriority extends AbstractAuditable
 {
     /**
      * @var int
@@ -34,10 +34,10 @@ class ProjectTargetGroup extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="ProjectTargetGroupType"
+     *      targetEntity="ProjectPriorityType"
      * )
      */
-    protected $targetGroup;
+    protected $priority;
 
     /**
      * @ORM\ManyToOne(
@@ -59,17 +59,17 @@ class ProjectTargetGroup extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getTargetGroup()
+    public function getPriority()
     {
-        return $this->targetGroup;
+        return $this->priority;
     }
 
     /**
-     * @param mixed $targetGroup
+     * @param mixed $priority
      */
-    public function setTargetGroup($targetGroup)
+    public function setPriority($priority)
     {
-        $this->targetGroup = $targetGroup;
+        $this->priority = $priority;
     }
 
     /**

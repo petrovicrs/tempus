@@ -8,14 +8,20 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\ProjectApplicantOrganisation;
+use AppBundle\Entity\ProjectContact;
 use AppBundle\Entity\ProjectContactPerson;
+use AppBundle\Entity\ProjectEvaluatorGrade;
 use AppBundle\Entity\ProjectKeyAction;
 use AppBundle\Entity\ProjectLimitation;
 use AppBundle\Entity\ProjectNote;
 use AppBundle\Entity\ProjectPartnerOrganisation;
+use AppBundle\Entity\ProjectPriority;
 use AppBundle\Entity\ProjectSubjectArea;
+use AppBundle\Entity\ProjectTargetGroup;
 use AppBundle\Entity\ProjectTopic;
+use AppBundle\Repository\ProjectContactRepository;
 use AppBundle\Repository\ProjectSubjectAreaRepository;
+use AppBundle\Repository\ProjectTargetGroupRepository;
 use AppBundle\Repository\ProjectTopicRepository;
 use PhpOption\Tests\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,6 +34,9 @@ use AppBundle\Repository\ProjectRepository;
 use AppBundle\Repository\ProjectApplicantOrganisationRepository;
 use AppBundle\Repository\ProjectPartnerOrganisationRepository;
 use AppBundle\Repository\ProjectLimitationRepository;
+use AppBundle\Repository\ProjectEvaluatorGradeRepository;
+use AppBundle\Repository\ProjectPriorityRepository;
+use AppBundle\Repository\ProjectTargetGroupTypeRepository;
 use AppBundle\Repository\ProjectNoteRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -149,34 +158,10 @@ class ProjectController extends AbstractController
         {
             $this->getProjectRepository()->saveProject($project);
 
-            /** @var ProjectApplicantOrganisation $applicantOrganisation */
-            foreach($project->getApplicantOrganisations() as $applicantOrganisation){
-                $applicantOrganisation->setProject($project);
-                $this->getApplicantOrganisationRepository()->save($applicantOrganisation);
-            }
-
-            /** @var ProjectPartnerOrganisation $partnerOrganisation */
-            foreach($project->getPartnerOrganisations() as $partnerOrganisation){
-                $partnerOrganisation->setProject($project);
-                $this->getProjectPartnerOrganisationRepository()->save($partnerOrganisation);
-            }
-
-            /** @var ProjectLimitation $limitation */
-            foreach($project->getLimitations() as $limitation){
-                $limitation->setProject($project);
-                $this->getProjectLimitationRepository()->save($limitation);
-            }
-
-            /** @var ProjectContactPerson $contactPerson */
-            foreach($project->getContactPersons() as $contactPerson){
-                $contactPerson->setProject($project);
-                $this->getProjectContactPersonRepository()->save($contactPerson);
-            }
-
-            /** @var ProjectTopic $topic */
-            foreach($project->getTopics() as $topic){
-                $topic->setProject($project);
-                $this->getProjectTopicRepository()->save($topic);
+            /** @var ProjectTargetGroup $targetGroup */
+            foreach($project->getProjectTargetGroup() as $targetGroup){
+                $targetGroup->setProject($project);
+                $this->getProjectTargetGroupRepository()->save($targetGroup);
             }
 
             /** @var ProjectSubjectArea $subjectArea */
@@ -185,10 +170,16 @@ class ProjectController extends AbstractController
                 $this->getProjectSubjectAreasRepository()->save($subjectArea);
             }
 
-            /** @var ProjectNote $note */
-            foreach($project->getNotes() as $note){
-                $note->setProject($project);
-                $this->getProjectNotesRepository()->save($note);
+            /** @var ProjectPriority $priority */
+            foreach($project->getProjectPriority() as $priority){
+                $priority->setProject($project);
+                $this->getProjectPriorityRepository()->save($priority);
+            }
+
+            /** @var ProjectContact $contact */
+            foreach($project->getContacts() as $contact){
+                $contact->setProject($project);
+                $this->getContactsRepository()->save($contact);
             }
 
             return $this->redirectToRoute('project_list');
@@ -382,6 +373,122 @@ class ProjectController extends AbstractController
     }
 
     /**
+     * @Route("/{locale}/project-ka2/edit/{projectId}", name="project_ka2_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     *
+     */
+    public function editKa2Action(Request $request, $projectId)
+    {
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+        $keyActionSelected = $request->request->get('project_key_action');
+
+        $projectForm = $this->createForm(ProjectKa2Form::class, $project, [
+            'action' => $this->generateUrl('project_ka2_edit', ['projectId' => $projectId]),
+            'method' => 'POST',
+        ]);
+
+        $originalTargetGroups = new ArrayCollection();
+        $originalSubjectAreas = new ArrayCollection();
+        $originalPriorities = new ArrayCollection();
+        $originalContacts = new ArrayCollection();
+
+        foreach ($project->getProjectTargetGroup() as $targetGroup) {
+            $originalTargetGroups->add($targetGroup);
+        }
+
+        foreach ($project->getSubjectAreas() as $subjectArea){
+            $originalSubjectAreas->add($subjectArea);
+        }
+
+        foreach ($project->getProjectPriority() as $priority){
+            $originalPriorities->add($priority);
+        }
+
+        foreach ($project->getContacts() as $contact){
+            $originalContacts->add($contact);
+        }
+
+        $projectForm->handleRequest($request);
+
+        if ($projectForm->isSubmitted() && $projectForm->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($originalTargetGroups as $targetGroup) {
+                if (false === $project->getProjectTargetGroup()->contains($targetGroup)) {
+                    $em->remove($targetGroup);
+                }
+            }
+
+            /** @var ProjectTargetGroup $targetGroup */
+            foreach ($project->getProjectTargetGroup() as $targetGroup) {
+                if (false === $originalTargetGroups->contains($targetGroup)) {
+                    $targetGroup->setProject($project);
+                    $this->getProjectTargetGroupRepository()->save($targetGroup);
+                }
+            }
+
+            foreach ($originalSubjectAreas as $subjectArea) {
+                if (false === $project->getSubjectAreas()->contains($subjectArea)) {
+                    $em->remove($subjectArea);
+                }
+            }
+
+            /** @var ProjectSubjectArea $subjectAria */
+            foreach ($project->getSubjectAreas() as $subjectAria) {
+                if (false === $originalSubjectAreas->contains($subjectAria)) {
+                    $subjectAria->setProject($project);
+                    $this->getProjectSubjectAreasRepository()->save($subjectAria);
+                }
+            }
+
+            foreach ($originalPriorities as $priority) {
+                if (false === $project->getProjectPriority()->contains($priority)) {
+                    $em->remove($priority);
+                }
+            }
+
+            /** @var ProjectPriority $priority */
+            foreach ($project->getProjectPriority() as $priority) {
+                if (false === $originalPriorities->contains($priority)) {
+                    $priority->setProject($project);
+                    $this->getProjectPriorityRepository()->save($priority);
+                }
+            }
+
+            foreach ($originalContacts as $contact) {
+                if (false === $project->getContacts()->contains($contact)) {
+                    $em->remove($contact);
+                }
+            }
+
+            /** @var ProjectContact $contact */
+            foreach ($project->getContacts() as $contact) {
+                if (false === $originalContacts->contains($contact)) {
+                    $contact->setProject($project);
+                    $this->getContactsRepository()->save($contact);
+                }
+            }
+
+            $this->getProjectRepository()->saveProject($project);
+
+            return $this->redirectToRoute('project_list');
+        }
+
+        $data = [
+            'my_form' => $projectForm->createView()
+        ];
+
+        if(!is_null($keyActionSelected)) {
+            $keyAction = $this->getProjectKeyActionRepository()->findOneBy(['id' => (int) $keyActionSelected]);
+            // TODO check what to pass to form (id, name, or something else)
+            $data['key_action_selected'] = $keyAction->getId();//$keyAction->getName($request->getLocale());
+        }
+
+        return $this->render('project/edit-ka2.twig', $data);
+    }
+
+    /**
      * @Route("/{locale}/project/{projectId}", name="project_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      * }
@@ -434,6 +541,46 @@ class ProjectController extends AbstractController
         }
 
         return $this->render('project/view.twig', ['project' => $project]);
+    }
+
+    /**
+     * @Route("/{locale}/project-ka2/{projectId}", name="project_ka2_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     *
+     * }
+     */
+    public function viewProjectKa2Action($projectId)
+    {
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        if (!$project) {
+            throw $this->createNotFoundException(
+                'No project found for id '. $projectId
+            );
+        }
+
+        $originalTargetGroups = new ArrayCollection();
+        $originalSubjectAreas = new ArrayCollection();
+        $originalPriorities = new ArrayCollection();
+        $originalContacts = new ArrayCollection();
+
+        foreach ($project->getProjectTargetGroup() as $targetGroup) {
+            $originalTargetGroups->add($targetGroup);
+        }
+
+        foreach ($project->getSubjectAreas() as $subjectArea){
+            $originalSubjectAreas->add($subjectArea);
+        }
+
+        foreach ($project->getProjectPriority() as $priority){
+            $originalPriorities->add($priority);
+        }
+
+        foreach ($project->getContacts() as $contact){
+            $originalContacts->add($contact);
+        }
+
+        return $this->render('project/view-ka2.twig', ['project' => $project]);
     }
 
     /**
@@ -506,6 +653,38 @@ class ProjectController extends AbstractController
     private function getProjectNotesRepository() {
 
         return $this->get('doctrine_entity_repository.project_notes');
+    }
+
+    /**
+     * @return ProjectTargetGroupRepository
+     */
+    private function getProjectTargetGroupRepository() {
+
+        return $this->get('doctrine_entity_repository.project_target_group');
+    }
+
+    /**
+     * @return ProjectNoteRepository
+     */
+    private function getProjectPriorityRepository() {
+
+        return $this->get('doctrine_entity_repository.project_priority');
+    }
+
+    /**
+     * @return ProjectContactRepository
+     */
+    private function getContactsRepository() {
+
+        return $this->get('doctrine_entity_repository.project_contact');
+    }
+
+    /**
+     * @return ProjectEvaluatorGradeRepository
+     */
+    private function getProjectEvaluatorGradeRepository() {
+
+        return $this->get('doctrine_entity_repository.project_evaluator_grade');
     }
 
 }

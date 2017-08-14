@@ -71,113 +71,113 @@ class Project extends AbstractAuditable
     /**
      * @var string $projectSummary
      * @Assert\Type("string")
-     * @ORM\Column(name="project_summary", type="string", length=255)
+     * @ORM\Column(name="project_summary", type="string", length=255, nullable=true)
      */
     protected $projectSummary;
 
     /**
      * @var string $applicationYear
      * @Assert\Type("string")
-     * @ORM\Column(name="application_year", type="string", length=255)
+     * @ORM\Column(name="application_year", type="string", length=255, nullable=true)
      */
     protected $applicationYear;
 
     /**
      * @var string $website
      * @Assert\Type("string")
-     * @ORM\Column(name="website", type="string", length=255)
+     * @ORM\Column(name="website", type="string", length=255, nullable=true)
      */
     protected $website;
 
     /**
-     * @var string $grant
+     * @var string $projectGrant
      * @Assert\Type("string")
-     * @ORM\Column(name="grant", type="string", length=255)
+     * @ORM\Column(name="projectGrant", type="string", length=255, nullable=true)
      */
-    protected $grant;
+    protected $projectGrant;
 
     /**
      * @var string $cofinancing
      * @Assert\Type("string")
-     * @ORM\Column(name="cofinancing", type="string", length=255)
+     * @ORM\Column(name="cofinancing", type="string", length=255, nullable=true)
      */
     protected $cofinancing;
 
     /**
      * @var string $total
      * @Assert\Type("string")
-     * @ORM\Column(name="total", type="string", length=255)
+     * @ORM\Column(name="total", type="string", length=255, nullable=true)
      */
     protected $total;
 
     /**
      * @var string $remarkOfficer
      * @Assert\Type("string")
-     * @ORM\Column(name="remarkOfficer", type="string", length=255)
+     * @ORM\Column(name="remarkOfficer", type="string", length=255, nullable=true)
      */
     protected $remarkOfficer;
 
     /**
      * @var string $remarkGrade
      * @Assert\Type("string")
-     * @ORM\Column(name="remarkGrade", type="string", length=255)
+     * @ORM\Column(name="remarkGrade", type="string", length=255, nullable=true)
      */
     protected $remarkGrade;
 
     /**
      * @var string $projectSummaryEnglish
      * @Assert\Type("string")
-     * @ORM\Column(name="projectSummaryEnglish", type="string", length=255)
+     * @ORM\Column(name="projectSummaryEnglish", type="string", length=255, nullable=true)
      */
     protected $projectSummaryEnglish;
 
     /**
      * @var string $projectSummarySerbian
      * @Assert\Type("string")
-     * @ORM\Column(name="projectSummarySerbian", type="string", length=255)
+     * @ORM\Column(name="projectSummarySerbian", type="string", length=255, nullable=true)
      */
     protected $projectSummarySerbian;
 
     /**
      * @var string $projectSummaryNative
      * @Assert\Type("string")
-     * @ORM\Column(name="projectSummaryNative", type="string", length=255)
+     * @ORM\Column(name="projectSummaryNative", type="string", length=255, nullable=true)
      */
     protected $projectSummaryNative;
 
     /**
      * @var string $projectObjectivesEnglish
      * @Assert\Type("string")
-     * @ORM\Column(name="projectObjectivesEnglish", type="string", length=255)
+     * @ORM\Column(name="projectObjectivesEnglish", type="string", length=255, nullable=true)
      */
     protected $projectObjectivesEnglish;
 
     /**
      * @var string $projectObjectivesSerbian
      * @Assert\Type("string")
-     * @ORM\Column(name="projectObjectivesSerbian", type="string", length=255)
+     * @ORM\Column(name="projectObjectivesSerbian", type="string", length=255, nullable=true)
      */
     protected $projectObjectivesSerbian;
 
     /**
      * @var string $projectObjectivesNative
      * @Assert\Type("string")
-     * @ORM\Column(name="projectObjectivesNative", type="string", length=255)
+     * @ORM\Column(name="projectObjectivesNative", type="string", length=255, nullable=true)
      */
     protected $projectObjectivesNative;
 
     /**
-     * @ORM\Column(name="end_datetime", type="date")
+     * @ORM\Column(name="end_datetime", type="date", nullable=true)
      */
     protected $endDatetime;
 
     /**
-     * @ORM\Column(name="start_datetime", type="date")
+     * @ORM\Column(name="start_datetime", type="date", nullable=true)
      */
     protected $startDatetime;
 
     /**
-     * @ORM\Column(name="extended_until", type="date")
+     * @ORM\Column(name="extended_until", type="date", nullable=true)
      */
     protected $extendedUntil;
 
@@ -189,22 +189,22 @@ class Project extends AbstractAuditable
     protected $durationMonths;
 
     /**
-     * @ORM\Column(name="audited", type="boolean")
+     * @ORM\Column(name="audited", type="boolean", nullable=true)
      */
     protected $audited;
 
     /**
-     * @ORM\Column(name="on_going", type="boolean")
+     * @ORM\Column(name="on_going", type="boolean", nullable=true)
      */
     protected $onGoing;
 
     /**
-     * @ORM\Column(name="participant_fewer_options", type="boolean")
+     * @ORM\Column(name="participant_fewer_options", type="boolean", nullable=true)
      */
     protected $participantFewerOptions;
 
     /**
-     * @ORM\Column(name="consortium", type="boolean")
+     * @ORM\Column(name="consortium", type="boolean", nullable=true)
      */
     protected $consortium;
 
@@ -346,6 +346,16 @@ class Project extends AbstractAuditable
      */
     protected $projectTargetGroup;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ProjectPriority", mappedBy="project", cascade={"persist"})
+     */
+    protected $projectPriority;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ProjectContact", mappedBy="project", cascade={"persist"})
+     */
+    protected $contacts;
+
     public function __construct()
     {
         parent::__construct();
@@ -357,6 +367,8 @@ class Project extends AbstractAuditable
         $this->applicantOrganisations = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->projectTargetGroup = new ArrayCollection();
+        $this->projectPriority = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
     }
 
     /**
@@ -748,6 +760,32 @@ class Project extends AbstractAuditable
     /**
      * @return mixed
      */
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
+
+    /**
+     * @param mixed $contacts
+     */
+    public function setContacts($contacts)
+    {
+        $this->contacts = $contacts;
+    }
+
+    public function addContacts(ProjectContact $contact)
+    {
+        $this->notes->add($contact);
+    }
+
+    public function removeContacts(ProjectContact $contact)
+    {
+        $this->notes->removeElement($contact);
+    }
+
+    /**
+     * @return mixed
+     */
     public function getApplicantOrganisations()
     {
         return $this->applicantOrganisations;
@@ -893,12 +931,38 @@ class Project extends AbstractAuditable
 
     public function addProjectTargetGroup(ProjectTargetGroup $group)
     {
-        $this->topics->add($group);
+        $this->projectTargetGroup->add($group);
     }
 
     public function removeProjectTargetGroup(ProjectTargetGroup $group)
     {
-        $this->topics->removeElement($group);
+        $this->projectTargetGroup->removeElement($group);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectPriority()
+    {
+        return $this->projectPriority;
+    }
+
+    /**
+     * @param mixed $projectPriority
+     */
+    public function setProjectPriority($projectPriority)
+    {
+        $this->projectPriority = $projectPriority;
+    }
+
+    public function addProjectPriority(ProjectPriority $group)
+    {
+        $this->projectPriority->add($group);
+    }
+
+    public function removeProjectPriority(ProjectPriority $group)
+    {
+        $this->projectPriority->removeElement($group);
     }
 
     /**
@@ -967,19 +1031,19 @@ class Project extends AbstractAuditable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getGrant()
+    public function getProjectGrant()
     {
-        return $this->grant;
+        return $this->projectGrant;
     }
 
     /**
-     * @param mixed $grant
+     * @param string $projectGrant
      */
-    public function setGrant($grant)
+    public function setProjectGrant($projectGrant)
     {
-        $this->grant = $grant;
+        $this->projectGrant = $projectGrant;
     }
 
     /**

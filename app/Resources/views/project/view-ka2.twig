@@ -109,7 +109,7 @@
                             <b>{% trans %}Contact{% endtrans %}:</b> {{ contact.contactValue ? contact.contactValue : 'N/A' }}
                         </td>
                         <td>
-                            <b>{% trans %}Contact Type{% endtrans %}:</b> {{ contact.contactType ? contact.contactType.name(app.request.getLocale()) }}
+                            <b>{% trans %}Contact Type{% endtrans %}:</b> {{ contact.contactType ? contact.contactType.type(app.request.getLocale()) }}
                         </td>
                         <td>
                             <b>{% trans %}Is Public{% endtrans %}:</b> {{ contact.isPublic ? 'Yes' : 'No' }}

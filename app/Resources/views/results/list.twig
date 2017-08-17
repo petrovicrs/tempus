@@ -4,8 +4,11 @@
     <section id="main">
         {% include 'sub-navbar.html.twig' with {'active': 'results' } %}
         <div class="container-fluid">
-            <a href="{{ localizedPath('results_create') }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Add Result{% endtrans %}</a>
-            <h2><b>{% trans %}Results{% endtrans %}</b></h2>
+            <div class="col-xs-12 section-heading">
+                <h2><b>{% trans %}Results{% endtrans %}</b></h2>
+                <a href="{{ localizedPath('results_create') }}" class="btn btn-add btn-success pull-right"><span aria-hidden="true"></span>{% trans %}Add Result{% endtrans %}</a>
+
+            </div>
 
             <table class="table table-hover" data-toggle="table">
                 <thead>

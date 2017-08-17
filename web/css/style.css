@@ -19,11 +19,6 @@ li {
     margin-top: 0;
 }
 
-
-#menu-list {
-    margin-bottom: 30px;
-}
-
 .loader {
     display: none;
     position: fixed;
@@ -63,6 +58,17 @@ li {
 #main {
     clear: both;
     padding-top: 0;
+}
+
+.section-heading {
+    padding: 3rem 0 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 3px double #ccc;
+}
+
+.section-heading h2 {
+    border: none;
+    display: inline;
 }
 
 

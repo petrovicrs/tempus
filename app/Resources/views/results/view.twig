@@ -2,7 +2,7 @@
 
 {% block body %}
     <section id="main">
-    {% include 'main-navbar.html.twig' with {'active': 'results'} %}
+    {% include 'sub-navbar.html.twig' with {'active': 'results'} %}
     <div class="container-fluid">
         <a href="{{ localizedPath('result_edit', {'resultId': result.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
         <h2><b>{% trans %}Results{% endtrans %}</b></h2>

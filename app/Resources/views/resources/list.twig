@@ -2,10 +2,12 @@
 
 {% block body %}
     <section id="main">
-        {% include 'main-navbar.html.twig' with {'active': 'resources'} %}
+        {% include 'sub-navbar.html.twig' with {'active': 'resources'} %}
         <div class="container-fluid">
-            <a href="{{ localizedPath('resources_create') }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Add Resource{% endtrans %}</a>
-            <h2><b>{% trans %}Resources{% endtrans %}</b></h2>
+            <div class="col-xs-12 section-heading">
+                <h2><b>{% trans %}Resources{% endtrans %}</b></h2>
+                <a href="{{ localizedPath('resources_create') }}" class="btn btn-add btn-success pull-right"><span aria-hidden="true"></span>{% trans %}Add Resource{% endtrans %}</a>
+            </div>
 
             <table class="table table-hover" data-toggle="table">
                 <thead>

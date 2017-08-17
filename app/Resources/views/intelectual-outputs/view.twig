@@ -2,7 +2,7 @@
 
 {% block body %}
     <section id="main">
-    {% include 'main-navbar.html.twig' with {'active': 'intelectual-outputs'} %}
+    {% include 'sub-navbar.html.twig' with {'active': 'intelectual-outputs'} %}
     <div class="container-fluid">
         <a href="{{ localizedPath('intelectual_output_edit', {'id': intelectualOutput.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
         <h2><b>{% trans %}Intelectual outputs{% endtrans %}</b></h2>

@@ -9,6 +9,11 @@ services:
         arguments: [ "@service_container" ]
         tags:
            - { name: twig.extension }
+    my.twig.extension.active_route:
+        class: AppBundle\Twig\ActiveRoute
+        arguments: [ "@service_container" ]
+        tags:
+           - { name: twig.extension }
     listener.requestresponse:
         class: AppBundle\EventListener\KernelListener
         arguments: [ "@service_container" ]
@@ -231,10 +236,21 @@ services:
         arguments:
             - AppBundle\Entity\Results
     doctrine_entity_repository.intelectual_outputs:
-            class: Doctrine\ORM\EntityRepository
-            factory: ["@doctrine", getRepository]
-            arguments:
-                - AppBundle\Entity\IntelectualOutputs
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\IntelectualOutputs
+    doctrine_entity_repository.reporting:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\Reporting
+
+    doctrine_entity_repository.reporting_questions_and_answers:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ReportingQuestionsAndAnswers
     app.security.login_form_authenticator:
         class: AppBundle\Security\LoginFormAuthenticator
         autowire: true

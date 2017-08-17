@@ -30,13 +30,18 @@
                     </a>
                 </div>
                 <div class="col-xs-6 text-right login">
-                    <ul>
-                        {% if is_granted('ROLE_USER') %}
-                            <li><a href="{{ path('security_logout') }}">Logout</a></li>
-                        {% else %}
-                            <li><a href="{{ path('security_login') }}">Login</a></li>
-                        {% endif %}
-                    </ul>
+                    <div class="col-xs-9 no-padding">
+                        {% include 'main-navbar.html.twig' with {'active': 'reporting'} %}
+                    </div>
+                    <div class="col-xs-3">
+                        <ul>
+                            {% if is_granted('ROLE_USER') %}
+                                <li><a href="{{ path('security_logout') }}">Logout</a></li>
+                            {% else %}
+                                <li><a href="{{ path('security_login') }}">Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>

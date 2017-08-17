@@ -33,6 +33,13 @@ class Project extends AbstractAuditable
     protected $id;
 
     /**
+     * @ORM\ManyToOne(
+     *      targetEntity="User"
+     * )
+     */
+    protected $user;
+
+    /**
      * @var string $name
      * @Assert\Type("string")
      * @ORM\Column(name="name_eng", type="string", length=255)
@@ -213,6 +220,22 @@ class Project extends AbstractAuditable
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
     }
 
     /**

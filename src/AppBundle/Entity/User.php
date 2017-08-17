@@ -37,6 +37,7 @@ class User implements UserInterface
      */
     private $plainPassword;
 
+
     /**
      * @ORM\Column(type="json_array")
      */
@@ -103,5 +104,4 @@ class User implements UserInterface
         // Doctrine *not* saving this entity, if only plainPassword changes
         $this->password = null;
     }
-
 }

@@ -30,4 +30,15 @@ abstract class AbstractController extends Controller {
         }
         return $this->redirect($this->generateUrl($route, $parameters), $status);
     }
+
+    protected function getLastProjectForCurrentUser()
+    {
+        $user = $this->getUser();
+        $lastProject = $this->get('doctrine_entity_repository.project')
+            ->findOneBy([
+                'user' => $user
+            ], 'DESC');
+
+        return $lastProject;
+    }
 }

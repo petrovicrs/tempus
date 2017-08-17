@@ -2,7 +2,7 @@
 
 {% block body %}
     <section id="main">
-        {% include 'main-navbar.html.twig' with {'active': 'action'} %}
+        {% include 'sub-navbar.html.twig' with {'active': 'action'} %}
         <div class="container-fluid">
             <a href="{{ localizedPath('action_create') }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>Add Action</a>
             {% for key,value in activities %}

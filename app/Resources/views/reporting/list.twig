@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+        {% include 'sub-navbar.html.twig' with {'active': 'reporting'} %}
+        <div class="container-fluid">
+            <a href="{{ localizedPath('reporting_create') }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Add Reporting{% endtrans %}</a>
+            <h2><b>{% trans %}Reporting{% endtrans %}</b></h2>
+
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                    <tr class="table-heleer">
+                        <th class="sortable"  data-sortable="true">{% trans %}Project{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Monitoring type{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Date{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Questions{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Monitoring by{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, report in reporting %}
+                        <tr>
+
+                            <td><a href="{{ localizedPath('project_view', {'projectId': report.project.id}) }}">{{ report.project.name(app.request.getLocale()) }}</a></td>
+
+                            {% if report.type %}
+                                <td>{{ report.type.name(app.request.getLocale()) }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+
+                            <td>{{ report.reportingDate }}</td>
+
+                            {% if report.questionsAndAnswers %}
+                                {% for qa in report.questionsAndAnswers %}
+                                    {% set suffix = '' %}
+
+                                    {% if loop.length > 1 %}
+                                        {% set suffix = '...' %}
+                                    {% endif %}
+
+                                    {% if loop.first %}
+                                        <td>{{ qa.question(app.request.getLocale()) }} {{ suffix }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+
+                            {% if report.reportingBy %}
+                                <td>{{ report.reportingBy.name(app.request.getLocale()) }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+
+                            {#<td><a href="{{ localizedPath('report_view', {'reportId': report.id}) }}">View</a></td>#}
+                            {#<td><a href="{{ localizedPath('report_view', {'reportId': report.id}) }}">Edit</a></td>#}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <div>
+{% endblock %}

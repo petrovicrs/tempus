@@ -2,7 +2,7 @@
 
 {% block body %}
     <section id="main">
-        {% include 'main-navbar.html.twig' with {'active': 'project'} %}
+        {% include 'sub-navbar.html.twig' with {'active': 'project'} %}
         <div class="container-fluid">
             {% if app.user %}
                 <a href="{{ localizedPath('project_create') }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>Add Project</a>

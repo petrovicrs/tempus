@@ -248,7 +248,7 @@ services:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
-            - AppBundle\Entity\ActionDeliverable
+            - AppBundle\Entity\ProjectDeliverable
     app.security.login_form_authenticator:
         class: AppBundle\Security\LoginFormAuthenticator
         autowire: true

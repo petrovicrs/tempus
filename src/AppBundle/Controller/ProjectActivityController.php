@@ -7,6 +7,8 @@
  */
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\ProjectActivity;
+use AppBundle\Form\ProjectActivityForm;
 use AppBundle\Repository\ProjectActivityRepository;
 use AppBundle\Repository\ProjectDeliverableRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -26,72 +28,34 @@ class ProjectActivityController extends AbstractController
         $activities = $this->getActivitiesRepository()->findBy(['projectId' => $projectId]);
         $deliverables = $this->getDeliverablesRepository()->findBy(['projectId' => $projectId]);
 
-        return $this->render('activity/list.twig', ['activities' => $activities,
+        return $this->render('project_activity/list.twig', ['activities' => $activities,
             'deliverables' => $deliverables, 'projectId' => $projectId]);
     }
 
     /**
-     * @Route("/{locale}/activities/create/{projectId}", name="project_activity_create", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/activities/create", name="project_activity_create", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
-    public function createAction(Request $request, $projectId)
+    public function createAction(Request $request)
     {
-        $persons = new Person();
+        $projectActivity = new ProjectActivity();
 
-        $personForm = $this->createForm(PersonForm::class, $persons, [
-            'action' => $this->generateUrl('person_create'),
+        $activityForm = $this->createForm(ProjectActivityForm::class, null, [
+            'action' => $this->generateUrl('project_activity_create'),
             'method' => 'POST',
             'locale' => $request->getLocale(),
         ]);
 
+        $activityForm->handleRequest($request);
 
-        $personForm->handleRequest($request);
+        if ($activityForm->isSubmitted()  && $activityForm->isValid()) {
+var_dump($activityForm);die;
 
-        if ($personForm->isSubmitted()  && $personForm->isValid()) {
-            $this->getPersonRepository()->savePerson($persons);
-
-            /** @var PersonContact $contact */
-            foreach($persons->getContacts() as $contact){
-                $contact->setPerson($persons);
-                $this->getPersonContactRepository()->saveContact($contact);
-            }
-
-            /** @var PersonAddress $personAddress */
-            foreach($persons->getAddresses() as $personAddress){
-                $personAddress->setPerson($persons);
-                $this->getPersonAddressRepository()->save($personAddress);
-            }
-
-            /** @var PersonNote $personNote */
-            foreach($persons->getPersonNotes() as $personNote){
-                $personNote->setPerson($persons);
-                $this->getPersonNoteRepository()->save($personNote);
-            }
-
-            /** @var PersonDocument $document */
-            foreach($persons->getPersonDocuments() as $document){
-                $document->setPerson($persons);
-                $this->getPersonDocumentRepository()->savePersonDocument($document);
-            }
-
-            /** @var PersonInstitutionRelationship $personInstitutionRelationship */
-            foreach($persons->getPersonInstitutionRelationships() as $personInstitutionRelationship){
-                $personInstitutionRelationship->setPerson($persons);
-                $this->getPersonInstitutionRelationshipRepository()->savePersonInstitutionRelationship($personInstitutionRelationship);
-            }
-
-
-            /** @var PersonFacingSituation $personFacingSituation */
-            foreach($persons->getPersonFacingSituations() as $personFacingSituation){
-                $personFacingSituation->setPerson($persons);
-                $this->getPersonFacingSituationRepository()->savePersonFacingSituation($personFacingSituation);
-            }
-
-            return $this->redirectToRoute('person_list');
+            return $this->redirectToRoute('project_activity_create');
 
         }
 
-        return $this->render('person/create.twig', ['my_form' => $personForm->createView()]);
+        return $this->render('project_activity/create.twig', ['my_form' => $activityForm->createView()]);
     }
 
     /**

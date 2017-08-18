@@ -4,11 +4,11 @@
     <section id="main">
         {% include 'main-navbar.html.twig' with {'active': 'action'} %}
         <div class="container-fluid">
-            <a href="{{ localizedPath('project_activity_create'{'projectId':projectId }) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>Add Activity</a>
+            <a href="{{ localizedPath('project_activity_create', {'projectId': projectId }) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>Add Activity</a>
             {% for key,value in activities %}
 
             {% endfor %}
-            {% for key,value in devivarebles %}
+            {% for key,value in deliverables %}
 
             {% endfor %}
         </div>

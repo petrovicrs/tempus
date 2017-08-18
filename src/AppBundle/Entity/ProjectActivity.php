@@ -61,14 +61,18 @@ class ProjectActivity extends AbstractAuditable
     protected $activityStatus;
 
     /**
-     * @ORM\Column(name="start_date", type="date", nullable=true)
+     * @ORM\ManyToOne(
+     *      targetEntity="ProjectActivity"
+     * )
      */
-    protected $startDate;
+    protected $activityFrom;
 
     /**
-     * @ORM\Column(name="end_date", type="date", nullable=true)
+     * @ORM\ManyToOne(
+     *      targetEntity="ProjectActivity"
+     * )
      */
-    protected $endDate;
+    protected $activityTo;
 
     /**
      * @return mixed
@@ -201,33 +205,43 @@ class ProjectActivity extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getStartDate()
+    public function getActivityFrom()
     {
-        return $this->startDate;
+        return $this->activityFrom;
     }
 
     /**
-     * @param mixed $startDate
+     * @param mixed $activityFrom
      */
-    public function setStartDate($startDate)
+    public function setActivityFrom($activityFrom)
     {
-        $this->startDate = $startDate;
+        $this->activityFrom = $activityFrom;
     }
 
     /**
      * @return mixed
      */
-    public function getEndDate()
+    public function getActivityTo()
     {
-        return $this->endDate;
+        return $this->activityTo;
     }
 
     /**
-     * @param mixed $endDate
+     * @param mixed $activityTo
      */
-    public function setEndDate($endDate)
+    public function setActivityTo($activityTo)
     {
-        $this->endDate = $endDate;
+        $this->activityTo = $activityTo;
     }
 
+    /**
+     * @param $locale
+     * @return String
+     */
+    public function getName($locale) {
+        if ($locale == "sr"){
+            return $this->titleSr;
+        }
+        return $this->titleEn;
+    }
 }

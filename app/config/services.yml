@@ -245,7 +245,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\Reporting
-
+    doctrine_entity_repository.reporting_person:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ReportingPerson
     doctrine_entity_repository.reporting_questions_and_answers:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

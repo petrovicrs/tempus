@@ -8,7 +8,7 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Person;
+use AppBundle\Entity\ReportingPerson;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,8 +19,8 @@ class ReportingPersonForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', EntityType::class, array(
-                'class'   => 'AppBundle\Entity\Person',
+            ->add('person', EntityType::class, array(
+                'class'   => 'AppBundle\Entity\ReportingPerson',
                 'label' => false,
                 'choice_label'  => function($value, $key) use ($options){
                     return $value->getName($options['locale']);
@@ -40,7 +40,7 @@ class ReportingPersonForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => Person::class
+            'data_class' => ReportingPerson::class
         ]);
     }
 }

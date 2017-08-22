@@ -30,7 +30,8 @@
                                 </div>
 
                                 <div class="col-xs-12">
-                                    <ul class="reporting-questions-and-answers" data-prototype="{{ include('/reporting/includes/reporting-questions-and-answers.html.twig',
+                                    {{ form_label(my_form.questionsAndAnswers, 'Monitoring Question and Answers:'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <ul class="questions-answers" data-prototype="{{ include('/reporting/includes/reporting-questions-and-answers.html.twig',
                                     {'form': my_form.questionsAndAnswers.vars.prototype })|e }}">
                                     </ul>
                                 </div>

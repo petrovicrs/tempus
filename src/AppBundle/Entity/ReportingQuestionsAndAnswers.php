@@ -27,32 +27,16 @@ class ReportingQuestionsAndAnswers extends AbstractAuditable
     protected $id;
 
     /**
-     * @var string $question
-     * @Assert\Type("string")
-     * @ORM\Column(name="question_en", type="string", length=255)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Questions", mappedBy="reportingQuestions", cascade={"persist"})
      */
-    protected $questionEn;
-
-    /**
-     * @var string $question
-     * @Assert\Type("string")
-     * @ORM\Column(name="question_sr", type="string", length=255)
-     */
-    protected $questionSr;
+    protected $reportingQuestionsAndAnswers;
 
     /**
      * @var string $answer
      * @Assert\Type("string")
-     * @ORM\Column(name="answer_en", type="string", length=255)
+     * @ORM\Column(name="answer", type="string", length=255)
      */
-    protected $answerEn;
-
-    /**
-     * @var string $answer
-     * @Assert\Type("string")
-     * @ORM\Column(name="answer_sr", type="string", length=255)
-     */
-    protected $answerSr;
+    protected $answer;
 
     /**
      * @ORM\ManyToOne(
@@ -62,6 +46,12 @@ class ReportingQuestionsAndAnswers extends AbstractAuditable
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $reporting;
+
+
+    public function __construct()
+    {
+        $this->questions = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -80,67 +70,51 @@ class ReportingQuestionsAndAnswers extends AbstractAuditable
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getQuestionEn(): string
+    public function getQuestions()
     {
-        return $this->questionEn;
+        return $this->questions;
     }
 
     /**
-     * @param string $questionEn
+     * @param mixed $questions
      */
-    public function setQuestionEn(string $questionEn)
+    public function setQuestions($questions)
     {
-        $this->questionEn = $questionEn;
+        $this->questions = $questions;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getQuestionSr(): string
+    public function getReportingQuestionsAndAnswers()
     {
-        return $this->questionSr;
+        return $this->reportingQuestionsAndAnswers;
     }
 
     /**
-     * @param string $questionSr
+     * @param mixed $reportingQuestionsAndAnswers
      */
-    public function setQuestionSr(string $questionSr)
+    public function setReportingQuestionsAndAnswers($reportingQuestionsAndAnswers)
     {
-        $this->questionSr = $questionSr;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAnswerEn(): string
-    {
-        return $this->answerEn;
-    }
-
-    /**
-     * @param string $answerEn
-     */
-    public function setAnswerEn(string $answerEn)
-    {
-        $this->answerEn = $answerEn;
+        $this->reportingQuestionsAndAnswers = $reportingQuestionsAndAnswers;
     }
 
     /**
      * @return string
      */
-    public function getAnswerSr(): string
+    public function getAnswer(): string
     {
-        return $this->answerSr;
+        return $this->answer;
     }
 
     /**
-     * @param string $answerSr
+     * @param string $answer
      */
-    public function setAnswerSr(string $answerSr)
+    public function setAnswer(string $answer)
     {
-        $this->answerSr = $answerSr;
+        $this->answer = $answer;
     }
 
     /**

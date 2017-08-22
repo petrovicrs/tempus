@@ -9,6 +9,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\ReportingQuestionsAndAnswers;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,9 +25,14 @@ class ReportingQuestionsAndAnswersForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('question' . ucfirst($options['locale']))
-            ->add('answer' . ucfirst($options['locale']))
-            ->add('submit', SubmitType::class);
+            ->add('questions', EntityType::class, array(
+                'class'   => 'AppBundle\Entity\Questions',
+                'label' => false,
+                'choice_label'  => function($value, $key) use ($options){
+                    return $value->getQuestion($options['locale']);
+                }
+            ))
+            ->add('answer', TextType::class);
     }
 
     /**

@@ -13,6 +13,7 @@ use AppBundle\Entity\Reporting;
 use AppBundle\Form\ReportingForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class ReportingController extends AbstractController
 {
@@ -51,10 +52,60 @@ class ReportingController extends AbstractController
                 $this->getQuestionAndAnswersRepository()->save($qa);
             }
 
-            foreach($reporting->getReportingBy() as $person){
-                $person->setReportingBy($reporting);
-                $this->getPersonRepository()->save($person);
+            foreach($reporting->getReportingBy() as $reportingPerson){
+                $reportingPerson->setReportingBy($reporting);
+                $this->getReportingPersonRepository()->save($reportingPerson);
             }
+
+            return $this->redirectToRoute('reporting_list');
+        }
+
+        return $this->render('reporting/create.twig', ['my_form' => $reportingForm->createView()]);
+    }
+
+    /**
+     * @Route("/{locale}/reporting/edit/{id}", name="reporting_edit", requirements={"locale": "%app.locales%", "id": "\d+"})
+     */
+    public function editAction(Request $request, $id)
+    {
+        $reporting = $this->getReportingRepository()->findOneBy('id', $id);
+
+        $reportingForm = $this->createForm(ReportingForm::class, $reporting, [
+            'action' => $this->generateUrl('reporting_edit', ['id' => $id]),
+            'method' => 'POST',
+            'locale' => $request->getLocale()
+        ]);
+
+        $reportingBy = new ArrayCollection();
+        $questionAndAnswers = new ArrayCollection();
+
+        foreach ($reporting->getReportingBy() as $reportingPerson) {
+            $reportingBy->add($reportingPerson);
+        }
+
+        foreach ($reporting->getQuestionAndAnswers() as $qa) {
+            $questionAndAnswers->add($qa);
+        }
+
+        $reportingForm->handleRequest($request);
+
+        if ($reportingForm->isSubmitted() && $reportingForm->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($reportingBy as $reportingPerson) {
+                if (false === $reporting->getReportingBy()->contains($reportingPerson)) {
+                    $em->remove($reportingPerson);
+                }
+            }
+
+            foreach ($questionAndAnswers as $qa) {
+                if (false === $reporting->getQuestionAndAnswers()->contains($qa)) {
+                    $em->remove($qa);
+                }
+            }
+
+            $this->getReportingRepository()->save($reporting);
 
             return $this->redirectToRoute('reporting_list');
         }
@@ -72,8 +123,8 @@ class ReportingController extends AbstractController
         return $this->get('doctrine_entity_repository.reporting_questions_and_answers');
     }
 
-    private function getPersonRepository()
+    private function getReportingPersonRepository()
     {
-        return $this->get('doctrine_entity_repository.person');
+        return $this->get('doctrine_entity_repository.reporting_person');
     }
 }

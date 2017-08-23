@@ -19,11 +19,6 @@ li {
     margin-top: 0;
 }
 
-
-#menu-list {
-    margin-bottom: 30px;
-}
-
 .loader {
     display: none;
     position: fixed;
@@ -42,4 +37,42 @@ li {
     position: absolute;
     top:50%;
     left:50%;
+}
+
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* MAIN NAV */
+.login {
+    height: 75px;
+}
+#main-nav .navbar-nav > li > a {
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 75px;
+}
+
+/* SECTION MAIN */
+#main {
+    clear: both;
+    padding-top: 0;
+}
+
+.section-heading {
+    padding: 3rem 0 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 3px double #ccc;
+}
+
+.section-heading h2 {
+    border: none;
+    display: inline;
+}
+
+
+/* REPORTING TAB */
+.reporting-by {
+    padding-left: 0;
 }

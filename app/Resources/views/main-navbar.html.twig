@@ -1,10 +1,7 @@
-<nav id="menu-list" class="navbar navbar-default">
-    <div class="container-fluid">
-        <ul class="nav navbar-nav">
-            <li class="{% if active == 'person' %}active{% endif %}"><a href="{{ localizedPath('person_list')}}">Person</a></li>
-            <li class="{% if active == 'institution' %}active{% endif %}"><a href="{{ localizedPath('institution_list')}}">Institution/Organization</a></li>
-            <li class="{% if active == 'project' %}active{% endif %}"><a href="{{ localizedPath('project_list')}}">Project</a></li>
-            <li class="{% if active == 'action' %}active{% endif %}"><a href="{{ localizedPath('action_list')}}">Action</a></li>
-        </ul>
-    </div>
+<nav id="main-nav" class="navbar" style="height: 75px">
+    <ul class="nav navbar-nav">
+        <li class="{% if activeRoute('person') %}active{% endif %}"><a href="{{ localizedPath('person_list')}}">Person</a></li>
+        <li class="{% if activeRoute('institution') %}active{% endif %}"><a href="{{ localizedPath('institution_list')}}">Institution/Organization</a></li>
+        <li class="{% if activeRoute('project') or activeRoute('default') or subNavRoute() %}active{% endif %}"><a href="{{ localizedPath('project_list')}}">Project</a></li>
+    </ul>
 </nav>

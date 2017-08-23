@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+    {% include 'sub-navbar.html.twig' with {'active': 'resources'} %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls resources">
+                <div class="col-sm-12">
+                    {{ form_start(my_form) }}
+                        <h2>{% trans %}Add Resource{% endtrans %}</h2>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    {{ form_label(my_form.resourceType, 'Resource type'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.resourceType, {'attr': {'class': 'form-control'}})  }}
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    {{ form_label(my_form.project, 'Project'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.project, {'attr': {'class': 'form-control'}})  }}
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    {{ form_label(my_form.keywords, 'Keywords'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.keywords, {'attr': {'class': 'form-control'}})  }}
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 text-right">
+                                    {{ form_label(my_form.isPublic, 'Public'|trans, {'label_attr': {'class': 'control-label'}} ) }}
+                                    <div class="">
+                                        {{ form_widget(my_form.isPublic)  }}
+                                    </div>
+                                </div>
+                                {% include 'resources/includes/resources-details.html.twig' with {'form': my_form} %}
+                            </div>
+                        </div>
+                    {{ form_end(my_form) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

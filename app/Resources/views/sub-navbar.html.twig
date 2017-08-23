@@ -1,0 +1,11 @@
+<nav id="menu-list" class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li class="{% if active == 'action' %}active{% endif %}"><a href="{{ localizedPath('action_list')}}">Action</a></li>
+            <li class="{% if active == 'intelectual_outputs' %}active{% endif %}"><a href="{{ localizedPath('intelectual_outputs_list')}}">Intelectual outputs</a></li>
+            <li class="{% if active == 'resources' %}active{% endif %}"><a href="{{ localizedPath('resources_list')}}">Resources</a></li>
+            <li class="{% if active == 'results' %}active{% endif %}"><a href="{{ localizedPath('results_list')}}">Results</a></li>
+            <li class="{% if active == 'reporting' %}active{% endif %}"><a href="{{ localizedPath('reporting_list')}}">Reporting</a></li>
+        </ul>
+    </div>
+</nav>

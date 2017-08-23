@@ -86,7 +86,8 @@ class ActivityType extends AbstractAuditable
         $this->nameSr = $nameSr;
     }
 
-    public function getName($locale) {
+    public function getName($locale)
+    {
         if ($locale == "sr"){
             return $this->nameSr;
         }

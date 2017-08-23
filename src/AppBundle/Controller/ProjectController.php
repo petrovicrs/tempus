@@ -76,6 +76,7 @@ class ProjectController extends AbstractController
 
         if ($projectForm->isSubmitted() && $projectForm->isValid())
         {
+            $project->setUser($this->getUser()); // Set current user to project
             $this->getProjectRepository()->saveProject($project);
 
             /** @var ProjectApplicantOrganisation $applicantOrganisation */

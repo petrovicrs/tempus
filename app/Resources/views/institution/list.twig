@@ -2,9 +2,11 @@
 
 {% block body %}
     <section id="main">
-        {% include 'main-navbar.html.twig' with {'active': 'institution'} %}
         <div class="container-fluid">
-            <a href="{{ localizedPath('institution_create') }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>Add Institution</a>
+            <div class="col-xs-12 section-heading">
+                <h2><b>{% trans %}Institution{% endtrans %}</b></h2>
+                <a href="{{ localizedPath('institution_create') }}" class="btn btn-add btn-success pull-right"><span aria-hidden="true"></span>Add Institution</a>
+            </div>
             <table class="table table-hover" data-toggle="table">
                 <thead>
                 <tr class="table-header">

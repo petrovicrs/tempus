@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+        {% include 'sub-navbar.html.twig' with {'active': 'intelectual_outputs'} %}
+        <div class="container-fluid">
+            <div class="col-xs-12 section-heading">
+                <h2><b>{% trans %}Intelectual outputs{% endtrans %}</b></h2>
+                <a href="{{ localizedPath('intelectual_outputs_create') }}" class="btn btn-add btn-success pull-right"><span aria-hidden="true"></span>{% trans %}Add Output{% endtrans %}</a>
+            </div>
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                    <tr class="table-heleer">
+                        <th class="sortable"  data-sortable="true">{% trans %}Title{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Type{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Project{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Due date{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Status{% endtrans %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, output in intelectualOutputs %}
+                        {% if output.isPublic %}
+                            <tr>
+                                <td><a href="{{ localizedPath('intelectual_output_view', {'id': output.id}) }}">{{ output.title(app.request.getLocale()) }}</a></td>
+
+                                {% if output.type %}
+                                    <td>{{ output.type.name(app.request.getLocale()) }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+
+                                <td><a href="{{ localizedPath('project_view', {'projectId': output.project.id}) }}">{{ output.project.name(app.request.getLocale()) }}</a></td>
+
+                                <td>{{ output.dueDate | date('d/m/y') }}</td>
+
+
+                                {% if output.status %}
+                                    <td>{{ output.status.name(app.request.getLocale()) }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <div>
+{% endblock %}

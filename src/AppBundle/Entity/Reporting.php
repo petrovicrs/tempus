@@ -54,7 +54,7 @@ class Reporting extends AbstractAuditable
 
     /**
      * @ORM\Column(name="comments_and_suggestions", type="text", nullable=true)
-     * @Assert\Type("string", groups={"reporting"})
+     * @Assert\Type("string")
      */
     protected $commentsAndSuggestions;
 

@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ReportingRepository")
@@ -42,7 +43,7 @@ class Reporting extends AbstractAuditable
     protected $reportingDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="ReportingQuestionsAndAnswers", mappedBy="reporting", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ReportingQuestionsAndAnswers", mappedBy="reporting")
      */
     protected $questionsAndAnswers;
 
@@ -52,7 +53,8 @@ class Reporting extends AbstractAuditable
     protected $reportingBy;
 
     /**
-     * @ORM\Column(name="comments_and_suggestions", type="text")
+     * @ORM\Column(name="comments_and_suggestions", type="text", nullable=true)
+     * @Assert\Type("string", groups={"reporting"})
      */
     protected $commentsAndSuggestions;
 
@@ -60,7 +62,6 @@ class Reporting extends AbstractAuditable
     {
         parent::__construct();
         $this->reportingBy = new ArrayCollection();
-        $this->questionsAndAnswers = new ArrayCollection();
     }
 
     /**
@@ -136,12 +137,16 @@ class Reporting extends AbstractAuditable
     }
 
     /**
-     * @param mixed $questionsAndAnswers
+     * Add $questionsAndAnswers
+     *
+     * @param ReportingQuestionsAndAnswers $questionsAndAnswers
+     * @return Reporting
      */
-    public function setQuestionsAndAnswers($questionsAndAnswers)
+    public function setQuestionsAndAnswers(ReportingQuestionsAndAnswers $questionsAndAnswers)
     {
         $this->questionsAndAnswers = $questionsAndAnswers;
     }
+
 
     /**
      * @return mixed
@@ -173,5 +178,13 @@ class Reporting extends AbstractAuditable
     public function setCommentsAndSuggestions($commentsAndSuggestions)
     {
         $this->commentsAndSuggestions = $commentsAndSuggestions;
+    }
+
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        // somehow you have an array of "fake names"
+        if($this->questionsAndAnswers) {
+            return true;
+        }
     }
 }

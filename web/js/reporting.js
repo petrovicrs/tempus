@@ -1,13 +1,15 @@
 var $addReportingByLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
 var $addReportinkByLinkDiv = $('<li></li>').append($addReportingByLink);
 
-var $addQuestionAndAnswersLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
-var $addQuestionAndAnswersLinkDiv = $('<li></li>').append($addQuestionAndAnswersLink);
+// var $addQuestionAndAnswersLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
+// var $addQuestionAndAnswersLinkDiv = $('<li></li>').append($addQuestionAndAnswersLink);
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of tags
     var $collectionReportingByHolder = $('ul.reporting-by');
     var $collectionQuestionAndAnswersHolder = $('ul.questions-answers');
+
+    console.log($collectionQuestionAndAnswersHolder);
 
     // add a delete link to all of the existing tag form li elements
     $collectionReportingByHolder.find('li').each(function() {
@@ -20,7 +22,7 @@ jQuery(document).ready(function() {
 
     // add the "add a tag" anchor and li to the tags ul
     $collectionReportingByHolder.append($addReportinkByLinkDiv);
-    $collectionQuestionAndAnswersHolder.append($addQuestionAndAnswersLinkDiv);
+    // $collectionQuestionAndAnswersHolder.append($addQuestionAndAnswersLinkDiv);
 
     // count the current form inputs we have (e.g. 2), use that as the new
     // index when inserting a new item (e.g. 2)

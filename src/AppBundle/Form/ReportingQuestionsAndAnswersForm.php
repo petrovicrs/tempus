@@ -25,14 +25,15 @@ class ReportingQuestionsAndAnswersForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('questions', EntityType::class, array(
-                'class'   => 'AppBundle\Entity\Questions',
-                'label' => false,
-                'choice_label'  => function($value, $key) use ($options){
-                    return $value->getQuestion($options['locale']);
-                }
-            ))
-            ->add('answer', TextType::class);
+//            ->add('questions', EntityType::class, array(
+//                'class'   => 'AppBundle\Entity\Questions',
+//                'label' => false,
+//                'choice_label'  => function($value, $key) use ($options){
+//                    return $value->getQuestion($options['locale']);
+//                }
+//            ))
+            ->add('question')
+            ->add('answer');
     }
 
     /**

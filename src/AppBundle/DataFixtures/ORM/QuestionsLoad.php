@@ -8,25 +8,25 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\ResourceType;
+use AppBundle\Entity\Questions;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class QuestionsLoad implements FixtureInterface
 {
-    private $types = ['Promotion Material', 'Book'];
-    private $types_sr = ['Promotivni materijal', 'Knjiga'];
+    private $questions = ['Some question no1?', 'Another question about something?'];
+    private $questions_sr = ['Neko pitanje broj 1?', 'Jos jedno pitanje o necemu?'];
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < count($this->types); $i++) {
+        for ($i = 0; $i < count($this->questions); $i++) {
 
-            $reourceType = new ResourceType();
+            $questions = new Questions();
 
-            $reourceType->setNameEn($this->types[$i]);
-            $reourceType->setNameSr($this->types_sr[$i]);
+            $questions->setQuestionsEn($this->questions[$i]);
+            $questions->setQuestionsSr($this->questions_sr[$i]);
 
-            $manager->persist($reourceType);
+            $manager->persist($questions);
         }
 
         $manager->flush();

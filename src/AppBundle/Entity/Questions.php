@@ -11,7 +11,6 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\QuestionsRepository")
@@ -27,25 +26,21 @@ class Questions extends AbstractAuditable
     protected $id;
 
     /**
-     * @var string $question
+     * @var string $answer
      * @Assert\Type("string")
-     * @ORM\Column(name="question_en", type="string", length=255)
+     * @ORM\Column(name="questions_en", type="string", length=255)
      */
-    protected $questionEn;
+    protected $questionsEn;
 
     /**
-     * @var string $question
+     * @var string $questions
      * @Assert\Type("string")
-     * @ORM\Column(name="question_sr", type="string", length=255)
+     * @ORM\Column(name="questions_sr", type="string", length=255)
      */
-    protected $questionSr;
+    protected $questionsSr;
 
     /**
-     * @ORM\ManyToOne(
-     *      targetEntity="AppBundle\Entity\ReportingQuestionsAndAnswers",
-     *      inversedBy="questions"
-     * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\OneToMany(targetEntity="ReportingQuestionsAndAnswers", mappedBy="questions")
      */
     protected $reportingQuestionsAndAnswers;
 
@@ -68,39 +63,55 @@ class Questions extends AbstractAuditable
     /**
      * @return string
      */
-    public function getQuestionEn(): string
+    public function getQuestionsEn(): string
     {
-        return $this->questionEn;
+        return $this->questionsEn;
     }
 
     /**
      * @param string $questionEn
      */
-    public function setQuestionEn(string $questionEn)
+    public function setQuestionsEn(string $questionEn)
     {
-        $this->questionEn = $questionEn;
+        $this->questionsEn = $questionEn;
     }
 
     /**
      * @return string
      */
-    public function getQuestionSr(): string
+    public function getQuestionsSr(): string
     {
-        return $this->questionSr;
+        return $this->questionsSr;
     }
 
     /**
      * @param string $questionSr
      */
-    public function setQuestionSr(string $questionSr)
+    public function setQuestionsSr(string $questionSr)
     {
-        $this->questionSr = $questionSr;
+        $this->questionsSr = $questionSr;
     }
 
-    public function getQuestion($locale) {
+    public function getQuestions($locale) {
         if ($locale == "sr"){
-            return $this->questionSr;
+            return $this->questionsSr;
         }
-        return $this->questionEn;
+        return $this->questionsEn;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReportingQuestionsAndAnswers()
+    {
+        return $this->reportingQuestionsAndAnswers;
+    }
+
+    /**
+     * @param mixed $reportingQuestionsAndAnswers
+     */
+    public function setReportingQuestionsAndAnswers($reportingQuestionsAndAnswers)
+    {
+        $this->reportingQuestionsAndAnswers = $reportingQuestionsAndAnswers;
     }
 }

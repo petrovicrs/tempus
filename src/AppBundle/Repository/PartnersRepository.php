@@ -9,9 +9,9 @@
 namespace AppBundle\Repository;
 
 /**
- * Class CommentTypeRepository
+ * Class PartnersRepository
  */
-class CommentTypeRepository extends \Doctrine\ORM\EntityRepository
+class PartnersRepository extends \Doctrine\ORM\EntityRepository
 {
     public function save($c) {
         $this->_em->persist($c);

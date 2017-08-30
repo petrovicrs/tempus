@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+    {% include 'sub-navbar.html.twig' with {'active': 'partners'} %}
+    <div class="container-fluid">
+        <a href="{{ localizedPath('partner_edit', {'id': partner.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
+        <h2><b>{% trans %}Partner{% endtrans %}</b></h2>
+        <div class="row">
+
+            <div class="col-xs-12">
+
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4"><h4>{% trans %}Team members{% endtrans %}</h4></div>
+                <div class="col-xs-4"><h4>{% trans %}Team departments{% endtrans %}</h4></div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-4">
+                    <table class="table table-hover" data-toggle="table">
+                        <tr><td><b>{% trans %}Institution/Organization{% endtrans %}:</b> {{ partner.institution ? partner.institution.name(app.request.getLocale()) : ''}}</td></tr>
+                        <tr><td><b>{% trans %}Partner type{% endtrans %}:</b> {{ partner.partnerType ? partner.partnerType.name(app.request.getLocale()) : ''}}</td></tr>
+                        <tr><td><b>{% trans %}Project coordinator{% endtrans %}:</b> {{ partner.projectCoordinator ? partner.projectCoordinator.name(app.request.getLocale()) : ''}}</td></tr>
+                        <tr><td><b>{% trans %}Legal representative{% endtrans %}:</b> {{ partner.legalRepresentative ? partner.legalRepresentative.name(app.request.locale) : '' }}</td></tr>
+                    </table>
+                </div>
+                <div class="col-xs-4">
+                    <table class="table table-hover" data-toggle="table">
+
+                        {% for member in teamMembers %}
+                            <tr><td><b>{% trans %}Member position{% endtrans %}:</b> {{ member.memberPosition ? member.memberPosition.name(app.request.getLocale()) : ''}}</td></tr>
+                            <tr><td><b>{% trans %}Member{% endtrans %}:</b> {{ member.member ? member.member.name(app.request.getLocale()) : ''}}</td></tr>
+                            <tr><td><b>{% trans %}Budget{% endtrans %}:</b> {{ member.budget }}</td></tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col-xs-4">
+                    <table class="table table-hover" data-toggle="table">
+                        {% for department in partner.teamDepartments %}
+                            <tr><td><b>{{ department.teamDepartments ? department.teamDepartments.name(app.request.getLocale()) : ''}}</td></tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <h2>{% trans %}Participants{% endtrans %}</h2>
+                <table class="table table-hover" data-toggle="table">
+                    {% for participant in participants %}
+                        <tr><td><b>{% trans %}Participant type{% endtrans %}:</b> {{ participant.participantType ? participant.participantType.name(app.request.getLocale()) : ''}}</td></tr>
+                        <tr><td><b>{% trans %}Participant{% endtrans %}:</b> {{ participant.participant ? participant.participant.name(app.request.getLocale()) : ''}}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+{% endblock %}

@@ -265,6 +265,21 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\MonitoringReporting
+    doctrine_entity_repository.partners:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\Partners
+    doctrine_entity_repository.partners_team_members:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\PartnersTeamMembers
+    doctrine_entity_repository.partners_participants:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\PartnersParticipants
     app.security.login_form_authenticator:
         class: AppBundle\Security\LoginFormAuthenticator
         autowire: true

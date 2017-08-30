@@ -2,25 +2,25 @@
 /**
  * Created by PhpStorm.
  * User: nemtish
- * Date: 27.08.17
- * Time: 17:31
+ * Date: 29.08.17
+ * Time: 23:08
  */
 
 namespace AppBundle\Entity;
 
-
-use AppBundle\Entity\AbstractAuditable;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentTypeRepository")
- * @ORM\Table(name="comment_type")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PartnersTeamDepartmentsRepository")
+ * @ORM\Table(name="partners_team_departments")
  */
-class CommentType extends AbstractAuditable
+class PartnersTeamDepartments
 {
     /**
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -28,16 +28,19 @@ class CommentType extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\Column(name="name_en", type="text", nullable=true)
-     * @Assert\Type("string")
+     * @ORM\Column(name="name_en", type="string", length=255)
      */
     protected $nameEn;
 
     /**
-     * @ORM\Column(name="name_sr", type="text", nullable=true)
-     * @Assert\Type("string")
+     * @ORM\Column(name="name_sr", type="string", length=255)
      */
     protected $nameSr;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Partners", inversedBy="teamDepartments")
+     */
+    protected $partners;
 
     /**
      * @return mixed
@@ -85,5 +88,30 @@ class CommentType extends AbstractAuditable
     public function setNameSr($nameSr)
     {
         $this->nameSr = $nameSr;
+    }
+
+    public function getName($locale)
+    {
+        if($locale == 'sr') {
+            return $this->nameSr;
+        }
+
+        return $this->nameEn;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPartners()
+    {
+        return $this->partners;
+    }
+
+    /**
+     * @param mixed $partners
+     */
+    public function setPartners($partners)
+    {
+        $this->partners = $partners;
     }
 }

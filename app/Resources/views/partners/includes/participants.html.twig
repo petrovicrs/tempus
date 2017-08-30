@@ -1,0 +1,12 @@
+<div class="block" style="clear: both;">
+
+    {{ form_label(form.participantType, 'Participant type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.participantType, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
+    {{ form_label(form.participant, 'Participant'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.participant, {'attr': {'class': 'form-control'}})  }}
+    </div>
+</div>

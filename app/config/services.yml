@@ -19,6 +19,10 @@ services:
         arguments: [ "@service_container" ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+    util.file_uploader:
+        class: AppBundle\Util\FileUploader
+        arguments: ["%file_uploads_directory%"]
+
     doctrine_entity_repository.application:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
@@ -280,6 +284,21 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\PartnersParticipants
+    doctrine_entity_repository.attachments:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\Attachments
+    doctrine_entity_repository.attachments_dms_documents:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\AttachmentsDmsDocuments
+    doctrine_entity_repository.attachments_manually_uploaded:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\AttachmentsManuallyUploaded
     app.security.login_form_authenticator:
         class: AppBundle\Security\LoginFormAuthenticator
         autowire: true

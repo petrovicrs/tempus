@@ -10,6 +10,7 @@
                 <div class="col-xs-12">
 
                     {{ form_start(my_form) }}
+
                         <div class="col-xs-12">
                             <h2>{% trans %}Add Reporting{% endtrans %}</h2>
                         </div>
@@ -29,12 +30,18 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xs-12">
-                                    {{ form_label(my_form.questionsAndAnswers, 'Monitoring Question and Answers:'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                    <ul class="questions-answers" data-prototype="{{ include('/reporting/includes/reporting-questions-and-answers.html.twig',
-                                    {'form': my_form.questionsAndAnswers.vars.prototype })|e }}">
-                                    </ul>
-                                </div>
+                                {% for key, qa in questions %}
+                                    <div class="col-xs-12">
+                                        <div class="col-xs-6">
+                                            <p>{{ qa.questions(app.request.getLocale()) }}</p>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="form">
+                                                <textarea id="appbundle_project_questionsAndAnswers_{{ key }}_answerEn" name="appbundle_project[questionsAndAnswers][{{ key }}][answerEn]" required="required" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
 
                                 <div class="col-xs-12">
                                     {{ form_label(my_form.commentsAndSuggestions, 'Comments and suggestions'|trans, {'label_attr': {'class': 'control-label'}}) }}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+    <script type="text/javascript" src="{{ asset('/js/calendar.js')}}" ></script>
+    {% include 'sub-navbar.html.twig' with {'active': 'group_calendar'} %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls calendar">
+                <div class="col-xs-12">
+                    {{ form_start(my_form) }}
+                        <div class="col-xs-6">
+                            <h2>{% trans %}Events{% endtrans %}</h2>
+
+                            <div class="event-holder">
+                                <ul class="calendar-event" data-prototype="{{ include('/group-calendar/includes/group-calendar-event.html.twig',
+                                {'form': my_form.event.vars.prototype })|e }}">
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div id="calendar"></div>
+                        </div>
+                    {{ form_end(my_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

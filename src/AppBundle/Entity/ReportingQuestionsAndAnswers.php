@@ -27,31 +27,28 @@ class ReportingQuestionsAndAnswers extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Questions", mappedBy="reportingQuestions", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Questions", inversedBy="reportingQuestionsAndAnswers", cascade={"persist"})
      */
-    protected $reportingQuestionsAndAnswers;
+    protected $questions;
 
     /**
      * @var string $answer
      * @Assert\Type("string")
-     * @ORM\Column(name="answer", type="string", length=255)
+     * @ORM\Column(name="answer_en", type="string", length=255, nullable=true)
      */
-    protected $answer;
+    protected $answerEn;
 
     /**
-     * @ORM\ManyToOne(
-     *      targetEntity="Reporting",
-     *      inversedBy="reportingBy"
-     * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var string $answer
+     * @Assert\Type("string")
+     * @ORM\Column(name="answer_sr", type="string", length=255, nullable=true)
+     */
+    protected $answerSr;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Reporting", inversedBy="questionsAndAnswers", cascade={"persist"})
      */
     protected $reporting;
-
-
-    public function __construct()
-    {
-        $this->questions = new ArrayCollection();
-    }
 
     /**
      * @return mixed
@@ -88,33 +85,40 @@ class ReportingQuestionsAndAnswers extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getReportingQuestionsAndAnswers()
+    public function getAnswerEn()
     {
-        return $this->reportingQuestionsAndAnswers;
+        return $this->answerEn;
     }
 
     /**
-     * @param mixed $reportingQuestionsAndAnswers
+     * @param mixed $answerEn
      */
-    public function setReportingQuestionsAndAnswers($reportingQuestionsAndAnswers)
+    public function setAnswerEn($answerEn)
     {
-        $this->reportingQuestionsAndAnswers = $reportingQuestionsAndAnswers;
+        $this->answerEn = $answerEn;
     }
 
     /**
      * @return string
      */
-    public function getAnswer(): string
+    public function getAnswerSr()
     {
-        return $this->answer;
+        return $this->answerSr;
     }
 
     /**
-     * @param string $answer
+     * @param string $answerSr
      */
-    public function setAnswer(string $answer)
+    public function setAnswerSr($answerSr)
     {
-        $this->answer = $answer;
+        $this->answerSr = $answerSr;
+    }
+
+    public function getAnswer($locale) {
+        if ($locale == "sr"){
+            return $this->answerSr;
+        }
+        return $this->answerEn;
     }
 
     /**

@@ -44,6 +44,7 @@ class ResourcesController extends AbstractController
         $resourcesForm->handleRequest($request);
 
         if ($resourcesForm->isSubmitted() && $resourcesForm->isValid()) {
+            $resources->setProject($this->getLastProjectForCurrentUser());
             $this->getResourcesRepository()->save($resources);
 
             return $this->redirectToRoute('resources_list');

@@ -8,7 +8,7 @@
 
 
         {% block stylesheets %}
-            {% stylesheets '@bootstrap_css' %}
+            {% stylesheets '@bootstrap_css' '@calendar_css' %}
                 <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
             {% endstylesheets %}
             <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/css/kbs.css') }}"/>
@@ -50,7 +50,7 @@
     <div class="loader"></div>
 
     {% block javascripts %}
-    {% javascripts '@jquery' '@bootstrap_js' %}
+    {% javascripts '@jquery' '@bootstrap_js' '@calendar_js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
     <!-- Latest compiled and minified JavaScript -->

@@ -36,7 +36,8 @@ abstract class AbstractController extends Controller {
         $user = $this->getUser();
         $lastProject = $this->get('doctrine_entity_repository.project')
             ->findOneBy(
-                ['user' => $user], 'DESC'
+                ['user' => $user],
+                ['id' => 'DESC']
             );
 
         return $lastProject;

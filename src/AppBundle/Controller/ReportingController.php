@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Reporting;
+use AppBundle\Entity\ReportingQuestionsAndAnswers;
 use AppBundle\Form\ReportingForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,6 +33,8 @@ class ReportingController extends AbstractController
     public function createAction(Request $request)
     {
         $reporting = new Reporting();
+        $questions = $this->getQuestionsRepository()->findAll();
+
 
         $reportingForm = $this->createForm(ReportingForm::class, $reporting, [
             'action' => $this->generateUrl('reporting_create'),
@@ -43,14 +46,22 @@ class ReportingController extends AbstractController
 
         if ($reportingForm->isSubmitted() && $reportingForm->isValid()) {
 
+            // Save questions and answers to ReportingQuestionsAndAnswers
+            foreach ($questions as $index => $qa) {
+                $reportingQuestionsAndAnswers = new ReportingQuestionsAndAnswers();
+
+                $answer = $request->request->get('appbundle_project')['questionsAndAnswers'][$index];
+                $dynamicFunction = 'setAnswer' . ucfirst($request->getLocale());
+                $reportingQuestionsAndAnswers->$dynamicFunction($answer['answer'.ucfirst($request->getLocale())]);
+
+                $reportingQuestionsAndAnswers->setQuestions($qa);
+                $reportingQuestionsAndAnswers->setReporting($reporting);
+
+                $this->getQuestionAndAnswersRepository()->save($reportingQuestionsAndAnswers);
+            }
+
             $reporting->setProject($this->getLastProjectForCurrentUser());
             $this->getReportingRepository()->save($reporting);
-
-
-            foreach($reporting->getQuestionAndAnswers() as $qa){
-                $qa->setReporting($reporting);
-                $this->getQuestionAndAnswersRepository()->save($qa);
-            }
 
             foreach($reporting->getReportingBy() as $reportingPerson){
                 $reportingPerson->setReportingBy($reporting);
@@ -60,7 +71,9 @@ class ReportingController extends AbstractController
             return $this->redirectToRoute('reporting_list');
         }
 
-        return $this->render('reporting/create.twig', ['my_form' => $reportingForm->createView()]);
+        return $this->render(
+            'reporting/create.twig',
+            ['my_form' => $reportingForm->createView(), 'questions' => $questions]);
     }
 
     /**
@@ -121,6 +134,11 @@ class ReportingController extends AbstractController
     private function getQuestionAndAnswersRepository()
     {
         return $this->get('doctrine_entity_repository.reporting_questions_and_answers');
+    }
+
+    private function getQuestionsRepository()
+    {
+        return $this->get('doctrine_entity_repository.questions');
     }
 
     private function getReportingPersonRepository()

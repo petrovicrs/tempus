@@ -144,6 +144,15 @@ assetic:
         jquery:
             inputs:
                 - %kernel.root_dir%/../vendor/components/jquery/jquery.js
+
+        calendar_js:
+            inputs:
+                - "%kernel.root_dir%/../components/calendar/moment.min.js"
+                - "%kernel.root_dir%/../components/calendar/fullcalendar.min.js"
+        calendar_css:
+            inputs:
+                - "%kernel.root_dir%/../components/calendar/fullcalendar.min.css"
+            filters: [cssrewrite]
 #
 ## FOS User Bundle
 #fos_user:

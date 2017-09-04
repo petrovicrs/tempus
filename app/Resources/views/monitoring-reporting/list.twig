@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+        {% include 'sub-navbar.html.twig' with {'active': 'monitoring'} %}
+        <div class="container-fluid">
+            <div class="col-xs-12 section-heading">
+                <h2><b>{% trans %}Monitoring/Reporting{% endtrans %}</b></h2>
+                <a href="{{ localizedPath('monitoring_create') }}" class="btn btn-add btn-success pull-right"><span aria-hidden="true"></span>{% trans %}Add Monitoring/Reporting{% endtrans %}</a>
+            </div>
+
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                    <tr class="table-heleer">
+                        <th class="sortable"  data-sortable="true">{% trans %}Project{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Monitoring type{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Monitoring date{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Comment type{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Comment{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Action{% endtrans %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in monitoring %}
+                        <tr>
+                            {% if value.project %}
+                                <td><a href="{{ localizedPath('project_view', {'projectId': value.project.id}) }}">{{ value.project.name(app.request.getLocale()) }}</a></td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+
+                            {% if value.monitoringType %}
+                                <td>{{ value.monitoringType.name(app.request.getLocale())}}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+
+                            <td>{{ value.monitoringDate | date('d/m/y')}}</td>
+
+                            {% if value.commentType %}
+                                <td>{{ value.commentType.name(app.request.getLocale())}}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+
+                            <td>{{ value.comment }}</td>
+
+                            <td>
+                                <a href="{{ localizedPath('monitoring_view', {'id': value.id}) }}">View</a> | <a href="{{ localizedPath('monitoring_edit', {'id': value.id}) }}">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <div>
+{% endblock %}

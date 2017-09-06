@@ -49,7 +49,6 @@ class ProjectActivityController extends AbstractController
         $activityForm->handleRequest($request);
 
         if ($activityForm->isSubmitted()  && $activityForm->isValid()) {
-var_dump($activityForm);die;
 
             return $this->redirectToRoute('project_activity_create');
 

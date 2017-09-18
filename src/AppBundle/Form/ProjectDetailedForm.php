@@ -21,7 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class ProjectForm extends AbstractType
+class ProjectDetailedForm extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -29,27 +29,6 @@ class ProjectForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('programmes', EntityType::class, [
-//                'class' => 'AppBundle:ProjectProgramme',
-//                'choice_label' => 'name' . ucfirst($options['locale'])
-//            ])
-//            ->add('keyActions', EntityType::class, [
-//                'class' => 'AppBundle:ProjectKeyAction',
-//                'choice_label' => 'name' . ucfirst($options['locale']),
-//                'data' => 2
-//            ])
-//            ->add('actions', EntityType::class, [
-//                'class' => 'AppBundle:ProjectAction',
-//                'choice_label' => 'name' . ucfirst($options['locale'])
-//            ])
-//            ->add('calls', EntityType::class, [
-//                'class' => 'AppBundle:ProjectCall',
-//                'choice_label' => 'name' . ucfirst($options['locale'])
-//            ])
-//            ->add('rounds', EntityType::class, [
-//                'class' => 'AppBundle:ProjectRound',
-//                'choice_label' => 'name' . ucfirst($options['locale'])
-//            ])
             ->add('nameEn', TextType::class)
             ->add('nameSr', TextType::class)
             ->add('nameOriginalLetter', TextType::class)
@@ -104,14 +83,6 @@ class ProjectForm extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ))
-//            ->add('calls', EntityType::class, [
-//                'class' => 'AppBundle:ProjectFtOfficer',
-//                'choice_label' => 'name' . ucfirst($options['locale'])
-//            ])
-//            ->add('rounds', EntityType::class, [
-//                'class' => 'AppBundle:ProjectEaceaOfficer',
-//                'choice_label' => 'name' . ucfirst($options['locale'])
-//            ])
             ->add('notes', CollectionType::class, array(
                 'entry_type'  => ProjectNoteForm::class,
                 'allow_add' => true,

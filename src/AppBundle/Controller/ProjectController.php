@@ -19,16 +19,19 @@ use AppBundle\Entity\ProjectPriority;
 use AppBundle\Entity\ProjectSubjectArea;
 use AppBundle\Entity\ProjectTargetGroup;
 use AppBundle\Entity\ProjectTopic;
+use AppBundle\Entity\ProjectStart;
 use AppBundle\Repository\ProjectContactRepository;
 use AppBundle\Repository\ProjectSubjectAreaRepository;
 use AppBundle\Repository\ProjectTargetGroupRepository;
 use AppBundle\Repository\ProjectTopicRepository;
+use AppBundle\Repository\ProjectStartRepository;
 use PhpOption\Tests\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Form\ProjectForm;
 use AppBundle\Form\ProjectKa2Form;
+use AppBundle\Form\ProjectStartForm;
 use AppBundle\Entity\Project;
 use AppBundle\Repository\ProjectRepository;
 use AppBundle\Repository\ProjectApplicantOrganisationRepository;
@@ -136,6 +139,43 @@ class ProjectController extends AbstractController
         }
 
         return $this->render('project/create.twig', $data);
+    }
+
+    /**
+     * @Route("/{locale}/project/create-project", name="project_create_start", requirements={"locale": "%app.locales%"})
+     *
+     */
+    public function createProjectAction(Request $request)
+    {
+        $project = new Project();
+
+        $projectForm = $this->createForm(ProjectStartForm::class, $project, [
+            'action' => $this->generateUrl('project_create_start'),
+            'method' => 'POST',
+            'locale' => $request->getLocale(),
+        ]);
+
+        $projectForm->handleRequest($request);
+
+        if ($projectForm->isSubmitted() && $projectForm->isValid())
+        {
+            $this->getProjectRepository()->saveProject($project);
+
+            if ($project->getKeyActions()->getName($request->getLocale()) == 'ka1') {
+                return $this->redirectToRoute('project_create');
+            } else if ($project->getKeyActions()->getName($request->getLocale()) == 'ka2') {
+                return $this->redirectToRoute('project_ka2_create');
+            }
+
+            return $this->redirectToRoute('project_list');
+
+        }
+
+        $data = [
+            'my_form' => $projectForm->createView()
+        ];
+
+        return $this->render('project/project-create.twig', $data);
     }
 
     /**

@@ -29,31 +29,10 @@ class ProjectKa2Form extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('programmes', EntityType::class, [
-//                'class' => 'AppBundle:ProjectProgramme',
-//                'choice_label' => 'name' . ucfirst($options['locale'])
-//            ])
-//            ->add('keyActions', EntityType::class, [
-//                'class' => 'AppBundle:ProjectKeyAction',
-//                'choice_label' => 'name' . ucfirst($options['locale']),
-//                'data' => 2
-//            ])
-//            ->add('actions', EntityType::class, [
-//                'class' => 'AppBundle:ProjectAction',
-//                'choice_label' => 'name' . ucfirst($options['locale'])
-//            ])
             ->add('types', EntityType::class, [
                 'class' => 'AppBundle:ProjectType',
                 'choice_label' => 'name' . ucfirst($options['locale'])
             ])
-//            ->add('calls', EntityType::class, [
-//                'class' => 'AppBundle:ProjectCall',
-//                'choice_label' => 'name' . ucfirst($options['locale'])
-//            ])
-//            ->add('rounds', EntityType::class, [
-//                'class' => 'AppBundle:ProjectRound',
-//                'choice_label' => 'name' . ucfirst($options['locale'])
-//            ])
             ->add('nameEn', TextType::class)
             ->add('nameSr', TextType::class)
             ->add('nameOriginalLetter', TextType::class)
@@ -137,7 +116,7 @@ class ProjectKa2Form extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ))
-            ->add('submit', SubmitType::class, array('label_format' => 'Submit'));
+            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
     }
 
     /**

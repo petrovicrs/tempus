@@ -41,8 +41,11 @@ class AttachmentsController extends AbstractController
      */
     public function createAction(Request $request)
     {
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
+
         $attachmentExist = $this->getAttachmentsRepository()->findOneBy(
-            ['project' => $this->getLastProjectForCurrentUser()],
+            ['project' => $project],
             ['id' => 'DESC']
         );
 
@@ -51,6 +54,7 @@ class AttachmentsController extends AbstractController
         }
 
         $attachments = new Attachments();
+
 
         $attachmentsForm = $this->createForm(AttachmentsForm::class, $attachments, [
             'action' => $this->generateUrl('attachments_create'),
@@ -81,10 +85,12 @@ class AttachmentsController extends AbstractController
 
             $this->getAttachmentsRepository()->save($attachments);
 
-            return $this->redirectToRoute('attachments_list');
+            return $this->redirectToRoute('group_calendar_create');
         }
 
-        return $this->render('attachments/create.twig', ['my_form' => $attachmentsForm->createView()]);
+        return $this->render('attachments/create.twig', ['my_form' => $attachmentsForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr()
+        ]);
     }
 
     /**

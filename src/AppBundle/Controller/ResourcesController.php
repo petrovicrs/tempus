@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Project;
 use AppBundle\Entity\Resources;
 use AppBundle\Form\ResourcesForm;
 use AppBundle\Repository\ResourcesRepository;
@@ -34,6 +35,9 @@ class ResourcesController extends AbstractController
     public function createAction(Request $request)
     {
         $resources = new Resources();
+        
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
 
         $resourcesForm = $this->createForm(ResourcesForm::class, $resources, [
             'action' => $this->generateUrl('resources_create'),
@@ -44,13 +48,14 @@ class ResourcesController extends AbstractController
         $resourcesForm->handleRequest($request);
 
         if ($resourcesForm->isSubmitted() && $resourcesForm->isValid()) {
-            $resources->setProject($this->getLastProjectForCurrentUser());
+            
+            $resources->setProject($project);
             $this->getResourcesRepository()->save($resources);
 
-            return $this->redirectToRoute('resources_list');
+            return $this->redirectToRoute('intelectual_outputs_create');
         }
 
-        return $this->render('resources/create.twig', ['my_form' => $resourcesForm->createView()]);
+        return $this->render('resources/create.twig', ['my_form' => $resourcesForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
     /**

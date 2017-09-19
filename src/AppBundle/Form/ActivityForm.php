@@ -41,7 +41,7 @@ class ActivityForm extends AbstractType
                 'allow_delete' => true,
                 'label'        => false
             ))
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
     }
 
     /**

@@ -216,6 +216,11 @@ class Project extends AbstractAuditable
     protected $consortium;
 
     /**
+     * @ORM\Column(name="is_completed", type="integer", nullable=true)
+     */
+    protected $isCompleted;
+
+    /**
      * @ORM\ManyToOne(
      *      targetEntity="ProjectProgramme"
      * )
@@ -1325,6 +1330,21 @@ class Project extends AbstractAuditable
         $this->projectObjectivesNative = $projectObjectivesNative;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getIsCompleted()
+    {
+        return $this->isCompleted;
+    }
+
+    /**
+     * @param mixed $isCompleted
+     */
+    public function setIsCompleted($isCompleted)
+    {
+        $this->isCompleted = $isCompleted;
+    }
 
 }
 

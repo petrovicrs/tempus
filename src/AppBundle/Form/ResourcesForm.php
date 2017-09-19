@@ -32,10 +32,10 @@ class ResourcesForm extends AbstractType
                 'class'         => 'AppBundle\Entity\ResourceType',
                 'choice_label'  => 'name' . ucfirst($options['locale']),
             ])
-            ->add('project', EntityType::class, [
-                'class'         => 'AppBundle\Entity\Project',
-                'choice_label'  => 'name' . ucfirst($options['locale']),
-            ])
+//            ->add('project', EntityType::class, [
+//                'class'         => 'AppBundle\Entity\Project',
+//                'choice_label'  => 'name' . ucfirst($options['locale']),
+//            ])
             ->add('keywords', TextType::class)
             ->add('isPublic', CheckboxType::class, [
 //                'label' => 'Public?',
@@ -46,7 +46,7 @@ class ResourcesForm extends AbstractType
             ->add('descriptionEn')
             ->add('descriptionSr')
             ->add('abstract')
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
     }
 
     /**

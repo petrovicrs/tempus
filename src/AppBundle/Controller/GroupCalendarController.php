@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\EventReminder;
 use AppBundle\Entity\GroupCalendar;
 use AppBundle\Entity\GroupCalendarEvent;
+use AppBundle\Entity\Project;
 use AppBundle\Form\GroupCalendarForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,6 +38,9 @@ class GroupCalendarController extends AbstractController
     {
         $calendar = new GroupCalendar();
 
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
+        
         $calendarForm = $this->createForm(GroupCalendarForm::class, $calendar, [
             'action' => $this->generateUrl('group_calendar_create'),
             'method' => 'POST',
@@ -47,7 +51,11 @@ class GroupCalendarController extends AbstractController
 
         if ($calendarForm->isSubmitted() && $calendarForm->isValid()) {
 
-            $calendar->setProject($this->getLastProjectForCurrentUser());
+            /** @var Project $project */
+            $project = $this->getLastProjectForCurrentUser();
+            $project->setIsCompleted(1);
+
+            $calendar->setProject($project);
             $this->getCalendarRepository()->save($calendar);
 
             /* @var GroupCalendarEvent $event */
@@ -61,12 +69,15 @@ class GroupCalendarController extends AbstractController
                 }
 
                 $this->getCalendarEventRepository()->save($event);
+                $this->getProjectRepository()->saveProject($project);
             }
 
-            return $this->redirectToRoute('group_calendar_list');
+            return $this->redirectToRoute('project_list');
         }
 
-        return $this->render('group-calendar/create.twig', ['my_form' => $calendarForm->createView()]);
+        return $this->render('group-calendar/create.twig', ['my_form' => $calendarForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr()
+        ]);
     }
 
 //    /**
@@ -95,8 +106,14 @@ class GroupCalendarController extends AbstractController
         return $this->get('doctrine_entity_repository.group_calendar_event');
     }
 
+    
     private function getEventReminderRepository()
     {
         return $this->get('doctrine_entity_repository.event_reminder');
+    }
+    
+    private function getProjectRepository() {
+
+        return $this->get('doctrine_entity_repository.project');
     }
 }

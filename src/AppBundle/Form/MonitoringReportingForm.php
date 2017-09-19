@@ -37,7 +37,7 @@ class MonitoringReportingForm extends AbstractType
                 'choice_label'  => 'name' . ucfirst($options['locale'])
             ])
             ->add('comment', TextareaType::class)
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
     }
 
     /**

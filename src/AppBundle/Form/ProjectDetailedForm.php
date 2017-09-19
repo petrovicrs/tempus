@@ -91,7 +91,7 @@ class ProjectDetailedForm extends AbstractType
                 'label' => false
             ))
             ->add('projectSummary', TextareaType::class)
-            ->add('submit', SubmitType::class, array('label_format' => 'Submit'));
+            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
     }
 
     /**

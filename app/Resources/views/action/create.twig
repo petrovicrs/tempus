@@ -4,9 +4,12 @@
 <script type="text/javascript" src="{{ asset('/js/action.js')}}"></script>
 
 <section id="main">
-
-    {% include 'sub-navbar.html.twig' with {'active': 'action'} %}
-
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar.html.twig' with {'active': 'action'} %}
+    {% endif %}
+        {%  if keyAction == 'ka2' %}
+    {% include 'sub-navbar-ka2.html.twig' with {'active': 'action'} %}
+    {% endif %}
     <div class="container-fluid">
         <div class="page-header">
             <h1>{% trans %}Create action{% endtrans %}</h1>

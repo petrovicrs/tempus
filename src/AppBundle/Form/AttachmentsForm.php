@@ -38,7 +38,7 @@ class AttachmentsForm extends AbstractType
             ))
             ->add('dmsNotes')
             ->add('uploadedFilesNotes')
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
 
 //        , FileType::class, [
 //        'multiple' => true,

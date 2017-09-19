@@ -2,7 +2,12 @@
 
 {% block body %}
     <section id="main">
-    {% include 'sub-navbar.html.twig' with {'active': 'resources'} %}
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar.html.twig' with {'active': 'resources'} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'resources'} %}
+        {% endif %}
     <div class="container-fluid">
         <div class="row">
             <div class="controls resources">
@@ -16,12 +21,6 @@
                                     {{ form_label(my_form.resourceType, 'Resource type'|trans, {'label_attr': {'class': 'control-label'}}) }}
                                     <div class="form">
                                         {{ form_widget(my_form.resourceType, {'attr': {'class': 'form-control'}})  }}
-                                    </div>
-                                </div>
-                                <div class="col-xs-3">
-                                    {{ form_label(my_form.project, 'Project'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                    <div class="form">
-                                        {{ form_widget(my_form.project, {'attr': {'class': 'form-control'}})  }}
                                     </div>
                                 </div>
                                 <div class="col-xs-6">

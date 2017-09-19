@@ -55,7 +55,7 @@ class ProjectController extends AbstractController
      */
     public function listAction()
     {//* @Security("is_granted('ROLE_ADMIN')")
-        $result = $this->getProjectRepository()->findAll();
+        $result = $this->getProjectRepository()->findBy(['isCompleted' => 1]);
 
         return $this->render('project/list.twig', ['result' => $result]);
     }
@@ -66,8 +66,8 @@ class ProjectController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $project = new Project();
-        $keyActionSelected = $request->request->get('project_key_action');
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
 
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_create'),
@@ -79,9 +79,8 @@ class ProjectController extends AbstractController
 
         if ($projectForm->isSubmitted() && $projectForm->isValid())
         {
-            $project->setUser($this->getUser()); // Set current user to project
             $this->getProjectRepository()->saveProject($project);
-
+            
             /** @var ProjectApplicantOrganisation $applicantOrganisation */
             foreach($project->getApplicantOrganisations() as $applicantOrganisation){
                 $applicantOrganisation->setProject($project);
@@ -124,19 +123,13 @@ class ProjectController extends AbstractController
                 $this->getProjectNotesRepository()->save($note);
             }
 
-            return $this->redirectToRoute('project_list');
+            return $this->redirectToRoute('resources_create');
 
         }
 
         $data = [
             'my_form' => $projectForm->createView()
         ];
-
-        if(!is_null($keyActionSelected)) {
-            $keyAction = $this->getProjectKeyActionRepository()->findOneBy(['id' => (int) $keyActionSelected]);
-            // TODO check what to pass to form (id, name, or something else)
-            $data['key_action_selected'] = $keyAction->getId();//$keyAction->getName($request->getLocale());
-        }
 
         return $this->render('project/create.twig', $data);
     }
@@ -159,12 +152,13 @@ class ProjectController extends AbstractController
 
         if ($projectForm->isSubmitted() && $projectForm->isValid())
         {
+            $project->setUser($this->getUser());
             $this->getProjectRepository()->saveProject($project);
 
             if ($project->getKeyActions()->getName($request->getLocale()) == 'ka1') {
-                return $this->redirectToRoute('project_create');
+                return $this->redirectToRoute('project_create', ['active' => 'project']);
             } else if ($project->getKeyActions()->getName($request->getLocale()) == 'ka2') {
-                return $this->redirectToRoute('project_ka2_create');
+                return $this->redirectToRoute('project_ka2_create', ['active' => 'project']);
             }
 
             return $this->redirectToRoute('project_list');
@@ -184,8 +178,8 @@ class ProjectController extends AbstractController
      */
     public function createKa2Action(Request $request)
     {
-        $project = new Project();
-        $keyActionSelected = $request->request->get('project_key_action');
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
 
         $projectForm = $this->createForm(ProjectKa2Form::class, $project, [
             'action' => $this->generateUrl('project_ka2_create'),
@@ -223,19 +217,13 @@ class ProjectController extends AbstractController
                 $this->getContactsRepository()->save($contact);
             }
 
-            return $this->redirectToRoute('project_list');
+            return $this->redirectToRoute('monitoring_create');
 
         }
 
         $data = [
             'my_form' => $projectForm->createView()
         ];
-
-        if(!is_null($keyActionSelected)) {
-            $keyAction = $this->getProjectKeyActionRepository()->findOneBy(['id' => (int) $keyActionSelected]);
-            // TODO check what to pass to form (id, name, or something else)
-            $data['key_action_selected'] = $keyAction->getId();//$keyAction->getName($request->getLocale());
-        }
 
         return $this->render('project/create-ka2.twig', $data);
     }

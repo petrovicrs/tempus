@@ -2,7 +2,12 @@
 
 {% block body %}
     <section id="main">
-    {% include 'sub-navbar.html.twig' with {'active': 'results'} %}
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar.html.twig' with {'active': 'results'} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'results'} %}
+        {% endif %}
     <div class="container-fluid">
         <div class="row">
             <div class="controls results">
@@ -19,12 +24,6 @@
                                     {{ form_label(my_form.resultType, 'Result type'|trans, {'label_attr': {'class': 'control-label'}}) }}
                                     <div class="form">
                                         {{ form_widget(my_form.resultType, {'attr': {'class': 'form-control'}})  }}
-                                    </div>
-                                </div>
-                                <div class="col-xs-2">
-                                    {{ form_label(my_form.project, 'Project'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                    <div class="form">
-                                        {{ form_widget(my_form.project, {'attr': {'class': 'form-control'}})  }}
                                     </div>
                                 </div>
                                 <div class="col-xs-2">

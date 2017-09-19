@@ -31,10 +31,10 @@ class IntelectualOutputsForm extends AbstractType
                 'class'         => 'AppBundle\Entity\IntelectualOutputsType',
                 'choice_label'  => 'name' . ucfirst($options['locale']),
             ])
-            ->add('project', EntityType::class, [
-                'class'         => 'AppBundle\Entity\Project',
-                'choice_label'  => 'name' . ucfirst($options['locale']),
-            ])
+//            ->add('project', EntityType::class, [
+//                'class'         => 'AppBundle\Entity\Project',
+//                'choice_label'  => 'name' . ucfirst($options['locale']),
+//            ])
             ->add('status', EntityType::class, [
                 'class'         => 'AppBundle\Entity\IntelectualOutputsStatus',
                 'choice_label'  => 'name' . ucfirst($options['locale']),
@@ -52,7 +52,7 @@ class IntelectualOutputsForm extends AbstractType
             ->add('descriptionEn')
             ->add('descriptionSr')
             ->add('notes')
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
     }
 
     /**

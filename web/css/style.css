@@ -76,3 +76,7 @@ li {
 .reporting-by {
     padding-left: 0;
 }
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}

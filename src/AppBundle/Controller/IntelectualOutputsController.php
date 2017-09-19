@@ -32,6 +32,9 @@ class IntelectualOutputsController extends AbstractController
     {
         $intelectualOutputs = new IntelectualOutputs();
 
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
+
         $intelectualOutputsForm = $this->createForm(IntelectualOutputsForm::class, $intelectualOutputs, [
             'action' => $this->generateUrl('intelectual_outputs_create'),
             'method' => 'POST',
@@ -41,12 +44,16 @@ class IntelectualOutputsController extends AbstractController
         $intelectualOutputsForm->handleRequest($request);
 
         if ($intelectualOutputsForm->isSubmitted() && $intelectualOutputsForm->isValid()) {
+
+            $intelectualOutputs->setProject($this->getLastProjectForCurrentUser());
             $this->getIntelectualOutputsRepository()->save($intelectualOutputs);
 
-            return $this->redirectToRoute('intelectual_outputs_list');
+            return $this->redirectToRoute('results_create');
         }
 
-        return $this->render('intelectual-outputs/create.twig', ['my_form' => $intelectualOutputsForm->createView()]);
+        return $this->render('intelectual-outputs/create.twig', ['my_form' => $intelectualOutputsForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr()
+        ]);
     }
 
     /**

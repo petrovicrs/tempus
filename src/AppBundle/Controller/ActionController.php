@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Action;
 use AppBundle\Entity\ActionDetails;
 use AppBundle\Entity\Activity;
+use AppBundle\Entity\Project;
 use AppBundle\Form\ActionDetailsForm;
 use AppBundle\Form\ActionForm;
 use AppBundle\Form\ActivityForm;
@@ -49,6 +50,9 @@ class ActionController extends AbstractController
     {
         $activity = new Activity();
 
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
+
         $activityForm = $this->createForm(ActivityForm::class, $activity, [
             'action' => $this->generateUrl('action_create'),
             'method' => 'POST',
@@ -58,6 +62,9 @@ class ActionController extends AbstractController
         $activityForm->handleRequest($request);
 
         if ($activityForm->isSubmitted() && $activityForm->isValid()) {
+
+            $project = $this->getLastProjectForCurrentUser();
+            $activity->setProject($project);
             $this->getActivityRepository()->save($activity);
 
 
@@ -66,10 +73,12 @@ class ActionController extends AbstractController
                 $this->getActionDetailsRepository()->save($action);
             }
 
-            return $this->redirectToRoute('action_list');
+            return $this->redirectToRoute('resources_create');
         }
 
-        return $this->render('action/create.twig', ['my_form' => $activityForm->createView()]);
+        return $this->render('action/create.twig', ['my_form' => $activityForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr()
+        ]);
     }
 
     /**

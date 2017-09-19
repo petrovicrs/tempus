@@ -32,6 +32,9 @@ class MonitoringReportingController extends AbstractController
     {
         $monitoringReporting = new MonitoringReporting();
 
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
+        
         $monitoringForm = $this->createForm(MonitoringReportingForm::class, $monitoringReporting, [
             'action' => $this->generateUrl('monitoring_create'),
             'method' => 'POST',
@@ -45,12 +48,12 @@ class MonitoringReportingController extends AbstractController
             $monitoringReporting->setProject($this->getLastProjectForCurrentUser());
             $this->getMonitoringReportingRepository()->save($monitoringReporting);
 
-            return $this->redirectToRoute('monitoring_list');
+            return $this->redirectToRoute('partner_create');
         }
 
         return $this->render(
             'monitoring-reporting/create.twig',
-            ['my_form' => $monitoringForm->createView()]);
+            ['my_form' => $monitoringForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
     /**

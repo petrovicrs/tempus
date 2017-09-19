@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Project;
 use AppBundle\Entity\Reporting;
 use AppBundle\Entity\ReportingQuestionsAndAnswers;
 use AppBundle\Form\ReportingForm;
@@ -35,6 +36,8 @@ class ReportingController extends AbstractController
         $reporting = new Reporting();
         $questions = $this->getQuestionsRepository()->findAll();
 
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
 
         $reportingForm = $this->createForm(ReportingForm::class, $reporting, [
             'action' => $this->generateUrl('reporting_create'),
@@ -60,7 +63,7 @@ class ReportingController extends AbstractController
                 $this->getQuestionAndAnswersRepository()->save($reportingQuestionsAndAnswers);
             }
 
-            $reporting->setProject($this->getLastProjectForCurrentUser());
+            $reporting->setProject($project);
             $this->getReportingRepository()->save($reporting);
 
             foreach($reporting->getReportingBy() as $reportingPerson){
@@ -68,12 +71,12 @@ class ReportingController extends AbstractController
                 $this->getReportingPersonRepository()->save($reportingPerson);
             }
 
-            return $this->redirectToRoute('reporting_list');
+            return $this->redirectToRoute('attachments_create');
         }
 
         return $this->render(
             'reporting/create.twig',
-            ['my_form' => $reportingForm->createView(), 'questions' => $questions]);
+            ['my_form' => $reportingForm->createView(), 'questions' => $questions, 'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
     /**

@@ -104,7 +104,7 @@ class Activity extends AbstractAuditable
     }
 
     /**
-     * @param mixed $action
+     * @param mixed
      */
     public function setActionDetails($actionDetails)
     {

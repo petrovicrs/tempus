@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Project;
 use AppBundle\Entity\Results;
 use AppBundle\Form\ResultsForm;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +34,8 @@ class ResultsController extends AbstractController
     public function createAction(Request $request)
     {
         $results = new Results();
-
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
         $resultsForm = $this->createForm(ResultsForm::class, $results, [
             'action' => $this->generateUrl('results_create'),
             'method' => 'POST',
@@ -43,12 +45,14 @@ class ResultsController extends AbstractController
         $resultsForm->handleRequest($request);
 
         if ($resultsForm->isSubmitted() && $resultsForm->isValid()) {
+
+            $results->setProject($project);
             $this->getResultsRepository()->save($results);
 
-            return $this->redirectToRoute('results_list');
+            return $this->redirectToRoute('reporting_create');
         }
 
-        return $this->render('results/create.twig', ['my_form' => $resultsForm->createView()]);
+        return $this->render('results/create.twig', ['my_form' => $resultsForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
     /**

@@ -36,6 +36,9 @@ class PartnersController extends AbstractController
     {
         $partners = new Partners();
 
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
+        
         $partnersForm = $this->createForm(PartnersForm::class, $partners, [
             'action' => $this->generateUrl('partner_create'),
             'method' => 'POST',
@@ -61,10 +64,10 @@ class PartnersController extends AbstractController
                 $this->getPartnersParticipantsRepository()->save($participant);
             }
 
-            return $this->redirectToRoute('partners_list');
+            return $this->redirectToRoute('resources_create');
         }
 
-        return $this->render('partners/create.twig', ['my_form' => $partnersForm->createView()]);
+        return $this->render('partners/create.twig', ['my_form' => $partnersForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
     /**

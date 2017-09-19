@@ -3,7 +3,12 @@
 {% block body %}
     <section id="main">
     <script type="text/javascript" src="{{ asset('/js/attachments.js')}}" ></script>
-    {% include 'sub-navbar.html.twig' with {'active': 'attachments'} %}
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar.html.twig' with {'active': 'attachments'} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'attachments'} %}
+        {% endif %}
     <div class="container-fluid">
         <div class="row">
             <div class="controls results">

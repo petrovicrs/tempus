@@ -32,10 +32,10 @@ class ResultsForm extends AbstractType
                 'class'         => 'AppBundle\Entity\ResultType',
                 'choice_label'  => 'name' . ucfirst($options['locale']),
             ])
-            ->add('project', EntityType::class, [
-                'class'         => 'AppBundle\Entity\Project',
-                'choice_label'  => 'name' . ucfirst($options['locale']),
-            ])
+//            ->add('project', EntityType::class, [
+//                'class'         => 'AppBundle\Entity\Project',
+//                'choice_label'  => 'name' . ucfirst($options['locale']),
+//            ])
             ->add('resultStatus', EntityType::class, [
                 'class'         => 'AppBundle\Entity\ResultStatus',
                 'choice_label'  => 'name' . ucfirst($options['locale']),
@@ -52,7 +52,7 @@ class ResultsForm extends AbstractType
             ->add('descriptionEn')
             ->add('descriptionSr')
             ->add('notes')
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
     }
 
     /**

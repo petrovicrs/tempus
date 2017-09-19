@@ -52,7 +52,7 @@ class ReportingForm extends AbstractType
 //                'label'        => false
 //            ])
             ->add('commentsAndSuggestions', TextType::class)
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
     }
 
     /**

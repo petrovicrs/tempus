@@ -12,6 +12,8 @@ use AppBundle\Entity\IntelectualOutputs;
 use AppBundle\Form\IntelectualOutputsForm;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\Project;
+use AppBundle\Repository\ProjectRepository;
 
 class IntelectualOutputsController extends AbstractController
 {
@@ -45,27 +47,31 @@ class IntelectualOutputsController extends AbstractController
 
         if ($intelectualOutputsForm->isSubmitted() && $intelectualOutputsForm->isValid()) {
 
-            $intelectualOutputs->setProject($this->getLastProjectForCurrentUser());
+            $intelectualOutputs->setProject($project);
             $this->getIntelectualOutputsRepository()->save($intelectualOutputs);
 
             return $this->redirectToRoute('results_create');
         }
 
         return $this->render('intelectual-outputs/create.twig', ['my_form' => $intelectualOutputsForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr()
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()
         ]);
     }
 
     /**
-     * @Route("/{locale}/intelectual-outputs/edit/{id}", name="intelectual_output_edit", requirements={"id": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/intelectual-outputs/edit/{projectId}", name="intelectual_output_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $projectId)
     {
-        $intelectualOutput = $this->getIntelectualOutputsRepository()->findOneBy(['id' => $id]);
+        /** @var IntelectualOutputs $intelectualOutput */
+        $intelectualOutput = $this->getIntelectualOutputsRepository()->findOneBy(['project' => $projectId]);
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
         $intelectualOutputForm = $this->createForm(IntelectualOutputsForm::class, $intelectualOutput, [
-            'action' => $this->generateUrl('intelectual_output_edit', ['id' => $id]),
+            'action' => $this->generateUrl('intelectual_output_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
@@ -73,12 +79,15 @@ class IntelectualOutputsController extends AbstractController
         $intelectualOutputForm->handleRequest($request);
 
         if ($intelectualOutputForm->isSubmitted() && $intelectualOutputForm->isValid()) {
-            $this->getIntelectualOutputsRepository()->save($output);
+            $this->getIntelectualOutputsRepository()->save($intelectualOutput);
 
-            return $this->redirectToRoute('intelectual_outputs_list');
+            if (!$intelectualOutput->getProject()->getIsCompleted()) {
+                return $this->redirectToRoute('results_create');
+            }
         }
 
-        return $this->render('intelectual-outputs/edit.twig', ['my_form' => $intelectualOutputForm->createView()]);
+        return $this->render('intelectual-outputs/edit.twig', ['my_form' => $intelectualOutputForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
     /**
@@ -94,5 +103,13 @@ class IntelectualOutputsController extends AbstractController
     private function getIntelectualOutputsRepository()
     {
         return $this->get('doctrine_entity_repository.intelectual_outputs');
+    }
+
+    /**
+     * @return ProjectRepository
+     */
+    private function getProjectRepository() {
+
+        return $this->get('doctrine_entity_repository.project');
     }
 }

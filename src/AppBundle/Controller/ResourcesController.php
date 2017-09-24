@@ -12,6 +12,7 @@ use AppBundle\Entity\Project;
 use AppBundle\Entity\Resources;
 use AppBundle\Form\ResourcesForm;
 use AppBundle\Repository\ResourcesRepository;
+use AppBundle\Repository\ProjectRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -55,19 +56,24 @@ class ResourcesController extends AbstractController
             return $this->redirectToRoute('intelectual_outputs_create');
         }
 
-        return $this->render('resources/create.twig', ['my_form' => $resourcesForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
+        return $this->render('resources/create.twig', ['my_form' => $resourcesForm->createView(), 
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()]);
     }
 
     /**
-     * @Route("/{locale}/resources/edit/{resourceId}", name="resource_edit", requirements={"resourceId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/resources/edit/{projectId}", name="resource_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
-    public function editAction(Request $request, $resourceId)
+    public function editAction(Request $request, $projectId)
     {
-        $resource = $this->getResourcesRepository()->findOneBy(['id' => $resourceId]);
+        /** @var Resources $resource */
+        $resource = $this->getResourcesRepository()->findOneBy(['project' => $projectId]);
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
         $resourceForm = $this->createForm(ResourcesForm::class, $resource, [
-            'action' => $this->generateUrl('resource_edit', ['resourceId' => $resourceId]),
+            'action' => $this->generateUrl('resource_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
@@ -78,10 +84,13 @@ class ResourcesController extends AbstractController
 
             $this->getResourcesRepository()->save($resource);
 
-            return $this->redirectToRoute('resources_list');
+            if (!$resource->getProject()->getIsCompleted()) {
+                return $this->redirectToRoute('intelectual_outputs_create');
+            }
         }
 
-        return $this->render('resources/edit.twig', ['my_form' => $resourceForm->createView()]);
+        return $this->render('resources/edit.twig', ['my_form' => $resourceForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
     /**
@@ -97,5 +106,13 @@ class ResourcesController extends AbstractController
     private function getResourcesRepository()
     {
         return $this->get('doctrine_entity_repository.resources');
+    }
+
+    /**
+     * @return ProjectRepository
+     */
+    private function getProjectRepository() {
+
+        return $this->get('doctrine_entity_repository.project');
     }
 }

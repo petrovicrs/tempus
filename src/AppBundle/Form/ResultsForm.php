@@ -52,7 +52,7 @@ class ResultsForm extends AbstractType
             ->add('descriptionEn')
             ->add('descriptionSr')
             ->add('notes')
-            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
+            ->add('submit', SubmitType::class, ['label_format' => 'Next']);
     }
 
     /**

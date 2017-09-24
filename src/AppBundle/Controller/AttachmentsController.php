@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Project;
 use AppBundle\Entity\Attachments;
 use AppBundle\Entity\AttachmentsDmsDocuments;
 use AppBundle\Entity\AttachmentsManuallyUploaded;
@@ -20,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Repository\ProjectRepository;
 
 class AttachmentsController extends AbstractController
 {
@@ -89,16 +91,19 @@ class AttachmentsController extends AbstractController
         }
 
         return $this->render('attachments/create.twig', ['my_form' => $attachmentsForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr()
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()
         ]);
     }
 
     /**
-     * @Route("/{locale}/attachments/edit/{id}", name="attachment_edit", requirements={"id": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/attachments/edit/{projectId}", name="attachment_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $projectId)
     {
-        $attachments = $this->getAttachmentsRepository()->findOneBy(['id' => $id]);
+        $attachments = $this->getAttachmentsRepository()->findOneBy(['project' => $projectId]);
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
         /* @var AttachmentsManuallyUploaded $value */
         foreach ($attachments->getManuallyUploadedFiles() as $value) {
@@ -108,7 +113,7 @@ class AttachmentsController extends AbstractController
         }
 
         $attachmentsForm = $this->createForm(AttachmentsForm::class, $attachments, [
-            'action' => $this->generateUrl('attachment_edit', ['id' => $id]),
+            'action' => $this->generateUrl('attachment_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
@@ -163,10 +168,14 @@ class AttachmentsController extends AbstractController
 
             $this->getAttachmentsRepository()->save($attachments);
 
-            return $this->redirectToRoute('attachments_list');
+            if (!$project->getIsCompleted()){
+                return $this->redirectToRoute('group_calendar_create');
+            }
+
         }
 
-        return $this->render('attachments/edit.twig', ['my_form' => $attachmentsForm->createView(), 'attachments' => $attachments]);
+        return $this->render('attachments/edit.twig', ['my_form' => $attachmentsForm->createView(),
+            'attachments' => $attachments, 'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
 //    /**
@@ -194,5 +203,13 @@ class AttachmentsController extends AbstractController
     private function getAttachmentsManuallyUploadedRepository()
     {
         return $this->get('doctrine_entity_repository.attachments_manually_uploaded');
+    }
+
+    /**
+     * @return ProjectRepository
+     */
+    private function getProjectRepository() {
+
+        return $this->get('doctrine_entity_repository.project');
     }
 }

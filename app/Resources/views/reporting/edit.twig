@@ -2,61 +2,57 @@
 {#TODO - left for finish#}
 {% block body %}
     <section id="main">
-    {% include 'sub-navbar.html.twig' with {'active': 'reporting'} %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="controls results">
-                <div class="col-xs-12">
-
-                    {{ form_start(my_form) }}
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar.html.twig' with {'active': 'reporting'} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting'} %}
+        {% endif %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="controls reporting">
                     <div class="col-xs-12">
-                        <h2>{% trans %}Edit Result{% endtrans %}</h2>
-                    </div>
-
-                    <div class="row">
+                        {{ form_start(my_form) }}
                         <div class="col-xs-12">
-                            <div class="col-xs-2">
-                                {{ form_label(my_form.resultType, 'Result type'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                <div class="form">
-                                    {{ form_widget(my_form.resultType, {'attr': {'class': 'form-control'}})  }}
+                            <h2>{% trans %}Add Reporting{% endtrans %}</h2>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-9">
+                                <div class="col-xs-3">
+                                    {{ form_label(my_form.type, 'Monitoring type'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.type, {'attr': {'class': 'form-control'}})  }}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-2">
-                                {{ form_label(my_form.project, 'Project'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                <div class="form">
-                                    {{ form_widget(my_form.project, {'attr': {'class': 'form-control'}})  }}
+                                <div class="col-xs-3">
+                                    {{ form_label(my_form.reportingDate, 'Monitoring visit on'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.reportingDate) }}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-2">
-                                {{ form_label(my_form.resultStatus, 'Status'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                <div class="form">
-                                    {{ form_widget(my_form.resultStatus, {'attr': {'class': 'form-control'}})  }}
+
+                                <div class="col-xs-12">
+                                    {{ form_label(my_form.commentsAndSuggestions, 'Comments and suggestions'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                                    <div class="form">
+                                        {{ form_widget(my_form.commentsAndSuggestions, {'attr': {'class': 'form-control'}})  }}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xs-3">
-                                {{ form_label(my_form.isPublic, 'Public?'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                <div class="form">
-                                    {{ form_widget(my_form.isPublic) }}
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                {{ form_label(my_form.showDescription, 'Show description?'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                <div class="form">
-                                    {{ form_widget(my_form.showDescription) }}
+
+                                <div class="col-xs-12">
+                                    {{ form_widget(my_form.submit, { 'label': 'Submit' }) }}
                                 </div>
                             </div>
 
+                            <div class="col-xs-3">
+                                <ul class="reporting-by" data-prototype="{{include('/reporting/includes/reporting-by.html.twig',
+                                {'form': my_form.reportingBy.vars.prototype })|e}}">
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col-xs-12">
-                            {% include 'results/includes/results-details.html.twig' with {'form': my_form} %}
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12">
                         {{ form_end(my_form) }}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 {% endblock %}

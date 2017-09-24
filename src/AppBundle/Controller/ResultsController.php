@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use AppBundle\Repository\ProjectRepository;
 
 class ResultsController extends AbstractController
 {
@@ -34,8 +35,10 @@ class ResultsController extends AbstractController
     public function createAction(Request $request)
     {
         $results = new Results();
+
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
+
         $resultsForm = $this->createForm(ResultsForm::class, $results, [
             'action' => $this->generateUrl('results_create'),
             'method' => 'POST',
@@ -52,19 +55,24 @@ class ResultsController extends AbstractController
             return $this->redirectToRoute('reporting_create');
         }
 
-        return $this->render('results/create.twig', ['my_form' => $resultsForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
+        return $this->render('results/create.twig', ['my_form' => $resultsForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()]);
     }
 
     /**
-     * @Route("/{locale}/results/edit/{resultId}", name="result_edit", requirements={"resultId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/results/edit/{projectId}", name="result_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
-    public function editAction(Request $request, $resultId)
+    public function editAction(Request $request, $projectId)
     {
-        $result = $this->getResultsRepository()->findOneBy(['id' => $resultId]);
+        /** @var Results $result */
+        $result = $this->getResultsRepository()->findOneBy(['project' => $projectId]);
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
         $resultForm = $this->createForm(ResultsForm::class, $result, [
-            'action' => $this->generateUrl('result_edit', ['resultId' => $resultId]),
+            'action' => $this->generateUrl('result_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
@@ -74,10 +82,13 @@ class ResultsController extends AbstractController
         if ($resultForm->isSubmitted() && $resultForm->isValid()) {
             $this->getResultsRepository()->save($result);
 
-            return $this->redirectToRoute('results_list');
+            if (!$result->getProject()->getIsCompleted()) {
+                return $this->redirectToRoute('reporting_create');
+            }
+
         }
 
-        return $this->render('results/edit.twig', ['my_form' => $resultForm->createView()]);
+        return $this->render('results/edit.twig', ['my_form' => $resultForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
     /**
@@ -93,5 +104,13 @@ class ResultsController extends AbstractController
     private function getResultsRepository()
     {
         return $this->get('doctrine_entity_repository.results');
+    }
+
+    /**
+     * @return ProjectRepository
+     */
+    private function getProjectRepository() {
+
+        return $this->get('doctrine_entity_repository.project');
     }
 }

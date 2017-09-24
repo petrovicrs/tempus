@@ -76,7 +76,7 @@ class GroupCalendarController extends AbstractController
         }
 
         return $this->render('group-calendar/create.twig', ['my_form' => $calendarForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr()
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()
         ]);
     }
 

@@ -8,7 +8,6 @@
 
 namespace AppBundle\Controller;
 
-
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Reporting;
 use AppBundle\Entity\ReportingQuestionsAndAnswers;
@@ -16,6 +15,7 @@ use AppBundle\Form\ReportingForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Repository\ProjectRepository;
 
 class ReportingController extends AbstractController
 {
@@ -76,18 +76,23 @@ class ReportingController extends AbstractController
 
         return $this->render(
             'reporting/create.twig',
-            ['my_form' => $reportingForm->createView(), 'questions' => $questions, 'keyAction' => $project->getKeyActions()->getNameSr()]);
+            ['my_form' => $reportingForm->createView(), 'questions' => $questions,
+                'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()]);
     }
 
     /**
-     * @Route("/{locale}/reporting/edit/{id}", name="reporting_edit", requirements={"locale": "%app.locales%", "id": "\d+"})
+     * @Route("/{locale}/reporting/edit/{projectId}", name="reporting_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $projectId)
     {
-        $reporting = $this->getReportingRepository()->findOneBy('id', $id);
+        /** @var Reporting $reporting */
+        $reporting = $this->getReportingRepository()->findOneBy(['project' => $projectId]);
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
         $reportingForm = $this->createForm(ReportingForm::class, $reporting, [
-            'action' => $this->generateUrl('reporting_edit', ['id' => $id]),
+            'action' => $this->generateUrl('reporting_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
@@ -99,7 +104,7 @@ class ReportingController extends AbstractController
             $reportingBy->add($reportingPerson);
         }
 
-        foreach ($reporting->getQuestionAndAnswers() as $qa) {
+        foreach ($reporting->getQuestionsAndAnswers() as $qa) {
             $questionAndAnswers->add($qa);
         }
 
@@ -116,17 +121,19 @@ class ReportingController extends AbstractController
             }
 
             foreach ($questionAndAnswers as $qa) {
-                if (false === $reporting->getQuestionAndAnswers()->contains($qa)) {
+                if (false === $reporting->getQuestionsAndAnswers()->contains($qa)) {
                     $em->remove($qa);
                 }
             }
 
             $this->getReportingRepository()->save($reporting);
 
-            return $this->redirectToRoute('reporting_list');
+            if (!$reporting->getProject()->getIsCompleted()) {
+                return $this->redirectToRoute('attachments_create');
+            }
         }
 
-        return $this->render('reporting/create.twig', ['my_form' => $reportingForm->createView()]);
+        return $this->render('reporting/edit.twig', ['my_form' => $reportingForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
     private function getReportingRepository()
@@ -147,5 +154,13 @@ class ReportingController extends AbstractController
     private function getReportingPersonRepository()
     {
         return $this->get('doctrine_entity_repository.reporting_person');
+    }
+
+    /**
+     * @return ProjectRepository
+     */
+    private function getProjectRepository() {
+
+        return $this->get('doctrine_entity_repository.project');
     }
 }

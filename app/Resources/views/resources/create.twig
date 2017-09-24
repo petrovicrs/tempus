@@ -11,6 +11,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="controls resources">
+                <a href="{{ localizedPath('project_edit', {projectId: projectId}) }}"><button>Back</button></a>
                 <div class="col-sm-12">
                     {{ form_start(my_form) }}
                         <h2>{% trans %}Add Resource{% endtrans %}</h2>

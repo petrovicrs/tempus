@@ -8,6 +8,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Project;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -31,9 +32,13 @@ abstract class AbstractController extends Controller {
         return $this->redirect($this->generateUrl($route, $parameters), $status);
     }
 
+    /**
+     * @return Project
+     */
     protected function getLastProjectForCurrentUser()
     {
         $user = $this->getUser();
+        /** @var Project $lastProject */
         $lastProject = $this->get('doctrine_entity_repository.project')
             ->findOneBy(
                 ['user' => $user],

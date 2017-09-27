@@ -8,7 +8,6 @@
 
 namespace AppBundle\Form;
 
-
 use AppBundle\Entity\EventReminder;
 use AppBundle\Entity\EventReminderType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

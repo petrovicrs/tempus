@@ -76,3 +76,13 @@ li {
 .reporting-by {
     padding-left: 0;
 }
+
+/*  CALENDAR TAB */
+
+.event-holder {
+    display: inline-block;
+    border: 1px solid;
+    /* position: relative; */
+    width: 100%;
+    padding: 2rem;
+}

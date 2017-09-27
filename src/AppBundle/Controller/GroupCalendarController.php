@@ -13,6 +13,7 @@ use AppBundle\Entity\GroupCalendar;
 use AppBundle\Entity\GroupCalendarEvent;
 use AppBundle\Entity\Project;
 use AppBundle\Form\GroupCalendarForm;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,11 +25,12 @@ class GroupCalendarController extends AbstractController
      */
     public function listAction()
     {
-        $calendar = $this->getCalendarRepository()->findOneBy(
+        $events = $this->getCalendarRepository()->findBy(
             ['project' => $this->getLastProjectForCurrentUser()],
             ['id' => 'DESC']
         );
-        return $this->render('group-calendar/list.twig', ['calendar' => $calendar]);
+
+        return $this->render('group-calendar/list.twig', ['events' => $events]);
     }
 
     /**
@@ -40,7 +42,7 @@ class GroupCalendarController extends AbstractController
 
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
-        
+
         $calendarForm = $this->createForm(GroupCalendarForm::class, $calendar, [
             'action' => $this->generateUrl('group_calendar_create'),
             'method' => 'POST',
@@ -58,21 +60,14 @@ class GroupCalendarController extends AbstractController
             $calendar->setProject($project);
             $this->getCalendarRepository()->save($calendar);
 
-            /* @var GroupCalendarEvent $event */
-            foreach ($calendar->getEvent() as $event) {
-                $event->setGroupCalendar($calendar);
+            /* @var EventReminder $reminder */
+            foreach ($calendar->getEventReminder() as $reminder) {
 
-                /* @var EventReminder $reminder */
-                foreach ($event->getEventReminder() as $reminder) {
-                    $reminder->setGroupCalendarEvent($event);
-                    $this->getEventReminderRepository()->save($reminder);
-                }
-
-                $this->getCalendarEventRepository()->save($event);
-                $this->getProjectRepository()->saveProject($project);
+                $reminder->setGroupCalendar($calendar);
+                $this->getEventReminderRepository()->save($reminder);
             }
 
-            return $this->redirectToRoute('project_list');
+            return $this->redirectToRoute('group_calendar_list');
         }
 
         return $this->render('group-calendar/create.twig', ['my_form' => $calendarForm->createView(),
@@ -80,13 +75,49 @@ class GroupCalendarController extends AbstractController
         ]);
     }
 
-//    /**
-//     * @Route("/{locale}/group-calendar/edit/{id}", name="group_calendar_edit", requirements={"locale": "%app.locales%"}, "id": "\d+")
-//     */
-//    public function editAction(Request $request, $id)
-//    {
-//
-//    }
+    /**
+     * @Route("/{locale}/group-calendar/edit/{projectId}", name="group_calendar_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
+     */
+    public function editAction(Request $request, $projectId)
+    {
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+        /** @var GroupCalendar $calendar*/
+        $calendar = $this->getCalendarRepository()->findOneBy(['project' => $projectId]);
+
+        $calendarForm = $this->createForm(GroupCalendarForm::class, $calendar, [
+            'action' => $this->generateUrl('group_calendar_edit', ['projectId' => $projectId]),
+            'method' => 'POST',
+            'locale' => $request->getLocale()
+        ]);
+
+        $eventReminder = new ArrayCollection();
+
+        /** @var EventReminder $reminder */
+        foreach ($calendar->getEventReminder() as $reminder) {
+            $eventReminder->add($reminder);
+        }
+
+        $calendarForm->handleRequest($request);
+
+        if ($calendarForm->isSubmitted() && $calendarForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            /** @var EventReminder $reminder */
+            foreach ($eventReminder as $reminder) {
+                if (false === $calendar->getEventReminder()->contains($reminder)) {
+                    $em->remove($reminder);
+                }
+                $this->getEventReminderRepository()->save($reminder);
+            }
+
+            $this->getCalendarRepository()->save($calendar);
+
+            return $this->redirectToRoute('project_list');
+        }
+
+        return $this->render('group-calendar/edit.twig', ['my_form' => $calendarForm->createView()]);
+    }
 
     /**
      * @Route("/{locale}/group-calendar/view/{id}", name="group_calendar_view", requirements={"locale": "%app.locales%", "id": "\d+"})
@@ -101,18 +132,13 @@ class GroupCalendarController extends AbstractController
         return $this->get('doctrine_entity_repository.group_calendar');
     }
 
-    private function getCalendarEventRepository()
-    {
-        return $this->get('doctrine_entity_repository.group_calendar_event');
-    }
-
-    
     private function getEventReminderRepository()
     {
         return $this->get('doctrine_entity_repository.event_reminder');
     }
-    
-    private function getProjectRepository() {
+
+    private function getProjectRepository()
+    {
 
         return $this->get('doctrine_entity_repository.project');
     }

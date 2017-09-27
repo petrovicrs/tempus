@@ -2,25 +2,17 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    database_host:     127.0.0.1
-    database_port:     ~
-    database_name:     symfony
-    database_user:     root
-    database_password: ~
-    # You should uncomment this if you want use pdo_sqlite
-    # database_path: "%kernel.root_dir%/data.db3"
-
-    mailer_transport:  smtp
-    mailer_host:       127.0.0.1
-    mailer_user:       ~
-    mailer_password:   ~
-
-    # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
-
-    # nelmio cors
+    database_host: kbs_db
+    database_port: 3306
+    database_name: tempus
+    database_user: tempus
+    database_password: 123456
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: 4abb307f70763a04c0a6ddfd97a2e4689efd1289
     cors_allow_origin: 'http://localhost'
-
-    # nelmio api docs
     api_name: 'Your API name'
     api_description: 'The full description of your API'
+    file_uploads_directory: '%kernel.root_dir%/web/uploads'

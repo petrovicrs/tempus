@@ -2,12 +2,15 @@
 
 {% block body %}
     <section id="main">
-        {% if keyAction == 'ka1' %}
-            {% include 'sub-navbar.html.twig' with {'active': 'results'} %}
-        {% endif %}
-        {%  if keyAction == 'ka2' %}
-            {% include 'sub-navbar-ka2.html.twig' with {'active': 'results'} %}
-        {% endif %}
+
+
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar.html.twig' with {'active': 'results'} %}
+    {% endif %}
+    {%  if keyAction == 'ka2' %}
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'results'} %}
+    {% endif %}
+
     <div class="container-fluid">
         <div class="row">
             <div class="controls results">

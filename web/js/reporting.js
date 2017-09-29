@@ -1,67 +1,74 @@
 
-var $addReportingLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
-var $addReportinkLinkDiv = $('<li></li>').append($addReportingLink);
-
-var $addReportingByLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
-var $addReportinkByLinkDiv = $('<li></li>').append($addReportingByLink);
-
-// var $addQuestionAndAnswersLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
-// var $addQuestionAndAnswersLinkDiv = $('<li></li>').append($addQuestionAndAnswersLink);
-
 jQuery(document).ready(function() {
-    // Get the ul that holds the collection of tags
-    var $collectionReportingHolder = $('ul.reporting');
-    var $collectionReportingByHolder = $('ul.reporting-by');
-    var $collectionQuestionAndAnswersHolder = $('ul.questions-answers');
 
-    // add a delete link to all of the existing tag form li elements
+    loadReporting();
+});
+
+function loadReporting() {
+    var $addReportingLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
+    var $addReportinkLinkDiv = $('<li></li>').append($addReportingLink);
+
+    var $collectionReportingHolder = $('ul.reporting');
+
     $collectionReportingHolder.find('li').each(function() {
         $addFormDeleteLink($(this));
     });
 
-    $collectionReportingByHolder.find('li').each(function() {
-        $addFormDeleteLink($(this));
-    });
-
-    $collectionQuestionAndAnswersHolder.find('li').each(function() {
-        $addFormDeleteLink($(this));
-    });
-
-    // add the "add a tag" anchor and li to the tags ul
     $collectionReportingHolder.append($addReportinkLinkDiv);
-    $collectionReportingByHolder.append($addReportinkByLinkDiv);
-    // $collectionQuestionAndAnswersHolder.append($addQuestionAndAnswersLinkDiv);
-
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
     $collectionReportingHolder.data('index', $collectionReportingHolder.find(':input').length);
-    $collectionReportingByHolder.data('index', $collectionReportingByHolder.find(':input').length);
-    $collectionQuestionAndAnswersHolder.data('index', $collectionQuestionAndAnswersHolder.find(':input').length);
 
     $addReportingLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
 
         // add a new tag form (see code block below)
-        $addForm($collectionReportingHolder, $addReportinkLinkDiv);
+        $addForm($collectionReportingHolder, $addReportinkLinkDiv, 'reporting');
     });
+}
+
+function loadReportingBy() {
+    var $addReportingByLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
+    var $addReportinkByLinkDiv = $('<li></li>').append($addReportingByLink);
+
+    var $collectionReportingByHolder = $('ul.reporting-by');
+
+    $collectionReportingByHolder.find('li').each(function() {
+        $addFormDeleteLink($(this));
+    });
+
+    // add the "add a tag" anchor and li to the tags ul
+
+    $collectionReportingByHolder.append($addReportinkByLinkDiv);
+    // $collectionQuestionAndAnswersHolder.append($addQuestionAndAnswersLinkDiv);
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+
+    $collectionReportingByHolder.data('index', $collectionReportingByHolder.find(':input').length);
 
     $addReportingByLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
 
         // add a new tag form (see code block below)
-        $addForm($collectionReportingByHolder, $addReportinkByLinkDiv);
+        $addForm($collectionReportingByHolder, $addReportinkByLinkDiv, 'reportingBy');
     });
+}
+// var $addQuestionAndAnswersLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
+// var $addQuestionAndAnswersLinkDiv = $('<li></li>').append($addQuestionAndAnswersLink);
 
-    $addQuestionAndAnswersLink.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
-
-        // add a new tag form (see code block below)
-        $addForm($collectionQuestionAndAnswersHolder, $addQuestionAndAnswersLinkDiv);
-    });
-});
+// jQuery(document).ready(function() {
+//     // Get the ul that holds the collection of tags
+//
+//     var $collectionQuestionAndAnswersHolder = $('ul.questions-answers');
+//
+//     $collectionQuestionAndAnswersHolder.find('li').each(function() {
+//         $addFormDeleteLink($(this));
+//     });
+//
+//
+//     $collectionQuestionAndAnswersHolder.data('index', $collectionQuestionAndAnswersHolder.find(':input').length);
+// });
 
 function $addFormDeleteLink($formDiv) {
     var $removeFormA = $('<a href="#">delete</a>');
@@ -76,7 +83,7 @@ function $addFormDeleteLink($formDiv) {
     });
 }
 
-function $addForm($collectionHolder, $addLinkDiv) {
+function $addForm($collectionHolder, $addLinkDiv, formName) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
 
@@ -97,6 +104,10 @@ function $addForm($collectionHolder, $addLinkDiv) {
     $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove</a>');
 
     $addLinkDiv.before($newFormDiv);
+
+    if(formName === 'reporting') {
+        loadReportingBy();
+    }
 
     // handle the removal, just for this example
     $('.btn-remove').click(function(e) {

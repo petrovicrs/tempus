@@ -21,10 +21,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for key, report in reporting %}
+                {% for projectReport in projectReporting %}
+                    {% for key, report in projectReport.reporting %}
                         <tr>
-                            {% if report.project %}
-                                <td><a href="{{ localizedPath('project_view', {'projectId': report.project.id}) }}">{{ report.project.name(app.request.getLocale()) }}</a></td>
+                            {% if projectReport.project %}
+                                <td><a href="{{ localizedPath('project_view', {'projectId': projectReport.project.id}) }}">{{ projectReport.project.name(app.request.getLocale()) }}</a></td>
                             {% else %}
                                 <td><a href="#">null</a></td>
                             {% endif %}
@@ -75,6 +76,7 @@
                             {#<td><a href="{{ localizedPath('report_view', {'reportId': report.id}) }}">Edit</a></td>#}
                         </tr>
                     {% endfor %}
+                {% endfor %}
                 </tbody>
             </table>
         </div>

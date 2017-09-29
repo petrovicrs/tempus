@@ -26,8 +26,8 @@ class ReportingController extends AbstractController
      */
     public function listAction()
     {
-        $reporting = $this->getProjectReportingRepository()->findAll();
-        return $this->render('reporting/list.twig', ['reporting' => $reporting]);
+        $projectReporting = $this->getProjectReportingRepository()->findAll();
+        return $this->render('reporting/list.twig', ['projectReporting' => $projectReporting]);
     }
 
     /**
@@ -95,55 +95,84 @@ class ReportingController extends AbstractController
      */
     public function editAction(Request $request, $projectId)
     {
+        $questions = $this->getQuestionsRepository()->findAll();
+
         /** @var Reporting $reporting */
-        $reporting = $this->getReportingRepository()->findOneBy(['project' => $projectId]);
+        $projectReporting = $this->getProjectReportingRepository()->findOneBy(
+            ['project' => $projectId],
+            ['id' => 'DESC']
+        );
 
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
-        $reportingForm = $this->createForm(ReportingForm::class, $reporting, [
+        $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
             'action' => $this->generateUrl('reporting_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
 
+        $reporting = new ArrayCollection();
         $reportingBy = new ArrayCollection();
         $questionAndAnswers = new ArrayCollection();
 
-        foreach ($reporting->getReportingBy() as $reportingPerson) {
-            $reportingBy->add($reportingPerson);
+        foreach ($projectReporting->getReporting() as $report) {
+
+            $reporting->add($report);
+
+            foreach ($report->getReportingBy() as $reportingPerson) {
+                $reportingBy->add($reportingPerson);
+            }
+
+            foreach ($report->getQuestionsAndAnswers() as $qa) {
+                $questionAndAnswers->add($qa);
+            }
         }
 
-        foreach ($reporting->getQuestionsAndAnswers() as $qa) {
-            $questionAndAnswers->add($qa);
-        }
+        $projectReportingForm->handleRequest($request);
 
-        $reportingForm->handleRequest($request);
-
-        if ($reportingForm->isSubmitted() && $reportingForm->isValid()) {
+        if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
 
+            foreach ($reporting as $report) {
+                if(false === $projectReporting->getReporting()->contains($report)) {
+                    $em->remove($report);
+                }
+            }
+
             foreach ($reportingBy as $reportingPerson) {
-                if (false === $reporting->getReportingBy()->contains($reportingPerson)) {
-                    $em->remove($reportingPerson);
+                foreach ($projectReporting->getReporting() as $reporting) {
+                    if (false === $reporting->getReportingBy()->contains($reportingPerson)) {
+                        $em->remove($reportingPerson);
+                    }
                 }
             }
 
             foreach ($questionAndAnswers as $qa) {
-                if (false === $reporting->getQuestionsAndAnswers()->contains($qa)) {
-                    $em->remove($qa);
+                foreach ($projectReporting->getReporting() as $reporting) {
+                    if (false === $reporting->getQuestionsAndAnswers()->contains($qa)) {
+                        $em->remove($qa);
+                    }
                 }
             }
 
-            $this->getReportingRepository()->save($reporting);
+            foreach ($projectReporting->getReporting() as $reporting) {
+                $this->getReportingRepository()->save($reporting);
+            }
 
-            if (!$reporting->getProject()->getIsCompleted()) {
+            $this->getProjectReportingRepository()->save($projectReporting);
+
+            if (!$projectReporting->getProject()->getIsCompleted()) {
                 return $this->redirectToRoute('attachments_create');
             }
         }
 
-        return $this->render('reporting/edit.twig', ['my_form' => $reportingForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
+        return $this->render('reporting/edit.twig', [
+            'my_form' => $projectReportingForm->createView(),
+            'questions' => $questions,
+            'keyAction' => $project->getKeyActions()->getNameSr()
+        ]);
     }
 
     private function getProjectReportingRepository()

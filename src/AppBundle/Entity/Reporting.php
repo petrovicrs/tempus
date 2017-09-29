@@ -28,9 +28,14 @@ class Reporting extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\ManyToOne(
+     *      targetEntity="ProjectReporting",
+     *      inversedBy="reporting",
+     *      cascade={"persist"}
+     * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    protected $project;
+    protected $projectReporting;
 
     /**
      * @ORM\ManyToOne(targetEntity="ReportingType")
@@ -83,17 +88,17 @@ class Reporting extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getProject()
+    public function getProjectReporting()
     {
-        return $this->project;
+        return $this->projectReporting;
     }
 
     /**
-     * @param mixed $project
+     * @param mixed $projectReporting
      */
-    public function setProject($project)
+    public function setProjectReporting($projectReporting)
     {
-        $this->project = $project;
+        $this->projectReporting = $projectReporting;
     }
 
     /**

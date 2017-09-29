@@ -1,3 +1,7 @@
+
+var $addReportingLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
+var $addReportinkLinkDiv = $('<li></li>').append($addReportingLink);
+
 var $addReportingByLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
 var $addReportinkByLinkDiv = $('<li></li>').append($addReportingByLink);
 
@@ -6,12 +10,15 @@ var $addReportinkByLinkDiv = $('<li></li>').append($addReportingByLink);
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of tags
+    var $collectionReportingHolder = $('ul.reporting');
     var $collectionReportingByHolder = $('ul.reporting-by');
     var $collectionQuestionAndAnswersHolder = $('ul.questions-answers');
 
-    console.log($collectionQuestionAndAnswersHolder);
-
     // add a delete link to all of the existing tag form li elements
+    $collectionReportingHolder.find('li').each(function() {
+        $addFormDeleteLink($(this));
+    });
+
     $collectionReportingByHolder.find('li').each(function() {
         $addFormDeleteLink($(this));
     });
@@ -21,13 +28,23 @@ jQuery(document).ready(function() {
     });
 
     // add the "add a tag" anchor and li to the tags ul
+    $collectionReportingHolder.append($addReportinkLinkDiv);
     $collectionReportingByHolder.append($addReportinkByLinkDiv);
     // $collectionQuestionAndAnswersHolder.append($addQuestionAndAnswersLinkDiv);
 
     // count the current form inputs we have (e.g. 2), use that as the new
     // index when inserting a new item (e.g. 2)
+    $collectionReportingHolder.data('index', $collectionReportingHolder.find(':input').length);
     $collectionReportingByHolder.data('index', $collectionReportingByHolder.find(':input').length);
     $collectionQuestionAndAnswersHolder.data('index', $collectionQuestionAndAnswersHolder.find(':input').length);
+
+    $addReportingLink.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new tag form (see code block below)
+        $addForm($collectionReportingHolder, $addReportinkLinkDiv);
+    });
 
     $addReportingByLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL

@@ -51,8 +51,7 @@ class ReportingForm extends AbstractType
 //                'allow_delete' => true,
 //                'label'        => false
 //            ])
-            ->add('commentsAndSuggestions', TextType::class)
-            ->add('submit', SubmitType::class, ['label_format' => 'Next']);
+            ->add('commentsAndSuggestions', TextType::class);
     }
 
     /**

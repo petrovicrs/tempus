@@ -263,6 +263,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\IntelectualOutputs
+    doctrine_entity_repository.project_reporting:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectReporting
     doctrine_entity_repository.reporting:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

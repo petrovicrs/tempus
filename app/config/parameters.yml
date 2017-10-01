@@ -1,6 +1,6 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: kbs_db
+    database_host': kbs_db
     database_port: 3306
     database_name: tempus
     database_user: tempus

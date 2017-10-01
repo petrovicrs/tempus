@@ -38,14 +38,29 @@ class GroupCalendar extends AbstractAuditable
     protected $project;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\GroupCalendarEvent", mappedBy="groupCalendar", cascade={"persist"})
+     * @Column(name="event_date", type="datetime")
      */
-    protected $event;
+    protected $eventDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="GroupCalendarEventType")
+     */
+    protected $eventType;
+
+    /**
+     * @Column(name="event_description", type="string", length=255)
+     */
+    protected $eventDescription;
+
+    /**
+     * @ORM\OneToMany(targetEntity="EventReminder", mappedBy="groupCalendar", cascade={"persist"})
+     */
+    protected $eventReminder;
 
     public function __construct()
     {
         parent::__construct();
-        $this->event = new ArrayCollection();
+        $this->eventReminder = new ArrayCollection();
     }
 
     /**
@@ -83,16 +98,64 @@ class GroupCalendar extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getEvent()
+    public function getEventDate()
     {
-        return $this->event;
+        return $this->eventDate;
     }
 
     /**
-     * @param mixed $event
+     * @param mixed $eventDate
      */
-    public function setEvent($event)
+    public function setEventDate($eventDate)
     {
-        $this->event = $event;
+        $this->eventDate = $eventDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEventType()
+    {
+        return $this->eventType;
+    }
+
+    /**
+     * @param mixed $eventType
+     */
+    public function setEventType($eventType)
+    {
+        $this->eventType = $eventType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEventDescription()
+    {
+        return $this->eventDescription;
+    }
+
+    /**
+     * @param mixed $eventDescription
+     */
+    public function setEventDescription($eventDescription)
+    {
+        $this->eventDescription = $eventDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEventReminder()
+    {
+        return $this->eventReminder;
+    }
+
+    /**
+     * @param mixed $eventReminder
+     */
+    public function setEventReminder($eventReminder)
+    {
+        $this->eventReminder = $eventReminder;
     }
 }

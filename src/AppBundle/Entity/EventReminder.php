@@ -25,21 +25,21 @@ class EventReminder extends AbstractAuditable
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
     /**
      * @ORM\ManyToOne(targetEntity="EventReminderType")
      */
     protected $remindType;
-
     /**
      * @Column(name="days_ahead", type="integer")
      */
     protected $daysAhead;
-
     /**
-     * @ORM\ManyToOne(targetEntity="GroupCalendarEvent", inversedBy="eventReminder")
+     * @ORM\ManyToOne(
+     *     targetEntity="GroupCalendar", inversedBy="eventReminder"
+     * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    protected $groupCalendarEvent;
+    protected $groupCalendar;
 
     /**
      * @return mixed
@@ -92,16 +92,16 @@ class EventReminder extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getGroupCalendarEvent()
+    public function getGroupCalendar()
     {
-        return $this->groupCalendarEvent;
+        return $this->groupCalendar;
     }
 
     /**
-     * @param mixed $groupCalendarEvent
+     * @param mixed $groupCalendar
      */
-    public function setGroupCalendarEvent($groupCalendarEvent)
+    public function setGroupCalendar($groupCalendar)
     {
-        $this->groupCalendarEvent = $groupCalendarEvent;
+        $this->groupCalendar = $groupCalendar;
     }
 }

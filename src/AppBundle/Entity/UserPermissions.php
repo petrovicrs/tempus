@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="permissions")
+ * @ORM\Table(name="user_permissions")
  */
 class UserPermissions
 {

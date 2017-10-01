@@ -25,17 +25,14 @@ class GroupCalendarEventType extends AbstractAuditable
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
     /**
      * @Column(name="name_en", type="string", length=255)
      */
     protected $nameEn;
-
     /**
      * @Column(name="name_sr", type="string", length=255)
      */
     protected $nameSr;
-
     /**
      * @Column(name="color", type="string", length=16)
      */

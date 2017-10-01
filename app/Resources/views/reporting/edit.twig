@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {#TODO - left for finish#}
 {% block body %}
+    <script type="text/javascript" src="{{ asset('/js/reporting.js')}}"></script>
     <section id="main">
         {% if keyAction == 'ka1' %}
             {% include 'sub-navbar.html.twig' with {'active': 'reporting'} %}
@@ -14,42 +15,12 @@
                     <div class="col-xs-12">
                         {{ form_start(my_form) }}
                         <div class="col-xs-12">
-                            <h2>{% trans %}Add Reporting{% endtrans %}</h2>
+                            <h2>{% trans %}Edit Reporting{% endtrans %}</h2>
                         </div>
 
-                        <div class="row">
-                            <div class="col-xs-9">
-                                <div class="col-xs-3">
-                                    {{ form_label(my_form.type, 'Monitoring type'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                    <div class="form">
-                                        {{ form_widget(my_form.type, {'attr': {'class': 'form-control'}})  }}
-                                    </div>
-                                </div>
-                                <div class="col-xs-3">
-                                    {{ form_label(my_form.reportingDate, 'Monitoring visit on'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                    <div class="form">
-                                        {{ form_widget(my_form.reportingDate) }}
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-12">
-                                    {{ form_label(my_form.commentsAndSuggestions, 'Comments and suggestions'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                    <div class="form">
-                                        {{ form_widget(my_form.commentsAndSuggestions, {'attr': {'class': 'form-control'}})  }}
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-12">
-                                    {{ form_widget(my_form.submit, { 'label': 'Submit' }) }}
-                                </div>
-                            </div>
-
-                            <div class="col-xs-3">
-                                <ul class="reporting-by" data-prototype="{{include('/reporting/includes/reporting-by.html.twig',
-                                {'form': my_form.reportingBy.vars.prototype })|e}}">
-                                </ul>
-                            </div>
-                        </div>
+                        <ul class="reporting" data-prototype="{{include('/reporting/includes/reporting.html.twig',
+                        {'form': my_form.reporting.vars.prototype })|e}}">
+                        </ul>
                         {{ form_end(my_form) }}
                     </div>
                 </div>

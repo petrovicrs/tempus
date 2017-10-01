@@ -2,22 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: nemtish
- * Date: 02.09.17
- * Time: 18:06
+ * Date: 07.08.17
+ * Time: 13:22
  */
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\GroupCalendarEvent;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+use AppBundle\Entity\ProjectReporting;
+use AppBundle\Entity\Reporting;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class GroupCalendarEventForm extends AbstractType
+class ProjectReportingForm extends AbstractType
 {
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -25,18 +27,14 @@ class GroupCalendarEventForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('eventDate', DateType::class)
-            ->add('eventType', EntityType::class, array(
-                'class' => 'AppBundle\Entity\GroupCalendarEventType',
-                'choice_label' => 'name' . ucfirst($options['locale'])
-            ))
-            ->add('eventDescription')
-            ->add('eventReminder', CollectionType::class, array(
-                'entry_type' => EventReminderForm::class,
-                'allow_add' => true,
+            ->add('reporting', CollectionType::class, [
+                'entry_type'    => ReportingForm::class,
+                'allow_add'     => true,
                 'by_reference' => false,
-                'label' => false
-            ));
+                'allow_delete' => true,
+                'label'        => false
+            ])
+            ->add('submit', SubmitType::class, ['label_format' => 'Next']);
     }
 
     /**
@@ -51,7 +49,8 @@ class GroupCalendarEventForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => GroupCalendarEvent::class
+            'data_class' => ProjectReporting::class,
+            'allow_extra_fields' => true,
         ]);
     }
 }

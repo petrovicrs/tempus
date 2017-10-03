@@ -52,7 +52,7 @@ class AttachmentsController extends AbstractController
         );
 
         if(false == is_null($attachmentExist)) {
-            return $this->forward('AppBundle:Attachments:edit', ['id' => $attachmentExist->getId()]);
+            return $this->forward('AppBundle:Attachments:edit', ['projectId' => $project->getId()]);
         }
 
         $attachments = new Attachments();
@@ -175,7 +175,7 @@ class AttachmentsController extends AbstractController
         }
 
         return $this->render('attachments/edit.twig', ['my_form' => $attachmentsForm->createView(),
-            'attachments' => $attachments, 'keyAction' => $project->getKeyActions()->getNameSr()]);
+            'attachments' => $attachments, 'projectId' => $projectId, 'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
 //    /**

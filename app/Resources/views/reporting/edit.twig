@@ -18,7 +18,7 @@
                             <h2>{% trans %}Edit Reporting{% endtrans %}</h2>
                         </div>
 
-                        <ul class="reporting" data-prototype="{{include('/reporting/includes/reporting.html.twig',
+                        <ul class="reporting" data-purpose="edit" data-prototype="{{include('/reporting/includes/reporting.html.twig',
                         {'form': my_form.reporting.vars.prototype })|e}}">
                         </ul>
                         {{ form_end(my_form) }}

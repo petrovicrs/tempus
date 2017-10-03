@@ -3,8 +3,14 @@
 {% block body %}
     <section id="main">
     <script type="text/javascript" src="{{ asset('/js/attachments.js')}}" ></script>
-    {% include 'sub-navbar.html.twig' with {'active': 'attachments'} %}
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar.html.twig' with {'active': 'attachments'} %}
+    {% endif %}
+    {%  if keyAction == 'ka2' %}
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'attachments'} %}
+    {% endif %}
     <div class="container-fluid">
+        <a href="{{ localizedPath('reporting_edit', {projectId: projectId}) }}"><button>Back</button></a>
         <div class="row">
             <div class="controls attachments">
                 <div class="col-xs-12">

@@ -27,11 +27,6 @@ class Resources extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project")
-     */
-    protected $project;
-
-    /**
      * @ORM\ManyToOne(targetEntity="ResourceType")
      */
     protected $resourceType;
@@ -77,6 +72,12 @@ class Resources extends AbstractAuditable
      */
     protected $abstract;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProjectResources", inversedBy="resources")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $projectResources;
+
     //TODO Add attachment entity
     //protected $atachments;
 
@@ -94,22 +95,6 @@ class Resources extends AbstractAuditable
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * @param mixed $project
-     */
-    public function setProject($project)
-    {
-        $this->project = $project;
     }
 
     /**
@@ -240,7 +225,21 @@ class Resources extends AbstractAuditable
         $this->abstract = $abstract;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getProjectResources()
+    {
+        return $this->projectResources;
+    }
 
+    /**
+     * @param mixed $projectResources
+     */
+    public function setProjectResources($projectResources)
+    {
+        $this->projectResources = $projectResources;
+    }
 
     public function getTitle($locale)
     {

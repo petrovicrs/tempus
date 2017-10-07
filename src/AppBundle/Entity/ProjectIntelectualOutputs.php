@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: nemtish
- * Date: 03.10.17
- * Time: 22:58
+ * Date: 07.10.17
+ * Time: 23:29
  */
 
 namespace AppBundle\Entity;
@@ -14,10 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectResourcesRepository")
- * @ORM\Table(name="project_resources")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectIntelectualOutputsRepository")
+ * @ORM\Table(name="project_intelectual_outputs")
  */
-class ProjectResources extends AbstractAuditable
+class ProjectIntelectualOutputs extends AbstractAuditable
 {
     /**
      * @ORM\Id
@@ -32,15 +32,18 @@ class ProjectResources extends AbstractAuditable
     protected $project;
 
     /**
-     * @ORM\OneToMany(targetEntity="Resources", mappedBy="projectResources", cascade={"persist"})
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\IntelectualOutputs", mappedBy="projectIntelectualOutputs", cascade={"persist"})
      */
-    protected $resources;
+    protected $intelectualOutputs;
 
-
+    /**
+     * ProjectIntelectualOutputs constructor.
+     */
     public function __construct()
     {
         parent::__construct();
-        $this->resources = new ArrayCollection();
+        $this->intelectualOutputs = new ArrayCollection();
     }
 
     /**
@@ -78,16 +81,16 @@ class ProjectResources extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getResources()
+    public function getIntelectualOutputs()
     {
-        return $this->resources;
+        return $this->intelectualOutputs;
     }
 
     /**
-     * @param mixed $resources
+     * @param mixed
      */
-    public function setResources($resources)
+    public function setIntelectualOutputs($intelectualOutputs)
     {
-        $this->resources = $resources;
+        $this->intelectualOutputs = $intelectualOutputs;
     }
 }

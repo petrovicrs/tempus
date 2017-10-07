@@ -2,9 +2,14 @@
 
 {% block body %}
     <section id="main">
-    {% include 'sub-navbar.html.twig' with {'active': 'intelectual-outputs'} %}
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar.html.twig' with {'active': 'intelectual_outputs'} %}
+    {% endif %}
+    {%  if keyAction == 'ka2' %}
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'intelectual_outputs'} %}
+    {% endif %}
     <div class="container-fluid">
-        <a href="{{ localizedPath('intelectual_output_edit', {'id': intelectualOutput.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
+        <a href="{{ localizedPath('intelectual_output_edit', {'project_id': projectIntelectualOutput.project.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
         <h2><b>{% trans %}Intelectual outputs{% endtrans %}</b></h2>
 
         <table class="table table-hover" data-toggle="table">
@@ -20,50 +25,54 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{ intelectualOutput.title(app.request.getLocale()) }}</td>
+                {% for intelectualOutput in projectIntelectualOutput.intelectualOutputs %}
+                    <tr>
+                        <td>{{ intelectualOutput.title(app.request.getLocale()) }}</td>
 
-                    {% if intelectualOutput.type %}
-                        <td>{{ intelectualOutput.type.name(app.request.getLocale()) }}</td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
+                        {% if intelectualOutput.type %}
+                            <td>{{ intelectualOutput.type.name(app.request.getLocale()) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
 
-                    <td><a href="{{ localizedPath('project_view', {'projectId': intelectualOutput.project.id}) }}">{{ intelectualOutput.project.name(app.request.getLocale()) }}</a></td>
+                        <td><a href="{{ localizedPath('project_view', {'project_id': projectIntelectualOutput.project.id}) }}">{{ projectIntelectualOutput.project.name(app.request.getLocale()) }}</a></td>
 
-                    <td>{{ intelectualOutput.dueDate | date('d/m/y')}}</td>
+                        <td>{{ intelectualOutput.dueDate | date('d/m/y')}}</td>
 
-                    {% if intelectualOutput.status %}
-                        <td>{{ intelectualOutput.status.name(app.request.getLocale()) }}</td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
+                        {% if intelectualOutput.status %}
+                            <td>{{ intelectualOutput.status.name(app.request.getLocale()) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
 
-                    {% if intelectualOutput.isPublic %}
-                        <td class="text-center">{% trans %}Yes{% endtrans %}</td>
-                    {% else %}
-                        <td class="text-center">{% trans %}No{% endtrans %}</td>
-                    {% endif %}
+                        {% if intelectualOutput.isPublic %}
+                            <td class="text-center">{% trans %}Yes{% endtrans %}</td>
+                        {% else %}
+                            <td class="text-center">{% trans %}No{% endtrans %}</td>
+                        {% endif %}
 
-                    {% if intelectualOutput.eLinkAvailable %}
-                        <td class="text-center">{% trans %}Yes{% endtrans %}</td>
-                    {% else %}
-                        <td class="text-center">{% trans %}No{% endtrans %}</td>
-                    {% endif %}
-                </tr>
+                        {% if intelectualOutput.eLinkAvailable %}
+                            <td class="text-center">{% trans %}Yes{% endtrans %}</td>
+                        {% else %}
+                            <td class="text-center">{% trans %}No{% endtrans %}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
 
-        <div class="col-xs-12 no-padding">
-            <h2>Description</h2>
-            <p>{{ intelectualOutput.description(app.request.getLocale()) }}</p>
-        </div>
+        {% for intelectualOutput in projectIntelectualOutput.intelectualOutputs %}
+            <div class="col-xs-12 no-padding">
+                <h2>Description</h2>
+                <p>{{ intelectualOutput.description(app.request.getLocale()) }}</p>
+            </div>
 
-        <div class="col-xs-12 no-padding">
-            <h2>Notes</h2>
-            {# TODO list filest #}
-            <p>{{ intelectualOutput.notes }}</p>
-        </div>
+            <div class="col-xs-12 no-padding">
+                <h2>Notes</h2>
+                {# TODO list filest #}
+                <p>{{ intelectualOutput.notes }}</p>
+            </div>
+        {% endfor %}
     </div>
     <div>
 {% endblock %}

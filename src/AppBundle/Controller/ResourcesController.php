@@ -9,7 +9,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Project;
+use AppBundle\Entity\ProjectResources;
 use AppBundle\Entity\Resources;
+use AppBundle\Form\ProjectResourcesForm;
 use AppBundle\Form\ResourcesForm;
 use AppBundle\Repository\ResourcesRepository;
 use AppBundle\Repository\ProjectRepository;
@@ -35,28 +37,34 @@ class ResourcesController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $resources = new Resources();
+        $projectResources = new ProjectResources();
         
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
-        $resourcesForm = $this->createForm(ResourcesForm::class, $resources, [
+        $projectResourcesForm = $this->createForm(ProjectResourcesForm::class, $projectResources, [
             'action' => $this->generateUrl('resources_create'),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
 
-        $resourcesForm->handleRequest($request);
+        $projectResourcesForm->handleRequest($request);
 
-        if ($resourcesForm->isSubmitted() && $resourcesForm->isValid()) {
-            
-            $resources->setProject($project);
-            $this->getResourcesRepository()->save($resources);
+        if ($projectResourcesForm->isSubmitted() && $projectResourcesForm->isValid()) {
+
+            $projectResources->setProject($project);
+
+            /** @var Resources $resource */
+            foreach ($projectResources->getResources() as $resource) {
+                $resource->setProjectResources($projectResources);
+            }
+
+            $this->getProjectResourcesRepository()->save($projectResources);
 
             return $this->redirectToRoute('intelectual_outputs_create');
         }
 
-        return $this->render('resources/create.twig', ['my_form' => $resourcesForm->createView(), 
+        return $this->render('resources/create.twig', ['my_form' => $projectResourcesForm->createView(),
             'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()]);
     }
 
@@ -66,30 +74,33 @@ class ResourcesController extends AbstractController
      */
     public function editAction(Request $request, $projectId)
     {
-        /** @var Resources $resource */
-        $resource = $this->getResourcesRepository()->findOneBy(['project' => $projectId]);
+        /** @var ProjectResources $projectResources */
+        $projectResources = $this->getProjectResourcesRepository()->findOneBy(['project' => $projectId]);
 
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
-        $resourceForm = $this->createForm(ResourcesForm::class, $resource, [
+        $projectResourceForm = $this->createForm(ProjectResourcesForm::class, $projectResources, [
             'action' => $this->generateUrl('resource_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
 
-        $resourceForm->handleRequest($request);
+        $projectResourceForm->handleRequest($request);
 
-        if ($resourceForm->isSubmitted() && $resourceForm->isValid()) {
+        if ($projectResourceForm->isSubmitted() && $projectResourceForm->isValid()) {
 
-            $this->getResourcesRepository()->save($resource);
+            foreach ($projectResources->getResources() as $resource) {
+                $this->getResourcesRepository()->save($resource);
 
-            if (!$resource->getProject()->getIsCompleted()) {
+            }
+
+            if (!$projectResources->getProject()->getIsCompleted()) {
                 return $this->redirectToRoute('intelectual_outputs_create');
             }
         }
 
-        return $this->render('resources/edit.twig', ['my_form' => $resourceForm->createView(),
+        return $this->render('resources/edit.twig', ['my_form' => $projectResourceForm->createView(),
             'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
@@ -101,6 +112,11 @@ class ResourcesController extends AbstractController
         $resource = $this->getResourcesRepository()->findOneBy(['id' => $resourceId]);
 
         return $this->render('resources/view.twig', ['resource' => $resource]);
+    }
+
+    private function getProjectResourcesRepository()
+    {
+        return $this->get('doctrine_entity_repository.project_resources');
     }
 
     private function getResourcesRepository()

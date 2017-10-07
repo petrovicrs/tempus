@@ -24,6 +24,12 @@ function loadReporting() {
         // add a new tag form (see code block below)
         $addForm($collectionReportingHolder, $addReportinkLinkDiv, 'reporting');
     });
+
+    if($collectionReportingHolder.data('purpose') === 'create') {
+        $addForm($collectionReportingHolder, $addReportinkLinkDiv, 'reporting');
+    }
+
+    return true;
 }
 
 function loadReportingBy() {

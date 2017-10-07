@@ -9,18 +9,16 @@
 namespace AppBundle\Form;
 
 
-use AppBundle\Entity\Resources;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AppBundle\Entity\ProjectResources;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ResourcesForm extends AbstractType
+class ProjectResourcesForm extends AbstractType
 {
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -28,20 +26,14 @@ class ResourcesForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('resourceType', EntityType::class, [
-                'class'         => 'AppBundle\Entity\ResourceType',
-                'choice_label'  => 'name' . ucfirst($options['locale']),
+            ->add('resources', CollectionType::class, [
+                'entry_type'    => ResourcesForm::class,
+                'allow_add'     => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label'        => false
             ])
-            ->add('keywords', TextType::class)
-            ->add('isPublic', CheckboxType::class, [
-//                'label' => 'Public?',
-                'required' => false
-            ])
-            ->add('titleEn')
-            ->add('titleSr')
-            ->add('descriptionEn')
-            ->add('descriptionSr')
-            ->add('abstract');
+            ->add('submit', SubmitType::class, ['label_format' => 'Next']);
     }
 
     /**
@@ -56,7 +48,8 @@ class ResourcesForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => Resources::class
+            'data_class' => ProjectResources::class,
+            'allow_extra_fields' => true,
         ]);
     }
 }

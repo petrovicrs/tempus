@@ -175,6 +175,22 @@ class ReportingController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{locale}/reporting/view/{Id}", name="reporting_view", requirements={"Id": "\d+", "locale": "%app.locales%"})
+     */
+    public function viewAction($id)
+    {
+        $reporting = $this->getReportingRepository()->findOneBy(['id' => $id]);
+
+        return $this->render(
+            'reporting/view.twig',
+            [
+                'reporting' => $reporting,
+                'keyAction' => $reporting->getProjectReporting()->getProject()->getKeyActions()->getNameSr()
+            ]
+        );
+    }
+
     private function getProjectReportingRepository()
     {
         return $this->get('doctrine_entity_repository.project_reporting');

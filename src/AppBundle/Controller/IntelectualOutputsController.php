@@ -25,7 +25,7 @@ class IntelectualOutputsController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $intelectualOutputs = $this->getProjectIntelectualOutputsRepository()->findAll();
+        $intelectualOutputs = $this->getIntelectualOutputsRepository()->findAll();
 
         return $this->render('intelectual-outputs/list.twig', ['intelectualOutputs' => $intelectualOutputs]);
     }
@@ -120,13 +120,15 @@ class IntelectualOutputsController extends AbstractController
      */
     public function viewAction($id)
     {
-        $projectIntelectualOutput = $this->getProjectIntelectualOutputsRepository()->findOneBy(['id' => $id]);
+        $intelectualOutput = $this->getIntelectualOutputsRepository()->findOneBy(['id' => $id]);
+        $project = $intelectualOutput->getProjectIntelectualOutputs()->getProject();
 
         return $this->render(
             'intelectual-outputs/view.twig',
             [
-                'projectIntelectualOutput' => $projectIntelectualOutput,
-                'keyAction' => $projectIntelectualOutput->getProject()->getKeyActions()->getNameSr()
+                'intelectualOutput' => $intelectualOutput,
+                'projectId' => $project->getId(),
+                'keyAction' => $project->getKeyActions()->getNameSr()
             ]
         );
     }

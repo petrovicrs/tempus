@@ -11,7 +11,6 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ResultsRepository")
@@ -27,9 +26,10 @@ class Results extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\ManyToOne(targetEntity="ProjectResults", inversedBy="results")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    protected $project;
+    protected $projectResults;
 
     /**
      * @ORM\ManyToOne(targetEntity="ResultType")
@@ -103,17 +103,17 @@ class Results extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getProject()
+    public function getProjectResults()
     {
-        return $this->project;
+        return $this->projectResults;
     }
 
     /**
-     * @param mixed $project
+     * @param mixed $projectResults
      */
-    public function setProject($project)
+    public function setProjectResults($projectResults)
     {
-        $this->project = $project;
+        $this->projectResults = $projectResults;
     }
 
     /**

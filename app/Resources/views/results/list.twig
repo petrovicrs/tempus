@@ -38,7 +38,7 @@
                                     <td></td>
                                 {% endif %}
 
-                                <td><a href="{{ localizedPath('project_view', {'projectId': result.project.id}) }}">{{ result.project.name(app.request.getLocale()) }}</a></td>
+                                <td><a href="{{ localizedPath('project_view', {'projectId': result.projectResults.project.id}) }}">{{ result.projectResults.project.name(app.request.getLocale()) }}</a></td>
 
                                 {% if result.resultStatus %}
                                     <td>{{ result.resultStatus.name(app.request.getLocale()) }}</td>

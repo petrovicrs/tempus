@@ -9,7 +9,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\IntelectualOutputs;
+use AppBundle\Entity\ProjectIntelectualOutputs;
 use AppBundle\Form\IntelectualOutputsForm;
+use AppBundle\Form\ProjectIntelectualOutputsForm;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Project;
@@ -32,28 +35,32 @@ class IntelectualOutputsController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $intelectualOutputs = new IntelectualOutputs();
+        $projectIntelectualOutputs = new ProjectIntelectualOutputs();
 
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
-        $intelectualOutputsForm = $this->createForm(IntelectualOutputsForm::class, $intelectualOutputs, [
+        $projectIntelectualOutputsForm = $this->createForm(ProjectIntelectualOutputsForm::class, $projectIntelectualOutputs, [
             'action' => $this->generateUrl('intelectual_outputs_create'),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
 
-        $intelectualOutputsForm->handleRequest($request);
+        $projectIntelectualOutputsForm->handleRequest($request);
 
-        if ($intelectualOutputsForm->isSubmitted() && $intelectualOutputsForm->isValid()) {
+        if ($projectIntelectualOutputsForm->isSubmitted() && $projectIntelectualOutputsForm->isValid()) {
 
-            $intelectualOutputs->setProject($project);
-            $this->getIntelectualOutputsRepository()->save($intelectualOutputs);
+            foreach ($projectIntelectualOutputs->getIntelectualOutputs() as $intelectualOutput) {
+                $intelectualOutput->setProjectIntelectualOutputs($projectIntelectualOutputs);
+            }
+
+            $projectIntelectualOutputs->setProject($project);
+            $this->getProjectIntelectualOutputsRepository()->save($projectIntelectualOutputs);
 
             return $this->redirectToRoute('results_create');
         }
 
-        return $this->render('intelectual-outputs/create.twig', ['my_form' => $intelectualOutputsForm->createView(),
+        return $this->render('intelectual-outputs/create.twig', ['my_form' => $projectIntelectualOutputsForm->createView(),
             'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()
         ]);
     }
@@ -64,29 +71,47 @@ class IntelectualOutputsController extends AbstractController
      */
     public function editAction(Request $request, $projectId)
     {
-        /** @var IntelectualOutputs $intelectualOutput */
-        $intelectualOutput = $this->getIntelectualOutputsRepository()->findOneBy(['project' => $projectId]);
+        /** @var ProjectIntelectualOutputs $projectIntelectualOutput */
+        $projectIntelectualOutput = $this->getProjectIntelectualOutputsRepository()->findOneBy(['project' => $projectId]);
 
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
-        $intelectualOutputForm = $this->createForm(IntelectualOutputsForm::class, $intelectualOutput, [
+        $projectIntelectualOutputForm = $this->createForm(ProjectIntelectualOutputsForm::class, $projectIntelectualOutput, [
             'action' => $this->generateUrl('intelectual_output_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
 
-        $intelectualOutputForm->handleRequest($request);
+        $intelectualOutputs = new ArrayCollection();
 
-        if ($intelectualOutputForm->isSubmitted() && $intelectualOutputForm->isValid()) {
-            $this->getIntelectualOutputsRepository()->save($intelectualOutput);
+        foreach ($projectIntelectualOutput->getIntelectualOutputs() as $output) {
+            $intelectualOutputs->add($output);
+        }
 
-            if (!$intelectualOutput->getProject()->getIsCompleted()) {
+        $projectIntelectualOutputForm->handleRequest($request);
+
+        if ($projectIntelectualOutputForm->isSubmitted() && $projectIntelectualOutputForm->isValid()) {
+
+
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($intelectualOutputs as $output) {
+                if (false === $projectIntelectualOutput->getIntelectualOutputs()->contains($output)) {
+                    $em->remove($output);
+                }
+
+                $this->getIntelectualOutputsRepository()->save($output);
+            }
+
+            $this->getProjectIntelectualOutputsRepository()->save($projectIntelectualOutput);
+
+            if (!$projectIntelectualOutput->getProject()->getIsCompleted()) {
                 return $this->redirectToRoute('results_create');
             }
         }
 
-        return $this->render('intelectual-outputs/edit.twig', ['my_form' => $intelectualOutputForm->createView(),
+        return $this->render('intelectual-outputs/edit.twig', ['my_form' => $projectIntelectualOutputForm->createView(),
             'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
@@ -96,8 +121,21 @@ class IntelectualOutputsController extends AbstractController
     public function viewAction($id)
     {
         $intelectualOutput = $this->getIntelectualOutputsRepository()->findOneBy(['id' => $id]);
+        $project = $intelectualOutput->getProjectIntelectualOutputs()->getProject();
 
-        return $this->render('intelectual-outputs/view.twig', ['intelectualOutput' => $intelectualOutput]);
+        return $this->render(
+            'intelectual-outputs/view.twig',
+            [
+                'intelectualOutput' => $intelectualOutput,
+                'projectId' => $project->getId(),
+                'keyAction' => $project->getKeyActions()->getNameSr()
+            ]
+        );
+    }
+
+    private function getProjectIntelectualOutputsRepository()
+    {
+        return $this->get('doctrine_entity_repository.project_intelectual_outputs');
     }
 
     private function getIntelectualOutputsRepository()

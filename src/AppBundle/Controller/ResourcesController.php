@@ -29,7 +29,12 @@ class ResourcesController extends AbstractController
     {
         $resources = $this->getResourcesRepository()->findAll();
 
-        return $this->render('resources/list.twig', ['resources' => $resources]);
+        return $this->render(
+            'resources/list.twig',
+            [
+                'resources' => $resources
+            ]
+        );
     }
 
     /**
@@ -111,7 +116,7 @@ class ResourcesController extends AbstractController
     {
         $resource = $this->getResourcesRepository()->findOneBy(['id' => $resourceId]);
 
-        return $this->render('resources/view.twig', ['resource' => $resource]);
+        return $this->render('resources/view.twig', ['resource' => $resource,'keyAction' => $resource->getProjectResources()->getProject()->getKeyActions()->getNameSr()]);
     }
 
     private function getProjectResourcesRepository()

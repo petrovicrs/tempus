@@ -11,7 +11,6 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\IntelectualOutputsRepository")
@@ -27,9 +26,10 @@ class IntelectualOutputs extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\ManyToOne(targetEntity="ProjectIntelectualOutputs", inversedBy="intelectualOutputs")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    protected $project;
+    protected $projectIntelectualOutputs;
 
     /**
      * @ORM\ManyToOne(targetEntity="IntelectualOutputsType")
@@ -109,17 +109,17 @@ class IntelectualOutputs extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getProject()
+    public function getProjectIntelectualOutputs()
     {
-        return $this->project;
+        return $this->projectIntelectualOutputs;
     }
 
     /**
-     * @param mixed $project
+     * @param mixed $projectIntelectualOutputs
      */
-    public function setProject($project)
+    public function setProjectIntelectualOutputs($projectIntelectualOutputs)
     {
-        $this->project = $project;
+        $this->projectIntelectualOutputs = $projectIntelectualOutputs;
     }
 
     /**

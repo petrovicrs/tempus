@@ -9,8 +9,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Project;
-use AppBundle\Entity\Results;
-use AppBundle\Form\ResultsForm;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -30,7 +28,7 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/results/create", name="results_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/users/create", name="user_create", requirements={"locale": "%app.locales%"})
      */
     public function createAction(Request $request)
     {
@@ -60,7 +58,7 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/results/edit/{projectId}", name="result_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/users/edit/{projectId}", name="user_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function editAction(Request $request, $projectId)
@@ -92,7 +90,7 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/results/view/{resultId}", name="result_view", requirements={"resultId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/users/view/{resultId}", name="user_view", requirements={"resultId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($resultId)
     {

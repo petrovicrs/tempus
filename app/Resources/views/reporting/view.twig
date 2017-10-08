@@ -2,7 +2,12 @@
 {#TODO - left for finish#}
 {% block body %}
     <section id="main">
-    {% include 'sub-navbar.html.twig' with {'active': 'reporting'} %}
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar.html.twig' with {'active': 'reporting'} %}
+    {% endif %}
+    {%  if keyAction == 'ka2' %}
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting'} %}
+    {% endif %}
     <div class="container-fluid">
         <a href="{{ localizedPath('result_edit', {'resultId': result.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
         <h2><b>{% trans %}Reporting{% endtrans %}</b></h2>

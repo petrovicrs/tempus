@@ -10,15 +10,17 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\IntelectualOutputs;
+use AppBundle\Entity\ProjectIntelectualOutputs;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class IntelectualOutputsForm extends AbstractType
+class ProjectIntelectualOutputsForm extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -27,27 +29,14 @@ class IntelectualOutputsForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', EntityType::class, [
-                'class'         => 'AppBundle\Entity\IntelectualOutputsType',
-                'choice_label'  => 'name' . ucfirst($options['locale']),
+            ->add('intelectualOutputs', CollectionType::class, [
+                'entry_type'    => IntelectualOutputsForm::class,
+                'allow_add'     => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label'        => false
             ])
-            ->add('status', EntityType::class, [
-                'class'         => 'AppBundle\Entity\IntelectualOutputsStatus',
-                'choice_label'  => 'name' . ucfirst($options['locale']),
-            ])
-            ->add('dueDate', DateType::class, ['label_format' => 'Due Date'])
-            ->add('isPublic', CheckboxType::class, [
-//                'label' => 'Public?',
-                'required' => false
-            ])
-            ->add('eLinkAvailable', CheckboxType::class, [
-                'required' => false
-            ])
-            ->add('titleEn')
-            ->add('titleSr')
-            ->add('descriptionEn')
-            ->add('descriptionSr')
-            ->add('notes');
+            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
     }
 
     /**
@@ -62,7 +51,7 @@ class IntelectualOutputsForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => IntelectualOutputs::class
+            'data_class' => ProjectIntelectualOutputs::class
         ]);
     }
 }

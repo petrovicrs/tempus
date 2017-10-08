@@ -258,11 +258,21 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\ProjectResources
+    doctrine_entity_repository.project_results:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectResults
     doctrine_entity_repository.results:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\Results
+    doctrine_entity_repository.project_intelectual_outputs:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectIntelectualOutputs
     doctrine_entity_repository.intelectual_outputs:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

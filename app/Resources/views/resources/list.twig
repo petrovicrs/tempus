@@ -26,7 +26,7 @@
                                 <td><a href="{{ localizedPath('resource_view', {'resourceId': resource.id}) }}">{{ resource.title(app.request.getLocale()) }}</a></td>
                                 <td>{{ resource.resourceType.name(app.request.getLocale()) }}</td>
                                 <td>{{ resource.keywords }}</td>
-                                <td><a href="{{ localizedPath('project_view', {'projectId': resource.project.id}) }}">{{ resource.project.name(app.request.getLocale()) }}</a></td>
+                                <td><a href="{{ localizedPath('project_view', {'projectId': resource.projectResources.project.id}) }}">{{ resource.projectResources.project.name(app.request.getLocale()) }}</a></td>
                                 {# TODO count attachments #}
                                 <td class="text-center">0</td>
                             </tr>

@@ -4,7 +4,7 @@
     <section id="main">
     {% include 'sub-navbar.html.twig' with {'active': 'results'} %}
     <div class="container-fluid">
-        <a href="{{ localizedPath('result_edit', {'resultId': result.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
+        <a href="{{ localizedPath('result_edit', {'projectId': result.projectResults.project.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
         <h2><b>{% trans %}Results{% endtrans %}</b></h2>
 
         <table class="table table-hover" data-toggle="table">
@@ -28,7 +28,7 @@
                         <td></td>
                     {% endif %}
 
-                    <td><a href="{{ localizedPath('project_view', {'projectId': result.project.id}) }}">{{ result.project.name(app.request.getLocale()) }}</a></td>
+                    <td><a href="{{ localizedPath('project_view', {'projectId': result.projectResults.project.id}) }}">{{ result.projectResults.project.name(app.request.getLocale()) }}</a></td>
 
                     {% if result.resultStatus %}
                         <td>{{ result.resultStatus.name(app.request.getLocale()) }}</td>

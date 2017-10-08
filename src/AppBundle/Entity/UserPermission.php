@@ -6,16 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use AppBundle\Entity\ProjectProgramme;
-use AppBundle\Entity\ProjectKeyAction;
-use AppBundle\Entity\ProjectAction;
-use AppBundle\Entity\ProjectCall;
-use AppBundle\Entity\ProjectRound;
-use AppBundle\Entity\ProjectNote;
-use AppBundle\Entity\ProjectTopic;
-use AppBundle\Entity\ProjectSubjectArea;
-use AppBundle\Entity\ProjectLimitation;
-use AppBundle\Entity\ProjectTargetGroup;
+
 
 
 /**
@@ -33,316 +24,322 @@ class UserPermission extends AbstractAuditable
      */
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(
-     *      targetEntity="ProjectReporting",
-     *      inversedBy="reporting",
-     *      cascade={"persist"}
-     * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
+//    /**
+//     * @ORM\ManyToOne(
+//     *      targetEntity="UserProjectPermission",
+//     *      inversedBy="projectPermission",
+//     *      cascade={"persist"}
+//     * )
+//     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
+//     */
+//    protected $userProjectPermission;
+//
+//    /**
+//     * @ORM\ManyToOne(
+//     *      targetEntity="UserInstitutionPermission",
+//     *      inversedBy="institutionPermission",
+//     *      cascade={"persist"}
+//     * )
+//     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
+//     */
+//    protected $userInstitutionPermission;
+
+//    /**
+//     * @ORM\OneToOne(
+//     *      targetEntity="User",
+//     *      mappedBy="permission",
+//     *      cascade={"persist"}
+//     * )
+//     */
+//    protected $user;
 
     /**
-     * @ORM\ManyToOne(
-     *      targetEntity="UserProjectPermission"
-     * )
-     */
-    protected $userProjectPermission;
-
-    /**
-     * @ORM\ManyToOne(
-     *      targetEntity="UserInstitutionPermission"
-     * )
-     */
-    protected $userInstitutionPermission;
-
-    /**
-     * @ORM\Column(name="people_view", type="boolean")
+     * @ORM\Column(name="people_view", type="boolean", nullable=true)
      */
     protected $peopleView;
 
     /**
-     * @ORM\Column(name="people_edit", type="boolean")
+     * @ORM\Column(name="people_edit", type="boolean", nullable=true)
      */
     protected $peopleEdit;
 
     /**
-     * @ORM\Column(name="people_delete", type="boolean")
+     * @ORM\Column(name="people_delete", type="boolean", nullable=true)
      */
     protected $peopleDelete;
 
     /**
-     * @ORM\Column(name="people_export", type="boolean")
+     * @ORM\Column(name="people_export", type="boolean", nullable=true)
      */
     protected $peopleExport;
 
     /**
-     * @ORM\Column(name="activities_view", type="boolean")
+     * @ORM\Column(name="activities_view", type="boolean", nullable=true)
      */
     protected $activitiesView;
 
     /**
-     * @ORM\Column(name="activities_edit", type="boolean")
+     * @ORM\Column(name="activities_edit", type="boolean", nullable=true)
      */
     protected $activitiesEdit;
 
     /**
-     * @ORM\Column(name="activities_delete", type="boolean")
+     * @ORM\Column(name="activities_delete", type="boolean", nullable=true)
      */
     protected $activitiesDelete;
 
     /**
-     * @ORM\Column(name="activities_export", type="boolean")
+     * @ORM\Column(name="activities_export", type="boolean", nullable=true)
      */
     protected $activitiesExport;
 
     /**
-     * @ORM\Column(name="deliverables_view", type="boolean")
+     * @ORM\Column(name="deliverables_view", type="boolean", nullable=true)
      */
     protected $deliverablesView;
 
     /**
-     * @ORM\Column(name="deliverables_edit", type="boolean")
+     * @ORM\Column(name="deliverables_edit", type="boolean", nullable=true)
      */
     protected $deliverablesEdit;
 
     /**
-     * @ORM\Column(name="deliverables_delete", type="boolean")
+     * @ORM\Column(name="deliverables_delete", type="boolean", nullable=true)
      */
     protected $deliverablesDelete;
 
     /**
-     * @ORM\Column(name="deliverables_export", type="boolean")
+     * @ORM\Column(name="deliverables_export", type="boolean", nullable=true)
      */
     protected $deliverablesExport;
 
     /**
-     * @ORM\Column(name="monitoring_view", type="boolean")
+     * @ORM\Column(name="monitoring_view", type="boolean", nullable=true)
      */
     protected $monitoringView;
 
     /**
-     * @ORM\Column(name="monitoring_edit", type="boolean")
+     * @ORM\Column(name="monitoring_edit", type="boolean", nullable=true)
      */
     protected $monitoringEdit;
 
     /**
-     * @ORM\Column(name="monitoring_delete", type="boolean")
+     * @ORM\Column(name="monitoring_delete", type="boolean", nullable=true)
      */
     protected $monitoringDelete;
 
     /**
-     * @ORM\Column(name="monitoring_export", type="boolean")
+     * @ORM\Column(name="monitoring_export", type="boolean", nullable=true)
      */
     protected $monitoringExport;
 
     /**
-     * @ORM\Column(name="partners_view", type="boolean")
+     * @ORM\Column(name="partners_view", type="boolean", nullable=true)
      */
     protected $partnersView;
 
     /**
-     * @ORM\Column(name="partners_edit", type="boolean")
+     * @ORM\Column(name="partners_edit", type="boolean", nullable=true)
      */
     protected $partnersEdit;
 
     /**
-     * @ORM\Column(name="partners_delete", type="boolean")
+     * @ORM\Column(name="partners_delete", type="boolean", nullable=true)
      */
     protected $partnersDelete;
 
     /**
-     * @ORM\Column(name="partners_export", type="boolean")
+     * @ORM\Column(name="partners_export", type="boolean", nullable=true)
      */
     protected $partnersExport;
 
     /**
-     * @ORM\Column(name="resources_view", type="boolean")
+     * @ORM\Column(name="resources_view", type="boolean", nullable=true)
      */
     protected $resourcesView;
 
     /**
-     * @ORM\Column(name="resources_edit", type="boolean")
+     * @ORM\Column(name="resources_edit", type="boolean", nullable=true)
      */
     protected $resourcesEdit;
 
     /**
-     * @ORM\Column(name="resources_delete", type="boolean")
+     * @ORM\Column(name="resources_delete", type="boolean", nullable=true)
      */
     protected $resourcesDelete;
 
     /**
-     * @ORM\Column(name="resources_export", type="boolean")
+     * @ORM\Column(name="resources_export", type="boolean", nullable=true)
      */
     protected $resourcesExport;
 
     /**
-     * @ORM\Column(name="intoutputs_view", type="boolean")
+     * @ORM\Column(name="intoutputs_view", type="boolean", nullable=true)
      */
     protected $intoutputsView;
 
     /**
-     * @ORM\Column(name="intoutputs_edit", type="boolean")
+     * @ORM\Column(name="intoutputs_edit", type="boolean", nullable=true)
      */
     protected $intoutputsEdit;
 
     /**
-     * @ORM\Column(name="intoutputs_delete", type="boolean")
+     * @ORM\Column(name="intoutputs_delete", type="boolean", nullable=true)
      */
     protected $intoutputsDelete;
 
     /**
-     * @ORM\Column(name="intoutputs_export", type="boolean")
+     * @ORM\Column(name="intoutputs_export", type="boolean", nullable=true)
      */
     protected $intoutputsExport;
 
     /**
-     * @ORM\Column(name="results_view", type="boolean")
+     * @ORM\Column(name="results_view", type="boolean", nullable=true)
      */
     protected $resultsView;
 
     /**
-     * @ORM\Column(name="results_edit", type="boolean")
+     * @ORM\Column(name="results_edit", type="boolean", nullable=true)
      */
     protected $resultsEdit;
 
     /**
-     * @ORM\Column(name="results_delete", type="boolean")
+     * @ORM\Column(name="results_delete", type="boolean", nullable=true)
      */
     protected $resultsDelete;
 
     /**
-     * @ORM\Column(name="results_export", type="boolean")
+     * @ORM\Column(name="results_export", type="boolean", nullable=true)
      */
     protected $resultsExport;
 
     /**
-     * @ORM\Column(name="reporting_view", type="boolean")
+     * @ORM\Column(name="reporting_view", type="boolean", nullable=true)
      */
     protected $reportingView;
 
     /**
-     * @ORM\Column(name="reporting_edit", type="boolean")
+     * @ORM\Column(name="reporting_edit", type="boolean", nullable=true)
      */
     protected $reportingEdit;
 
     /**
-     * @ORM\Column(name="reporting_delete", type="boolean")
+     * @ORM\Column(name="reporting_delete", type="boolean", nullable=true)
      */
     protected $reportingDelete;
 
     /**
-     * @ORM\Column(name="reporting_export", type="boolean")
+     * @ORM\Column(name="reporting_export", type="boolean", nullable=true)
      */
     protected $reportingExport;
 
     /**
-     * @ORM\Column(name="attachments_view", type="boolean")
+     * @ORM\Column(name="attachments_view", type="boolean", nullable=true)
      */
     protected $attachmentsView;
 
     /**
-     * @ORM\Column(name="attachments_edit", type="boolean")
+     * @ORM\Column(name="attachments_edit", type="boolean", nullable=true)
      */
     protected $attachmentsEdit;
 
     /**
-     * @ORM\Column(name="attachments_delete", type="boolean")
+     * @ORM\Column(name="attachments_delete", type="boolean", nullable=true)
      */
     protected $attachmentsDelete;
 
     /**
-     * @ORM\Column(name="attachments_export", type="boolean")
+     * @ORM\Column(name="attachments_export", type="boolean", nullable=true)
      */
     protected $attachmentsExport;
 
     /**
-     * @ORM\Column(name="calendar_view", type="boolean")
+     * @ORM\Column(name="calendar_view", type="boolean", nullable=true)
      */
     protected $calendarView;
 
     /**
-     * @ORM\Column(name="calendar_edit", type="boolean")
+     * @ORM\Column(name="calendar_edit", type="boolean", nullable=true)
      */
     protected $calendarEdit;
 
     /**
-     * @ORM\Column(name="calendar_delete", type="boolean")
+     * @ORM\Column(name="calendar_delete", type="boolean", nullable=true)
      */
     protected $calendarDelete;
 
     /**
-     * @ORM\Column(name="calendar_export", type="boolean")
+     * @ORM\Column(name="calendar_export", type="boolean", nullable=true)
      */
     protected $calendarExport;
 
     /**
-     * @ORM\Column(name="users_view", type="boolean")
+     * @ORM\Column(name="users_view", type="boolean", nullable=true)
      */
     protected $usersView;
 
     /**
-     * @ORM\Column(name="users_edit", type="boolean")
+     * @ORM\Column(name="users_edit", type="boolean", nullable=true)
      */
     protected $usersEdit;
 
     /**
-     * @ORM\Column(name="users_delete", type="boolean")
+     * @ORM\Column(name="users_delete", type="boolean", nullable=true)
      */
     protected $usersDelete;
 
     /**
-     * @ORM\Column(name="users_export", type="boolean")
+     * @ORM\Column(name="users_export", type="boolean", nullable=true)
      */
     protected $usersExport;
 
     /**
-     * @ORM\Column(name="newproject_view", type="boolean")
+     * @ORM\Column(name="newproject_view", type="boolean", nullable=true)
      */
     protected $newprojectView;
 
     /**
-     * @ORM\Column(name="newproject_edit", type="boolean")
+     * @ORM\Column(name="newproject_edit", type="boolean", nullable=true)
      */
     protected $newprojectEdit;
 
     /**
-     * @ORM\Column(name="newproject_delete", type="boolean")
+     * @ORM\Column(name="newproject_delete", type="boolean", nullable=true)
      */
     protected $newprojectDelete;
 
     /**
-     * @ORM\Column(name="newproject_create", type="boolean")
+     * @ORM\Column(name="newproject_create", type="boolean", nullable=true)
      */
     protected $newprojectCreate;
 
     /**
-     * @ORM\Column(name="newproject_export", type="boolean")
+     * @ORM\Column(name="newproject_export", type="boolean", nullable=true)
      */
     protected $newprojectExport;
 
     /**
-     * @ORM\Column(name="newinstitution_view", type="boolean")
+     * @ORM\Column(name="newinstitution_view", type="boolean", nullable=true)
      */
     protected $newinstitutionView;
 
     /**
-     * @ORM\Column(name="newinstitution_edit", type="boolean")
+     * @ORM\Column(name="newinstitution_edit", type="boolean", nullable=true)
      */
     protected $newinstitutionEdit;
 
     /**
-     * @ORM\Column(name="newinstitution_delete", type="boolean")
+     * @ORM\Column(name="newinstitution_delete", type="boolean", nullable=true)
      */
     protected $newinstitutionDelete;
 
     /**
-     * @ORM\Column(name="newinstitution_export", type="boolean")
+     * @ORM\Column(name="newinstitution_export", type="boolean", nullable=true)
      */
     protected $newinstitutionExport;
 
     /**
-     * @ORM\Column(name="newinstitution_create", type="boolean")
+     * @ORM\Column(name="newinstitution_create", type="boolean", nullable=true)
      */
     protected $newinstitutionCreate;
 
@@ -369,21 +366,21 @@ class UserPermission extends AbstractAuditable
         return $this->userProjectPermission;
     }
 
-    /**
-     * @param mixed $userProjectPermission
-     */
-    public function setUserProjectPermission($userProjectPermission)
-    {
-        $this->userProjectPermission = $userProjectPermission;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserInstitutionPermission()
-    {
-        return $this->userInstitutionPermission;
-    }
+//    /**
+//     * @param mixed $userProjectPermission
+//     */
+//    public function setUserProjectPermission($userProjectPermission)
+//    {
+//        $this->userProjectPermission = $userProjectPermission;
+//    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getUserInstitutionPermission()
+//    {
+//        return $this->userInstitutionPermission;
+//    }
 
     /**
      * @param mixed $userInstitutionPermission
@@ -1320,6 +1317,22 @@ class UserPermission extends AbstractAuditable
     {
         $this->newinstitutionCreate = $newinstitutionCreate;
     }
+
+//    /**
+//     * @return mixed
+//     */
+//    public function getUser()
+//    {
+//        return $this->user;
+//    }
+//
+//    /**
+//     * @param mixed $user
+//     */
+//    public function setUser($user)
+//    {
+//        $this->user = $user;
+//    }
 
 }
 

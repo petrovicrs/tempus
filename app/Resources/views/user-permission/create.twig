@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/reporting.js')}}"></script>
+    <section id="main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls reporting">
+                <div class="col-xs-12">
+                    {{ form_start(my_form) }}
+
+                    {{ form_end(my_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

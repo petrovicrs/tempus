@@ -11,4 +11,9 @@ namespace AppBundle\Repository;
 
 class UserPermissionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function save($permission) {
+
+        $this->_em->persist($permission);
+        $this->_em->flush();
+    }
 }

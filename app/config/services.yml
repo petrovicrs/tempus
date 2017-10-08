@@ -363,6 +363,21 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\EventReminder
+    doctrine_entity_repository.user_permission:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\UserPermission
+    doctrine_entity_repository.user_project_permission:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\UserProjectPermission
+    doctrine_entity_repository.user_institution_permission:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\UserInstitutionPermission
     app.security.login_form_authenticator:
         class: AppBundle\Security\LoginFormAuthenticator
         autowire: true

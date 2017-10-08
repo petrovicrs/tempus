@@ -23,6 +23,11 @@ class Permissions
     private $name;
 
     /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $useName;
+
+    /**
      * @ORM\Column(type="string")
      */
     private $description;
@@ -63,5 +68,22 @@ class Permissions
     {
         $this->description = $description;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUseName()
+    {
+        return $this->useName;
+    }
+
+    /**
+     * @param mixed $useName
+     */
+    public function setUseName($useName)
+    {
+        $this->useName = $useName;
+    }
+
 
 }

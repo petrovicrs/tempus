@@ -402,11 +402,11 @@ class ProjectController extends AbstractController
     {
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
-        $keyActionSelected = $request->request->get('project_key_action');
 
         $projectForm = $this->createForm(ProjectKa2Form::class, $project, [
             'action' => $this->generateUrl('project_ka2_edit', ['projectId' => $projectId]),
             'method' => 'POST',
+            'isCompleted' => $project->getIsCompleted(),
         ]);
 
         $originalTargetGroups = new ArrayCollection();
@@ -494,7 +494,10 @@ class ProjectController extends AbstractController
 
             $this->getProjectRepository()->saveProject($project);
 
-            return $this->redirectToRoute('project_list');
+            if (!$project->getIsCompleted()) {
+                return $this->redirectToRoute('monitoring_create');
+            }
+
         }
 
         return $this->render('project/edit-ka2.twig', ['my_form' => $projectForm->createView(), 'id' => $projectId]);

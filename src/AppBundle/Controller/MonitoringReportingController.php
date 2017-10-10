@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\MonitoringReporting;
+use AppBundle\Entity\Project;
 use AppBundle\Form\MonitoringReportingForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,20 +54,27 @@ class MonitoringReportingController extends AbstractController
 
         return $this->render(
             'monitoring-reporting/create.twig',
-            ['my_form' => $monitoringForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
+            [
+                'my_form' => $monitoringForm->createView(),
+                'keyAction' => $project->getKeyActions()->getNameSr(),
+                'projectId' => $project->getId(),
+            ]);
     }
 
     /**
-     * @Route("/{locale}/monitoring/edit/{id}", name="monitoring_edit", requirements={"locale": "%app.locales%", "id": "\d+"})
+     * @Route("/{locale}/monitoring/edit/{projectId}", name="monitoring_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $projectId)
     {
-        $monitoringReporting = $this->getMonitoringReportingRepository()->findOneBy(['id' => $id]);
+        /** @var MonitoringReporting $monitoringReporting */
+        $monitoringReporting = $this->getMonitoringReportingRepository()->findOneBy(['project' => $projectId]);
+
 
         $monitoringForm = $this->createForm(MonitoringReportingForm::class, $monitoringReporting, [
-            'action' => $this->generateUrl('monitoring_edit', ['id' => $id]),
+            'action' => $this->generateUrl('monitoring_edit', ['projectId' => $projectId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'isCompleted' => $monitoringReporting->getProject()->getIsCompleted(),
         ]);
 
         $monitoringForm->handleRequest($request);
@@ -76,12 +84,17 @@ class MonitoringReportingController extends AbstractController
             $monitoringReporting->setProject($this->getLastProjectForCurrentUser());
             $this->getMonitoringReportingRepository()->save($monitoringReporting);
 
-            return $this->redirectToRoute('partner_edit', ['id' => $id]);
+            if (!$monitoringReporting->getProject()->getIsCompleted()) {
+                return $this->redirectToRoute('monitoring_create');
+            }
         }
 
         return $this->render(
             'monitoring-reporting/edit.twig',
-            ['my_form' => $monitoringForm->createView(), 'id' => $id]);
+            [
+                'my_form' => $monitoringForm->createView(),
+                'projectId' => $projectId
+            ]);
     }
 
     /**

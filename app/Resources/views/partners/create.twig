@@ -5,71 +5,66 @@
     {% include 'sub-navbar-ka2.html.twig' with {'active': 'partners'} %}
     <div class="container-fluid">
         <div class="row-fluid">
-        <div class="page-header">
-            <h1>{% trans %}Add Partner{% endtrans %}</h1>
-        </div>
-
-
-        <div class="row">
-            <div class="controls">
-                {{ form_start(my_form) }}
-
-                <!--<div class="col-sm-6">-->
-                    <div class="form-group">
-                        {{ form_label(my_form.institution, 'Institution/Organization'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.institution, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-
-                        {{ form_label(my_form.partnerType, 'Partner type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.partnerType, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-
-                        {{ form_label(my_form.projectCoordinator, 'Project coordinator'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.projectCoordinator, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-
-
-                        {{ form_label(my_form.legalRepresentative, 'Legal representative'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.legalRepresentative, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-
-                        {{ form_label(my_form.isAssociatedPartner, 'Associated partner?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.isAssociatedPartner, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-
-                        {{ form_label(my_form.allDepartments, 'All departments?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.allDepartments, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-
-                        {{ form_label(my_form.teamMembers, 'Team members'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <ul class="team-members" data-prototype="{{ include('/partners/includes/team-members.html.twig',
-                        {'form': my_form.teamMembers.vars.prototype })|e }}">
-                        </ul>
-
-                        <div class="form-inline">
-                            {{ form_widget(my_form.teamDepartments, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-
-                        {{ form_label(my_form.participants, 'Participants'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <ul class="participants" data-prototype="{{ include('/partners/includes/participants.html.twig',
-                        {'form': my_form.participants.vars.prototype })|e }}">
-                        </ul>
-
-                        <div class="form-inline">
-                            {{ form_widget(my_form.submit, { 'label': 'Create'|trans}, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-                    </div>
-                <!--</div>-->
-
-                {{ form_end(my_form) }}
+            <div class="page-header">
+                <h1>{% trans %}Add Partner{% endtrans %}</h1>
             </div>
-        </div>
+
+            <div class="row">
+                <div class="controls resources">
+                    <a href="{{ localizedPath('monitoring_edit', {projectId: projectId}) }}"><button>Back</button></a>
+
+                    {{ form_start(my_form) }}
+
+                        <div class="form-group">
+                            {{ form_label(my_form.institution, 'Institution/Organization'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.institution, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+
+                            {{ form_label(my_form.partnerType, 'Partner type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.partnerType, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+
+                            {{ form_label(my_form.projectCoordinator, 'Project coordinator'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.projectCoordinator, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+
+
+                            {{ form_label(my_form.legalRepresentative, 'Legal representative'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.legalRepresentative, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+
+                            {{ form_label(my_form.isAssociatedPartner, 'Associated partner?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.isAssociatedPartner, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+
+                            {{ form_label(my_form.allDepartments, 'All departments?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.allDepartments, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+
+                            {{ form_label(my_form.teamMembers, 'Team members'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <ul class="team-members" data-prototype="{{ include('/partners/includes/team-members.html.twig',
+                            {'form': my_form.teamMembers.vars.prototype })|e }}">
+                            </ul>
+
+                            <div class="form-inline">
+                                {{ form_widget(my_form.teamDepartments, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+
+                            {{ form_label(my_form.participants, 'Participants'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <ul class="participants" data-prototype="{{ include('/partners/includes/participants.html.twig',
+                            {'form': my_form.participants.vars.prototype })|e }}">
+                            </ul>
+                        </div>
+
+                    {{ form_end(my_form) }}
+                </div>
+            </div>
         </div>
     </div>
 </section>

@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Partners;
+use AppBundle\Entity\Project;
 use AppBundle\Entity\PartnersParticipants;
 use AppBundle\Entity\PartnersTeamMembers;
 use AppBundle\Form\PartnersForm;
@@ -67,20 +68,27 @@ class PartnersController extends AbstractController
             return $this->redirectToRoute('resources_create');
         }
 
-        return $this->render('partners/create.twig', ['my_form' => $partnersForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
+        return $this->render('partners/create.twig',
+            [
+                'my_form' => $partnersForm->createView(),
+                'keyAction' => $project->getKeyActions()->getNameSr(),
+                'projectId' => $project->getId(),
+            ]);
     }
 
     /**
-     * @Route("/{locale}/partners/edit/{id}", name="partner_edit", requirements={"id": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/partners/edit/{projectId}", name="partner_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $projectId)
     {
-        $partners = $this->getPartnersRepository()->findOneBy(['id' => $id]);
+        /** @var Partners $partners */
+        $partners = $this->getPartnersRepository()->findOneBy(['project' => $projectId]);
 
         $partnersForm = $this->createForm(PartnersForm::class, $partners, [
-            'action' => $this->generateUrl('partner_edit', ['id' => $id]),
+            'action' => $this->generateUrl('partner_edit', ['projectId' => $projectId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'isCompleted' => $partners->getProject()->getIsCompleted(),
         ]);
 
         $teamMembers = new ArrayCollection();
@@ -116,10 +124,12 @@ class PartnersController extends AbstractController
 
             $this->getPartnersRepository()->save($partners);
 
-            return $this->redirectToRoute('resource_edit', ['id' => $id]);
+            if (!$partners->getProject()->getIsCompleted()) {
+                return $this->redirectToRoute('resources_create');
+            }
         }
 
-        return $this->render('partners/edit.twig', ['my_form' => $partnersForm->createView(), 'id' => $id]);
+        return $this->render('partners/edit.twig', ['my_form' => $partnersForm->createView(), 'projectId' => $projectId]);
     }
 
     /**

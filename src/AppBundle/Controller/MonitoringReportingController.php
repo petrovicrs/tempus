@@ -13,6 +13,7 @@ use AppBundle\Entity\MonitoringReporting;
 use AppBundle\Entity\ProjectMonitoringReporting;
 use AppBundle\Form\MonitoringReportingForm;
 use AppBundle\Form\ProjectMonitoringReportingForm;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -65,31 +66,51 @@ class MonitoringReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/monitoring/edit/{id}", name="monitoring_edit", requirements={"locale": "%app.locales%", "id": "\d+"})
+     * @Route("/{locale}/monitoring/edit/{projectId}", name="monitoring_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $projectId)
     {
-        $monitoringReporting = $this->getMonitoringReportingRepository()->findOneBy(['id' => $id]);
+        /** @var ProjectMonitoringReporting $projectMonitoringReporting */
+        $projectMonitoringReporting = $this->getProjectMonitoringReportingRepository()->findOneBy(['project' => $projectId]);
 
-        $monitoringForm = $this->createForm(MonitoringReportingForm::class, $monitoringReporting, [
-            'action' => $this->generateUrl('monitoring_edit', ['id' => $id]),
+        $projectMonitoringForm = $this->createForm(ProjectMonitoringReportingForm::class, $projectMonitoringReporting, [
+            'action' => $this->generateUrl('monitoring_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
 
-        $monitoringForm->handleRequest($request);
+        $monitoringReporting = new ArrayCollection();
 
-        if ($monitoringForm->isSubmitted() && $monitoringForm->isValid()) {
+        foreach ($projectMonitoringReporting->getMonitoringReporting() as $monitoring) {
+            $monitoringReporting->add($monitoring);
+        }
 
-            $monitoringReporting->setProject($this->getLastProjectForCurrentUser());
-            $this->getMonitoringReportingRepository()->save($monitoringReporting);
+        $projectMonitoringForm->handleRequest($request);
 
-            return $this->redirectToRoute('partner_edit', ['id' => $id]);
+        if ($projectMonitoringForm->isSubmitted() && $projectMonitoringForm->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($monitoringReporting as $monitoring) {
+                if (false === $projectMonitoringReporting->getMonitoringReporting()->contains($monitoring)) {
+                    $em->remove($monitoring);
+                }
+
+                $this->getMonitoringReportingRepository()->save($monitoring);
+            }
+
+            $this->getProjectMonitoringReportingRepository()->save($projectMonitoringReporting);
+
+            return $this->redirectToRoute('partner_create');
         }
 
         return $this->render(
             'monitoring-reporting/edit.twig',
-            ['my_form' => $monitoringForm->createView(), 'id' => $id]);
+            [
+                'my_form' => $projectMonitoringForm->createView(),
+                'keyAction' => $projectMonitoringReporting->getProject()->getKeyActions()->getNameSr()
+            ]
+        );
     }
 
     /**

@@ -10,7 +10,9 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\MonitoringReporting;
+use AppBundle\Entity\ProjectMonitoringReporting;
 use AppBundle\Form\MonitoringReportingForm;
+use AppBundle\Form\ProjectMonitoringReportingForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,30 +32,36 @@ class MonitoringReportingController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $monitoringReporting = new MonitoringReporting();
+        $projectMonitoringReporting = new ProjectMonitoringReporting();
 
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
-        $monitoringForm = $this->createForm(MonitoringReportingForm::class, $monitoringReporting, [
+        $projectMonitoringForm = $this->createForm(ProjectMonitoringReportingForm::class, $projectMonitoringReporting, [
             'action' => $this->generateUrl('monitoring_create'),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
 
-        $monitoringForm->handleRequest($request);
+        $projectMonitoringForm->handleRequest($request);
 
-        if ($monitoringForm->isSubmitted() && $monitoringForm->isValid()) {
+        if ($projectMonitoringForm->isSubmitted() && $projectMonitoringForm->isValid()) {
 
-            $monitoringReporting->setProject($this->getLastProjectForCurrentUser());
-            $this->getMonitoringReportingRepository()->save($monitoringReporting);
+            $projectMonitoringReporting->setProject($this->getLastProjectForCurrentUser());
+
+            /** @var MonitoringReporting $one */
+            foreach($projectMonitoringReporting->getMonitoringReporting() as $one) {
+                $one->setProjectMonitoringReporting($projectMonitoringReporting);
+            }
+
+            $this->getProjectMonitoringReportingRepository()->save($projectMonitoringReporting);
 
             return $this->redirectToRoute('partner_create');
         }
 
         return $this->render(
             'monitoring-reporting/create.twig',
-            ['my_form' => $monitoringForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
+            ['my_form' => $projectMonitoringForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
     }
 
     /**
@@ -92,6 +100,11 @@ class MonitoringReportingController extends AbstractController
         $monitoring = $this->getMonitoringReportingRepository()->findOneBy(['id' => $id]);
 
         return $this->render('monitoring-reporting/view.twig', ['monitoring' => $monitoring, 'id' => $id]);
+    }
+
+    private function getProjectMonitoringReportingRepository()
+    {
+        return $this->get('doctrine_entity_repository.project_monitoring_reporting');
     }
 
     private function getMonitoringReportingRepository()

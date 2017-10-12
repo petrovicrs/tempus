@@ -2,22 +2,23 @@
 /**
  * Created by PhpStorm.
  * User: nemtish
- * Date: 08.10.17
- * Time: 00:38
+ * Date: 12.10.17
+ * Time: 11:49
  */
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\AbstractAuditable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectResultsRepository")
- * @ORM\Table(name="project_results")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectMonitoringReportingRepository")
+ * @ORM\Table(name="project_monitoring_reporting")
  */
-class ProjectResults extends AbstractAuditable
+class ProjectMonitoringReporting extends AbstractAuditable
 {
     /**
      * @ORM\Id
@@ -32,14 +33,14 @@ class ProjectResults extends AbstractAuditable
     protected $project;
 
     /**
-     * @ORM\OneToMany(targetEntity="Results", mappedBy="projectResults", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MonitoringReporting", mappedBy="projectMonitoringReporting", cascade={"persist"})
      */
-    protected $results;
+    protected $monitoringReporting;
 
     public function __construct()
     {
         parent::__construct();
-        $this->results = new ArrayCollection();
+        $this->monitoringReporting = new ArrayCollection();
     }
 
     /**
@@ -77,16 +78,16 @@ class ProjectResults extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getResults()
+    public function getMonitoringReporting()
     {
-        return $this->results;
+        return $this->monitoringReporting;
     }
 
     /**
-     * @param mixed $results
+     * @param mixed $monitoringReporting
      */
-    public function setResults($results)
+    public function setMonitoringReporting($monitoringReporting)
     {
-        $this->results = $results;
+        $this->monitoringReporting = $monitoringReporting;
     }
 }

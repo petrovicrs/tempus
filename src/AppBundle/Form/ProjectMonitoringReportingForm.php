@@ -10,8 +10,10 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\MonitoringReporting;
+use AppBundle\Entity\ProjectMonitoringReporting;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,7 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MonitoringReportingForm extends AbstractType
+class ProjectMonitoringReportingForm extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -27,16 +29,14 @@ class MonitoringReportingForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('monitoringType', EntityType::class, [
-                'class' => 'AppBundle:ReportingType',
-                'choice_label'  => 'name' . ucfirst($options['locale'])
+            ->add('monitoringReporting', CollectionType::class, [
+                'entry_type'    => MonitoringReportingForm::class,
+                'allow_add'     => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label'        => false
             ])
-            ->add('monitoringDate', DateType::class)
-            ->add('commentType', EntityType::class, [
-                'class' => 'AppBundle:CommentType',
-                'choice_label'  => 'name' . ucfirst($options['locale'])
-            ])
-            ->add('comment', TextareaType::class);
+            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
     }
 
     /**
@@ -52,7 +52,7 @@ class MonitoringReportingForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => MonitoringReporting::class,
+            'data_class' => ProjectMonitoringReporting::class,
         ]);
 
     }

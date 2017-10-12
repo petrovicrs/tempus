@@ -67,7 +67,9 @@ class GroupCalendarController extends AbstractController
                 $this->getEventReminderRepository()->save($reminder);
             }
 
-            return $this->redirectToRoute('group_calendar_list');
+            $this->getProjectRepository()->saveProject($project);
+
+            return $this->redirectToRoute('project_list');
         }
 
         return $this->render('group-calendar/create.twig', ['my_form' => $calendarForm->createView(),

@@ -3,6 +3,6 @@
         <li class="{% if activeRoute('person') %}active{% endif %}"><a href="{{ localizedPath('person_list')}}">Person</a></li>
         <li class="{% if activeRoute('institution') %}active{% endif %}"><a href="{{ localizedPath('institution_list')}}">Institution/Organization</a></li>
         <li class="{% if activeRoute('project') or activeRoute('default') or subNavRoute() %}active{% endif %}"><a href="{{ localizedPath('project_list')}}">Project</a></li>
-        <li class="{% if activeRoute('user_permision') or activeRoute('default') or subNavRoute() %}active{% endif %}"><a href="{{ localizedPath('user_list')}}">Users</a></li>
+        <li class="{% if activeRoute('user-permission') %}active{% endif %}"><a href="{{ localizedPath('user_permission_create')}}">Users</a></li>
     </ul>
 </nav>

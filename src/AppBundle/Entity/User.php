@@ -47,6 +47,15 @@ class User implements UserInterface
      */
     private $plainPassword;
 
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="UserPermission",
+     *      inversedBy="user"
+     * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $permission;
+
 
     /**
      * @ORM\Column(type="json_array")
@@ -146,5 +155,22 @@ class User implements UserInterface
     {
         $this->surname = $surname;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPermission()
+    {
+        return $this->permission;
+    }
+
+    /**
+     * @param mixed $permission
+     */
+    public function setPermission($permission)
+    {
+        $this->permission = $permission;
+    }
+
 
 }

@@ -1,0 +1,15 @@
+<div class="block" style="clear: both;">
+    <div class="col-xs-6">
+        {#{{ form_row(form.question) }}#}
+        {#{% for q in form.question %}#}
+            {#<tr>#}
+                {#{{ dump(q) }}#}
+                {#<td>{{ form_widget(q) }}</td>#}
+                {#<td>{{ color.vars.data.code }}</td>#}
+            {#</tr>#}
+        {#{% endfor %}#}
+    </div>
+    <div class="col-xs-6">
+        {{ form_row(form.answer) }}
+    </div>
+</div>

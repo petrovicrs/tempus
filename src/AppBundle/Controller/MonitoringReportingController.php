@@ -108,8 +108,8 @@ class MonitoringReportingController extends AbstractController
 
             $this->getProjectMonitoringReportingRepository()->save($projectMonitoringReporting);
 
-            if (!$monitoringReporting->getProject()->getIsCompleted()) {
-                return $this->redirectToRoute('monitoring_create');
+            if (!$projectMonitoringReporting->getProject()->getIsCompleted()) {
+                return $this->redirectToRoute('partner_create');
             }
         }
 

@@ -24,35 +24,6 @@ class UserPermission extends AbstractAuditable
      */
     protected $id;
 
-//    /**
-//     * @ORM\ManyToOne(
-//     *      targetEntity="UserProjectPermission",
-//     *      inversedBy="projectPermission",
-//     *      cascade={"persist"}
-//     * )
-//     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
-//     */
-//    protected $userProjectPermission;
-//
-//    /**
-//     * @ORM\ManyToOne(
-//     *      targetEntity="UserInstitutionPermission",
-//     *      inversedBy="institutionPermission",
-//     *      cascade={"persist"}
-//     * )
-//     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
-//     */
-//    protected $userInstitutionPermission;
-
-//    /**
-//     * @ORM\OneToOne(
-//     *      targetEntity="User",
-//     *      mappedBy="permission",
-//     *      cascade={"persist"}
-//     * )
-//     */
-//    protected $user;
-
     /**
      * @ORM\Column(name="people_view", type="boolean", nullable=true)
      */
@@ -343,11 +314,19 @@ class UserPermission extends AbstractAuditable
      */
     protected $newinstitutionCreate;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ExistingProjectPermission", mappedBy="permission", cascade={"persist"})
+     */
+    protected $existingProjectPermission;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ExistingInstitutionPermission", mappedBy="permission", cascade={"persist"})
+     */
+    protected $existingInstitutionPermission;
+
     public function __construct()
     {
         parent::__construct();
-        $this->userInstitutionPermission = new ArrayCollection();
-        $this->userProjectPermission = new ArrayCollection();
     }
 
     /**
@@ -356,38 +335,6 @@ class UserPermission extends AbstractAuditable
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserProjectPermission()
-    {
-        return $this->userProjectPermission;
-    }
-
-//    /**
-//     * @param mixed $userProjectPermission
-//     */
-//    public function setUserProjectPermission($userProjectPermission)
-//    {
-//        $this->userProjectPermission = $userProjectPermission;
-//    }
-//
-//    /**
-//     * @return mixed
-//     */
-//    public function getUserInstitutionPermission()
-//    {
-//        return $this->userInstitutionPermission;
-//    }
-
-    /**
-     * @param mixed $userInstitutionPermission
-     */
-    public function setUserInstitutionPermission($userInstitutionPermission)
-    {
-        $this->userInstitutionPermission = $userInstitutionPermission;
     }
 
     /**
@@ -1318,21 +1265,37 @@ class UserPermission extends AbstractAuditable
         $this->newinstitutionCreate = $newinstitutionCreate;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getUser()
-//    {
-//        return $this->user;
-//    }
-//
-//    /**
-//     * @param mixed $user
-//     */
-//    public function setUser($user)
-//    {
-//        $this->user = $user;
-//    }
+    /**
+     * @return mixed
+     */
+    public function getExistingProjectPermission()
+    {
+        return $this->existingProjectPermission;
+    }
+
+    /**
+     * @param mixed $existingProjectPermission
+     */
+    public function setExistingProjectPermission($existingProjectPermission)
+    {
+        $this->existingProjectPermission = $existingProjectPermission;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExistingInstitutionPermission()
+    {
+        return $this->existingInstitutionPermission;
+    }
+
+    /**
+     * @param mixed $existingInstitutionPermission
+     */
+    public function setExistingInstitutionPermission($existingInstitutionPermission)
+    {
+        $this->existingInstitutionPermission = $existingInstitutionPermission;
+    }
 
 }
 

@@ -8,6 +8,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\ExistingInstitutionPermission;
+use AppBundle\Entity\ExistingProjectPermission;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\UserPermission;
 use AppBundle\Entity\Results;
@@ -51,7 +53,24 @@ class UserPermissionController extends AbstractController
 //                $result->setProjectResults($projectResults);
 //            }
             //$userPermission->setUser(1);
+
             $this->getUserPermissionRepository()->save($userPermission);
+
+            /** @var ExistingProjectPermission $projectPermission */
+            foreach($userPermission->getExistingProjectPermission() as $projectPermission) {
+                $projectPermission->setUser($this->getUser());
+                $projectPermission->setPermission($userPermission);
+
+                $this->getExistingProjectPermissionRepository()->save($projectPermission);
+            }
+
+            /** @var ExistingInstitutionPermission $institutionPermission */
+            foreach($userPermission->getExistingInstitutionPermission() as $institutionPermission) {
+                $institutionPermission->setUser($this->getUser());
+                $institutionPermission->setPermission($userPermission);
+
+                $this->getExistingInstitutionPermissionRepository()->save($institutionPermission);
+            }
 
             return $this->redirectToRoute('project_list');
         }
@@ -128,13 +147,12 @@ class UserPermissionController extends AbstractController
         return $this->get('doctrine_entity_repository.user_permission');
     }
 
-    private function getUserProjectPermissionRepository()
+    private function getExistingProjectPermissionRepository()
     {
-        return $this->get('doctrine_entity_repository.user_project_permission');
+        return $this->get('doctrine_entity_repository.existing_project_permission');
     }
-
-    private function getUserInstitutionPermissionRepository() {
-
-        return $this->get('doctrine_entity_repository.user_institution_permission');
+    private function getExistingInstitutionPermissionRepository()
+    {
+        return $this->get('doctrine_entity_repository.existing_institution_permission');
     }
 }

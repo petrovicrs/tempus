@@ -11,7 +11,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\MonitoringReporting;
 use AppBundle\Entity\Project;
+use AppBundle\Entity\ProjectMonitoringReporting;
 use AppBundle\Form\MonitoringReportingForm;
+use AppBundle\Form\ProjectMonitoringReportingForm;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -31,23 +34,29 @@ class MonitoringReportingController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $monitoringReporting = new MonitoringReporting();
+        $projectMonitoringReporting = new ProjectMonitoringReporting();
 
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
-        $monitoringForm = $this->createForm(MonitoringReportingForm::class, $monitoringReporting, [
+        $projectMonitoringForm = $this->createForm(ProjectMonitoringReportingForm::class, $projectMonitoringReporting, [
             'action' => $this->generateUrl('monitoring_create'),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
 
-        $monitoringForm->handleRequest($request);
+        $projectMonitoringForm->handleRequest($request);
 
-        if ($monitoringForm->isSubmitted() && $monitoringForm->isValid()) {
+        if ($projectMonitoringForm->isSubmitted() && $projectMonitoringForm->isValid()) {
 
-            $monitoringReporting->setProject($this->getLastProjectForCurrentUser());
-            $this->getMonitoringReportingRepository()->save($monitoringReporting);
+            $projectMonitoringReporting->setProject($this->getLastProjectForCurrentUser());
+
+            /** @var MonitoringReporting $one */
+            foreach($projectMonitoringReporting->getMonitoringReporting() as $one) {
+                $one->setProjectMonitoringReporting($projectMonitoringReporting);
+            }
+
+            $this->getProjectMonitoringReportingRepository()->save($projectMonitoringReporting);
 
             return $this->redirectToRoute('partner_create');
         }
@@ -55,10 +64,11 @@ class MonitoringReportingController extends AbstractController
         return $this->render(
             'monitoring-reporting/create.twig',
             [
-                'my_form' => $monitoringForm->createView(),
+                'my_form' => $projectMonitoringForm->createView(),
                 'keyAction' => $project->getKeyActions()->getNameSr(),
                 'projectId' => $project->getId(),
-            ]);
+            ]
+        );
     }
 
     /**
@@ -66,23 +76,37 @@ class MonitoringReportingController extends AbstractController
      */
     public function editAction(Request $request, $projectId)
     {
-        /** @var MonitoringReporting $monitoringReporting */
-        $monitoringReporting = $this->getMonitoringReportingRepository()->findOneBy(['project' => $projectId]);
+        /** @var ProjectMonitoringReporting $projectMonitoringReporting */
+        $projectMonitoringReporting = $this->getProjectMonitoringReportingRepository()->findOneBy(['project' => $projectId]);
 
-
-        $monitoringForm = $this->createForm(MonitoringReportingForm::class, $monitoringReporting, [
+        $projectMonitoringForm = $this->createForm(ProjectMonitoringReportingForm::class, $projectMonitoringReporting, [
             'action' => $this->generateUrl('monitoring_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale(),
-            'isCompleted' => $monitoringReporting->getProject()->getIsCompleted(),
+            'isCompleted' => $projectMonitoringReporting->getProject()->getIsCompleted(),
         ]);
 
-        $monitoringForm->handleRequest($request);
+        $monitoringReporting = new ArrayCollection();
 
-        if ($monitoringForm->isSubmitted() && $monitoringForm->isValid()) {
+        foreach ($projectMonitoringReporting->getMonitoringReporting() as $monitoring) {
+            $monitoringReporting->add($monitoring);
+        }
 
-            $monitoringReporting->setProject($this->getLastProjectForCurrentUser());
-            $this->getMonitoringReportingRepository()->save($monitoringReporting);
+        $projectMonitoringForm->handleRequest($request);
+
+        if ($projectMonitoringForm->isSubmitted() && $projectMonitoringForm->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($monitoringReporting as $monitoring) {
+                if (false === $projectMonitoringReporting->getMonitoringReporting()->contains($monitoring)) {
+                    $em->remove($monitoring);
+                }
+
+                $this->getMonitoringReportingRepository()->save($monitoring);
+            }
+
+            $this->getProjectMonitoringReportingRepository()->save($projectMonitoringReporting);
 
             if (!$monitoringReporting->getProject()->getIsCompleted()) {
                 return $this->redirectToRoute('monitoring_create');
@@ -92,9 +116,11 @@ class MonitoringReportingController extends AbstractController
         return $this->render(
             'monitoring-reporting/edit.twig',
             [
-                'my_form' => $monitoringForm->createView(),
-                'projectId' => $projectId
-            ]);
+                'my_form' => $projectMonitoringForm->createView(),
+                'keyAction' => $projectMonitoringReporting->getProject()->getKeyActions()->getNameSr(),
+                'projectId' => $projectId,
+            ]
+        );
     }
 
     /**
@@ -105,6 +131,11 @@ class MonitoringReportingController extends AbstractController
         $monitoring = $this->getMonitoringReportingRepository()->findOneBy(['id' => $id]);
 
         return $this->render('monitoring-reporting/view.twig', ['monitoring' => $monitoring, 'id' => $id]);
+    }
+
+    private function getProjectMonitoringReportingRepository()
+    {
+        return $this->get('doctrine_entity_repository.project_monitoring_reporting');
     }
 
     private function getMonitoringReportingRepository()

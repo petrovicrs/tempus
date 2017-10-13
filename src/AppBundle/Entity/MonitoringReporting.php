@@ -28,9 +28,10 @@ class MonitoringReporting extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProjectMonitoringReporting", inversedBy="monitoringReporting")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    protected $project;
+    protected $projectMonitoringReporting;
 
     /**
      * @ORM\ManyToOne(targetEntity="ReportingType")
@@ -72,17 +73,17 @@ class MonitoringReporting extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getProject()
+    public function getProjectMonitoringReporting()
     {
-        return $this->project;
+        return $this->projectMonitoringReporting;
     }
 
     /**
-     * @param mixed $project
+     * @param mixed $projectMonitoringReporting
      */
-    public function setProject($project)
+    public function setProjectMonitoringReporting($projectMonitoringReporting)
     {
-        $this->project = $project;
+        $this->projectMonitoringReporting = $projectMonitoringReporting;
     }
 
     /**

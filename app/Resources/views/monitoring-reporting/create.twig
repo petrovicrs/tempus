@@ -1,50 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <script type="text/javascript" src="{{ asset('/js/monitoring-reporting.js')}}"></script>
     <section id="main">
-    {% include 'sub-navbar-ka2.html.twig' with {'active': 'monitoring'} %}
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar.html.twig' with {'active': 'monitoring'} %}
+    {% endif %}
+    {%  if keyAction == 'ka2' %}
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'monitoring'} %}
+    {% endif %}
     <div class="container-fluid">
         <div class="row">
-            <div class="controls resources">
+            <div class="controls monitoring">
                 <a href="{{ localizedPath('project_ka2_edit', {projectId: projectId}) }}"><button>Back</button></a>
                 <div class="col-sm-12">
                     {{ form_start(my_form) }}
                         <h2>{% trans %}Add Monitoring{% endtrans %}</h2>
 
                         <div class="form-group">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="col-xs-3">
-                                        {{ form_label(my_form.monitoringType, 'Monitoring type'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                        <div class="form">
-                                            {{ form_widget(my_form.monitoringType, {'attr': {'class': 'form-control'}})  }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12">
-                                    <div class="col-xs-3">
-                                        {{ form_label(my_form.monitoringDate, 'Monitoring date'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                        <div class="form">
-                                            {{ form_widget(my_form.monitoringDate)  }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-12">
-                                    <div class="col-xs-3">
-                                        {{ form_label(my_form.commentType, 'Comment type'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                        <div class="form">
-                                            {{ form_widget(my_form.commentType, {'attr': {'class': 'form-control'}})  }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12">
-                                    {{ form_label(my_form.comment, 'Comment'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                                    <div class="form">
-                                        {{ form_widget(my_form.comment, {'attr': {'class': 'form-control'}})  }}
-                                    </div>
-                                </div>
-                            </div>
+                            <ul class="monitoring-reporting" data-purpose="create" data-prototype="{{include('monitoring-reporting/includes/details.html.twig',
+                            {'my_form': my_form.monitoringReporting.vars.prototype })|e}}">
+                            </ul>
                         </div>
                     {{ form_end(my_form) }}
                 </div>

@@ -313,6 +313,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\Questions
+    doctrine_entity_repository.project_monitoring_reporting:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectMonitoringReporting
     doctrine_entity_repository.monitoring_reporting:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

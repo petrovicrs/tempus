@@ -50,7 +50,7 @@ class ResourcesController extends AbstractController
         $projectResourcesForm = $this->createForm(ProjectResourcesForm::class, $projectResources, [
             'action' => $this->generateUrl('resources_create'),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
         ]);
 
         $projectResourcesForm->handleRequest($request);
@@ -88,7 +88,8 @@ class ResourcesController extends AbstractController
         $projectResourceForm = $this->createForm(ProjectResourcesForm::class, $projectResources, [
             'action' => $this->generateUrl('resource_edit', ['projectId' => $projectId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'isCompleted' => $project->getIsCompleted(),
         ]);
 
         $projectResourceForm->handleRequest($request);
@@ -100,13 +101,17 @@ class ResourcesController extends AbstractController
 
             }
 
-            if (!$projectResources->getProject()->getIsCompleted()) {
+            if (!$project->getIsCompleted()) {
                 return $this->redirectToRoute('intelectual_outputs_create');
             }
         }
 
-        return $this->render('resources/edit.twig', ['my_form' => $projectResourceForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr()]);
+        return $this->render('resources/edit.twig',
+            [
+                'my_form' => $projectResourceForm->createView(),
+                'keyAction' => $project->getKeyActions()->getNameSr(),
+                'projectId' => $project->getId(),
+            ]);
     }
 
     /**

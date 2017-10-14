@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\MonitoringReporting;
+use AppBundle\Entity\Project;
 use AppBundle\Entity\ProjectMonitoringReporting;
 use AppBundle\Form\MonitoringReportingForm;
 use AppBundle\Form\ProjectMonitoringReportingForm;
@@ -62,7 +63,12 @@ class MonitoringReportingController extends AbstractController
 
         return $this->render(
             'monitoring-reporting/create.twig',
-            ['my_form' => $projectMonitoringForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
+            [
+                'my_form' => $projectMonitoringForm->createView(),
+                'keyAction' => $project->getKeyActions()->getNameSr(),
+                'projectId' => $project->getId(),
+            ]
+        );
     }
 
     /**
@@ -76,7 +82,8 @@ class MonitoringReportingController extends AbstractController
         $projectMonitoringForm = $this->createForm(ProjectMonitoringReportingForm::class, $projectMonitoringReporting, [
             'action' => $this->generateUrl('monitoring_edit', ['projectId' => $projectId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'isCompleted' => $projectMonitoringReporting->getProject()->getIsCompleted(),
         ]);
 
         $monitoringReporting = new ArrayCollection();
@@ -101,14 +108,17 @@ class MonitoringReportingController extends AbstractController
 
             $this->getProjectMonitoringReportingRepository()->save($projectMonitoringReporting);
 
-            return $this->redirectToRoute('partner_create');
+            if (!$projectMonitoringReporting->getProject()->getIsCompleted()) {
+                return $this->redirectToRoute('partner_create');
+            }
         }
 
         return $this->render(
             'monitoring-reporting/edit.twig',
             [
                 'my_form' => $projectMonitoringForm->createView(),
-                'keyAction' => $projectMonitoringReporting->getProject()->getKeyActions()->getNameSr()
+                'keyAction' => $projectMonitoringReporting->getProject()->getKeyActions()->getNameSr(),
+                'projectId' => $projectId,
             ]
         );
     }

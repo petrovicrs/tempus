@@ -2,10 +2,11 @@
 
 {% block body %}
     <section id="main">
-    {% include 'sub-navbar.html.twig' with {'active': 'monitoring'} %}
+    {% include 'sub-navbar-ka2.html.twig' with {'active': 'monitoring'} %}
     <div class="container-fluid">
         <div class="row">
             <div class="controls resources">
+                <a href="{{ localizedPath('project_ka2_edit', {projectId: projectId}) }}"><button>Back</button></a>
                 <div class="col-sm-12">
                     {{ form_start(my_form) }}
                     <h2>{% trans %}Edit Monitoring{% endtrans %}</h2>
@@ -19,7 +20,6 @@
                     </div>
                     {{ form_end(my_form) }}
                 </div>
-
             </div>
         </div>
     </div>

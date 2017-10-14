@@ -37,6 +37,12 @@ class MonitoringReportingForm extends AbstractType
                 'choice_label'  => 'name' . ucfirst($options['locale'])
             ])
             ->add('comment', TextareaType::class);
+            if ($options['isCompleted']) {
+                $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
+            }
+            else {
+                $builder->add('submit', SubmitType::class, array('label_format' => 'Next'));
+            }
     }
 
     /**
@@ -53,6 +59,7 @@ class MonitoringReportingForm extends AbstractType
         $resolver->setDefaults([
             'locale' => 'en',
             'data_class' => MonitoringReporting::class,
+            'isCompleted' => 0,
         ]);
 
     }

@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Partners;
+use AppBundle\Entity\Project;
 use AppBundle\Entity\PartnersParticipants;
 use AppBundle\Entity\PartnersTeamMembers;
 use AppBundle\Entity\Project;
@@ -76,7 +77,8 @@ class PartnersController extends AbstractController
         return $this->render('partners/create.twig',
             [
                 'my_form' => $projectPartnersForm->createView(),
-                'keyAction' => $project->getKeyActions()->getNameSr()
+                'keyAction' => $project->getKeyActions()->getNameSr(),
+                'projectId' => $project->getId()
             ]
         );
     }
@@ -91,7 +93,8 @@ class PartnersController extends AbstractController
         $projectPartnersForm = $this->createForm(ProjectPartnersForm::class, $projectPartners, [
             'action' => $this->generateUrl('partner_edit', ['projectId' => $projectId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'isCompleted' => $projectPartners->getProject()->getIsCompleted(),
         ]);
 
         $partners = new ArrayCollection();
@@ -141,7 +144,9 @@ class PartnersController extends AbstractController
 
             $this->getProjectPartnersRepository()->save($partners);
 
-            return $this->redirectToRoute('resource_edit', ['id' => $projectId]);
+            if (!$partners->getProject()->getIsCompleted()) {
+                return $this->redirectToRoute('resources_create');
+            }
         }
 
         return $this->render('partners/edit.twig', ['my_form' => $projectPartnersForm->createView(), 'projectId' => $projectId]);

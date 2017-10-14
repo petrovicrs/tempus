@@ -38,10 +38,10 @@ class PartnersParticipants
     protected $participant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Partners", inversedBy="participants")
+     * @ORM\ManyToOne(targetEntity="ProjectPartners", inversedBy="participants")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    protected $partners;
+    protected $projectPartners;
 
     /**
      * @return mixed
@@ -94,16 +94,16 @@ class PartnersParticipants
     /**
      * @return mixed
      */
-    public function getPartners()
+    public function getProjectPartners()
     {
-        return $this->partners;
+        return $this->projectPartners;
     }
 
     /**
-     * @param mixed $partners
+     * @param mixed $projectPartners
      */
-    public function setPartners($partners)
+    public function setProjectPartners($projectPartners)
     {
-        $this->partners = $partners;
+        $this->projectPartners = $projectPartners;
     }
 }

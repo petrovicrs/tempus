@@ -11,11 +11,11 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Partners;
 use AppBundle\Entity\PartnersParticipants;
 use AppBundle\Entity\PartnersTeamMembers;
-use AppBundle\Form\PartnersForm;
+use AppBundle\Entity\Project;
+use AppBundle\Entity\ProjectPartners;
+use AppBundle\Form\ProjectPartnersForm;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
 class PartnersController extends AbstractController
@@ -34,92 +34,117 @@ class PartnersController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $partners = new Partners();
+        $projectPartners = new ProjectPartners();
 
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
-        $partnersForm = $this->createForm(PartnersForm::class, $partners, [
+        $projectPartnersForm = $this->createForm(ProjectPartnersForm::class, $projectPartners, [
             'action' => $this->generateUrl('partner_create'),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
 
-        $partnersForm->handleRequest($request);
+        $projectPartnersForm->handleRequest($request);
 
-        if ($partnersForm->isSubmitted() && $partnersForm->isValid()) {
-            $partners->setProject($this->getLastProjectForCurrentUser());
+        if ($projectPartnersForm->isSubmitted() && $projectPartnersForm->isValid()) {
 
-            $this->getPartnersRepository()->save($partners);
+            $projectPartners->setProject($this->getLastProjectForCurrentUser());
 
-            /** @var PartnersTeamMembers $member */
-            foreach($partners->getTeamMembers() as $member){
-                $member->setPartners($partners);
-                $this->getPartnersTeamMembersRepository()->save($member);
+            /** @var Partners $partner */
+            foreach ($projectPartners->getPartners() as $partner) {
+
+                $partner->setProjectPartners($projectPartners);
+
+                /** @var PartnersTeamMembers $member */
+                foreach($partner->getTeamMembers() as $member){
+                    $member->setPartners($partner);
+//                    $this->getPartnersTeamMembersRepository()->save($member);
+                }
             }
 
             /** @var PartnersParticipants $participant */
-            foreach($partners->getParticipants() as $participant){
-                $participant->setPartners($partners);
-                $this->getPartnersParticipantsRepository()->save($participant);
+            foreach($projectPartners->getParticipants() as $participant){
+                $participant->setProjectPartners($projectPartners);
             }
+
+            $this->getProjectPartnersRepository()->save($projectPartners);
 
             return $this->redirectToRoute('resources_create');
         }
 
-        return $this->render('partners/create.twig', ['my_form' => $partnersForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
+        return $this->render('partners/create.twig',
+            [
+                'my_form' => $projectPartnersForm->createView(),
+                'keyAction' => $project->getKeyActions()->getNameSr()
+            ]
+        );
     }
 
     /**
-     * @Route("/{locale}/partners/edit/{id}", name="partner_edit", requirements={"id": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/partners/edit/{projectId}", name="partner_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $projectId)
     {
-        $partners = $this->getPartnersRepository()->findOneBy(['id' => $id]);
+        $projectPartners = $this->getProjectPartnersRepository()->findOneBy(['project' => $projectId]);
 
-        $partnersForm = $this->createForm(PartnersForm::class, $partners, [
-            'action' => $this->generateUrl('partner_edit', ['id' => $id]),
+        $projectPartnersForm = $this->createForm(ProjectPartnersForm::class, $projectPartners, [
+            'action' => $this->generateUrl('partner_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
 
-        $teamMembers = new ArrayCollection();
+        $partners = new ArrayCollection();
         $participants = new ArrayCollection();
+        $teamMembers = new ArrayCollection();
 
-        foreach ($partners->getTeamMembers() as $member) {
-            $teamMembers->add($member);
+        /** @var Partners $partner */
+        foreach ($projectPartners->getPartners() as $partner) {
+            $partners->add($partner);
+
+            foreach ($partner->getTeamMembers() as $member) {
+                $teamMembers->add($member);
+            }
         }
 
-        foreach ($partners->getParticipants() as $participant) {
+        foreach ($projectPartners->getParticipants() as $participant) {
             $participants->add($participant);
         }
 
-        $partnersForm->handleRequest($request);
+        $projectPartnersForm->handleRequest($request);
 
-        if ($partnersForm->isSubmitted() && $partnersForm->isValid()) {
+        if ($projectPartnersForm->isSubmitted() && $projectPartnersForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
 
-            /** @var PartnersTeamMembers $member */
-            foreach($teamMembers as $member){
-                if(false === $partners->getTeamMembers()->contains($member)) {
-                    $em->remove($member);
+            foreach ($partners as $partner) {
+                if(false === $projectPartners->getPartners()->contains($partner)) {
+                    $em->remove($partner);
                 }
+
+                /** @var PartnersTeamMembers $member */
+                foreach($teamMembers as $member){
+                    if(false === $partner->getTeamMembers()->contains($member)) {
+                        $em->remove($member);
+                    }
+                }
+
+                $this->getPartnersRepository()->save($partners);
             }
 
             /** @var PartnersParticipants $participant */
             foreach($participants as $participant){
-                if(false === $partners->getParticipants()->contains($participant)) {
+                if(false === $projectPartners->getParticipants()->contains($participant)) {
                     $em->remove($participant);
                 }
             }
 
-            $this->getPartnersRepository()->save($partners);
+            $this->getProjectPartnersRepository()->save($partners);
 
-            return $this->redirectToRoute('resource_edit', ['id' => $id]);
+            return $this->redirectToRoute('resource_edit', ['id' => $projectId]);
         }
 
-        return $this->render('partners/edit.twig', ['my_form' => $partnersForm->createView(), 'id' => $id]);
+        return $this->render('partners/edit.twig', ['my_form' => $projectPartnersForm->createView(), 'projectId' => $projectId]);
     }
 
     /**
@@ -132,6 +157,11 @@ class PartnersController extends AbstractController
         $participants = $this->get('doctrine_entity_repository.partners_participants')->findBy(['partners' => $id]);
 
         return $this->render('partners/view.twig', ['partner' => $partner, 'teamMembers' => $teamMembers, 'participants' => $participants]);
+    }
+
+    private function getProjectPartnersRepository()
+    {
+        return $this->get('doctrine_entity_repository.project_partners');
     }
 
     private function getPartnersRepository()

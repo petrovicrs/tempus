@@ -46,6 +46,7 @@ class PartnersForm extends AbstractType
                 }
             ])
             ->add('isAssociatedPartner', CheckboxType::class, array('required' => false))
+            ->add('budget')
             ->add('isWithoutTeam', CheckboxType::class, array('required' => false))
             ->add('allDepartments', CheckboxType::class, array('required' => false))
             ->add('teamMembers', CollectionType::class, array(
@@ -60,15 +61,7 @@ class PartnersForm extends AbstractType
                 'choice_label' => 'name' . ucfirst($options['locale']),
                 'expanded' => true,
                 'multiple' => true
-            ))
-            ->add('participants', CollectionType::class, array(
-                'entry_type'   => PartnersParticipantsForm::class,
-                'allow_add' => true,
-                'by_reference' => false,
-                'allow_delete' => true,
-                'label' => false
-            ))
-            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
+            ));
     }
 
     /**

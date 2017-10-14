@@ -1,61 +1,27 @@
 
+var $addParticipantsLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
+var $addParticipantsLinkDiv = $('<li></li>').append($addParticipantsLink);
+
 jQuery(document).ready(function() {
-    loadPartners();
-});
-
-function loadPartners() {
-
-    var $addPartnersLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
-    var $addPartnersLinkDiv = $('<li></li>').append($addPartnersLink);
-
     // Get the ul that holds the collection of tags
-    var $collectionPartnersHolder = $('ul.partners');
+    var $collectionParticipantsHolder = $('ul.participants');
 
     // add a delete link to all of the existing tag form li elements
-    $collectionPartnersHolder.find('li').each(function() {
+    $collectionParticipantsHolder.find('li').each(function() {
         $addFormDeleteLink($(this));
     });
 
     // add the "add a tag" anchor and li to the tags ul
-    $collectionPartnersHolder.append($addPartnersLinkDiv);
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionPartnersHolder.data('index', $collectionPartnersHolder.find(':input').length);
+    $collectionParticipantsHolder.append($addParticipantsLinkDiv);
+    $collectionParticipantsHolder.data('index', $collectionParticipantsHolder.find(':input').length);
 
-    $addPartnersLink.on('click', function(e) {
+    $addParticipantsLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
-
         // add a new tag form (see code block below)
-        $addForm($collectionPartnersHolder, $addPartnersLinkDiv);
-
-        loadTeamMembers();
+        $addForm($collectionParticipantsHolder, $addParticipantsLinkDiv);
     });
-}
-
-function loadTeamMembers() {
-
-    var $addTeamMembersLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
-    var $addTeamMembersLinkDiv = $('<li></li>').append($addTeamMembersLink);
-
-    var $collectionTeamMembersHolder = $('ul.team-members');
-
-
-    $collectionTeamMembersHolder.find('li').each(function() {
-        $addFormDeleteLink($(this));
-    });
-
-    $collectionTeamMembersHolder.append($addTeamMembersLinkDiv);
-    $collectionTeamMembersHolder.data('index', $collectionTeamMembersHolder.find(':input').length);
-
-    $addTeamMembersLink.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
-
-        // add a new tag form (see code block below)
-        $addForm($collectionTeamMembersHolder, $addTeamMembersLinkDiv);
-    });
-}
+});
 
 function $addFormDeleteLink($formDiv) {
     var $removeFormA = $('<a href="#">delete</a>');

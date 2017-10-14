@@ -323,6 +323,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\MonitoringReporting
+    doctrine_entity_repository.project_partners:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectPartners
     doctrine_entity_repository.partners:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

@@ -28,9 +28,10 @@ class Partners extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\ManyToOne(targetEntity="ProjectPartners", inversedBy="partners")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    protected $project;
+    protected $projectPartners;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Institution")
@@ -58,6 +59,11 @@ class Partners extends AbstractAuditable
     protected $isAssociatedPartner;
 
     /**
+     * @ORM\Column(name="budget", type="string", length=64)
+     */
+    protected $budget;
+
+    /**
      * @ORM\Column(name="is_without_team", type="boolean")
      */
     protected $isWithoutTeam;
@@ -77,16 +83,10 @@ class Partners extends AbstractAuditable
      */
     protected $teamDepartments;
 
-    /**
-     * @ORM\OneToMany(targetEntity="PartnersParticipants", mappedBy="partners", cascade={"persist"})
-     */
-    protected $participants;
-
     public function __construct()
     {
         parent::__construct();
         $this->teamMembers = new ArrayCollection();
-        $this->participants = new ArrayCollection();
     }
 
     /**
@@ -108,17 +108,17 @@ class Partners extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getProject()
+    public function getProjectPartners()
     {
-        return $this->project;
+        return $this->projectPartners;
     }
 
     /**
-     * @param mixed $project
+     * @param mixed $projectPartners
      */
-    public function setProject($project)
+    public function setProjectPartners($projectPartners)
     {
-        $this->project = $project;
+        $this->projectPartners = $projectPartners;
     }
 
     /**
@@ -204,7 +204,23 @@ class Partners extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getisWithoutTeam()
+    public function getBudget()
+    {
+        return $this->budget;
+    }
+
+    /**
+     * @param mixed $budget
+     */
+    public function setBudget($budget)
+    {
+        $this->budget = $budget;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsWithoutTeam()
     {
         return $this->isWithoutTeam;
     }
@@ -231,16 +247,6 @@ class Partners extends AbstractAuditable
     public function setTeamMembers($teamMembers)
     {
         $this->teamMembers = $teamMembers;
-    }
-
-    public function addTeamMembers(PartnersTeamMembers $teamMember)
-    {
-        $this->teamMembers->add($teamMember);
-    }
-
-    public function removeTeamMembers(PartnersTeamMembers $teamMember)
-    {
-        $this->teamMembers->removeElement($teamMember);
     }
 
     /**
@@ -273,32 +279,6 @@ class Partners extends AbstractAuditable
     public function setTeamDepartments($teamDepartments)
     {
         $this->teamDepartments = $teamDepartments;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getParticipants()
-    {
-        return $this->participants;
-    }
-
-    /**
-     * @param mixed $participants
-     */
-    public function setParticipants($participants)
-    {
-        $this->participants = $participants;
-    }
-
-    public function addParticipants(PartnersParticipants $participant)
-    {
-        $this->participants->add($participant);
-    }
-
-    public function removeParticipants(PartnersParticipants $participant)
-    {
-        $this->participants->removeElement($participant);
     }
 
     public function __toString() {

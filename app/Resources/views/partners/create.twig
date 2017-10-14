@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <script type="text/javascript" src="{{ asset('/js/partners.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/participants.js')}}" ></script>
 <section id="main">
     {% include 'sub-navbar-ka2.html.twig' with {'active': 'partners'} %}
     <div class="container-fluid">
@@ -15,56 +16,26 @@
                 {{ form_start(my_form) }}
 
                 <!--<div class="col-sm-6">-->
-                    <div class="form-group">
-                        {{ form_label(my_form.institution, 'Institution/Organization'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.institution, {'attr': {'class': 'form-control'}})  }}
+
+
+                        <div class="col-xs-12">
+                            {{ form_label(my_form.partners, 'Partners'|trans, {'label_attr': {'class': 'control-label col-xs-12'}}) }}
+                            <ul class="partners" data-prototype="{{ include('/partners/includes/partners.html.twig',
+                            {'my_form': my_form.partners.vars.prototype })|e }}">
+                            </ul>
                         </div>
 
-                        {{ form_label(my_form.partnerType, 'Partner type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.partnerType, {'attr': {'class': 'form-control'}})  }}
+                        <div class="col-xs-12">
+                            {{ form_label(my_form.participants, 'Participants'|trans, {'label_attr': {'class': 'control-label col-xs-12'}}) }}
+                            <ul class="participants" data-prototype="{{ include('/partners/includes/participants.html.twig',
+                            {'my_form': my_form.participants.vars.prototype })|e }}">
+                            </ul>
                         </div>
 
-                        {{ form_label(my_form.projectCoordinator, 'Project coordinator'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
-                            {{ form_widget(my_form.projectCoordinator, {'attr': {'class': 'form-control'}})  }}
+                            {{ form_widget(my_form.submit, { 'label': 'Next'|trans}, {'attr': {'class': 'form-control'}})  }}
                         </div>
 
-
-                        {{ form_label(my_form.legalRepresentative, 'Legal representative'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.legalRepresentative, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-
-                        {{ form_label(my_form.isAssociatedPartner, 'Associated partner?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.isAssociatedPartner, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-
-                        {{ form_label(my_form.allDepartments, 'All departments?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.allDepartments, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-
-                        {{ form_label(my_form.teamMembers, 'Team members'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <ul class="team-members" data-prototype="{{ include('/partners/includes/team-members.html.twig',
-                        {'form': my_form.teamMembers.vars.prototype })|e }}">
-                        </ul>
-
-                        <div class="form-inline">
-                            {{ form_widget(my_form.teamDepartments, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-
-                        {{ form_label(my_form.participants, 'Participants'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <ul class="participants" data-prototype="{{ include('/partners/includes/participants.html.twig',
-                        {'form': my_form.participants.vars.prototype })|e }}">
-                        </ul>
-
-                        <div class="form-inline">
-                            {{ form_widget(my_form.submit, { 'label': 'Create'|trans}, {'attr': {'class': 'form-control'}})  }}
-                        </div>
-                    </div>
                 <!--</div>-->
 
                 {{ form_end(my_form) }}

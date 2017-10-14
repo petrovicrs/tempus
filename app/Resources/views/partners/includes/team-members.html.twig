@@ -1,21 +1,21 @@
 <div class="block" style="clear: both;">
-    {{ form_label(my_form.isWithoutTeam, 'Without team?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
     <div class="form-inline">
+        {{ form_label(my_form.isWithoutTeam, 'Without team?'|trans, {'label_attr': {'class': 'control-label'}}) }}
         {{ form_widget(my_form.isWithoutTeam, {'attr': {'class': 'form-control'}})  }}
     </div>
 
-    {{ form_label(form.memberPosition, 'Member position'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
     <div class="form-inline">
+        {{ form_label(form.memberPosition, 'Member position'|trans, {'label_attr': {'class': 'control-label'}}) }}
         {{ form_widget(form.memberPosition, {'attr': {'class': 'form-control'}})  }}
     </div>
 
-    {{ form_label(form.member, 'Team member'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
     <div class="form-inline">
+        {{ form_label(form.member, 'Team member'|trans, {'label_attr': {'class': 'control-label'}}) }}
         {{ form_widget(form.member, {'attr': {'class': 'form-control'}})  }}
     </div>
 
-    {{ form_label(form.budget, 'Budget'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
     <div class="form-inline">
+        {{ form_label(form.budget, 'Budget'|trans, {'label_attr': {'class': 'control-label'}}) }}
         {{ form_widget(form.budget, {'attr': {'class': 'form-control'}})  }}
     </div>
 </div>

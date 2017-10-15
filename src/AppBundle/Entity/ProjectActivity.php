@@ -20,13 +20,6 @@ class ProjectActivity extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\Column(name="project_id", type="string")
-     */
-    protected $projectId;
-
-
-    /**
      * @ORM\Column(name="title_sr", type="string")
      */
     protected $titleSr;
@@ -62,17 +55,25 @@ class ProjectActivity extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="ProjectActivity"
+     *      targetEntity="Institution"
      * )
      */
     protected $activityFrom;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="ProjectActivity"
+     *      targetEntity="AppBundle\Entity\Institution"
      * )
      */
     protected $activityTo;
+
+    /**
+     * @ORM\ManyToOne(
+     *     targetEntity="AppBundle\Entity\ProjectDeliverablesActivities", inversedBy="activities"
+     * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $projectDeliverablesActivities;
 
     /**
      * @return mixed
@@ -88,22 +89,6 @@ class ProjectActivity extends AbstractAuditable
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProjectId()
-    {
-        return $this->projectId;
-    }
-
-    /**
-     * @param mixed $projectId
-     */
-    public function setProjectId($projectId)
-    {
-        $this->projectId = $projectId;
     }
 
     /**
@@ -232,6 +217,22 @@ class ProjectActivity extends AbstractAuditable
     public function setActivityTo($activityTo)
     {
         $this->activityTo = $activityTo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectDeliverablesActivities()
+    {
+        return $this->projectDeliverablesActivities;
+    }
+
+    /**
+     * @param mixed $projectDeliverablesActivities
+     */
+    public function setProjectDeliverablesActivities($projectDeliverablesActivities)
+    {
+        $this->projectDeliverablesActivities = $projectDeliverablesActivities;
     }
 
     /**

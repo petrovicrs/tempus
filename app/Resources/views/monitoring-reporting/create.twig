@@ -12,10 +12,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="controls monitoring">
-                <a href="{{ localizedPath('project_ka2_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                <a href="{{ localizedPath('deliverables_edit', {projectId: projectId}) }}"><button>Back</button></a>
                 <div class="col-sm-12">
                     {{ form_start(my_form) }}
-                        <h2>{% trans %}Add Monitoring{% endtrans %}</h2>
+                        <h2>{% trans %}Monitoring/Reporting{% endtrans %}</h2>
 
                         <div class="form-group">
                             <ul class="monitoring-reporting" data-purpose="create" data-prototype="{{include('monitoring-reporting/includes/details.html.twig',

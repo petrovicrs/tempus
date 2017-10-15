@@ -7,13 +7,14 @@
  */
 namespace AppBundle\Form;
 
-use AppBundle\Entity\ProjectActivity;
+use AppBundle\Entity\ProjectDeliverable;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class ProjectActivityForm extends AbstractType
+class ProjectDeliverableForm extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -25,20 +26,13 @@ class ProjectActivityForm extends AbstractType
             ->add('titleEn')
             ->add('descEn')
             ->add('descSr')
-            ->add('activityType', EntityType::class, [
-                'class' => 'AppBundle:ProjectActivityType',
+            ->add('date', DateType::class)
+            ->add('deliverableType', EntityType::class, [
+                'class' => 'AppBundle:ProjectDeliverableType',
                 'choice_label' => 'name' . ucfirst($options['locale'])
             ])
-            ->add('activityStatus', EntityType::class, [
-                'class' => 'AppBundle:ProjectActivityStatus',
-                'choice_label' => 'name' . ucfirst($options['locale'])
-            ])
-            ->add('activityTo', EntityType::class, [
-                'class' => 'AppBundle:ProjectActivity',
-                'choice_label' => 'name' . ucfirst($options['locale'])
-            ])
-            ->add('activityFrom', EntityType::class, [
-                'class' => 'AppBundle:ProjectActivity',
+            ->add('deliverableStatus', EntityType::class, [
+                'class' => 'AppBundle:ProjectDeliverableStatus',
                 'choice_label' => 'name' . ucfirst($options['locale'])
             ]);
     }
@@ -56,7 +50,7 @@ class ProjectActivityForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => ProjectActivity::class
+            'data_class' => ProjectDeliverable::class,
         ]);
 
     }

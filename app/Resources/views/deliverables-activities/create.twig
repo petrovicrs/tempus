@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/deliverables-activities.js')}}"></script>
+    <section id="main">
+    {% include 'sub-navbar-ka2.html.twig' with {'active': 'deliverables'} %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls deliverables">
+                <a href="{{ localizedPath('project_ka2_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                <div class="col-sm-12">
+                    {{ form_start(my_form) }}
+
+                        <div class="form-group">
+
+                            <h2>{% trans %}Deliverables{% endtrans %}</h2>
+                            <ul class="deliverables" data-purpose="create" data-prototype="{{include('deliverables-activities/includes/deliverables.html.twig',
+                            {'form': my_form.deliverables.vars.prototype })|e}}">
+                            </ul>
+
+                            <h2>{% trans %}Activities{% endtrans %}</h2>
+                            <ul class="activities" data-purpose="create" data-prototype="{{include('deliverables-activities/includes/activities.html.twig',
+                            {'form': my_form.activities.vars.prototype })|e}}">
+                            </ul>
+                        </div>
+                    {{ form_end(my_form) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,28 +1,29 @@
 
 jQuery(document).ready(function() {
 
-    loadMonitoringReporting();
+    initForm('.deliverables');
+    initForm('.activities');
 });
 
-function loadMonitoringReporting() {
-    var $addMonitoringReportingLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
-    var $addMonitoringReportingLinkDiv = $('<li></li>').append($addMonitoringReportingLink);
+function initForm(className) {
+    var $addLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
+    var $addLinkDiv = $('<li></li>').append($addLink);
 
-    var $collectionHolder = $('ul.monitoring-reporting');
+    var $collectionHolder = $('ul' + className);
 
     $collectionHolder.find('li').each(function() {
         $addFormDeleteLink($(this));
     });
 
-    $collectionHolder.append($addMonitoringReportingLinkDiv);
+    $collectionHolder.append($addLinkDiv);
     $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
-    $addMonitoringReportingLink.on('click', function(e) {
+    $addLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
 
         // add a new tag form (see code block below)
-        $addForm($collectionHolder, $addMonitoringReportingLinkDiv);
+        $addForm($collectionHolder, $addLinkDiv);
     });
 }
 

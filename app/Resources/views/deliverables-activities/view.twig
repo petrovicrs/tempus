@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+    {% include 'sub-navbar.html.twig' with {'active': 'monitoring'} %}
+    <div class="container-fluid">
+        <a href="{{ localizedPath('monitoring_edit', {'id': monitoring.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
+        <h2><b>{% trans %}Monitoring/Reporting{% endtrans %}</b></h2>
+
+        <table class="table table-hover" data-toggle="table">
+            <tr>
+                <td><b>{% trans %}Monitoring type{% endtrans %}</b>: {{ monitoring.monitoringType ? monitoring.monitoringType.name(app.request.getLocale()) : 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td><b>{% trans %}Monitoring date{% endtrans %}</b>: {{ monitoring.monitoringDate | date('d/m/Y')}}</td>
+            </tr>
+            <tr>
+                <td><b>{% trans %}Comment type{% endtrans %}</b>: {{ monitoring.commentType ? monitoring.commentType.name(app.request.getLocale()) : 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td><b>{% trans %}Comment{% endtrans %}</b>: {{ monitoring.comment }}</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+{% endblock %}

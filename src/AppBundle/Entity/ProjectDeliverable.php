@@ -20,13 +20,6 @@ class ProjectDeliverable extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\Column(name="project_id", type="string")
-     */
-    protected $projectId;
-
-
-    /**
      * @ORM\Column(name="title_sr", type="string")
      */
     protected $titleSr;
@@ -61,9 +54,17 @@ class ProjectDeliverable extends AbstractAuditable
     protected $deliverableStatus;
 
     /**
-     * @ORM\Column(name="date", type="date", nullable=true)
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     protected $date;
+
+    /**
+     * @ORM\ManyToOne(
+     *     targetEntity="AppBundle\Entity\ProjectDeliverablesActivities", inversedBy="deliverables"
+     * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $projectDeliverablesActivities;
 
     /**
      * @return mixed
@@ -79,22 +80,6 @@ class ProjectDeliverable extends AbstractAuditable
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProjectId()
-    {
-        return $this->projectId;
-    }
-
-    /**
-     * @param mixed $projectId
-     */
-    public function setProjectId($projectId)
-    {
-        $this->projectId = $projectId;
     }
 
     /**
@@ -209,4 +194,19 @@ class ProjectDeliverable extends AbstractAuditable
         $this->date = $date;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getProjectDeliverablesActivities()
+    {
+        return $this->projectDeliverablesActivities;
+    }
+
+    /**
+     * @param mixed $projectDeliverablesActivities
+     */
+    public function setProjectDeliverablesActivities($projectDeliverablesActivities)
+    {
+        $this->projectDeliverablesActivities = $projectDeliverablesActivities;
+    }
 }

@@ -217,7 +217,7 @@ class ProjectController extends AbstractController
                 $this->getContactsRepository()->save($contact);
             }
 
-            return $this->redirectToRoute('monitoring_create');
+            return $this->redirectToRoute('deliverables_create');
 
         }
 

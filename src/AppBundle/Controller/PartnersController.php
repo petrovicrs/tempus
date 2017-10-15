@@ -87,6 +87,7 @@ class PartnersController extends AbstractController
      */
     public function editAction(Request $request, $projectId)
     {
+        /** @var ProjectPartners $projectPartners */
         $projectPartners = $this->getProjectPartnersRepository()->findOneBy(['project' => $projectId]);
 
         $projectPartnersForm = $this->createForm(ProjectPartnersForm::class, $projectPartners, [
@@ -118,6 +119,7 @@ class PartnersController extends AbstractController
         if ($projectPartnersForm->isSubmitted() && $projectPartnersForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+
 
             foreach ($partners as $partner) {
                 if(false === $projectPartners->getPartners()->contains($partner)) {

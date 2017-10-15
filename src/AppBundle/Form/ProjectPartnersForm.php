@@ -39,8 +39,13 @@ class ProjectPartnersForm extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
                 'label' => false
-            ))
-            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
+            ));
+            if ($options['isCompleted']) {
+                $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
+            }
+            else {
+                $builder->add('submit', SubmitType::class, array('label_format' => 'Next'));
+            }
     }
 
     /**
@@ -56,6 +61,7 @@ class ProjectPartnersForm extends AbstractType
         $resolver->setDefaults([
             'locale' => 'en',
             'data_class' => ProjectPartners::class,
+            'isCompleted' => 0,
         ]);
 
     }

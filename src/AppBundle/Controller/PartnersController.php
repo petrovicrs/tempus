@@ -12,7 +12,6 @@ use AppBundle\Entity\Partners;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\PartnersParticipants;
 use AppBundle\Entity\PartnersTeamMembers;
-use AppBundle\Entity\Project;
 use AppBundle\Entity\ProjectPartners;
 use AppBundle\Form\ProjectPartnersForm;
 use Doctrine\Common\Collections\ArrayCollection;

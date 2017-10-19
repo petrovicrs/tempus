@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\ProjectActivity;
+use AppBundle\Entity\Project;
 use AppBundle\Entity\ProjectDeliverable;
 use AppBundle\Entity\ProjectDeliverablesActivities;
 use AppBundle\Form\ProjectDeliverablesActivitiesForm;

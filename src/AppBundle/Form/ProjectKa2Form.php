@@ -66,7 +66,7 @@ class ProjectKa2Form extends AbstractType
             ])
             ->add('contactPersonKa2', EntityType::class, [
                 'class' => 'AppBundle:Person',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'choice_label' => 'firstName' . ucfirst($options['locale'])
             ])
             ->add('ftOfficers', EntityType::class, [
                 'class' => 'AppBundle:ProjectFtOfficer',

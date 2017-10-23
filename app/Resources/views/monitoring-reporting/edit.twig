@@ -2,11 +2,13 @@
 
 {% block body %}
     <section id="main">
-    {% include 'sub-navbar-ka2.html.twig' with {'active': 'monitoring'} %}
+    {% include 'sub-navbar-ka2.html.twig' with {'active': 'monitoring', 'isCompleted': isCompleted, projectId: projectId} %}
     <div class="container-fluid">
         <div class="row">
             <div class="controls resources">
-                <a href="{{ localizedPath('deliverables_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                {% if not isCompleted %}
+                    <a href="{{ localizedPath('deliverables_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                {% endif %}
                 <div class="col-sm-12">
                     {{ form_start(my_form) }}
                     <h2>{% trans %}Edit Monitoring/Reporting{% endtrans %}</h2>

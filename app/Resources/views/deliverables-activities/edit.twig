@@ -3,11 +3,14 @@
 {% block body %}
     <script type="text/javascript" src="{{ asset('/js/deliverables-activities.js')}}"></script>
     <section id="main">
-    {% include 'sub-navbar-ka2.html.twig' with {'active': 'deliverables'} %}
+    {% include 'sub-navbar-ka2.html.twig' with {'active': 'deliverables', 'isCompleted': isCompleted, projectId: projectId} %}
     <div class="container-fluid">
         <div class="row">
             <div class="controls deliverables">
-                <a href="{{ localizedPath('project_ka2_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                {% if not isCompleted %}
+                    <a href="{{ localizedPath('project_ka2_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                {% endif %}
+
                 <div class="col-sm-12">
                     {{ form_start(my_form) }}
 

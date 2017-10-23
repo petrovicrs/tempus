@@ -4,14 +4,17 @@
     <script type="text/javascript" src="{{ asset('/js/reporting.js')}}"></script>
     <section id="main">
         {% if keyAction == 'ka1' %}
-            {% include 'sub-navbar.html.twig' with {'active': 'reporting'} %}
+            {% include 'sub-navbar.html.twig' with {'active': 'reporting', 'isCompleted': isCompleted, projectId: projectId} %}
         {% endif %}
         {%  if keyAction == 'ka2' %}
-            {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting'} %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting', 'isCompleted': isCompleted, projectId: projectId} %}
         {% endif %}
         <div class="container-fluid">
             <div class="row">
                 <div class="controls reporting">
+                    {% if not isCompleted %}
+                        <a href="{{ localizedPath('result_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                    {% endif %}
                     <div class="col-xs-12">
                         {{ form_start(my_form) }}
                         <div class="col-xs-12">

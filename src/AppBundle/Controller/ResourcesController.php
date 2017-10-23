@@ -111,6 +111,7 @@ class ResourcesController extends AbstractController
                 'my_form' => $projectResourceForm->createView(),
                 'keyAction' => $project->getKeyActions()->getNameSr(),
                 'projectId' => $project->getId(),
+                'isCompleted' => $project->getIsCompleted(),
             ]);
     }
 

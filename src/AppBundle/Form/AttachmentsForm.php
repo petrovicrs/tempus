@@ -37,8 +37,13 @@ class AttachmentsForm extends AbstractType
                 'label' => false
             ))
             ->add('dmsNotes')
-            ->add('uploadedFilesNotes')
-            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
+            ->add('uploadedFilesNotes');
+            if ($options['isCompleted']) {
+                $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
+            }
+            else {
+                $builder->add('submit', SubmitType::class, array('label_format' => 'Next'));
+            }
 
 //        , FileType::class, [
 //        'multiple' => true,
@@ -61,7 +66,8 @@ class AttachmentsForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => Attachments::class
+            'data_class' => Attachments::class,
+            'isCompleted' => 0,
         ]);
     }
 }

@@ -119,6 +119,7 @@ class MonitoringReportingController extends AbstractController
                 'my_form' => $projectMonitoringForm->createView(),
                 'keyAction' => $projectMonitoringReporting->getProject()->getKeyActions()->getNameSr(),
                 'projectId' => $projectId,
+                'isCompleted' => $projectMonitoringReporting->getProject()->getIsCompleted(),
             ]
         );
     }

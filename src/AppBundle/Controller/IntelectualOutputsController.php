@@ -80,7 +80,8 @@ class IntelectualOutputsController extends AbstractController
         $projectIntelectualOutputForm = $this->createForm(ProjectIntelectualOutputsForm::class, $projectIntelectualOutput, [
             'action' => $this->generateUrl('intelectual_output_edit', ['projectId' => $projectId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'isCompleted' => $project->getIsCompleted(),
         ]);
 
         $intelectualOutputs = new ArrayCollection();
@@ -111,8 +112,14 @@ class IntelectualOutputsController extends AbstractController
             }
         }
 
-        return $this->render('intelectual-outputs/edit.twig', ['my_form' => $projectIntelectualOutputForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr()]);
+        return $this->render('intelectual-outputs/edit.twig',
+            [
+                'my_form' => $projectIntelectualOutputForm->createView(),
+                'keyAction' => $project->getKeyActions()->getNameSr(),
+                'projectId' => $project->getId(),
+                'isCompleted' => $project->getIsCompleted(),
+            ]
+        );
     }
 
     /**

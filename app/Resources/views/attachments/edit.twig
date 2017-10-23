@@ -4,15 +4,20 @@
     <section id="main">
     <script type="text/javascript" src="{{ asset('/js/attachments.js')}}" ></script>
     {% if keyAction == 'ka1' %}
-        {% include 'sub-navbar.html.twig' with {'active': 'attachments'} %}
+        {% include 'sub-navbar.html.twig' with {'active': 'attachments', 'isCompleted': isCompleted, projectId: projectId} %}
     {% endif %}
     {%  if keyAction == 'ka2' %}
-        {% include 'sub-navbar-ka2.html.twig' with {'active': 'attachments'} %}
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'attachments', 'isCompleted': isCompleted, projectId: projectId} %}
     {% endif %}
     <div class="container-fluid">
-        <a href="{{ localizedPath('reporting_edit', {projectId: projectId}) }}"><button>Back</button></a>
+        {% if not isCompleted %}
+            <a href="{{ localizedPath('reporting_edit', {projectId: projectId}) }}"><button>Back</button></a>
+        {% endif %}
         <div class="row">
             <div class="controls attachments">
+                {% if not isCompleted %}
+                    <a href="{{ localizedPath('result_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                {% endif %}
                 <div class="col-xs-12">
 
                     {{ form_start(my_form, {'attr': {'novalidate': 'novalidate'}}) }}

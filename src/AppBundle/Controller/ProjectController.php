@@ -128,7 +128,9 @@ class ProjectController extends AbstractController
         }
 
         $data = [
-            'my_form' => $projectForm->createView()
+            'my_form' => $projectForm->createView(),
+            'projectId' => $project->getId(),
+            'isCompleted' => $project->getIsCompleted(),
         ];
 
         return $this->render('project/create.twig', $data);
@@ -222,7 +224,9 @@ class ProjectController extends AbstractController
         }
 
         $data = [
-            'my_form' => $projectForm->createView()
+            'my_form' => $projectForm->createView(),
+            'projectId' => $project->getId(),
+            'isCompleted' => $project->getIsCompleted(),
         ];
 
         return $this->render('project/create-ka2.twig', $data);
@@ -240,6 +244,7 @@ class ProjectController extends AbstractController
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_edit', ['projectId' => $projectId]),
             'method' => 'POST',
+            'isCompleted' => $project->getIsCompleted(),
         ]);
        
         $originalApplicantOrganisations = new ArrayCollection();
@@ -389,8 +394,11 @@ class ProjectController extends AbstractController
             }
         }
 
-        return $this->render('project/edit.twig', [
-            'my_form' => $projectForm->createView(), 'id' => $projectId
+        return $this->render('project/edit.twig',
+            [
+                'my_form' => $projectForm->createView(),
+                'projectId' => $projectId,
+                'isCompleted' => $project->getIsCompleted(),
         ]);
     }
 
@@ -500,7 +508,13 @@ class ProjectController extends AbstractController
 
         }
 
-        return $this->render('project/edit-ka2.twig', ['my_form' => $projectForm->createView(), 'id' => $projectId]);
+        return $this->render('project/edit-ka2.twig',
+            [
+                'my_form' => $projectForm->createView(),
+                'id' => $projectId,
+                'isCompleted' => $project->getIsCompleted(),
+            ]
+        );
     }
 
     /**

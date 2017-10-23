@@ -1,14 +1,14 @@
 <nav id="menu-list" class="navbar navbar-default">
     <div class="container-fluid">
         <ul class="nav navbar-nav">
-            <li class="{% if active == 'project' %}active{% endif %}"><a href="{{ localizedPath('project_create')}}" onclick="return false;">Project</a></li>
+            <li class="{% if active == 'project' %}active{% endif %}"><a href="{{ localizedPath('project_edit', {'projectId': projectId}) }}" >Project</a></li>
             <!--<li class="{% if active == 'action' %}active{% endif %}"><a href="{{ localizedPath('action_list')}}">Action</a></li>-->
-            <li class="{% if active == 'resources' %}active{% endif %}"><a href="{{ localizedPath('resources_create')}}" onclick="return false;">Resources</a></li>
-            <li class="{% if active == 'intelectual_outputs' %}active{% endif %}"><a href="{{ localizedPath('intelectual_outputs_create')}}" onclick="return false;">Intelectual outputs</a></li>
-            <li class="{% if active == 'results' %}active{% endif %}"><a href="{{ localizedPath('results_create')}}" onclick="return false;">Results</a></li>
-            <li class="{% if active == 'reporting' %}active{% endif %}"><a href="{{ localizedPath('reporting_create')}}" onclick="return false;">Reporting</a></li>
-            <li class="{% if active == 'attachments' %}active{% endif %}"><a href="{{ localizedPath('attachments_create')}}" onclick="return false;">Attachments</a></li>
-            <li class="{% if active == 'group_calendar' %}active{% endif %}"><a href="{{ localizedPath('group_calendar_create')}}" onclick="return false;">Group Calendar</a></li>
+            <li class="{% if active == 'resources' %}active{% endif %}"><a href="{{ localizedPath('resource_edit', {'projectId': projectId}) }}" >Resources</a></li>
+            <li class="{% if active == 'intelectual_outputs' %}active{% endif %}"><a href="{{ localizedPath('intelectual_output_edit', {'projectId': projectId}) }}" >Intelectual outputs</a></li>
+            <li class="{% if active == 'results' %}active{% endif %}"><a href="{{ localizedPath('result_edit', {'projectId': projectId}) }}" >Results</a></li>
+            <li class="{% if active == 'reporting' %}active{% endif %}"><a href="{{ localizedPath('reporting_edit', {'projectId': projectId}) }}" >Reporting</a></li>
+            <li class="{% if active == 'attachments' %}active{% endif %}"><a href="{{ localizedPath('attachment_edit', {'projectId': projectId}) }}" >Attachments</a></li>
+            <li class="{% if active == 'group_calendar' %}active{% endif %}"><a href="{{ localizedPath('group_calendar_edit', {'projectId': projectId}) }}" >Group Calendar</a></li>
         </ul>
     </div>
 </nav>

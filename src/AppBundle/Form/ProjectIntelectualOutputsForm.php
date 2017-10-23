@@ -35,8 +35,13 @@ class ProjectIntelectualOutputsForm extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
                 'label'        => false
-            ])
-            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
+            ]);
+            if ($options['isCompleted']) {
+                $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
+            }
+            else {
+                $builder->add('submit', SubmitType::class, array('label_format' => 'Next'));
+            }
     }
 
     /**
@@ -51,7 +56,8 @@ class ProjectIntelectualOutputsForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => ProjectIntelectualOutputs::class
+            'data_class' => ProjectIntelectualOutputs::class,
+            'isCompleted' => 0,
         ]);
     }
 }

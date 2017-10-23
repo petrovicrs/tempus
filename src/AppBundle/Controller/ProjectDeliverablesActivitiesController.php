@@ -93,7 +93,8 @@ class ProjectDeliverablesActivitiesController extends AbstractController
         $projectDeliverableActivitiesForm = $this->createForm(ProjectDeliverablesActivitiesForm::class, $projectDeliverableActivities, [
             'action' => $this->generateUrl('deliverables_edit', ['projectId' => $projectId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'isCompleted' => $project->getIsCompleted(),
         ]);
 
         $deliverables = new ArrayCollection();
@@ -137,6 +138,7 @@ class ProjectDeliverablesActivitiesController extends AbstractController
                 'my_form' => $projectDeliverableActivitiesForm->createView(),
                 'keyAction' => $project->getKeyActions()->getNameSr(),
                 'projectId' => $project->getId(),
+                'isCompleted' => $project->getIsCompleted(),
             ]
         );
     }

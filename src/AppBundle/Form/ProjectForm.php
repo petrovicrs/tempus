@@ -98,8 +98,13 @@ class ProjectForm extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ))
-            ->add('projectSummary', TextareaType::class)
-            ->add('submit', SubmitType::class, array('label_format' => 'Next'));
+            ->add('projectSummary', TextareaType::class);
+        if ($options['isCompleted']) {
+            $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
+        }
+        else {
+            $builder->add('submit', SubmitType::class, array('label_format' => 'Next'));
+        }
     }
 
     /**
@@ -108,7 +113,8 @@ class ProjectForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'locale' => 'en'
+            'locale' => 'en',
+            'isCompleted' => 0,
         ]);
     }
 

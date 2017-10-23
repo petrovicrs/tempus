@@ -3,10 +3,18 @@
 {% block body %}
     <section id="main">
     <script type="text/javascript" src="{{ asset('/js/calendar.js')}}" ></script>
-    {% include 'sub-navbar.html.twig' with {'active': 'group_calendar'} %}
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar.html.twig' with {'active': 'group_calendar', 'isCompleted': isCompleted, projectId: projectId} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'group_calendar', 'isCompleted': isCompleted, projectId: projectId} %}
+        {% endif %}
     <div class="container-fluid">
         <div class="row">
             <div class="controls calendar">
+                {% if not isCompleted %}
+                    <a href="{{ localizedPath('attachment_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                {% endif %}
                 <div class="col-xs-12">
                     {{ form_start(my_form) }}
                     <div class="col-xs-6">

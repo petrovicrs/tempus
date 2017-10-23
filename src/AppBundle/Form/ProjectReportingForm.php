@@ -33,8 +33,13 @@ class ProjectReportingForm extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
                 'label'        => false
-            ])
-            ->add('submit', SubmitType::class, ['label_format' => 'Next']);
+            ]);
+        if ($options['isCompleted']) {
+            $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
+        }
+        else {
+            $builder->add('submit', SubmitType::class, array('label_format' => 'Next'));
+        }
     }
 
     /**
@@ -51,6 +56,7 @@ class ProjectReportingForm extends AbstractType
             'locale' => 'en',
             'data_class' => ProjectReporting::class,
             'allow_extra_fields' => true,
+            'isCompleted' => 0,
         ]);
     }
 }

@@ -2,7 +2,7 @@
 {% block body %}
     <script type="text/javascript" src="{{ asset('/js/partners.js')}}" ></script>
     <section id="main">
-        {% include 'sub-navbar-ka2.html.twig' with {'active': 'partners'} %}
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'partners', 'isCompleted': isCompleted, projectId: projectId} %}
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="page-header">
@@ -10,29 +10,25 @@
                 </div>
                 <div class="row">
                     <div class="controls resources">
-                        <a href="{{ localizedPath('monitoring_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                        {% if not isCompleted %}
+                            <a href="{{ localizedPath('monitoring_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                        {% endif %}
                         {{ form_start(my_form) }}
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    {{ form_label(my_form.partners, 'Partners'|trans, {'label_attr': {'class': 'control-label col-xs-12'}}) }}
+                                    <ul class="partners" data-prototype="{{ include('/partners/includes/partners.html.twig',
+                                    {'my_form': my_form.partners.vars.prototype })|e }}">
+                                    </ul>
+                                </div>
 
-                        <!--<div class="col-sm-6">-->
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                {{ form_label(my_form.partners, 'Partners'|trans, {'label_attr': {'class': 'control-label col-xs-12'}}) }}
-                                <ul class="partners" data-prototype="{{ include('/partners/includes/partners.html.twig',
-                                {'my_form': my_form.partners.vars.prototype })|e }}">
-                                </ul>
+                                <div class="col-xs-12">
+                                    {{ form_label(my_form.participants, 'Participants'|trans, {'label_attr': {'class': 'control-label col-xs-12'}}) }}
+                                    <ul class="participants" data-prototype="{{ include('/partners/includes/participants.html.twig',
+                                    {'my_form': my_form.participants.vars.prototype })|e }}">
+                                    </ul>
+                                </div>
                             </div>
-
-                            <div class="col-xs-12">
-                                {{ form_label(my_form.participants, 'Participants'|trans, {'label_attr': {'class': 'control-label col-xs-12'}}) }}
-                                <ul class="participants" data-prototype="{{ include('/partners/includes/participants.html.twig',
-                                {'my_form': my_form.participants.vars.prototype })|e }}">
-                                </ul>
-                            </div>
-
-                            <div class="form-inline">
-                                {{ form_widget(my_form.submit, { 'label': 'Next'|trans}, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-
                         {{ form_end(my_form) }}
                     </div>
                 </div>

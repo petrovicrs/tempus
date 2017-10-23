@@ -4,14 +4,17 @@
     <section id="main">
     <script type="text/javascript" src="{{ asset('/js/results.js')}}"></script>
         {% if keyAction == 'ka1' %}
-            {% include 'sub-navbar.html.twig' with {'active': 'results'} %}
+            {% include 'sub-navbar.html.twig' with {'active': 'results', 'isCompleted': isCompleted, projectId: projectId} %}
         {% endif %}
         {%  if keyAction == 'ka2' %}
-            {% include 'sub-navbar-ka2.html.twig' with {'active': 'results'} %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'results', 'isCompleted': isCompleted, projectId: projectId} %}
         {% endif %}
     <div class="container-fluid">
         <div class="row">
             <div class="controls results">
+                {% if not isCompleted %}
+                    <a href="{{ localizedPath('intelectual_output_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                {% endif %}
                 <div class="col-xs-12">
 
                     {{ form_start(my_form) }}

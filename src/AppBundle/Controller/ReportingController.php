@@ -109,13 +109,15 @@ class ReportingController extends AbstractController
         $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
             'action' => $this->generateUrl('reporting_edit', ['projectId' => $projectId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'isCompleted' => $project->getIsCompleted(),
         ]);
 
         $reporting = new ArrayCollection();
         $reportingBy = new ArrayCollection();
         $questionAndAnswers = new ArrayCollection();
 
+        /** @var Reporting $report */
         foreach ($projectReporting->getReporting() as $report) {
 
             $reporting->add($report);
@@ -171,7 +173,9 @@ class ReportingController extends AbstractController
         return $this->render('reporting/edit.twig', [
             'my_form' => $projectReportingForm->createView(),
             'questions' => $questions,
-            'keyAction' => $project->getKeyActions()->getNameSr()
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'projectId' => $project->getId(),
+            'isCompleted' => $project->getIsCompleted(),
         ]);
     }
 

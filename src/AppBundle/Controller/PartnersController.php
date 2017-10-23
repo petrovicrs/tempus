@@ -150,7 +150,13 @@ class PartnersController extends AbstractController
             }
         }
 
-        return $this->render('partners/edit.twig', ['my_form' => $projectPartnersForm->createView(), 'projectId' => $projectId]);
+        return $this->render('partners/edit.twig',
+            [
+                'my_form' => $projectPartnersForm->createView(),
+                'projectId' => $projectId,
+                'isCompleted' => $projectPartners->getProject()->getIsCompleted(),
+            ]
+        );
     }
 
     /**

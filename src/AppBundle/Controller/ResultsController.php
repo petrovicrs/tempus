@@ -77,7 +77,8 @@ class ResultsController extends AbstractController
         $projectResultForm = $this->createForm(ProjectResultsForm::class, $projectResult, [
             'action' => $this->generateUrl('result_edit', ['projectId' => $projectId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'isCompleted' => $project->getIsCompleted(),
         ]);
 
         $results = new ArrayCollection();
@@ -107,7 +108,14 @@ class ResultsController extends AbstractController
             }
         }
 
-        return $this->render('results/edit.twig', ['my_form' => $projectResultForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
+        return $this->render('results/edit.twig',
+            [
+                'my_form' => $projectResultForm->createView(),
+                'keyAction' => $project->getKeyActions()->getNameSr(),
+                'projectId' => $project->getId(),
+                'isCompleted' => $project->getIsCompleted(),
+            ]
+        );
     }
 
     /**

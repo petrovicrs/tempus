@@ -100,6 +100,7 @@ class AttachmentsController extends AbstractController
      */
     public function editAction(Request $request, $projectId)
     {
+        /** @var Attachments $attachments */
         $attachments = $this->getAttachmentsRepository()->findOneBy(['project' => $projectId]);
 
         /** @var Project $project */
@@ -115,7 +116,8 @@ class AttachmentsController extends AbstractController
         $attachmentsForm = $this->createForm(AttachmentsForm::class, $attachments, [
             'action' => $this->generateUrl('attachment_edit', ['projectId' => $projectId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'isCompleted' => $project->getIsCompleted(),
         ]);
 
         $dmsDocuments = new ArrayCollection();
@@ -174,8 +176,15 @@ class AttachmentsController extends AbstractController
 
         }
 
-        return $this->render('attachments/edit.twig', ['my_form' => $attachmentsForm->createView(),
-            'attachments' => $attachments, 'projectId' => $projectId, 'keyAction' => $project->getKeyActions()->getNameSr()]);
+        return $this->render('attachments/edit.twig',
+            [
+                'my_form' => $attachmentsForm->createView(),
+                'attachments' => $attachments,
+                'projectId' => $projectId,
+                'keyAction' => $project->getKeyActions()->getNameSr(),
+                'isCompleted' => $project->getIsCompleted(),
+            ]
+        );
     }
 
 //    /**

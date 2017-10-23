@@ -115,13 +115,12 @@ class ResourcesController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/resources/view/{resourceId}", name="resource_view", requirements={"resourceId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/resources/view/{projectId}", name="resource_view", requirements={"$projectId": "\d+", "locale": "%app.locales%"})
      */
-    public function viewAction($resourceId)
+    public function viewAction($projectId)
     {
-        $resource = $this->getResourcesRepository()->findOneBy(['id' => $resourceId]);
-
-        return $this->render('resources/view.twig', ['resource' => $resource,'keyAction' => $resource->getProjectResources()->getProject()->getKeyActions()->getNameSr()]);
+        $projectResources = $this->getProjectResourcesRepository()->findOneBy(['id' => $projectId]);
+        return $this->render('resources/view.twig', ['projectResources' => $projectResources,'keyAction' => $projectResources->getProject()->getKeyActions()->getNameSr()]);
     }
 
     private function getProjectResourcesRepository()

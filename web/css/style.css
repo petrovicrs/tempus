@@ -1,4 +1,12 @@
 
+tr.details-row {
+    cursor: pointer;
+}
+
+.details-wrapper-inner {
+    padding-left: 2rem;
+}
+
 li {
     list-style-type: none;
 }

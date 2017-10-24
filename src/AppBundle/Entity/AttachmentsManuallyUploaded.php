@@ -33,7 +33,7 @@ class AttachmentsManuallyUploaded
      * @Assert\File(
      *      maxSize = "10M",
      *      mimeTypes = {"image/jpeg", "application/octet-stream"},
-     *      maxSizeMessage = "The maxmimum allowed file size is 5MB."
+     *      maxSizeMessage = "The maxmimum allowed file size is 10MB."
      * )
      */
     protected $file;

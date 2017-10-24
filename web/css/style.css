@@ -3,6 +3,10 @@ tr.details-row {
     cursor: pointer;
 }
 
+tr.details-wrapper td {
+    padding: 0 !important;
+}
+
 .details-wrapper-inner {
     padding-left: 2rem;
 }

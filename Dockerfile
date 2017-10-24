@@ -21,7 +21,7 @@ RUN curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
 RUN chmod a+x /usr/local/bin/symfony
 
 # WordPress dependencies
-RUN apt-get -y --allow-unauthenticated install mysql-client nginx php7.0-fpm php7.0-cli php7.0-common php7.0-mysql php7.0-curl php7.0-gd\
+RUN apt-get update && apt-get -y --allow-unauthenticated install mysql-client nginx php7.0-fpm php7.0-cli php7.0-common php7.0-mysql php7.0-curl php7.0-gd\
  php7.0-intl php7.0-mcrypt php7.0-xmlrpc php7.0-xsl php7.0-json php7.0-opcache php7.0-readline php7.0-xml php7.0-mbstring
 
 # Nginx config
@@ -54,12 +54,7 @@ RUN chmod 755 /start.sh
 ADD . /usr/share/nginx/www
 ADD ./configuration /configuration
 
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-RUN php composer-setup.php
-RUN php -r "unlink('composer-setup.php');"
-
-RUN mv composer.phar /usr/local/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 #
 ## Local development config

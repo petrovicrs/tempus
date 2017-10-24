@@ -50,17 +50,21 @@ class ProjectDeliverablesActivitiesController extends AbstractController
 
             $projectDeliverableActivities->setProject($project);
 
+            $this->getDeliverablesActivitiesRepository()->save($projectDeliverableActivities);
+
+            $deliverableActivityLastId = $this->getDeliverablesActivitiesRepository()->findOneBy(['project' => $project->getId()], ['id' => 'desc']);
+
             /** @var ProjectActivity $activity */
             foreach ($projectDeliverableActivities->getActivities() as $activity) {
+                $activity->setProjectDeliverablesActivities($deliverableActivityLastId);
                 $activity->setProjectDeliverablesActivities($projectDeliverableActivities);
             }
 
             /** @var ProjectDeliverable $deliverable */
             foreach ($projectDeliverableActivities->getDeliverables() as $deliverable) {
+                $deliverable->setProjectDeliverablesActivities($deliverableActivityLastId);
                 $deliverable->setProjectDeliverablesActivities($projectDeliverableActivities);
             }
-
-            $this->getDeliverablesActivitiesRepository()->save($projectDeliverableActivities);
 
             return $this->redirectToRoute('monitoring_create');
         }
@@ -97,15 +101,15 @@ class ProjectDeliverablesActivitiesController extends AbstractController
             'isCompleted' => $project->getIsCompleted(),
         ]);
 
-        $deliverables = new ArrayCollection();
-        $activities = new ArrayCollection();
+        $originalDeliverables = new ArrayCollection();
+        $originalActivities = new ArrayCollection();
 
         foreach ($projectDeliverableActivities->getDeliverables() as $deliverable) {
-            $deliverables->add($deliverable);
+            $originalDeliverables->add($deliverable);
         }
 
         foreach ($projectDeliverableActivities->getActivities() as $activity) {
-            $activities->add($activity);
+            $originalActivities->add($activity);
         }
 
         $projectDeliverableActivitiesForm->handleRequest($request);
@@ -113,19 +117,36 @@ class ProjectDeliverablesActivitiesController extends AbstractController
         if ($projectDeliverableActivitiesForm->isSubmitted() && $projectDeliverableActivitiesForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            foreach ($deliverables as $deliverable) {
+            $this->getDeliverablesActivitiesRepository()->save($projectDeliverableActivities);
+
+            /** @var ProjectDeliverable $deliverable */
+            foreach ($originalDeliverables as $deliverable) {
                 if(false === $projectDeliverableActivities->getDeliverables()->contains($deliverable)) {
                     $em->remove($deliverable);
                 }
             }
-
-            foreach ($activities as $activity) {
+            /** @var ProjectActivity $activity */
+            foreach ($originalActivities as $activity) {
                 if(false === $projectDeliverableActivities->getActivities()->contains($activity)) {
                     $em->remove($activity);
                 }
             }
 
-            $this->getDeliverablesActivitiesRepository()->save($projectDeliverableActivities);
+            /** @var ProjectDeliverable $deliverable */
+            foreach ($projectDeliverableActivities->getDeliverables() as $deliverable) {
+                if (false === $originalDeliverables->contains($deliverable)) {
+                    $deliverable->setProjectDeliverablesActivities($projectDeliverableActivities);
+                    $this->getProjectDeliverablesRepository()->save($deliverable);
+                }
+            }
+
+            /** @var ProjectActivity $activity */
+            foreach ($projectDeliverableActivities->getActivities() as $activity) {
+                if (false === $originalActivities->contains($activity)) {
+                    $activity->setProjectDeliverablesActivities($projectDeliverableActivities);
+                    $this->getProjectActivitiesRepository()->save($activity);
+                }
+            }
 
             if (!$projectDeliverableActivities->getProject()->getIsCompleted()) {
                 return $this->redirectToRoute('monitoring_create');
@@ -146,5 +167,15 @@ class ProjectDeliverablesActivitiesController extends AbstractController
     private function getDeliverablesActivitiesRepository()
     {
         return $this->get('doctrine_entity_repository.project_deliverables_activities');
+    }
+
+    private function getProjectDeliverablesRepository()
+    {
+        return $this->get('doctrine_entity_repository.project_deliverables');
+    }
+
+    private function getProjectActivitiesRepository()
+    {
+        return $this->get('doctrine_entity_repository.project_activities');
     }
 }

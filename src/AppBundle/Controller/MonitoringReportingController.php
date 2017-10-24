@@ -86,10 +86,10 @@ class MonitoringReportingController extends AbstractController
             'isCompleted' => $projectMonitoringReporting->getProject()->getIsCompleted(),
         ]);
 
-        $monitoringReporting = new ArrayCollection();
+        $originalMonitoringReporting = new ArrayCollection();
 
         foreach ($projectMonitoringReporting->getMonitoringReporting() as $monitoring) {
-            $monitoringReporting->add($monitoring);
+            $originalMonitoringReporting->add($monitoring);
         }
 
         $projectMonitoringForm->handleRequest($request);
@@ -98,12 +98,18 @@ class MonitoringReportingController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            foreach ($monitoringReporting as $monitoring) {
+            foreach ($originalMonitoringReporting as $monitoring) {
                 if (false === $projectMonitoringReporting->getMonitoringReporting()->contains($monitoring)) {
                     $em->remove($monitoring);
                 }
+            }
 
-                $this->getMonitoringReportingRepository()->save($monitoring);
+            /** @var MonitoringReporting $monitoringReporting */
+            foreach ($projectMonitoringReporting->getMonitoringReporting() as $monitoringReporting) {
+                if (false === $originalMonitoringReporting->contains($monitoringReporting)) {
+                    $monitoringReporting->setProjectMonitoringReporting($projectMonitoringReporting);
+                    $this->getMonitoringReportingRepository()->save($monitoringReporting);
+                }
             }
 
             $this->getProjectMonitoringReportingRepository()->save($projectMonitoringReporting);

@@ -97,7 +97,7 @@ class ReportingController extends AbstractController
     {
         $questions = $this->getQuestionsRepository()->findAll();
 
-        /** @var Reporting $reporting */
+        /** @var ProjectReporting $projectReporting */
         $projectReporting = $this->getProjectReportingRepository()->findOneBy(
             ['project' => $projectId],
             ['id' => 'DESC']
@@ -137,25 +137,25 @@ class ReportingController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            foreach ($reporting as $report) {
-                if(false === $projectReporting->getReporting()->contains($report)) {
-                    $em->remove($report);
+            foreach ($questionAndAnswers as $qa) {
+                foreach ($projectReporting->getReporting() as $reporting) {
+                    if ($reporting->getQuestionsAndAnswers() && false === $reporting->getQuestionsAndAnswers()->contains($qa)) {
+                        $em->remove($qa);
+                    }
                 }
             }
 
             foreach ($reportingBy as $reportingPerson) {
                 foreach ($projectReporting->getReporting() as $reporting) {
-                    if (false === $reporting->getReportingBy()->contains($reportingPerson)) {
+                    if ($reporting->getReportingBy() && false === $reporting->getReportingBy()->contains($reportingPerson)) {
                         $em->remove($reportingPerson);
                     }
                 }
             }
 
-            foreach ($questionAndAnswers as $qa) {
-                foreach ($projectReporting->getReporting() as $reporting) {
-                    if (false === $reporting->getQuestionsAndAnswers()->contains($qa)) {
-                        $em->remove($qa);
-                    }
+            foreach ($reporting as $report) {
+                if(false === $projectReporting->getReporting()->contains($report)) {
+                    $em->remove($report);
                 }
             }
 

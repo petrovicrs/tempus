@@ -34,11 +34,11 @@ class ProjectActivityForm extends AbstractType
                 'choice_label' => 'name' . ucfirst($options['locale'])
             ])
             ->add('activityTo', EntityType::class, [
-                'class' => 'AppBundle:ProjectActivity',
+                'class' => 'AppBundle:Institution',
                 'choice_label' => 'name' . ucfirst($options['locale'])
             ])
             ->add('activityFrom', EntityType::class, [
-                'class' => 'AppBundle:ProjectActivity',
+                'class' => 'AppBundle:Institution',
                 'choice_label' => 'name' . ucfirst($options['locale'])
             ]);
     }

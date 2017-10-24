@@ -23,6 +23,9 @@
 
                         <ul class="reporting" data-purpose="edit" data-prototype="{{include('/reporting/includes/reporting.html.twig',
                         {'form': my_form.reporting.vars.prototype })|e}}">
+                            ﻿{% for reporting in my_form.reporting %}
+                                <li>{{ include('/reporting/includes/reporting.html.twig', {'form': reporting }) }}</li>
+                            {% endfor %}
                         </ul>
                         {{ form_end(my_form) }}
                     </div>

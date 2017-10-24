@@ -19,11 +19,17 @@
                         <h2>{% trans %}Deliverables{% endtrans %}</h2>
                         <ul class="deliverables" data-purpose="create" data-prototype="{{include('deliverables-activities/includes/deliverables.html.twig',
                         {'form': my_form.deliverables.vars.prototype })|e}}">
+                            {% for deliverable in my_form.deliverables %}
+                                <li>{{ include('/deliverables-activities/includes/deliverables.html.twig', {'form': deliverable }) }}</li>
+                            {% endfor %}
                         </ul>
 
                         <h2>{% trans %}Activities{% endtrans %}</h2>
                         <ul class="activities" data-purpose="create" data-prototype="{{include('deliverables-activities/includes/activities.html.twig',
                         {'form': my_form.activities.vars.prototype })|e}}">
+                            {% for activity in my_form.activities %}
+                                <li>{{ include('/deliverables-activities/includes/activities.html.twig', {'form': activity }) }}</li>
+                            {% endfor %}
                         </ul>
                     </div>
                     {{ form_end(my_form) }}

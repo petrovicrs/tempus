@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class ResourcesController extends AbstractController
 {
@@ -92,14 +93,46 @@ class ResourcesController extends AbstractController
             'isCompleted' => $project->getIsCompleted(),
         ]);
 
+        $originalResources = new ArrayCollection();
+
+        /** @var Resources $resource */
+        foreach ($projectResources->getResources() as $resource) {
+            $originalResources->add($resource);
+        }
+
         $projectResourceForm->handleRequest($request);
 
         if ($projectResourceForm->isSubmitted() && $projectResourceForm->isValid()) {
 
-            foreach ($projectResources->getResources() as $resource) {
-                $this->getResourcesRepository()->save($resource);
+            $em = $this->getDoctrine()->getManager();
 
+            foreach ($originalResources as $originalResource) {
+                if (false === $projectResources->getResources()->contains($originalResource)) {
+                    $em->remove($originalResource);
+                }
             }
+
+            /** @var Resources $resource */
+            foreach ($projectResources->getResources() as $resource) {
+                if (false === $originalResources->contains($resource)) {
+                    $resource->setProject($project);
+                    $this->getApplicantOrganisationRepository()->save($applicantOrganisation);
+                }
+            }
+
+
+
+
+
+
+            $projectResources->setProject($project);
+            
+            /** @var Resources $resource */
+            foreach ($projectResources->getResources() as $resource) {
+                $resource->setProjectResources($projectResources);
+            }
+
+            $this->getProjectResourcesRepository()->save($projectResources);
 
             if (!$project->getIsCompleted()) {
                 return $this->redirectToRoute('intelectual_outputs_create');
@@ -120,8 +153,16 @@ class ResourcesController extends AbstractController
      */
     public function viewAction($projectId)
     {
-        $projectResources = $this->getProjectResourcesRepository()->findOneBy(['id' => $projectId]);
-        return $this->render('resources/view.twig', ['projectResources' => $projectResources,'keyAction' => $projectResources->getProject()->getKeyActions()->getNameSr()]);
+        /** @var ProjectResources $projectResources */
+        $projectResources = $this->getProjectResourcesRepository()->findOneBy(['project' => $projectId]);
+        return $this->render('resources/view.twig',
+            [
+                'projectResources' => $projectResources,
+                'keyAction' => $projectResources->getProject()->getKeyActions()->getNameSr(),
+                'projectId' => $projectResources->getProject()->getId(),
+                'isCompleted' => $projectResources->getProject()->getIsCompleted(),
+            ]
+        );
     }
 
     private function getProjectResourcesRepository()

@@ -111,17 +111,17 @@ class ResultsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/results/view/{resultId}", name="result_view", requirements={"resultId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/results/view/{projectId}", name="result_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
-    public function viewAction($resultId)
+    public function viewAction($projectId)
     {
-        $result = $this->getResultsRepository()->findOneBy(['id' => $resultId]);
+        $projectResults = $this->getProjectResultsRepository()->findOneBy(['project' => $projectId]);
 
         return $this->render(
             'results/view.twig',
             [
-                'result' => $result,
-                'keyAction' => $result->getProjectResults()->getProject()->getKeyActions()->getNameSr()
+                'results' => $projectResults->getResults(),
+                'keyAction' => $projectResults->getProject()->getKeyActions()->getNameSr()
             ]
         );
     }

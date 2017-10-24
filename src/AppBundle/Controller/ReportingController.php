@@ -176,17 +176,19 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/view/{Id}", name="reporting_view", requirements={"Id": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/reporting/view/{id}", name="reporting_view", requirements={"id": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($id)
     {
-        $reporting = $this->getReportingRepository()->findOneBy(['id' => $id]);
+        $projectReporting = $this->getProjectReportingRepository()->findOneBy(['project' => $id]);
+        $questions = $this->getQuestionsRepository()->findAll();
 
         return $this->render(
             'reporting/view.twig',
             [
-                'reporting' => $reporting,
-                'keyAction' => $reporting->getProjectReporting()->getProject()->getKeyActions()->getNameSr()
+                'reports' => $projectReporting->getReporting(),
+                'questions' => $questions,
+                'keyAction' => $projectReporting->getProject()->getKeyActions()->getNameSr()
             ]
         );
     }

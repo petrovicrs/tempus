@@ -20,7 +20,7 @@
         <h2>{% trans %}Manually uploaded files{% endtrans %}</h2>
 
         <div class="attachments-holder">
-            {% for element in attachments.manuallyUploadedFiles %}
+            {% for element in my_form.manuallyUploadedFiles %}
                 <li style="margin-bottom: 1rem;">
                     <b>{% trans %}Uploaded{% endtrans %}</b>: {{ element.file [37:] }}
                 </li>

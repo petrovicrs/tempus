@@ -106,6 +106,7 @@ class ResourcesController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
+            /** @var Resources $originalResource */
             foreach ($originalResources as $originalResource) {
                 if (false === $projectResources->getResources()->contains($originalResource)) {
                     $em->remove($originalResource);
@@ -115,24 +116,12 @@ class ResourcesController extends AbstractController
             /** @var Resources $resource */
             foreach ($projectResources->getResources() as $resource) {
                 if (false === $originalResources->contains($resource)) {
-                    $resource->setProject($project);
-                    $this->getApplicantOrganisationRepository()->save($applicantOrganisation);
+                    $resource->setProjectResources($projectResources);
+                    $this->getProjectResourcesRepository()->save($resource);
                 }
             }
 
-
-
-
-
-
-            $projectResources->setProject($project);
-            
-            /** @var Resources $resource */
-            foreach ($projectResources->getResources() as $resource) {
-                $resource->setProjectResources($projectResources);
-            }
-
-            $this->getProjectResourcesRepository()->save($projectResources);
+            $this->getResourcesRepository()->save($projectResources);
 
             if (!$project->getIsCompleted()) {
                 return $this->redirectToRoute('intelectual_outputs_create');

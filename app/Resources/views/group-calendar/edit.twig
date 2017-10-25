@@ -34,7 +34,10 @@
 
                             <div class="col-xs-12">
                                 <ul class="event-reminder" data-purpose="edit" data-prototype="{{ include('/group-calendar/includes/event-reminder.html.twig',
-                                {'form': my_form.eventReminder.vars.prototype })|e }}">
+                                {'my_form': my_form.eventReminder.vars.prototype })|e }}">
+                                    {% for oneReminder in my_form.eventReminder %}
+                                        <li>{{ include('/group-calendar/includes/event-reminder.html.twig', {'my_form': oneReminder }) }}</li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>

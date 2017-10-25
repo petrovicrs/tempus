@@ -81,10 +81,10 @@ class ResultsController extends AbstractController
             'isCompleted' => $project->getIsCompleted(),
         ]);
 
-        $results = new ArrayCollection();
+        $originalResults = new ArrayCollection();
 
         foreach ($projectResult->getResults() as $result) {
-            $results->add($result);
+            $originalResults->add($result);
         }
 
         $projectResultForm->handleRequest($request);
@@ -93,12 +93,19 @@ class ResultsController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            foreach ($results as $result) {
+            /** @var Results $result */
+            foreach ($originalResults as $result) {
                 if (false === $projectResult->getResults()->contains($result)) {
                     $em->remove($result);
                 }
+            }
 
-                $this->getResultsRepository()->save($result);
+            /** @var Results $result */
+            foreach ($projectResult->getResults() as $result) {
+                if (false === $originalResults->contains($result)) {
+                    $result->setProjectResults($projectResult);
+                    $this->getResultsRepository()->save($result);
+                }
             }
 
             $this->getProjectResultsRepository()->save($projectResult);

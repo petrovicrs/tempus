@@ -26,6 +26,9 @@
                             <div class="row">
                                 <ul class="resources" data-purpose="edit" data-prototype="{{include('resources/includes/resources-details.html.twig',
                                 {'form': my_form.resources.vars.prototype })|e}}">
+                                    {% for resource in my_form.resources %}
+                                        <li>{{ include('/resources/includes/resources-details.html.twig', {'form': resource }) }}</li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>

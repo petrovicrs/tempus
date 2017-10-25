@@ -84,25 +84,31 @@ class IntelectualOutputsController extends AbstractController
             'isCompleted' => $project->getIsCompleted(),
         ]);
 
-        $intelectualOutputs = new ArrayCollection();
+        $originalIntelectualOutputs = new ArrayCollection();
 
         foreach ($projectIntelectualOutput->getIntelectualOutputs() as $output) {
-            $intelectualOutputs->add($output);
+            $originalIntelectualOutputs->add($output);
         }
 
         $projectIntelectualOutputForm->handleRequest($request);
 
         if ($projectIntelectualOutputForm->isSubmitted() && $projectIntelectualOutputForm->isValid()) {
 
-
             $em = $this->getDoctrine()->getManager();
 
-            foreach ($intelectualOutputs as $output) {
-                if (false === $projectIntelectualOutput->getIntelectualOutputs()->contains($output)) {
-                    $em->remove($output);
+            /** @var IntelectualOutputs $ntelectualOutput */
+            foreach ($originalIntelectualOutputs as $ntelectualOutput) {
+                if (false === $projectIntelectualOutput->getIntelectualOutputs()->contains($ntelectualOutput)) {
+                    $em->remove($ntelectualOutput);
                 }
+            }
 
-                $this->getIntelectualOutputsRepository()->save($output);
+            /** @var IntelectualOutputs $ntelectualOutput */
+            foreach ($projectIntelectualOutput->getIntelectualOutputs() as $ntelectualOutput) {
+                if (false === $originalIntelectualOutputs->contains($ntelectualOutput)) {
+                    $ntelectualOutput->setProjectIntelectualOutputs($projectIntelectualOutput);
+                    $this->getIntelectualOutputsRepository()->save($ntelectualOutput);
+                }
             }
 
             $this->getProjectIntelectualOutputsRepository()->save($projectIntelectualOutput);

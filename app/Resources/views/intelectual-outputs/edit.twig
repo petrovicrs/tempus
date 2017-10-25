@@ -24,6 +24,9 @@
 
                     <ul class="intelectual-outputs" data-purpose="edit" data-prototype="{{include('intelectual-outputs/includes/details.html.twig',
                     {'my_form': my_form.intelectualOutputs.vars.prototype })|e}}">
+                        {% for intelectualOutput in my_form.intelectualOutputs %}
+                            <li>{{ include('/intelectual-outputs/includes/details.html.twig', {'my_form': intelectualOutput }) }}</li>
+                        {% endfor %}
                     </ul>
 
                     <div class="col-xs-12">

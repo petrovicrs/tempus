@@ -24,7 +24,7 @@
                     <th>{% trans %}Round{% endtrans %}</th>
                     <th>{% trans %}On-going{% endtrans %}</th>
                     {% if app.user %}
-                        <!--<th>{% trans %}View{% endtrans %}</th>-->
+                        <th>{% trans %}View{% endtrans %}</th>
                         <th>{% trans %}Edit{% endtrans %}</th>
                     {% endif %}
                 </tr>
@@ -45,11 +45,11 @@
                         <td> {{ value.onGoing ? 'Yes' : 'No' }} </td>
                         {% if app.user %}
                             {% if value.keyActions.name(app.request.locale) == 'ka1' %}
-                                <!--<td> <a href="{{ localizedPath('project_view', {'projectId':value.id }) }}"> View </a> </td>-->
+                                <td> <a href="{{ localizedPath('project_view', {'projectId':value.id }) }}"> View </a> </td>
                                 <td> <a href="{{ localizedPath('project_edit', {'projectId':value.id }) }}"> Edit </a> </td>
                             {% endif %}
                             {% if value.keyActions.name(app.request.locale) == 'ka2' %}
-                                <!--<td> <a href="{{ localizedPath('project_ka2_view', {'projectId':value.id }) }}"> View </a> </td>-->
+                                <td> <a href="{{ localizedPath('project_ka2_view', {'projectId':value.id }) }}"> View </a> </td>
                                 <td> <a href="{{ localizedPath('project_ka2_edit', {'projectId':value.id }) }}"> Edit </a> </td>
                             {% endif %}
                         {% endif %}

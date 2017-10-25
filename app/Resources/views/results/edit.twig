@@ -24,6 +24,9 @@
 
                     <ul class="results" data-purpose="edit" data-prototype="{{include('results/includes/results-details.html.twig',
                     {'my_form': my_form.results.vars.prototype })|e}}">
+                        {% for result in my_form.results %}
+                            <li>{{ include('/results/includes/results-details.html.twig', {'my_form': result }) }}</li>
+                        {% endfor %}
                     </ul>
 
                     <div class="col-xs-12">

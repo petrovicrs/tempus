@@ -95,29 +95,39 @@ class GroupCalendarController extends AbstractController
             'isCompleted' => $project->getIsCompleted(),
         ]);
 
-        $eventReminder = new ArrayCollection();
+        $originalEventReminder = new ArrayCollection();
 
         /** @var EventReminder $reminder */
         foreach ($calendar->getEventReminder() as $reminder) {
-            $eventReminder->add($reminder);
+            $originalEventReminder->add($reminder);
         }
 
         $calendarForm->handleRequest($request);
 
         if ($calendarForm->isSubmitted() && $calendarForm->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
 
             /** @var EventReminder $reminder */
-            foreach ($eventReminder as $reminder) {
+            foreach ($originalEventReminder as $reminder) {
                 if (false === $calendar->getEventReminder()->contains($reminder)) {
                     $em->remove($reminder);
                 }
-                $this->getEventReminderRepository()->save($reminder);
+            }
+
+            /** @var EventReminder $reminder */
+            foreach ($calendar->getEventReminder() as $reminder) {
+                if (false === $originalEventReminder->contains($reminder)) {
+                    $reminder->setGroupCalendar($calendar);
+                    $this->getEventReminderRepository()->save($reminder);
+                }
             }
 
             $this->getCalendarRepository()->save($calendar);
 
-            return $this->redirectToRoute('project_list');
+            if (!$project->getIsCompleted()) {
+                return $this->redirectToRoute('project_list');
+            }
         }
 
         return $this->render('group-calendar/edit.twig',

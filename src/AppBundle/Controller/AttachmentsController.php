@@ -187,17 +187,17 @@ class AttachmentsController extends AbstractController
         );
     }
 
-//    /**
-//     * @Route("/{locale}/attachments/view/{id}", name="attachment_view", requirements={"id": "\d+", "locale": "%app.locales%"})
-//     */
-//    public function viewAction($id)
-//    {
-//        $attachment = $this->getAttachmentsRepository()->findOneBy(['id' => $id]);
-//        $dmsDocuments = $this->getAttachmentsDmsRepository()->findBy(['attachments' => $id]);
-//        $uploadedFiles = $this->getAttachmentsManuallyUploadedRepository()->findBy(['attachments' => $id]);
-//
-//        return $this->render('attachments/view.twig', ['attachment' => $attachment, 'dmsDocuments' => $dmsDocuments, 'uploadedFiles' => $uploadedFiles]);
-//    }
+    /**
+     * @Route("/{locale}/attachments/view/{id}", name="attachment_view", requirements={"id": "\d+", "locale": "%app.locales%"})
+     */
+    public function viewAction($id)
+    {
+        $attachments = $this->getAttachmentsRepository()->findOneBy(['project' => $id]);
+        return $this->render('attachments/view.twig', [
+            'attachments' => $attachments,
+            'keyAction' => $attachments->getProject()->getKeyActions()->getNameSr()
+        ]);
+    }
 
     private function getAttachmentsRepository()
     {

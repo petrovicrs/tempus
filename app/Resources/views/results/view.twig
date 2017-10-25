@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <script type="text/javascript" src="{{ asset('/js/collapsible.js')}}"></script>
     <section id="main">
     {% include 'sub-navbar.html.twig' with {'active': 'results'} %}
     <div class="container-fluid">
-        <a href="{{ localizedPath('result_edit', {'projectId': result.projectResults.project.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
+
         <h2><b>{% trans %}Results{% endtrans %}</b></h2>
 
         <table class="table table-hover" data-toggle="table">
@@ -19,48 +20,57 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{ result.title(app.request.getLocale()) }}</td>
+                {% for result in results %}
+                    <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
+                        <td>{{ result.title(app.request.getLocale()) }}</td>
 
-                    {% if result.resultType %}
-                        <td>{{ result.resultType.name(app.request.getLocale()) }}</td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
+                        {% if result.resultType %}
+                            <td>{{ result.resultType.name(app.request.getLocale()) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
 
-                    <td><a href="{{ localizedPath('project_view', {'projectId': result.projectResults.project.id}) }}">{{ result.projectResults.project.name(app.request.getLocale()) }}</a></td>
+                        <td><a href="{{ localizedPath('project_view', {'projectId': result.projectResults.project.id}) }}">{{ result.projectResults.project.name(app.request.getLocale()) }}</a></td>
 
-                    {% if result.resultStatus %}
-                        <td>{{ result.resultStatus.name(app.request.getLocale()) }}</td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
+                        {% if result.resultStatus %}
+                            <td>{{ result.resultStatus.name(app.request.getLocale()) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
 
-                    {% if result.isPublic %}
-                        <td class="text-center">{% trans %}Yes{% endtrans %}</td>
-                    {% else %}
-                        <td class="text-center">{% trans %}No{% endtrans %}</td>
-                    {% endif %}
+                        {% if result.isPublic %}
+                            <td class="text-center">{% trans %}Yes{% endtrans %}</td>
+                        {% else %}
+                            <td class="text-center">{% trans %}No{% endtrans %}</td>
+                        {% endif %}
 
-                    {% if result.showDescription %}
-                        <td class="text-center">{% trans %}Yes{% endtrans %}</td>
-                    {% else %}
-                        <td class="text-center">{% trans %}No{% endtrans %}</td>
-                    {% endif %}
-                </tr>
+                        {% if result.showDescription %}
+                            <td class="text-center">{% trans %}Yes{% endtrans %}</td>
+                        {% else %}
+                            <td class="text-center">{% trans %}No{% endtrans %}</td>
+                        {% endif %}
+                    </tr>
+                    <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
+                        <td colspan="6">
+                            <div class="details-wrapper-inner">
+                                <div class="col-xs-12 no-padding">
+                                    <h2>Description</h2>
+                                    <p>{{ result.description(app.request.getLocale()) }}</p>
+                                </div>
+
+                                <div class="col-xs-12 no-padding">
+                                    <h2>Notes</h2>
+                                    {# TODO list filest #}
+                                    <p>{{ result.notes }}</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
 
-        <div class="col-xs-12 no-padding">
-            <h2>Description</h2>
-            <p>{{ result.description(app.request.getLocale()) }}</p>
-        </div>
 
-        <div class="col-xs-12 no-padding">
-            <h2>Notes</h2>
-            {# TODO list filest #}
-            <p>{{ result.notes }}</p>
-        </div>
     </div>
     <div>
 {% endblock %}

@@ -123,17 +123,18 @@ class IntelectualOutputsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/intelectual-outputs/view/{id}", name="intelectual_output_view", requirements={"id": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/intelectual-outputs/view/{projectId}", name="intelectual_output_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
-    public function viewAction($id)
+    public function viewAction($projectId)
     {
-        $intelectualOutput = $this->getIntelectualOutputsRepository()->findOneBy(['id' => $id]);
-        $project = $intelectualOutput->getProjectIntelectualOutputs()->getProject();
+        /** @var ProjectIntelectualOutputs $projectIntelectualOutputs */
+        $projectIntelectualOutputs = $this->getProjectIntelectualOutputsRepository()->findOneBy(['project' => $projectId]);
+        $project = $projectIntelectualOutputs->getProject();
 
         return $this->render(
             'intelectual-outputs/view.twig',
             [
-                'intelectualOutput' => $intelectualOutput,
+                'intelectualOutputs' => $projectIntelectualOutputs->getIntelectualOutputs(),
                 'projectId' => $project->getId(),
                 'keyAction' => $project->getKeyActions()->getNameSr()
             ]

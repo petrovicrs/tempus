@@ -20,15 +20,15 @@
         <h2>{% trans %}Manually uploaded files{% endtrans %}</h2>
 
         <div class="attachments-holder">
-            {% for element in my_form.manuallyUploadedFiles %}
-                <li>
-                    {{ element.file }}
+            {% for element in attachments.manuallyUploadedFiles %}
+                <li style="margin-bottom: 1rem;">
+                    <b>{% trans %}Uploaded{% endtrans %}</b>: {{ element.file [37:] }}
                 </li>
             {% endfor %}
-            <ul class="manually-uploaded-files" data-purpose="{{ purpose }}" data-prototype="{{ form_widget(my_form.manuallyUploadedFiles.vars.prototype)|e('html_attr') }}">
+            <ul class="manually-uploaded-files" data-purpose="{{ purpose }}" data-prototype="{{ form_widget(my_form.manuallyUploadedFiles.vars.prototype)|e }}">
                 {% for element in my_form.manuallyUploadedFiles %}
                     <li>
-                        {{ form_widget(element.file) }}
+                        {{ form_row(element.file) }}
                     </li>
                 {% endfor %}
             </ul>

@@ -208,11 +208,11 @@ class AttachmentsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/attachments/view/{id}", name="attachment_view", requirements={"id": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/attachments/view/{projectId}", name="attachment_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
-    public function viewAction($id)
+    public function viewAction($projectId)
     {
-        $attachments = $this->getAttachmentsRepository()->findOneBy(['project' => $id]);
+        $attachments = $this->getAttachmentsRepository()->findOneBy(['project' => $projectId]);
         return $this->render('attachments/view.twig', [
             'attachments' => $attachments,
             'keyAction' => $attachments->getProject()->getKeyActions()->getNameSr()

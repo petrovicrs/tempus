@@ -37,7 +37,7 @@
                                 <ul class="manually-uploaded-files">
                                     {% for attach in attachments.manuallyUploadedFiles %}
                                         <li>
-                                            <b>{% trans %}File{% endtrans %}</b>: {{ attach.file }}
+                                            <b>{% trans %}File{% endtrans %}</b>: {{ attach.originalFilename }}
                                         </li>
                                     {% endfor %}
                                 </ul>

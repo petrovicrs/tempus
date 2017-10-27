@@ -126,7 +126,9 @@ class GroupCalendarController extends AbstractController
      */
     public function viewAction(Request $request, $id)
     {
-
+        /** @var GroupCalendar $events */
+        $events = $this->getCalendarRepository()->findBy(['project' => $id]);
+        return $this->render('group-calendar/view.twig', ['events' => $events]);
     }
 
     private function getCalendarRepository()

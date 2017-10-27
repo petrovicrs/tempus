@@ -33,7 +33,7 @@ jQuery(document).ready(function() {
 });
 
 function $addFormDeleteLink($formDiv) {
-    var $removeFormA = $('<a href="#">delete</a>');
+    var $removeFormA = $('<a href="#" class="btn btn-remove btn-danger">delete</a>');
     $formDiv.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
@@ -60,7 +60,7 @@ function $addForm($collectionHolder, $addLinkDiv) {
     $collectionHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a tag" link li
-    var $newFormDiv = $('<li></li>').append(newForm);
+    var $newFormDiv = $('<li class="upload-btn"></li>').append(newForm);
 
     // also add a remove button, just for this example
     $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove</a>');

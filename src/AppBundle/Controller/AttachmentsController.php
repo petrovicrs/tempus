@@ -17,11 +17,15 @@ use AppBundle\Util\FileTypeHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bundle\DebugBundle\DebugBundle;
+use Symfony\Component\Debug\Debug;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\FileBag;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Repository\ProjectRepository;
+use Twig\Extension\DebugExtension;
 
 class AttachmentsController extends AbstractController
 {
@@ -46,17 +50,16 @@ class AttachmentsController extends AbstractController
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
-        $attachmentExist = $this->getAttachmentsRepository()->findOneBy(
-            ['project' => $project],
-            ['id' => 'DESC']
-        );
-
-        if(false == is_null($attachmentExist)) {
-            return $this->forward('AppBundle:Attachments:edit', ['projectId' => $project->getId()]);
-        }
+//        $attachmentExist = $this->getAttachmentsRepository()->findOneBy(
+//            ['project' => $project],
+//            ['id' => 'DESC']
+//        );
+//
+//        if(false == is_null($attachmentExist)) {
+//            return $this->forward('AppBundle:Attachments:edit', ['projectId' => $project->getId()]);
+//        }
 
         $attachments = new Attachments();
-
 
         $attachmentsForm = $this->createForm(AttachmentsForm::class, $attachments, [
             'action' => $this->generateUrl('attachments_create'),
@@ -70,18 +73,24 @@ class AttachmentsController extends AbstractController
 
             $attachments->setProject($this->getLastProjectForCurrentUser());
 
+            /** @var FileBag $files */
+            $files = $request->files->get('appbundle_project')['manuallyUploadedFiles'];
+
             /* @var AttachmentsManuallyUploaded $manuallyUploadedFile */
             foreach ($attachments->getManuallyUploadedFiles() as $key => $manuallyUploadedFile) {
 
-                $file = $request->files->get('appbundle_project')['manuallyUploadedFiles'][$key]['file'];
+                /** @var UploadedFile $file */
+                $file = $files[$key]['file'];
 
-                if(false == is_null($file)) {
+                if(false == is_null($file) && FileTypeHelper::isTypeAllowed($file)) {
+
+                    /** @var File $uploadedFile */
                     $uploadedFile = $this->get('util.file_uploader')->upload($file);
-                    $manuallyUploadedFile->setFile($uploadedFile->getFilename());
-                    $manuallyUploadedFile->setType(FileTypeHelper::getFileType($uploadedFile));
-                    $manuallyUploadedFile->setAttachments($attachments);
 
-                    $attachments->addManuallyUploadedFiles($manuallyUploadedFile);
+                    $manuallyUploadedFile->setFile($uploadedFile->getFilename());
+                    $manuallyUploadedFile->setType($file->getClientOriginalExtension());
+                    $manuallyUploadedFile->setOriginalFileName($file->getClientOriginalName());
+                    $manuallyUploadedFile->setAttachments($attachments);
                 }
             }
 
@@ -90,8 +99,11 @@ class AttachmentsController extends AbstractController
             return $this->redirectToRoute('group_calendar_create');
         }
 
-        return $this->render('attachments/create.twig', ['my_form' => $attachmentsForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()
+        return $this->render('attachments/create.twig', [
+            'my_form' => $attachmentsForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'projectId' => $project->getId(),
+            'attachments' => null
         ]);
     }
 
@@ -149,20 +161,33 @@ class AttachmentsController extends AbstractController
                     $em->remove($file);
                 }
             }
+            /** @var ProjectTopic $topic */
+            foreach ($project->getTopics() as $topic) {
+                if (false === $originalTopics->contains($topic)) {
+                    $topic->setProject($project);
+                    $this->getProjectTopicRepository()->save($topic);
+                }
+            }
+
+            /** @var FileBag $files */
+            $files = $request->files->get('appbundle_project')['manuallyUploadedFiles'];
 
             /* @var AttachmentsManuallyUploaded $manuallyUploadedFile */
             foreach ($attachments->getManuallyUploadedFiles() as $key => $manuallyUploadedFile) {
 
-                $file = $request->files->get('appbundle_project')['manuallyUploadedFiles'][$key]['file'];
+                /** @var UploadedFile $file */
+                $file = $files[$key]['file'];
 
-                if(false == is_null($file)) {
+                if(false == is_null($file) && FileTypeHelper::isTypeAllowed($file)) {
+                    var_dump($file->getClientOriginalExtension(), $key);
+
+                    /** @var File $uploadedFile */
                     $uploadedFile = $this->get('util.file_uploader')->upload($file);
-                    $manuallyUploadedFile->setFile($uploadedFile->getFilename());
-                    $manuallyUploadedFile->setType(FileTypeHelper::getFileType($uploadedFile));
-                    $manuallyUploadedFile->setAttachments($attachments);
 
-                    $this->getAttachmentsManuallyUploadedRepository()->save($manuallyUploadedFile);
-                    $attachments->addManuallyUploadedFiles($manuallyUploadedFile);
+                    $manuallyUploadedFile->setFile($uploadedFile->getFilename());
+                    $manuallyUploadedFile->setType($file->getClientOriginalExtension());
+                    $manuallyUploadedFile->setOriginalFileName($file->getClientOriginalName());
+                    $manuallyUploadedFile->setAttachments($attachments);
                 }
             }
 

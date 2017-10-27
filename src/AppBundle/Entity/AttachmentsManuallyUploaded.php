@@ -29,14 +29,13 @@ class AttachmentsManuallyUploaded
 
     /**
      * @ORM\Column(name="file", type="string", length=255, unique=true)
-     *
-     * @Assert\File(
-     *      maxSize = "10M",
-     *      mimeTypes = {"image/jpeg", "application/octet-stream"},
-     *      maxSizeMessage = "The maxmimum allowed file size is 10MB."
-     * )
      */
     protected $file;
+
+    /**
+     * @ORM\Column(type="string", length=128)
+     */
+    protected $originalFileName;
 
     /**
      * @ORM\Column(type="string", length=16)
@@ -45,6 +44,7 @@ class AttachmentsManuallyUploaded
 
     /**
      * @ORM\ManyToOne(targetEntity="Attachments", inversedBy="manuallyUploadedFiles")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $attachments;
 
@@ -78,6 +78,22 @@ class AttachmentsManuallyUploaded
     public function setFile($file)
     {
         $this->file = $file;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOriginalFileName()
+    {
+        return $this->originalFileName;
+    }
+
+    /**
+     * @param mixed $originalFileName
+     */
+    public function setOriginalFileName($originalFileName)
+    {
+        $this->originalFileName = $originalFileName;
     }
 
     /**

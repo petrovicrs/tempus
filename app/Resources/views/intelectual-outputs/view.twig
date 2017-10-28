@@ -3,12 +3,12 @@
 {% block body %}
     <script type="text/javascript" src="{{ asset('/js/collapsible.js')}}"></script>
     <section id="main">
-    {% if keyAction == 'ka1' %}
-        {% include 'sub-navbar.html.twig' with {'active': 'intelectual_outputs'} %}
-    {% endif %}
-    {%  if keyAction == 'ka2' %}
-        {% include 'sub-navbar-ka2.html.twig' with {'active': 'intelectual_outputs'} %}
-    {% endif %}
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar-view.html.twig' with {'active': 'intelectual_outputs', 'projectId': projectId} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2-view.html.twig' with {'active': 'intelectual_outputs', 'projectId': projectId} %}
+        {% endif %}
     <div class="container-fluid">
 
         <h2><b>{% trans %}Intelectual outputs{% endtrans %}</b></h2>

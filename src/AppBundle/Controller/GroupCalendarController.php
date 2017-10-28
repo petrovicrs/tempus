@@ -122,13 +122,18 @@ class GroupCalendarController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/group-calendar/view/{id}", name="group_calendar_view", requirements={"locale": "%app.locales%", "id": "\d+"})
+     * @Route("/{locale}/group-calendar/view/{projectId}", name="group_calendar_view", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
-    public function viewAction(Request $request, $id)
+    public function viewAction(Request $request, $projectId)
     {
         /** @var GroupCalendar $events */
-        $events = $this->getCalendarRepository()->findBy(['project' => $id]);
-        return $this->render('group-calendar/view.twig', ['events' => $events]);
+        $events = $this->getCalendarRepository()->findBy(['project' => $projectId]);
+
+        return $this->render('group-calendar/view.twig', [
+            'events' => $events,
+            'keyAction' => $events[0]->getProject()->getKeyActions()->getNameSr(),
+            'projectId' => $projectId
+        ]);
     }
 
     private function getCalendarRepository()

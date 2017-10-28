@@ -27,6 +27,7 @@ class LocalizedPath extends \Twig_Extension
         if(!isset($parameters['locale'])){
             $parameters['locale'] = $this->container->get('translator')->getLocale();
         }
+
         return $this->container->get('router')->generate($route, $parameters, $referenceType);
     }
 

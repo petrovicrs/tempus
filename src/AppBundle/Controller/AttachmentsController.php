@@ -208,7 +208,7 @@ class AttachmentsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/attachments/view/{projectId}", name="attachment_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/attachments/view/{projectId}", name="attachments_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($projectId)
     {

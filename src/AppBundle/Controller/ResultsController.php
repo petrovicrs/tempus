@@ -121,6 +121,7 @@ class ResultsController extends AbstractController
             'results/view.twig',
             [
                 'results' => $projectResults->getResults(),
+                'projectId' => $projectId,
                 'keyAction' => $projectResults->getProject()->getKeyActions()->getNameSr()
             ]
         );

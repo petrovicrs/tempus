@@ -2,7 +2,13 @@
 
 {% block body %}
     <section id="main">
-    {% include 'sub-navbar.html.twig' with {'active': 'group_calendar' } %}
+
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar-view.html.twig' with {'active': 'group_calendar', 'projectId': projectId} %}
+    {% endif %}
+    {%  if keyAction == 'ka2' %}
+        {% include 'sub-navbar-ka2-view.html.twig' with {'active': 'group_calendar', 'projectId': projectId} %}
+    {% endif %}
     <div class="container-fluid">
         <div class="col-xs-12 section-heading">
             <h2><b>{% trans %}Group Calendar{% endtrans %}</b></h2>
@@ -26,8 +32,6 @@
                                     var desc = {{ value.eventDescription | json_encode()|raw }};
                                     var date = {{ value.eventDate | json_encode()|raw }};
                                     var color = {{ value.eventType ? value.eventType.color | json_encode()|raw : 'blue'|json_encode|raw }};
-
-                                    console.log(desc, date, color);
 
                                     var event = {
                                         title  : desc,
@@ -53,7 +57,7 @@
                                         {{ reminder.daysAhead }} - {% trans %}Days ahead{% endtrans %}
                                     </div>
                                     <div class="col-xs-4">
-                                        <a href="{{ localizedPath('group_calendar_edit', {'projectId': value.project.id}) }}">{% trans %}Edit{% endtrans %}</a> | {% trans %}Remove{% endtrans %}
+                                        {#<a href="{{ localizedPath('group_calendar_edit', {'projectId': value.project.id}) }}">{% trans %}Edit{% endtrans %}</a>#}
                                     </div>
                                 {% endfor %}
                             </div>

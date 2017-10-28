@@ -120,7 +120,12 @@ class ResourcesController extends AbstractController
     public function viewAction($projectId)
     {
         $projectResources = $this->getProjectResourcesRepository()->findOneBy(['id' => $projectId]);
-        return $this->render('resources/view.twig', ['projectResources' => $projectResources,'keyAction' => $projectResources->getProject()->getKeyActions()->getNameSr()]);
+
+        return $this->render('resources/view.twig', [
+            'projectResources' => $projectResources,
+            'projectId' => $projectId,
+            'keyAction' => $projectResources->getProject()->getKeyActions()->getNameSr()
+        ]);
     }
 
     private function getProjectResourcesRepository()

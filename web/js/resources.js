@@ -25,9 +25,9 @@ function loadResources() {
         $addForm($collectionResourcesHolder, $addResourcesLinkDiv);
     });
 
-    if($collectionResourcesHolder.data('purpose') === 'create') {
-        $addForm($collectionResourcesHolder, $addResourcesLinkDiv);
-    }
+    // if($collectionResourcesHolder.data('purpose') === 'create') {
+    //     $addForm($collectionResourcesHolder, $addResourcesLinkDiv);
+    // }
 }
 
 function $addFormDeleteLink($formDiv) {

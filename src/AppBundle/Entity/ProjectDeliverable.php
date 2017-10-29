@@ -209,4 +209,18 @@ class ProjectDeliverable extends AbstractAuditable
     {
         $this->projectDeliverablesActivities = $projectDeliverablesActivities;
     }
+
+    public function getTitle($locale) {
+        if ($locale == "sr"){
+            return $this->titleSr;
+        }
+        return $this->titleEn;
+    }
+
+    public function getDesc($locale) {
+        if ($locale == "sr"){
+            return $this->descSr;
+        }
+        return $this->descEn;
+    }
 }

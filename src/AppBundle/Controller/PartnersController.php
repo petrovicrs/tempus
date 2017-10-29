@@ -27,8 +27,10 @@ class PartnersController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $partners = $this->getPartnersRepository()->findAll();
-        return $this->render('partners/list.twig', ['partners' => $partners]);
+        $partners = $this->getProjectPartnersRepository()->findAll();
+        return $this->render('partners/list.twig', [
+            'partners' => $partners
+        ]);
     }
 
     /**
@@ -214,15 +216,19 @@ class PartnersController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/partners/view/{id}", name="partner_view", requirements={"id": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/partners/view/{projectId}", name="partner_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
-    public function viewAction($id)
+    public function viewAction($projectId)
     {
-        $partner = $this->getPartnersRepository()->findOneBy(['id' => $id]);
-        $teamMembers = $this->get('doctrine_entity_repository.partners_team_members')->findBy(['partners' => $id]);
-        $participants = $this->get('doctrine_entity_repository.partners_participants')->findBy(['partners' => $id]);
+        $projectPartner = $this->getProjectPartnersRepository()->findOneBy(['project' => $projectId]);
+//        $teamMembers = $this->get('doctrine_entity_repository.partners_team_members')->findBy(['partners' => $projectId]);
+//        $participants = $this->get('doctrine_entity_repository.partners_participants')->findBy(['partners' => $projectId]);
 
-        return $this->render('partners/view.twig', ['partner' => $partner, 'teamMembers' => $teamMembers, 'participants' => $participants]);
+        return $this->render('partners/view.twig', [
+            'projectPartner' => $projectPartner,
+            'projectId' => $projectId,
+            'keyAction' => $projectPartner->getProject()->getKeyActions()->getNameSr()
+        ]);
     }
 
     private function getProjectPartnersRepository()

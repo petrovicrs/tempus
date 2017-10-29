@@ -25,7 +25,10 @@ class ProjectDeliverablesActivitiesController extends AbstractController
     public function listAction(Request $request)
     {
         $projectDeliverableActivities = $this->getDeliverablesActivitiesRepository()->findAll();
-        return $this->render('deliverables-activities/list.twig', ['deliverablesActivities' => $projectDeliverableActivities]);
+
+        return $this->render('deliverables-activities/list.twig', [
+            'deliverablesActivities' => $projectDeliverableActivities,
+        ]);
     }
 
     /**
@@ -162,6 +165,22 @@ class ProjectDeliverablesActivitiesController extends AbstractController
                 'isCompleted' => $project->getIsCompleted(),
             ]
         );
+    }
+
+    /**
+     * @Route("/{locale}/deliverables-activities/view/{projectId}", name="deliverables_view", requirements={"locale": "%app.locales%", "projectId": "\d+"})
+     */
+    public function viewAction(Request $request, $projectId)
+    {
+        $projectDeliverableActivities = $this->getDeliverablesActivitiesRepository()->findOneBy([
+            'project' => $projectId
+        ]);
+
+        return $this->render('deliverables-activities/view.twig', [
+            'deliverablesActivities' => $projectDeliverableActivities,
+            'projectId' => $projectId,
+            'keyAction' => $projectDeliverableActivities->getProject()->getKeyActions()->getNameSr()
+        ]);
     }
 
     private function getDeliverablesActivitiesRepository()

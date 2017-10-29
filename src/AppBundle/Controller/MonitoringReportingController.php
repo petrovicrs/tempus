@@ -25,8 +25,8 @@ class MonitoringReportingController extends AbstractController
      */
     public function listAction()
     {
-        $all = $this->getMonitoringReportingRepository()->findAll();
-        return $this->render('monitoring-reporting/list.twig', ['monitoring' => $all]);
+        $all = $this->getProjectMonitoringReportingRepository()->findAll();
+        return $this->render('monitoring-reporting/list.twig', ['projectMonitoring' => $all]);
     }
 
     /**
@@ -131,13 +131,17 @@ class MonitoringReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/monitoring/view/{id}", name="monitoring_view", requirements={"locale": "%app.locales%", "id": "\d+"})
+     * @Route("/{locale}/monitoring/view/{projectId}", name="monitoring_view", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
-    public function viewAction($id)
+    public function viewAction($projectId)
     {
-        $monitoring = $this->getMonitoringReportingRepository()->findOneBy(['id' => $id]);
+        $projectMonitoringReporting = $this->getProjectMonitoringReportingRepository()->findOneBy(['project' => $projectId]);
 
-        return $this->render('monitoring-reporting/view.twig', ['monitoring' => $monitoring, 'id' => $id]);
+        return $this->render('monitoring-reporting/view.twig', [
+            'projectMonitoring' => $projectMonitoringReporting,
+            'projectId' => $projectId,
+            'keyAction' => $projectMonitoringReporting->getProject()->getKeyActions()->getNameSr(),
+        ]);
     }
 
     private function getProjectMonitoringReportingRepository()

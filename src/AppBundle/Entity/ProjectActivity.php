@@ -239,10 +239,21 @@ class ProjectActivity extends AbstractAuditable
      * @param $locale
      * @return String
      */
-    public function getName($locale) {
+    public function getTitle($locale) {
         if ($locale == "sr"){
             return $this->titleSr;
         }
         return $this->titleEn;
+    }
+
+    /**
+     * @param $locale
+     * @return String
+     */
+    public function getDesc($locale) {
+        if ($locale == "sr"){
+            return $this->descSr;
+        }
+        return $this->descEn;
     }
 }

@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{#TODO - left for finish#}
+
 {% block body %}
     <script type="text/javascript" src="{{ asset('/js/collapsible.js')}}"></script>
     <section id="main">
@@ -25,7 +25,7 @@
             <tbody>
                 {% for report in reports %}
                     <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
-                        <td>{{ report.id }}</td>
+                        <td class="text-center">{{ report.id }}</td>
 
                         {% if report.type %}
                             <td>{{ report.type.name(app.request.locale) }}</td>
@@ -33,7 +33,7 @@
                             <td></td>
                         {% endif %}
 
-                        <td>{{ report.reportingDate | date}}</td>
+                        <td class="text-center">{{ report.reportingDate | date('d/m/y') }}</td>
 
                         {% if report.reportingBy %}
                             {% for by in report.reportingBy %}
@@ -56,9 +56,7 @@
                                     </div>
                                     <div class="col-xs-6 no-padding">
                                         {% for a in report.questionsAndAnswers %}
-                                            <div class="col-xs-6 no-padding">
-                                                <p>{{ a.answer(app.request.getLocale()) }}</p>
-                                            </div>
+                                            <p>{{ a.answer(app.request.getLocale()) }}</p>
                                         {% endfor %}
                                     </div>
                                 </div>

@@ -25,9 +25,9 @@ function loadReporting() {
         $addForm($collectionReportingHolder, $addReportinkLinkDiv, 'reporting');
     });
 
-    if($collectionReportingHolder.data('purpose') === 'create') {
-        $addForm($collectionReportingHolder, $addReportinkLinkDiv, 'reporting');
-    }
+    // if($collectionReportingHolder.data('purpose') === 'create') {
+    //     $addForm($collectionReportingHolder, $addReportinkLinkDiv, 'reporting');
+    // }
 
     return true;
 }

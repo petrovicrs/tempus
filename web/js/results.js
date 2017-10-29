@@ -25,9 +25,9 @@ function loadResults() {
         $addForm($collectionResultsHolder, $addResultsLinkDiv);
     });
 
-    if($collectionResultsHolder.data('purpose') === 'create') {
-        $addForm($collectionResultsHolder, $addResultsLinkDiv);
-    }
+    // if($collectionResultsHolder.data('purpose') === 'create') {
+    //     $addForm($collectionResultsHolder, $addResultsLinkDiv);
+    // }
 }
 
 function $addFormDeleteLink($formDiv) {

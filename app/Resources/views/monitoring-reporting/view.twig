@@ -1,25 +1,63 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <script type="text/javascript" src="{{ asset('/js/collapsible.js')}}"></script>
     <section id="main">
-    {% include 'sub-navbar.html.twig' with {'active': 'monitoring'} %}
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar-view.html.twig' with {'active': 'monitoring', 'projectId': projectId} %}
+    {% endif %}
+    {%  if keyAction == 'ka2' %}
+        {% include 'sub-navbar-ka2-view.html.twig' with {'active': 'monitoring', 'projectId': projectId} %}
+    {% endif %}
     <div class="container-fluid">
-        <a href="{{ localizedPath('monitoring_edit', {'id': monitoring.id}) }}" class="btn btn-add btn-success "><span aria-hidden="true"></span>{% trans %}Edit{% endtrans %}</a>
-        <h2><b>{% trans %}Monitoring/Reporting{% endtrans %}</b></h2>
+        <div class="col-xs-12 section-heading">
+            <h2><b>{% trans %}Monitoring/Reporting{% endtrans %}</b></h2>
+        </div>
+
+        <div class="col-xs-3">
+            <b>{% trans %}Project{% endtrans %}</b>: {{ projectMonitoring.project.name(app.request.locale) }}
+        </div>
+        <div class="col-xs-3">
+            <b>{% trans %}Created on{% endtrans %}</b>: {{ projectMonitoring.dateCreated | date('d/m/y') }}
+        </div>
+
+        <div class="col-xs-12">
+            <h2>Monitoring / Reporting</h2>
+        </div>
 
         <table class="table table-hover" data-toggle="table">
-            <tr>
-                <td><b>{% trans %}Monitoring type{% endtrans %}</b>: {{ monitoring.monitoringType ? monitoring.monitoringType.name(app.request.getLocale()) : 'N/A'}}</td>
+            <thead>
+            <tr class="table-heleer">
+                <th class="sortable"  data-sortable="true">{% trans %}Type{% endtrans %}</th>
+                <th class="sortable"  data-sortable="true">{% trans %}Comment type{% endtrans %}</th>
+                <th class="sortable"  data-sortable="true">{% trans %}Monitoring date{% endtrans %}</th>
             </tr>
-            <tr>
-                <td><b>{% trans %}Monitoring date{% endtrans %}</b>: {{ monitoring.monitoringDate | date('d/m/Y')}}</td>
-            </tr>
-            <tr>
-                <td><b>{% trans %}Comment type{% endtrans %}</b>: {{ monitoring.commentType ? monitoring.commentType.name(app.request.getLocale()) : 'N/A'}}</td>
-            </tr>
-            <tr>
-                <td><b>{% trans %}Comment{% endtrans %}</b>: {{ monitoring.comment }}</td>
-            </tr>
+            </thead>
+            <tbody>
+            {% for key, value in projectMonitoring.monitoringReporting %}
+                <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
+                    {% if value.monitoringType %}
+                        <td class="text-center">{{ value.monitoringType.name(app.request.locale) }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    {% if value.commentType %}
+                        <td class="text-center">{{ value.commentType.name(app.request.locale) }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td class="text-center">{{ value.monitoringDate | date('d/m/y') }}</td>
+                </tr>
+                <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
+                    <td colspan="3">
+                        <div class="details-wrapper-inner">
+                            <h2>{% trans %}Comment{% endtrans %}</h2>
+                            <p>{{ value.comment }}</p>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
         </table>
     </div>
     <div>

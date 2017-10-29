@@ -2,52 +2,47 @@
 
 {% block body %}
     <section id="main">
-        {% include 'sub-navbar.html.twig' with {'active': 'monitoring'} %}
+        {% include 'sub-navbar-ka2-list.html.twig' with {'active': 'deliverables'} %}
         <div class="container-fluid">
             <div class="col-xs-12 section-heading">
-                <h2><b>{% trans %}Monitoring/Reporting{% endtrans %}</b></h2>
-                <a href="{{ localizedPath('monitoring_create') }}" class="btn btn-add btn-success pull-right"><span aria-hidden="true"></span>{% trans %}Add Monitoring/Reporting{% endtrans %}</a>
+                <h2><b>{% trans %}Deliverables/Activities{% endtrans %}</b></h2>
             </div>
 
             <table class="table table-hover" data-toggle="table">
                 <thead>
                     <tr class="table-heleer">
+                        <th class="sortable"  data-sortable="true">{% trans %}Id{% endtrans %}</th>
                         <th class="sortable"  data-sortable="true">{% trans %}Project{% endtrans %}</th>
-                        <th class="sortable"  data-sortable="true">{% trans %}Monitoring type{% endtrans %}</th>
-                        <th class="sortable"  data-sortable="true">{% trans %}Monitoring date{% endtrans %}</th>
-                        <th class="sortable"  data-sortable="true">{% trans %}Comment type{% endtrans %}</th>
-                        <th class="sortable"  data-sortable="true">{% trans %}Comment{% endtrans %}</th>
-                        <th class="sortable"  data-sortable="true">{% trans %}Action{% endtrans %}</th>
+                        <th>{% trans %}Deliverables{% endtrans %}</th>
+                        <th>{% trans %}Activities{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Created{% endtrans %}</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for key, value in monitoring %}
+                    {% for key, value in deliverablesActivities %}
                         <tr>
+                            <td class="text-center">{{ value.id }}</td>
                             {% if value.project %}
-                                <td><a href="{{ localizedPath('project_view', {'projectId': value.project.id}) }}">{{ value.project.name(app.request.getLocale()) }}</a></td>
+                                <td class="text-center"><a href="{{ localizedPath('project_view', {'projectId': value.project.id}) }}">{{ value.project.name(app.request.getLocale()) }}</a></td>
                             {% else %}
-                                <td></td>
+                                <td class="text-center"></td>
                             {% endif %}
 
-                            {% if value.monitoringType %}
-                                <td>{{ value.monitoringType.name(app.request.getLocale())}}</td>
+                            {% if value.deliverables%}
+                                <td class="text-center">{{ value.deliverables | length }}</td>
                             {% else %}
-                                <td></td>
+                                <td class="text-center">0</td>
                             {% endif %}
 
-                            <td>{{ value.monitoringDate | date('d/m/y')}}</td>
-
-                            {% if value.commentType %}
-                                <td>{{ value.commentType.name(app.request.getLocale())}}</td>
+                            {% if value.activities%}
+                                <td class="text-center">{{ value.activities | length }}</td>
                             {% else %}
-                                <td></td>
+                                <td class="text-center">0</td>
                             {% endif %}
 
-                            <td>{{ value.comment }}</td>
-
-                            <td>
-                                <a href="{{ localizedPath('monitoring_view', {'id': value.id}) }}">View</a> | <a href="{{ localizedPath('monitoring_edit', {'id': value.id}) }}">Edit</a>
-                            </td>
+                            <td class="text-center">{{ value.dateCreated | date('d/m/y')}}</td>
+                            <td class="text-center"><a href="{{ localizedPath('deliverables_view', {'projectId': value.project.id}) }}">View</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

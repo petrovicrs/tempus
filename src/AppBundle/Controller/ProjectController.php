@@ -555,7 +555,7 @@ class ProjectController extends AbstractController
             $originalNotes->add($note);
         }
 
-        return $this->render('project/view.twig', ['project' => $project]);
+        return $this->render('project/view.twig', ['project' => $project, 'projectId' => $projectId]);
     }
 
     /**
@@ -595,7 +595,7 @@ class ProjectController extends AbstractController
             $originalContacts->add($contact);
         }
 
-        return $this->render('project/view-ka2.twig', ['project' => $project]);
+        return $this->render('project/view-ka2.twig', ['project' => $project, 'projectId' => $projectId]);
     }
 
     /**

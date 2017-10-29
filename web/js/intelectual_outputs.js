@@ -25,9 +25,9 @@ function loadIntelectualOutputs() {
         $addForm($collectionIntelectualOutputsHolder, $addIntelectualOutputsLinkDiv);
     });
 
-    if($collectionIntelectualOutputsHolder.data('purpose') === 'create') {
-        $addForm($collectionIntelectualOutputsHolder, $addIntelectualOutputsLinkDiv);
-    }
+    // if($collectionIntelectualOutputsHolder.data('purpose') === 'create') {
+    //     $addForm($collectionIntelectualOutputsHolder, $addIntelectualOutputsLinkDiv);
+    // }
 }
 
 function $addFormDeleteLink($formDiv) {

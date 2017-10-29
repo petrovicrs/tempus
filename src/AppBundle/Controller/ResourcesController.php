@@ -27,14 +27,8 @@ class ResourcesController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $resources = $this->getResourcesRepository()->findAll();
-
-        return $this->render(
-            'resources/list.twig',
-            [
-                'resources' => $resources
-            ]
-        );
+        $projectResources = $this->getProjectResourcesRepository()->findAll();
+        return $this->render('resources/list.twig', ['projectResources' => $projectResources]);
     }
 
     /**

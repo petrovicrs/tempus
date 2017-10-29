@@ -35,16 +35,19 @@
 <div class="col-xs-12">
     {{ form_label(my_form.teamMembers, 'Team members'|trans, {'label_attr': {'class': 'control-label'}}) }}
     <ul class="team-members" data-prototype="{{ include('/partners/includes/team-members.html.twig',
-    {'form': my_form.teamMembers.vars.prototype })|e }}">
+    {'my_form': my_form.teamMembers.vars.prototype })|e }}">
+        {% for teamMember in my_form.teamMembers %}
+            <li>{{ include('/partners/includes/team-members.html.twig', {'my_form': teamMember }) }}</li>
+        {% endfor %}
     </ul>
 </div>
 
 <div class="col-xs-12">
 
-    {{ form_label(my_form.allDepartments, 'All departments?'|trans, {'label_attr': {'class': 'control-label'}}) }}
-    <div class="form-inline">
-        {{ form_widget(my_form.allDepartments, {'attr': {'class': 'form-control'}}) }}
-    </div>
+    <!--{{ form_label(my_form.allDepartments, 'All departments?'|trans, {'label_attr': {'class': 'control-label'}}) }}-->
+    <!--<div class="form-inline">-->
+        <!--{{ form_widget(my_form.allDepartments, {'attr': {'class': 'form-control'}}) }}-->
+    <!--</div>-->
 
     <!--<div class="form-inline">-->
         <!--{{ form_widget(my_form.teamDepartments, {'attr': {'class': 'form-control'}}) }}-->

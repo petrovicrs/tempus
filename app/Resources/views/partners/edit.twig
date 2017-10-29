@@ -19,6 +19,9 @@
                                     {{ form_label(my_form.partners, 'Partners'|trans, {'label_attr': {'class': 'control-label col-xs-12'}}) }}
                                     <ul class="partners" data-prototype="{{ include('/partners/includes/partners.html.twig',
                                     {'my_form': my_form.partners.vars.prototype })|e }}">
+                                        {% for partner in my_form.partners %}
+                                            <li>{{ include('/partners/includes/partners.html.twig', {'my_form': partner }) }}</li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
 
@@ -26,6 +29,9 @@
                                     {{ form_label(my_form.participants, 'Participants'|trans, {'label_attr': {'class': 'control-label col-xs-12'}}) }}
                                     <ul class="participants" data-prototype="{{ include('/partners/includes/participants.html.twig',
                                     {'my_form': my_form.participants.vars.prototype })|e }}">
+                                        {% for participant in my_form.participants %}
+                                            <li>{{ include('/partners/includes/participants.html.twig', {'my_form': participant }) }}</li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>

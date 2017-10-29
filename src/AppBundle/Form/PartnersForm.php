@@ -62,13 +62,6 @@ class PartnersForm extends AbstractType
                 'expanded' => true,
                 'multiple' => true
             ));
-
-            if ($options['isCompleted']) {
-                $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
-            }
-            else {
-                $builder->add('submit', SubmitType::class, array('label_format' => 'Next'));
-            }
     }
 
     /**

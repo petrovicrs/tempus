@@ -17,9 +17,9 @@
                     <div class="form-group">
                         <div class="form-group">
                             <ul class="monitoring-reporting" data-purpose="edit" data-prototype="{{include('monitoring-reporting/includes/details.html.twig',
-                            {'form': my_form.monitoringReporting.vars.prototype })|e}}">
+                            {'my_form': my_form.monitoringReporting.vars.prototype })|e}}">
                                 {% for oneMonitoringReporting in my_form.monitoringReporting %}
-                                    <li>{{ include('/monitoring-reporting/includes/details.html.twig', {'form': oneMonitoringReporting }) }}</li>
+                                    <li>{{ include('/monitoring-reporting/includes/details.html.twig', {'my_form': oneMonitoringReporting }) }}</li>
                                 {% endfor %}
                             </ul>
                         </div>

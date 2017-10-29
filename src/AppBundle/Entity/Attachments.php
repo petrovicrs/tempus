@@ -159,22 +159,6 @@ class Attachments extends AbstractAuditable
     }
 
     /**
-     * @param $file
-     * @return $this
-     */
-    public function addManuallyUploadedFiles(AttachmentsManuallyUploaded $file)
-    {
-        $this->manuallyUploadedFiles->add($file);
-
-        return $this;
-    }
-
-    public function removeManuallyUploadedFiles(AttachmentsManuallyUploaded $file)
-    {
-        $this->manuallyUploadedFiles->remove($file);
-    }
-
-    /**
      * @return mixed
      */
     public function getUploadedFilesNotes()

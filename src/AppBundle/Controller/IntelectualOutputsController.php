@@ -141,7 +141,7 @@ class IntelectualOutputsController extends AbstractController
             'intelectual-outputs/view.twig',
             [
                 'intelectualOutputs' => $projectIntelectualOutputs->getIntelectualOutputs(),
-                'projectId' => $project->getId(),
+                'projectId' => $projectId,
                 'keyAction' => $project->getKeyActions()->getNameSr()
             ]
         );

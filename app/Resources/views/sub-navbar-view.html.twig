@@ -6,9 +6,9 @@
             <li class="{% if active == 'resources' %}active{% endif %}"><a href="{{ localizedPath('resource_view', {'projectId': projectId})}}" >Resources</a></li>
             <li class="{% if active == 'intelectual_outputs' %}active{% endif %}"><a href="{{ localizedPath('intelectual_output_view', {'projectId': projectId})}}" >Intelectual outputs</a></li>
             <li class="{% if active == 'results' %}active{% endif %}"><a href="{{ localizedPath('result_view', {'projectId': projectId})}}" >Results</a></li>
-            <li class="{% if active == 'reporting' %}active{% endif %}"><a href="{{ localizedPath('reporting_create', {'projectId': projectId})}}" >Reporting</a></li>
-            <li class="{% if active == 'attachments' %}active{% endif %}"><a href="{{ localizedPath('attachments_create', {'projectId': projectId})}}" >Attachments</a></li>
-            <li class="{% if active == 'group_calendar' %}active{% endif %}"><a href="{{ localizedPath('group_calendar_create', {'projectId': projectId})}}" >Group Calendar</a></li>
+            <li class="{% if active == 'reporting' %}active{% endif %}"><a href="{{ localizedPath('reporting_view', {'projectId': projectId})}}" >Reporting</a></li>
+            <li class="{% if active == 'attachments' %}active{% endif %}"><a href="{{ localizedPath('attachments_view', {'projectId': projectId})}}" >Attachments</a></li>
+            <li class="{% if active == 'group_calendar' %}active{% endif %}"><a href="{{ localizedPath('group_calendar_view', {'projectId': projectId})}}" >Group Calendar</a></li>
         </ul>
     </div>
-</nav>done
+</nav>

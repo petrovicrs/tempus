@@ -3,10 +3,10 @@
 {% block body %}
     <section id="main">
         {% if keyAction == 'ka1' %}
-            {% include 'sub-navbar.html.twig' with {'active': 'attachments'} %}
+            {% include 'sub-navbar-view.html.twig' with {'active': 'attachments', 'projectId': attachments.project.id} %}
         {% endif %}
         {%  if keyAction == 'ka2' %}
-            {% include 'sub-navbar-ka2.html.twig' with {'active': 'attachments'} %}
+            {% include 'sub-navbar-ka2-view.html.twig' with {'active': 'attachments', 'projectId': attachments.project.id} %}
         {% endif %}
     <div class="container-fluid">
 
@@ -37,7 +37,7 @@
                                 <ul class="manually-uploaded-files">
                                     {% for attach in attachments.manuallyUploadedFiles %}
                                         <li>
-                                            <b>{% trans %}File{% endtrans %}</b>: {{ attach.file }}
+                                            <b>{% trans %}File{% endtrans %}</b>: {{ attach.originalFilename }}
                                         </li>
                                     {% endfor %}
                                 </ul>

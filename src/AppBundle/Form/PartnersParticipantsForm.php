@@ -30,7 +30,7 @@ class PartnersParticipantsForm extends AbstractType
             ->add('participant', EntityType::class, [
                 'class' => 'AppBundle:Person',
                 'choice_label' => function($value, $key, $index) use ($options) {
-                    return $value->getName($options['locale']);
+                    return $value->getName($options['locale']) . $value->getLastName($options['locale']) . ' - ' . $value->getId();
                 }
             ]);
     }

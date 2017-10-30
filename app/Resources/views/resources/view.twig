@@ -12,44 +12,45 @@
     <div class="container-fluid">
 
         <h2><b>{% trans %}Resource{% endtrans %}</b></h2>
+        {% if projectResources %}
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                    <tr class="table-header">
+                        <th>{% trans %}Resource title{% endtrans %}</th>
+                        <th>{% trans %}Type{% endtrans %}</th>
+                        <th>{% trans %}Keywords{% endtrans %}</th>
+                        <th>{% trans %}Project{% endtrans %}</th>
+                        <th>{% trans %}Public?{% endtrans %}</th>
+                    </tr>
+                </thead>
 
-        <table class="table table-hover" data-toggle="table">
-            <thead>
-                <tr class="table-header">
-                    <th>{% trans %}Resource title{% endtrans %}</th>
-                    <th>{% trans %}Type{% endtrans %}</th>
-                    <th>{% trans %}Keywords{% endtrans %}</th>
-                    <th>{% trans %}Project{% endtrans %}</th>
-                    <th>{% trans %}Public?{% endtrans %}</th>
-                </tr>
-            </thead>
-
-            <tbody>
-            {% for r in projectResources.resources %}
-                <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
-                    <td>{{ r.title(app.request.getLocale()) }}</td>
-                    <td>{{ r.resourceType.name(app.request.getLocale()) }}</td>
-                    <td>{{ r.keywords }}</td>
-                    <td><a href="{{ localizedPath('project_view', {'projectId': r.projectResources.project.id}) }}">{{ r.projectResources.project.name(app.request.getLocale()) }}</a></td>
-                    {% if r.isPublic %}
-                        <td class="text-center">{% trans %}Yes{% endtrans %}</td>
-                    {% else %}
-                        <td class="text-center">{% trans %}No{% endtrans %}</td>
-                    {% endif %}
-                </tr>
-                <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
-                    <td colspan="5">
-                        <div class="details-wrapper-inner">
-                            <h2>{% trans %}Abstract{% endtrans %}</h2>
-                            <p>{{ r.abstract }}</p>
-                            <h2>{% trans %}Attachments{% endtrans %}</h2>
-                            <p>{% trans %}Files{% endtrans %}</p>
-                        </div>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                <tbody>
+                {% for resource in projectResources.resources %}
+                    <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
+                        <td>{{ resource.title(app.request.getLocale()) }}</td>
+                        <td>{{ resource.resourceType.name(app.request.getLocale()) }}</td>
+                        <td>{{ resource.keywords }}</td>
+                        <td><a href="{{ localizedPath('project_view', {'projectId': resource.projectResources.project.id}) }}">{{ resource.projectResources.project.name(app.request.getLocale()) }}</a></td>
+                        {% if resource.isPublic %}
+                            <td class="text-center">{% trans %}Yes{% endtrans %}</td>
+                        {% else %}
+                            <td class="text-center">{% trans %}No{% endtrans %}</td>
+                        {% endif %}
+                    </tr>
+                    <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
+                        <td colspan="5">
+                            <div class="details-wrapper-inner">
+                                <h2>{% trans %}Abstract{% endtrans %}</h2>
+                                <p>{{ resource.abstract }}</p>
+                                <h2>{% trans %}Attachments{% endtrans %}</h2>
+                                <p>{% trans %}Files{% endtrans %}</p>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
     <div>
 {% endblock %}

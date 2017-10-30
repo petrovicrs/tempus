@@ -163,13 +163,13 @@ class AttachmentsController extends AbstractController
                     $em->remove($file);
                 }
             }
-            /** @var ProjectTopic $topic */
-            foreach ($project->getTopics() as $topic) {
-                if (false === $originalTopics->contains($topic)) {
-                    $topic->setProject($project);
-                    $this->getProjectTopicRepository()->save($topic);
-                }
-            }
+//            /** @var ProjectTopic $topic */
+//            foreach ($project->getTopics() as $topic) {
+//                if (false === $originalTopics->contains($topic)) {
+//                    $topic->setProject($project);
+//                    $this->getProjectTopicRepository()->save($topic);
+//                }
+//            }
 
             /** @var FileBag $files */
             $files = $request->files->get('appbundle_project')['manuallyUploadedFiles'];

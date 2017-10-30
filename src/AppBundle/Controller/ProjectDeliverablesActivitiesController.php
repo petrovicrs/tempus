@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\ProjectActivity;
 use AppBundle\Entity\Project;
+use AppBundle\Repository\ProjectRepository;
 use AppBundle\Entity\ProjectDeliverable;
 use AppBundle\Entity\ProjectDeliverablesActivities;
 use AppBundle\Form\ProjectDeliverablesActivitiesForm;
@@ -176,10 +177,14 @@ class ProjectDeliverablesActivitiesController extends AbstractController
             'project' => $projectId
         ]);
 
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
         return $this->render('deliverables-activities/view.twig', [
             'deliverablesActivities' => $projectDeliverableActivities,
             'projectId' => $projectId,
-            'keyAction' => $projectDeliverableActivities->getProject()->getKeyActions()->getNameSr()
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'project' => $project,
         ]);
     }
 
@@ -196,5 +201,13 @@ class ProjectDeliverablesActivitiesController extends AbstractController
     private function getProjectActivitiesRepository()
     {
         return $this->get('doctrine_entity_repository.project_activities');
+    }
+
+    /**
+     * @return ProjectRepository
+     */
+    private function getProjectRepository() {
+
+        return $this->get('doctrine_entity_repository.project');
     }
 }

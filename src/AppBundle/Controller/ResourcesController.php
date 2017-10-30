@@ -89,9 +89,11 @@ class ResourcesController extends AbstractController
 
         $originalResources = new ArrayCollection();
 
-        /** @var Resources $resource */
-        foreach ($projectResources->getResources() as $resource) {
-            $originalResources->add($resource);
+        if ($projectResources) {
+            /** @var Resources $resource */
+            foreach ($projectResources->getResources() as $resource) {
+                $originalResources->add($resource);
+            }
         }
 
         $projectResourceForm->handleRequest($request);
@@ -100,10 +102,12 @@ class ResourcesController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            /** @var Resources $originalResource */
-            foreach ($originalResources as $originalResource) {
-                if (false === $projectResources->getResources()->contains($originalResource)) {
-                    $em->remove($originalResource);
+            if (count($originalResources)) {
+                /** @var Resources $originalResource */
+                foreach ($originalResources as $originalResource) {
+                    if (false === $projectResources->getResources()->contains($originalResource)) {
+                        $em->remove($originalResource);
+                    }
                 }
             }
 
@@ -138,10 +142,14 @@ class ResourcesController extends AbstractController
     {
         $projectResources = $this->getProjectResourcesRepository()->findOneBy(['project' => $projectId]);
 
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
         return $this->render('resources/view.twig', [
             'projectResources' => $projectResources,
             'projectId' => $projectId,
-            'keyAction' => $projectResources->getProject()->getKeyActions()->getNameSr()
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'project' => $project,
         ]);
     }
 

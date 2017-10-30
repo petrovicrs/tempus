@@ -15,89 +15,92 @@
         </div>
 
         <div class="col-xs-3">
-            <b>{% trans %}Project{% endtrans %}</b>: {{ projectPartner.project.name(app.request.locale) }}
+            <b>{% trans %}Project{% endtrans %}</b>: {{ project.name(app.request.locale) }}
         </div>
-        <div class="col-xs-3">
-            <b>{% trans %}Created on{% endtrans %}</b>: {{ projectPartner.dateCreated | date('d/m/y') }}
-        </div>
-
+        {% if projectPartner %}
+            <div class="col-xs-3">
+                <b>{% trans %}Created on{% endtrans %}</b>: {{ projectPartner.dateCreated | date('d/m/y') }}
+            </div>
+        {% endif %}
         <div class="col-xs-12">
             <h2>Partners</h2>
         </div>
-        <table class="table table-hover" data-toggle="table">
-            <thead>
-            <tr class="table-heleer">
-                <th class="sortable"  data-sortable="true">{% trans %}Institution{% endtrans %}</th>
-                <th>{% trans %}Partner type{% endtrans %}</th>
-                <th>{% trans %}Project coordinator{% endtrans %}</th>
-                <th class="sortable"  data-sortable="true">{% trans %}Legal representative{% endtrans %}</th>
-                <th>{% trans %}Budget{% endtrans %}</th>
-                <th class="sortable"  data-sortable="true">{% trans %}Associated{% endtrans %}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for partner in projectPartner.partners %}
-                <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
-                    {% if partner.institution %}
-                        <td class="text-center">{{ partner.institution.name(app.request.locale) }}</td>
-                    {% else %}
-                        <td class="text-center">/</td>
-                    {% endif %}
-                    {% if partner.partnerType %}
-                        <td class="text-center">{{ partner.partnerType.name(app.request.locale) }}</td>
-                    {% else %}
-                        <td>/</td>
-                    {% endif %}
-                    {% if partner.projectCoordinator %}
-                        <td class="text-center">{{ partner.projectCoordinator.name(app.request.locale) }}</td>
-                    {% else %}
-                        <td>/</td>
-                    {% endif %}
-                    {% if partner.legalRepresentative %}
-                        <td class="text-center">{{ partner.legalRepresentative.name(app.request.locale) }}</td>
-                    {% else %}
-                        <td>/</td>
-                    {% endif %}
-                    <td class="text-center">{{ partner.budget }}</td>
-                    {% if partner.isAssociatedPartner %}
-                        <td class="text-center">{% trans %}Yes{% endtrans %}</td>
-                    {% else %}
-                        <td class="text-center">{% trans %}No{% endtrans %}</td>
-                    {% endif %}
+        {% if projectPartner %}
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                <tr class="table-heleer">
+                    <th class="sortable"  data-sortable="true">{% trans %}Institution{% endtrans %}</th>
+                    <th>{% trans %}Partner type{% endtrans %}</th>
+                    <th>{% trans %}Project coordinator{% endtrans %}</th>
+                    <th class="sortable"  data-sortable="true">{% trans %}Legal representative{% endtrans %}</th>
+                    <th>{% trans %}Budget{% endtrans %}</th>
+                    <th class="sortable"  data-sortable="true">{% trans %}Associated{% endtrans %}</th>
                 </tr>
-                <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
-                    <td colspan="6">
-                        <div class="details-wrapper-inner">
-                            <div class="col-xs-6">
-                                <h2>{% trans %}Team members{% endtrans %}</h2>
-                                {% if partner.teamMembers %}
-                                    {% for one in partner.teamMembers %}
-                                        {% if one.member %}
-                                            <p>Name: {{ one.member.name(app.request.locale) }}</p>
-                                        {% endif %}
-                                        {% if one.memberPosition %}
-                                            <p>Position: {{ one.memberPosition.name(app.request.locale) }}</p>
-                                        {% endif %}
-                                        <p>Budget: {{ one.budget }}</p>
-                                        <br>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
+                </thead>
+                <tbody>
+                {% for partner in projectPartner.partners %}
+                    <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
+                        {% if partner.institution %}
+                            <td class="text-center">{{ partner.institution.name(app.request.locale) }}</td>
+                        {% else %}
+                            <td class="text-center">/</td>
+                        {% endif %}
+                        {% if partner.partnerType %}
+                            <td class="text-center">{{ partner.partnerType.name(app.request.locale) }}</td>
+                        {% else %}
+                            <td>/</td>
+                        {% endif %}
+                        {% if partner.projectCoordinator %}
+                            <td class="text-center">{{ partner.projectCoordinator.name(app.request.locale) }}</td>
+                        {% else %}
+                            <td>/</td>
+                        {% endif %}
+                        {% if partner.legalRepresentative %}
+                            <td class="text-center">{{ partner.legalRepresentative.name(app.request.locale) }}</td>
+                        {% else %}
+                            <td>/</td>
+                        {% endif %}
+                        <td class="text-center">{{ partner.budget }}</td>
+                        {% if partner.isAssociatedPartner %}
+                            <td class="text-center">{% trans %}Yes{% endtrans %}</td>
+                        {% else %}
+                            <td class="text-center">{% trans %}No{% endtrans %}</td>
+                        {% endif %}
+                    </tr>
+                    <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
+                        <td colspan="6">
+                            <div class="details-wrapper-inner">
+                                <div class="col-xs-6">
+                                    <h2>{% trans %}Team members{% endtrans %}</h2>
+                                    {% if partner.teamMembers %}
+                                        {% for one in partner.teamMembers %}
+                                            {% if one.member %}
+                                                <p>Name: {{ one.member.name(app.request.locale) }}</p>
+                                            {% endif %}
+                                            {% if one.memberPosition %}
+                                                <p>Position: {{ one.memberPosition.name(app.request.locale) }}</p>
+                                            {% endif %}
+                                            <p>Budget: {{ one.budget }}</p>
+                                            <br>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
 
-                            <div class="col-xs-6">
-                                <h2>{% trans %}Team Departments{% endtrans %}</h2>
-                                {% if partner.teamDepartments %}
-                                    {% for dep in partner.teamdepartments %}
-                                        <p>{{ dep.name(app.request.locale) }}</p>
-                                    {% endfor %}
-                                {% endif %}
+                                <div class="col-xs-6">
+                                    <h2>{% trans %}Team Departments{% endtrans %}</h2>
+                                    {% if partner.teamDepartments %}
+                                        {% for dep in partner.teamdepartments %}
+                                            <p>{{ dep.name(app.request.locale) }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
 
 
 

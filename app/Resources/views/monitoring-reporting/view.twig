@@ -15,50 +15,53 @@
         </div>
 
         <div class="col-xs-3">
-            <b>{% trans %}Project{% endtrans %}</b>: {{ projectMonitoring.project.name(app.request.locale) }}
+            <b>{% trans %}Project{% endtrans %}</b>: {{ project.name(app.request.locale) }}
         </div>
-        <div class="col-xs-3">
-            <b>{% trans %}Created on{% endtrans %}</b>: {{ projectMonitoring.dateCreated | date('d/m/y') }}
-        </div>
+        {% if projectMonitoring %}
+            <div class="col-xs-3">
+                <b>{% trans %}Created on{% endtrans %}</b>: {{ projectMonitoring.dateCreated | date('d/m/y') }}
+            </div>
+        {% endif %}
 
         <div class="col-xs-12">
             <h2>Monitoring / Reporting</h2>
         </div>
-
-        <table class="table table-hover" data-toggle="table">
-            <thead>
-            <tr class="table-heleer">
-                <th class="sortable"  data-sortable="true">{% trans %}Type{% endtrans %}</th>
-                <th class="sortable"  data-sortable="true">{% trans %}Comment type{% endtrans %}</th>
-                <th class="sortable"  data-sortable="true">{% trans %}Monitoring date{% endtrans %}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for key, value in projectMonitoring.monitoringReporting %}
-                <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
-                    {% if value.monitoringType %}
-                        <td class="text-center">{{ value.monitoringType.name(app.request.locale) }}</td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
-                    {% if value.commentType %}
-                        <td class="text-center">{{ value.commentType.name(app.request.locale) }}</td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
-                    <td class="text-center">{{ value.monitoringDate | date('d/m/y') }}</td>
+        {% if projectMonitoring %}
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                <tr class="table-heleer">
+                    <th class="sortable"  data-sortable="true">{% trans %}Type{% endtrans %}</th>
+                    <th class="sortable"  data-sortable="true">{% trans %}Comment type{% endtrans %}</th>
+                    <th class="sortable"  data-sortable="true">{% trans %}Monitoring date{% endtrans %}</th>
                 </tr>
-                <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
-                    <td colspan="3">
-                        <div class="details-wrapper-inner">
-                            <h2>{% trans %}Comment{% endtrans %}</h2>
-                            <p>{{ value.comment }}</p>
-                        </div>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for key, value in projectMonitoring.monitoringReporting %}
+                    <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
+                        {% if value.monitoringType %}
+                            <td class="text-center">{{ value.monitoringType.name(app.request.locale) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        {% if value.commentType %}
+                            <td class="text-center">{{ value.commentType.name(app.request.locale) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        <td class="text-center">{{ value.monitoringDate | date('d/m/y') }}</td>
+                    </tr>
+                    <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
+                        <td colspan="3">
+                            <div class="details-wrapper-inner">
+                                <h2>{% trans %}Comment{% endtrans %}</h2>
+                                <p>{{ value.comment }}</p>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
     <div>
 {% endblock %}

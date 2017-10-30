@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\MonitoringReporting;
 use AppBundle\Entity\Project;
+use AppBundle\Repository\ProjectRepository;
 use AppBundle\Entity\ProjectMonitoringReporting;
 use AppBundle\Form\MonitoringReportingForm;
 use AppBundle\Form\ProjectMonitoringReportingForm;
@@ -135,12 +136,17 @@ class MonitoringReportingController extends AbstractController
      */
     public function viewAction($projectId)
     {
+        /** @var MonitoringReporting $projectMonitoringReporting */
         $projectMonitoringReporting = $this->getProjectMonitoringReportingRepository()->findOneBy(['project' => $projectId]);
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
         return $this->render('monitoring-reporting/view.twig', [
             'projectMonitoring' => $projectMonitoringReporting,
             'projectId' => $projectId,
-            'keyAction' => $projectMonitoringReporting->getProject()->getKeyActions()->getNameSr(),
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'project' => $project,
         ]);
     }
 
@@ -152,5 +158,13 @@ class MonitoringReportingController extends AbstractController
     private function getMonitoringReportingRepository()
     {
         return $this->get('doctrine_entity_repository.monitoring_reporting');
+    }
+
+    /**
+     * @return ProjectRepository
+     */
+    private function getProjectRepository() {
+
+        return $this->get('doctrine_entity_repository.project');
     }
 }

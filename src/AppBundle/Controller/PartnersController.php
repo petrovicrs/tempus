@@ -146,12 +146,6 @@ class PartnersController extends AbstractController
                             }
                         }
 
-
-
-
-
-
-
 //                        /** @var PartnersTeamMembers $member */
 //                        foreach($partner->getTeamMembers() as $member){
 //                            /** @var Partners $partner */
@@ -224,10 +218,14 @@ class PartnersController extends AbstractController
 //        $teamMembers = $this->get('doctrine_entity_repository.partners_team_members')->findBy(['partners' => $projectId]);
 //        $participants = $this->get('doctrine_entity_repository.partners_participants')->findBy(['partners' => $projectId]);
 
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
         return $this->render('partners/view.twig', [
             'projectPartner' => $projectPartner,
             'projectId' => $projectId,
-            'keyAction' => $projectPartner->getProject()->getKeyActions()->getNameSr()
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'project' => $project,
         ]);
     }
 

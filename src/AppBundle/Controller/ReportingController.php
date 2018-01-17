@@ -106,6 +106,12 @@ class ReportingController extends AbstractController
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
+        if (count($projectReporting) === 0) {
+            $projectReporting = new ProjectReporting();
+            $projectReporting->setProject($project);
+            $this->getProjectReportingRepository()->save($projectReporting);
+        }
+
         $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
             'action' => $this->generateUrl('reporting_edit', ['projectId' => $projectId]),
             'method' => 'POST',
@@ -184,16 +190,21 @@ class ReportingController extends AbstractController
      */
     public function viewAction($projectId)
     {
+        /** @var ProjectReporting $projectReporting */
         $projectReporting = $this->getProjectReportingRepository()->findOneBy(['project' => $projectId]);
+
         $questions = $this->getQuestionsRepository()->findAll();
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
         return $this->render(
             'reporting/view.twig',
             [
-                'reports' => $projectReporting->getReporting(),
+                'reports' => $projectReporting ? $projectReporting->getReporting() : null,
                 'projectId' => $projectId,
                 'questions' => $questions,
-                'keyAction' => $projectReporting->getProject()->getKeyActions()->getNameSr()
+                'keyAction' => $project->getKeyActions()->getNameSr()
             ]
         );
     }

@@ -35,7 +35,7 @@ class EventReminder extends AbstractAuditable
     protected $daysAhead;
     /**
      * @ORM\ManyToOne(
-     *     targetEntity="GroupCalendar", inversedBy="eventReminder"
+     *     targetEntity="GroupCalendar", inversedBy="eventReminder", cascade={"persist"}
      * )
      * @ORM\JoinColumn(onDelete="CASCADE")
      */

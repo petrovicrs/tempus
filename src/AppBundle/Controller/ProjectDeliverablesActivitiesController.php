@@ -95,8 +95,13 @@ class ProjectDeliverablesActivitiesController extends AbstractController
         );
 
         /** @var Project $project */
-        $project = $projectDeliverableActivities->getProject();
+        $project =  $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
+        if (count($projectDeliverableActivities) === 0) {
+            $projectDeliverableActivities = new ProjectDeliverablesActivities();
+            $projectDeliverableActivities->setProject($project);
+            $this->getDeliverablesActivitiesRepository()->save($projectDeliverableActivities);
+        }
 
         $projectDeliverableActivitiesForm = $this->createForm(ProjectDeliverablesActivitiesForm::class, $projectDeliverableActivities, [
             'action' => $this->generateUrl('deliverables_edit', ['projectId' => $projectId]),

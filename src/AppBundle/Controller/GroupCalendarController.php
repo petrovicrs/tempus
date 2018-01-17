@@ -88,6 +88,11 @@ class GroupCalendarController extends AbstractController
         /** @var GroupCalendar $calendar*/
         $calendar = $this->getCalendarRepository()->findOneBy(['project' => $projectId]);
 
+        if (count($calendar) === 0) {
+            $calendar = new GroupCalendar();
+            $calendar->setProject($project);
+        }
+
         $calendarForm = $this->createForm(GroupCalendarForm::class, $calendar, [
             'action' => $this->generateUrl('group_calendar_edit', ['projectId' => $projectId]),
             'method' => 'POST',
@@ -101,6 +106,7 @@ class GroupCalendarController extends AbstractController
         foreach ($calendar->getEventReminder() as $reminder) {
             $originalEventReminder->add($reminder);
         }
+
 
         $calendarForm->handleRequest($request);
 
@@ -148,9 +154,12 @@ class GroupCalendarController extends AbstractController
         /** @var GroupCalendar $events */
         $events = $this->getCalendarRepository()->findBy(['project' => $projectId]);
 
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
         return $this->render('group-calendar/view.twig', [
             'events' => $events,
-            'keyAction' => $events[0]->getProject()->getKeyActions()->getNameSr(),
+            'keyAction' => $project->getKeyActions()->getNameSr(),
             'projectId' => $projectId
         ]);
     }

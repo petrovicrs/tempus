@@ -80,11 +80,20 @@ class MonitoringReportingController extends AbstractController
         /** @var ProjectMonitoringReporting $projectMonitoringReporting */
         $projectMonitoringReporting = $this->getProjectMonitoringReportingRepository()->findOneBy(['project' => $projectId]);
 
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        if (count($projectMonitoringReporting) === 0) {
+            $projectMonitoringReporting = new ProjectMonitoringReporting();
+            $projectMonitoringReporting->setProject($project);
+            $this->getProjectMonitoringReportingRepository()->save($projectMonitoringReporting);
+        }
+
         $projectMonitoringForm = $this->createForm(ProjectMonitoringReportingForm::class, $projectMonitoringReporting, [
             'action' => $this->generateUrl('monitoring_edit', ['projectId' => $projectId]),
             'method' => 'POST',
             'locale' => $request->getLocale(),
-            'isCompleted' => $projectMonitoringReporting->getProject()->getIsCompleted(),
+            'isCompleted' => $project->getIsCompleted(),
         ]);
 
         $originalMonitoringReporting = new ArrayCollection();

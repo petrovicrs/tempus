@@ -118,6 +118,12 @@ class AttachmentsController extends AbstractController
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
+        if (count($attachments) === 0) {
+            $attachments = new Attachments();
+            $attachments->setProject($project);
+            $this->getAttachmentsRepository()->save($attachments);
+        }
+
         /* @var AttachmentsManuallyUploaded $value */
         foreach ($attachments->getManuallyUploadedFiles() as $value) {
             $value->setFile(
@@ -218,9 +224,15 @@ class AttachmentsController extends AbstractController
     public function viewAction($projectId)
     {
         $attachments = $this->getAttachmentsRepository()->findOneBy(['project' => $projectId]);
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+
         return $this->render('attachments/view.twig', [
             'attachments' => $attachments,
-            'keyAction' => $attachments->getProject()->getKeyActions()->getNameSr()
+            'projectId' => $project->getId(),
+            'keyAction' => $project->getKeyActions()->getNameSr()
         ]);
     }
 

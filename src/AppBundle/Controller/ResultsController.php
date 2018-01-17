@@ -74,6 +74,12 @@ class ResultsController extends AbstractController
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
+        if (count($projectResult) === 0) {
+            $projectResult = new ProjectResults();
+            $projectResult->setProject($project);
+            $this->getProjectResultsRepository()->save($projectResult);
+        }
+
         $projectResultForm = $this->createForm(ProjectResultsForm::class, $projectResult, [
             'action' => $this->generateUrl('result_edit', ['projectId' => $projectId]),
             'method' => 'POST',
@@ -130,14 +136,18 @@ class ResultsController extends AbstractController
      */
     public function viewAction($projectId)
     {
+        /** @var ProjectResults $projectResults */
         $projectResults = $this->getProjectResultsRepository()->findOneBy(['project' => $projectId]);
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
         return $this->render(
             'results/view.twig',
             [
-                'results' => $projectResults->getResults(),
+                'results' => $projectResults ? $projectResults->getResults() : null,
                 'projectId' => $projectId,
-                'keyAction' => $projectResults->getProject()->getKeyActions()->getNameSr()
+                'keyAction' => $project->getKeyActions()->getNameSr()
             ]
         );
     }

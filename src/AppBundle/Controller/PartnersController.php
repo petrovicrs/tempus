@@ -97,6 +97,12 @@ class PartnersController extends AbstractController
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
+        if (count($projectPartners) === 0) {
+            $projectPartners = new ProjectPartners();
+            $projectPartners->setProject($project);
+            $this->getProjectPartnersRepository()->save($projectPartners);
+        }
+
         $projectPartnersForm = $this->createForm(ProjectPartnersForm::class, $projectPartners, [
             'action' => $this->generateUrl('partner_edit', ['projectId' => $projectId]),
             'method' => 'POST',

@@ -80,6 +80,12 @@ class ResourcesController extends AbstractController
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
+        if (count($projectResources) === 0) {
+            $projectResources = new ProjectResources();
+            $projectResources->setProject($project);
+            $this->getProjectResourcesRepository()->save($projectResources);
+        }
+
         $projectResourceForm = $this->createForm(ProjectResourcesForm::class, $projectResources, [
             'action' => $this->generateUrl('resource_edit', ['projectId' => $projectId]),
             'method' => 'POST',
@@ -89,11 +95,9 @@ class ResourcesController extends AbstractController
 
         $originalResources = new ArrayCollection();
 
-        if ($projectResources) {
-            /** @var Resources $resource */
-            foreach ($projectResources->getResources() as $resource) {
-                $originalResources->add($resource);
-            }
+        /** @var Resources $resource */
+        foreach ($projectResources->getResources() as $resource) {
+            $originalResources->add($resource);
         }
 
         $projectResourceForm->handleRequest($request);
@@ -102,12 +106,10 @@ class ResourcesController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            if (count($originalResources)) {
-                /** @var Resources $originalResource */
-                foreach ($originalResources as $originalResource) {
-                    if (false === $projectResources->getResources()->contains($originalResource)) {
-                        $em->remove($originalResource);
-                    }
+            /** @var Resources $originalResource */
+            foreach ($originalResources as $originalResource) {
+                if (false === $projectResources->getResources()->contains($originalResource)) {
+                    $em->remove($originalResource);
                 }
             }
 

@@ -71,11 +71,17 @@ class IntelectualOutputsController extends AbstractController
      */
     public function editAction(Request $request, $projectId)
     {
-        /** @var ProjectIntelectualOutputs $projectIntelectualOutput */
+        /** @var ProjectIntelectualOutputs[] $projectIntelectualOutput */
         $projectIntelectualOutput = $this->getProjectIntelectualOutputsRepository()->findOneBy(['project' => $projectId]);
 
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        if (count($projectIntelectualOutput) === 0) {
+            $projectIntelectualOutput = new ProjectIntelectualOutputs();
+            $projectIntelectualOutput->setProject($project);
+            $this->getProjectIntelectualOutputsRepository()->save($projectIntelectualOutput);
+        }
 
         $projectIntelectualOutputForm = $this->createForm(ProjectIntelectualOutputsForm::class, $projectIntelectualOutput, [
             'action' => $this->generateUrl('intelectual_output_edit', ['projectId' => $projectId]),
@@ -86,9 +92,12 @@ class IntelectualOutputsController extends AbstractController
 
         $originalIntelectualOutputs = new ArrayCollection();
 
-        foreach ($projectIntelectualOutput->getIntelectualOutputs() as $output) {
-            $originalIntelectualOutputs->add($output);
+        if (count($projectIntelectualOutput) > 0) {
+            foreach ($projectIntelectualOutput->getIntelectualOutputs() as $output) {
+                $originalIntelectualOutputs->add($output);
+            }
         }
+
 
         $projectIntelectualOutputForm->handleRequest($request);
 
@@ -96,20 +105,22 @@ class IntelectualOutputsController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            /** @var IntelectualOutputs $ntelectualOutput */
-            foreach ($originalIntelectualOutputs as $ntelectualOutput) {
-                if (false === $projectIntelectualOutput->getIntelectualOutputs()->contains($ntelectualOutput)) {
-                    $em->remove($ntelectualOutput);
+            /** @var IntelectualOutputs $intelectualOutput */
+            foreach ($originalIntelectualOutputs as $intelectualOutput) {
+                if (false === $projectIntelectualOutput->getIntelectualOutputs()->contains($intelectualOutput)) {
+                    $em->remove($intelectualOutput);
                 }
             }
 
-            /** @var IntelectualOutputs $ntelectualOutput */
-            foreach ($projectIntelectualOutput->getIntelectualOutputs() as $ntelectualOutput) {
-                if (false === $originalIntelectualOutputs->contains($ntelectualOutput)) {
-                    $ntelectualOutput->setProjectIntelectualOutputs($projectIntelectualOutput);
-                    $this->getIntelectualOutputsRepository()->save($ntelectualOutput);
+            /** @var IntelectualOutputs $intelectualOutput */
+            foreach ($projectIntelectualOutput->getIntelectualOutputs() as $intelectualOutput) {
+                if (false === $originalIntelectualOutputs->contains($intelectualOutput)) {
+                    $intelectualOutput->setProjectIntelectualOutputs($projectIntelectualOutput);
+                    $this->getIntelectualOutputsRepository()->save($intelectualOutput);
                 }
             }
+
+
 
             $this->getProjectIntelectualOutputsRepository()->save($projectIntelectualOutput);
 
@@ -135,12 +146,14 @@ class IntelectualOutputsController extends AbstractController
     {
         /** @var ProjectIntelectualOutputs $projectIntelectualOutputs */
         $projectIntelectualOutputs = $this->getProjectIntelectualOutputsRepository()->findOneBy(['project' => $projectId]);
-        $project = $projectIntelectualOutputs->getProject();
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
         return $this->render(
             'intelectual-outputs/view.twig',
             [
-                'intelectualOutputs' => $projectIntelectualOutputs->getIntelectualOutputs(),
+                'intelectualOutputs' => $projectIntelectualOutputs ? $projectIntelectualOutputs->getIntelectualOutputs() : null,
                 'projectId' => $projectId,
                 'keyAction' => $project->getKeyActions()->getNameSr()
             ]

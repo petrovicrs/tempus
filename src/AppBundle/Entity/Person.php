@@ -362,6 +362,22 @@ class Person extends AbstractAuditable
     /**
      * @return mixed
      */
+    public function getLastAddress($locale)
+    {
+        $addresses = $this->getAddresses();
+
+        if (count($addresses) === 0) {
+            return '';
+        }
+
+        /** @var PersonAddress $one */
+        foreach ($addresses as $one) {
+            return ', ' . $one->getCountry()->getName($locale);
+        }
+    }
+    /**
+     * @return mixed
+     */
     public function getAddresses()
     {
         return $this->addresses;

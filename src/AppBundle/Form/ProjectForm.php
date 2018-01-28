@@ -67,7 +67,7 @@ class ProjectForm extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'label' => false
+                'label' => false,
             ))
             ->add('topics', CollectionType::class, array(
                 'entry_type'  => ProjectTopicsForm::class,

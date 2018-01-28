@@ -32,14 +32,24 @@ class Activity extends AbstractAuditable
     protected $activityType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project")
-     */
-    protected $project;
-
-    /**
      * @ORM\OneToMany(targetEntity="ActionDetails", mappedBy="activity", cascade={"persist"})
      */
     protected $actionDetails;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="is_long_term", type="boolean")
+     */
+    protected $isLongTerm;
+
+    /**
+     * @ORM\ManyToOne(
+     *     targetEntity="AppBundle\Entity\ProjectMobilityFlows", inversedBy="activities"
+     * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $projectMobilityFlows;
+
 
     public function __construct()
     {
@@ -82,22 +92,6 @@ class Activity extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * @param mixed $project
-     */
-    public function setProject($project)
-    {
-        $this->project = $project;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getActionDetails()
     {
         return $this->actionDetails;
@@ -109,5 +103,37 @@ class Activity extends AbstractAuditable
     public function setActionDetails($actionDetails)
     {
         $this->actionDetails = $actionDetails;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getisLongTerm()
+    {
+        return $this->isLongTerm;
+    }
+
+    /**
+     * @param mixed $isLongTerm
+     */
+    public function setIsLongTerm($isLongTerm)
+    {
+        $this->isLongTerm = $isLongTerm;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectMobilityFlows()
+    {
+        return $this->projectMobilityFlows;
+    }
+
+    /**
+     * @param mixed $projectMobilityFlows
+     */
+    public function setProjectMobilityFlows($projectMobilityFlows)
+    {
+        $this->projectMobilityFlows = $projectMobilityFlows;
     }
 }

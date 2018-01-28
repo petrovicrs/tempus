@@ -11,32 +11,22 @@
 
 
             <div class="row">
-                <div class="controls">
-                    {{ form_start(my_form) }}
+                {{ form_start(my_form) }}
 
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            {{ form_label(my_form.activityType, 'Activity type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                            <div class="form-inline">
-                                {{ form_widget(my_form.activityType, {'attr': {'class': 'form-control'}})  }}
-                            </div>
+                <div class="controls activities">
+                    <h2>{% trans %}Add Activity{% endtrans %}</h2>
 
-                            {{ form_label(my_form.project, 'Project'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                            <div class="form-inline">
-                                {{ form_widget(my_form.project, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-
-                            <ul class="action-details" data-purpose="edit" data-prototype="{{ include('/action/includes/action-details.html.twig',
-                            {'form': my_form.actionDetails.vars.prototype })|e }}">
-                                {% for action in my_form.actionDetails %}
-                                    <li>{{ include('/action/includes/action-details.html.twig', {'form': action }) }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
+                    <div class="col-xs-12">
+                        <ul class="activities" data-purpose="create" data-prototype="{{include('action/includes/activities.html.twig',
+                            {'form': my_form.activities.vars.prototype })|e}}">
+                            {% for activity in my_form.activities %}
+                                <li>{{ include('action/includes/activities.html.twig', {'form': activity }) }}</li>
+                            {% endfor %}
+                        </ul>
                     </div>
-
-                    {{ form_end(my_form) }}
                 </div>
+
+                {{ form_end(my_form) }}
             </div>
         </div>
     </section>

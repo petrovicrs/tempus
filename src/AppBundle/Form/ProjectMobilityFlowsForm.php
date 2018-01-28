@@ -10,23 +10,32 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\Action;
+use AppBundle\Entity\ProjectMobilityFlows;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ActionForm extends AbstractType
+class ProjectMobilityFlowsForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('activity', CollectionType::class, array(
+            ->add('activities', CollectionType::class, array(
                 'entry_type'   => ActivityForm::class,
                 'allow_add'    => true,
                 'by_reference' => false,
                 'allow_delete' => true
             ));
+
+        if ($options['isCompleted']) {
+            $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
+        }
+        else {
+            $builder->add('submit', SubmitType::class, array('label_format' => 'Next'));
+        }
     }
 
     /**
@@ -41,7 +50,9 @@ class ActionForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => Action::class
+            'data_class' => ProjectMobilityFlows::class,
+            'allow_extra_fields' => true,
+            'isCompleted' => 0,
         ]);
     }
 }

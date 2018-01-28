@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -57,10 +58,16 @@ class ActionDetailsForm extends AbstractType
             ->add('daysWithoutTravel', IntegerType::class, ['label_format' => 'Total days excluding travel days'])
             ->add('travelDays', IntegerType::class, ['label_format' => 'Travel days'])
             ->add('totalDays', IntegerType::class, ['label_format' => 'Total days'])
+            ->add('venue', TextType::class, ['required' => false, 'label_format' => 'Venue'])
+            ->add('durationMonths', IntegerType::class, ['required' => false, 'label_format' => 'Duration (full months)'])
+            ->add('durationExtraDays', IntegerType::class, ['required' => false, 'label_format' => 'Duration (extra days)'])
+            ->add('totalDays', IntegerType::class, ['label_format' => 'Total days'])
             ->add('hasSpecialNeeds', CheckboxType::class, ['required' => false])
             ->add('hasFewerOptions', CheckboxType::class, ['required' => false])
             ->add('isAccompanyingPerson', CheckboxType::class, ['required' => false])
-            ->add('isLongTerm', CheckboxType::class, ['required' => false]);
+            ->add('student', CheckboxType::class, ['required' => false, 'label_format' => 'Student?'])
+            ->add('apprentice', CheckboxType::class, ['required' => false])
+            ->add('nonTeachingStuff', CheckboxType::class, ['required' => false]);
     }
 
     /**

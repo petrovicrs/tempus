@@ -23,7 +23,9 @@ class InstitutionLegalRepresentativeForm extends AbstractType
         $builder
             ->add('person', EntityType::class, [
                 'class' => 'AppBundle:Person',
-                'choice_label' => 'first_name_' . ucfirst($options['locale'])
+                'choice_label' => function($value, $key, $index) use ($options) {
+                    return $value->getName($options['locale']) . $value->getLastName($options['locale']) . ' - ' . $value->getId();
+                }
             ])
             ->add('position', EntityType::class, [
                 'class' => 'AppBundle:InstitutionLegalRepresentativePosition',

@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <section id="main">
+
+    {% include 'main-navbar.html.twig' with {'active': 'person'} %}
+
     <div class="container-fluid">
         <div class="page-header">
             <table class="table table-hover" data-toggle="table">
@@ -32,7 +35,7 @@
             <b>{% trans %}Title (prefix){% endtrans %}</b>: {{ person.titlePrefix }} <br/>
             <b>{% trans %}Title (suffix){% endtrans %}</b>: {{ person.titleSuffix }} <br/>
             <b>{% trans %}Gender{% endtrans %}</b>: {{ person.gender.name(app.request.getLocale()) }} <br/>
-            <b>{% trans %}Field of expertise{% endtrans %}</b>: {{ person.fieldOfExpertise.name(app.request.getLocale()) }} <br/>
+            <b>{% trans %}Field of expertise{% endtrans %}</b>: {% if person.fieldOfExpertise %} {{ person.fieldOfExpertise.name(app.request.getLocale()) }} {% endif %} <br/>
             <b>{% trans %}Person with fewer opportunities{% endtrans %}</b>:
                 {%  if(person.hasFewerOpportunities == 1) %}
                     {% trans %}Yes{% endtrans %}
@@ -140,8 +143,8 @@
             </thead>
             {% for personInstitutionRelationship in person.personInstitutionRelationships %}
                 <tr>
-                    <td>{{ personInstitutionRelationship.streetAndNumber }}</td>
-                    <td>{{ personInstitutionRelationship.personInstitutionRelationshipType.type(app.request.getLocale()) }}</td>
+                    <td>{{ personInstitutionRelationship.institution ? personInstitutionRelationship.institution.name(app.request.getLocale()) : 'N/A'}}</td>
+                    <td>{{ personInstitutionRelationship.personInstitutionRelationshipType ? personInstitutionRelationship.personInstitutionRelationshipType.type(app.request.getLocale()) : 'N/A'}}</td>
                 </tr>
             {% endfor %}
         </table>

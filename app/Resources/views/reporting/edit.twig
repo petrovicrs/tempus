@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{#TODO - left for finish#}
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/reporting.js')}}"></script>
+    <section id="main">
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar.html.twig' with {'active': 'reporting', 'isCompleted': isCompleted, projectId: projectId} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting', 'isCompleted': isCompleted, projectId: projectId} %}
+        {% endif %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="controls reporting">
+                    {% if not isCompleted %}
+                        <a href="{{ localizedPath('result_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                    {% endif %}
+                    <div class="col-xs-12">
+                        {{ form_start(my_form) }}
+                        <div class="col-xs-12">
+                            <h2>{% trans %}Edit Reporting{% endtrans %}</h2>
+                        </div>
+
+                        <ul class="reporting" data-purpose="edit" data-prototype="{{include('/reporting/includes/reporting.html.twig',
+                        {'form': my_form.reporting.vars.prototype })|e}}">
+                            ﻿{% for reporting in my_form.reporting %}
+                                <li>{{ include('/reporting/includes/reporting.html.twig', {'form': reporting }) }}</li>
+                            {% endfor %}
+                        </ul>
+                        {{ form_end(my_form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

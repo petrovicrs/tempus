@@ -19,6 +19,16 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $surname;
+
+    /**
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
@@ -36,6 +46,16 @@ class User implements UserInterface
      * @var string
      */
     private $plainPassword;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="UserPermission",
+     *      inversedBy="user"
+     * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $permission;
+
 
     /**
      * @ORM\Column(type="json_array")
@@ -103,5 +123,54 @@ class User implements UserInterface
         // Doctrine *not* saving this entity, if only plainPassword changes
         $this->password = null;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    /**
+     * @param mixed $surname
+     */
+    public function setSurname($surname)
+    {
+        $this->surname = $surname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPermission()
+    {
+        return $this->permission;
+    }
+
+    /**
+     * @param mixed $permission
+     */
+    public function setPermission($permission)
+    {
+        $this->permission = $permission;
+    }
+
 
 }

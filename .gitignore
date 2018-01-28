@@ -1,5 +1,6 @@
 #.gitignore file
 
+app/web/
 vendor
 .idea
 var

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+    {% include 'sub-navbar-ka2-list.html.twig' with {'active': 'reporting'} %}
+        <div class="container-fluid">
+            <div class="col-xs-12 section-heading">
+                <h2><b>{% trans %}Reporting{% endtrans %}</b></h2>
+            </div>
+
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                    <tr class="table-heleer">
+                        <th class="sortable"  data-sortable="true">{% trans %}Id{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Project{% endtrans %}</th>
+                        <th>{% trans %}Reportings{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Created on{% endtrans %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for projectReport in projectReporting %}
+                    <tr>
+                        <td class="text-center">{{ projectReport.id }}</td>
+                        <td><a href="{{ localizedPath('project_view', {'projectId': projectReport.project.id}) }}">{{ projectReport.project.name(app.request.getLocale()) }}</a></td>
+                        <td class="text-center">{{ projectReport.reporting | length }}</td>
+                        <td class="text-center">{{ projectReport.dateCreated | date('d/m/y') }}</td>
+                        <td class="text-center"><a href="{{ localizedPath('reporting_view', {'projectId': projectReport.project.id}) }}">View</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <div>
+{% endblock %}

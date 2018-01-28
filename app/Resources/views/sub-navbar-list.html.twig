@@ -1,0 +1,14 @@
+<nav id="menu-list" class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li class="{% if active == 'project' %}active{% endif %}"><a href="{{ localizedPath('project_list')}}" >Project</a></li>
+            <!--<li class="{% if active == 'action' %}active{% endif %}"><a href="{{ localizedPath('action_list')}}">Action</a></li>-->
+            <li class="{% if active == 'resources' %}active{% endif %}"><a href="{{ localizedPath('resource_list')}}" >Resources</a></li>
+            <li class="{% if active == 'intelectual_outputs' %}active{% endif %}"><a href="{{ localizedPath('intelectual_output_list')}}" >Intelectual outputs</a></li>
+            <li class="{% if active == 'results' %}active{% endif %}"><a href="{{ localizedPath('result_list')}}" >Results</a></li>
+            <li class="{% if active == 'reporting' %}active{% endif %}"><a href="{{ localizedPath('reporting_list')}}" >Reporting</a></li>
+            <li class="{% if active == 'attachments' %}active{% endif %}"><a href="{{ localizedPath('attachments_list')}}" >Attachments</a></li>
+            <li class="{% if active == 'group_calendar' %}active{% endif %}"><a href="{{ localizedPath('group_calendar_list')}}" >Group Calendar</a></li>
+        </ul>
+    </div>
+</nav>

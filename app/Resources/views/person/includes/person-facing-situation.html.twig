@@ -1,3 +1,8 @@
 <div class="block" style="clear: both;">
-    {{ form_row(form.facingSituation) }}
+
+    {{ form_label(form.facingSituation, 'Facing situation'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.facingSituation, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
 </div>

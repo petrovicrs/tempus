@@ -1,17 +1,19 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<script type="text/javascript" src="{{ asset('/js/pic_numbers.js')}}" ></script>
-<script type="text/javascript" src="{{ asset('/js/institution_contacts.js')}}" ></script>
-<script type="text/javascript" src="{{ asset('/js/addresses.js')}}" ></script>
-<script type="text/javascript" src="{{ asset('/js/accreditations.js')}}" ></script>
-<script type="text/javascript" src="{{ asset('/js/legalRepresentatives.js')}}" ></script>
-<script type="text/javascript" src="{{ asset('/js/notes.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/pic_numbers.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/institution_contacts.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/addresses.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/accreditations.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/legalRepresentatives.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/notes.js')}}" ></script>
     <section id="main">
         <div class="container-fluid">
+        <div class="row-fluid">
             <div class="page-header">
                 <h1>{% trans %}Add Institution{% endtrans %}</h1>
             </div>
 
+            <div class="row">
             <div class="controls">
                 {{ form_start(my_form) }}
 
@@ -45,7 +47,7 @@
                             {{ form_widget(my_form.founderOriginalLetterSr, {'attr': {'class': 'form-control'}})  }}
                         </div>
                     </div>
-                    <div>
+                    <div style="padding-bottom: 1em">
                         {{ form_label(my_form.founderOriginalLetter, 'Founder Name Original Alphabet'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
                             {{ form_widget(my_form.founderOriginalLetter, {'attr': {'class': 'form-control'}})  }}
@@ -57,7 +59,7 @@
                             {{ form_widget(my_form.institutionFounderType, {'attr': {'class': 'form-control'}})  }}
                         </div>
                     </div>
-                    <div>
+                    <div style="padding-bottom: 1em">
                         {{ form_label(my_form.institutionType, 'Type of Institution/Organisation'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
                             {{ form_widget(my_form.institutionType, {'attr': {'class': 'form-control'}})  }}
@@ -69,7 +71,7 @@
                             {{ form_widget(my_form.institutionLevel, {'attr': {'class': 'form-control'}})  }}
                         </div>
                     </div>
-                    <div>
+                    <div style="padding-bottom: 1em">
                         {{ form_label(my_form.parentInstitution, 'Parent Institution/Organisation'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
                             {{ form_widget(my_form.parentInstitution, {'attr': {'class': 'form-control'}})  }}
@@ -139,6 +141,8 @@
                     </ul>
                 {{ form_end(my_form) }}
             </div>
+            </div>
+        </div>
         </div>
     </section>
 {% endblock %}

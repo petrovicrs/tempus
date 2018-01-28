@@ -8,11 +8,16 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -24,27 +29,82 @@ class ProjectForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nameEng', TextType::class, ['label_format' => 'Name English'])
-            ->add('nameSrb', TextType::class, ['label_format' => 'Name Serbian'])
-            ->add('description', TextType::class, ['label_format' => 'Description'])
-            ->add('goals', TextType::class, ['label_format' => 'Goals'])
-            ->add('nameOriginalLetter', TextType::class, ['label_format' => 'Name Original Letter'])
-            ->add('acronym', TextType::class, ['label_format' => 'Acronym'])
-            ->add('program', EntityType::class, ['class' => 'AppBundle:Program', 'choice_label' => 'name', 'label_format' => 'Program'])
-            ->add('status', TextType::class, ['label_format' => 'Status'])
-            ->add('scope', TextType::class, ['label_format' => 'Scope'])
-            ->add('applicationYear', null, ['label_format' => 'Application Year'])
-            ->add('referenceNumber', TextType::class, ['label_format' => 'Reference Number'])
-            ->add('duration', TextType::class, ['label_format' => 'Duration'])
-            ->add('endDatetime', null, ['label_format' => 'End Datetime'])
-            ->add('startDatetime', null, ['label_format' => 'Start Datetime'])
-            ->add('extendedTime', null, ['label_format' => 'Extended Time'])
-            ->add('grantAmount', TextType::class, ['label_format' => 'Grant Amount'])
-            ->add('coFinancingAmount', TextType::class, ['label_format' => 'coFinancing Amount'])
-            ->add('totalProjectValue', TextType::class, ['label_format' => 'Total Project Value'])
-            ->add('mark', TextType::class, ['label_format' => 'Mark'])
-            ->add('markExplanation', TextType::class, ['label_format' => 'Mark Explanation'])
-            ->add('submit', SubmitType::class, array('label_format' => 'Submit'));
+            ->add('nameEn', TextType::class)
+            ->add('nameSr', TextType::class)
+            ->add('nameOriginalLetter', TextType::class)
+            ->add('acronym', TextType::class)
+            ->add('endDatetime', DateType::class)
+            ->add('startDatetime', DateType::class)
+            ->add('projectNumber', TextType::class)
+            ->add('durationMonths', TextType::class)
+            ->add('audited', CheckboxType::class, array('required' => false))
+            ->add('onGoing', CheckboxType::class, array('required' => false))
+            ->add('applicantOrganisations', CollectionType::class, array(
+                'entry_type'  => ProjectApplicantOrganisationForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
+            ->add('participantFewerOptions', CheckboxType::class, array('required' => false))
+            ->add('consortium', CheckboxType::class, array('required' => false))
+            ->add('partnerOrganisations', CollectionType::class, array(
+                'entry_type'  => ProjectParnerOrganisationForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
+            ->add('limitations', CollectionType::class, array(
+                'entry_type'  => ProjectLimitationsForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
+            ->add('contactPersons', CollectionType::class, array(
+                'entry_type'  => ProjectContactPersonForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
+            ->add('topics', CollectionType::class, array(
+                'entry_type'  => ProjectTopicsForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
+            ->add('subjectAreas', CollectionType::class, array(
+                'entry_type'  => ProjectSubjectAreasForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
+//            ->add('calls', EntityType::class, [
+//                'class' => 'AppBundle:ProjectFtOfficer',
+//                'choice_label' => 'name' . ucfirst($options['locale'])
+//            ])
+//            ->add('rounds', EntityType::class, [
+//                'class' => 'AppBundle:ProjectEaceaOfficer',
+//                'choice_label' => 'name' . ucfirst($options['locale'])
+//            ])
+            ->add('notes', CollectionType::class, array(
+                'entry_type'  => ProjectNoteForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
+            ->add('projectSummary', TextareaType::class);
+        if ($options['isCompleted']) {
+            $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
+        }
+        else {
+            $builder->add('submit', SubmitType::class, array('label_format' => 'Next'));
+        }
     }
 
     /**
@@ -52,10 +112,10 @@ class ProjectForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Project',
-            'submit_button_label' => 'Create'
-        ));
+        $resolver->setDefaults([
+            'locale' => 'en',
+            'isCompleted' => 0,
+        ]);
     }
 
     /**

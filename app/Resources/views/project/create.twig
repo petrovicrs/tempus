@@ -1,141 +1,137 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
+    <script type="text/javascript" src="{{ asset('/js/projectApplicantOrganisations.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecPartnerOrganisations.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecLimitations.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecContactPersons.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecTopics.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecSubjectAreas.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projecNotes.js')}}" ></script>
+
     <section id="main">
+        {% include 'sub-navbar.html.twig' with {'active': 'project'} %}
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="page-header">
-                        <h1>{% trans %}Create project{% endtrans %}</h1>
+            <div class="page-header">
+                <h1>{% trans %}Add Project{% endtrans %}</h1>
+            </div>
+
+            <div class="controls">
+                {{ form_start(my_form) }}
+
+                    {# GENERAL INFORMATION #}
+                    <div class="general-info">
+
+                        <h2>General information</h2>
+
+                        {% if key_action_selected is defined and key_action_selected == 2 %}
+                            {# OVDE DODAJ ZA KA2 projekte#}
+                            <h1>KA2</h1>
+                        {% else %}
+                            <div>
+                                {{ form_label(my_form.nameEn, 'English'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.nameEn, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.nameSr, 'Serbian'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.nameSr, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.nameOriginalLetter, 'Original letter'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.nameOriginalLetter, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.acronym, 'Acronym'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.acronym, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.startDatetime, 'Start date'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.startDatetime)  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.endDatetime, 'End date'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.endDatetime)  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.projectNumber, 'Project nr.'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.projectNumber, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.durationMonths, 'Duration in months'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.durationMonths, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.audited, 'Audited'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.audited, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.onGoing, 'On-going'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.onGoing, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <ul class="applicantOrganisations" data-prototype="{{ include('/project/includes/applicantOrganisations.html.twig',
+                            {'form': my_form.applicantOrganisations.vars.prototype })|e }}">
+                            </ul>
+                            <div>
+                                {{ form_label(my_form.participantFewerOptions, 'Participan with fewer options'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.participantFewerOptions, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.consortium, 'Consortium?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.consortium, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <ul class="partnerOrganisations" data-prototype="{{ include('/project/includes/partnerOrganisations.html.twig',
+                            {'form': my_form.partnerOrganisations.vars.prototype})|e }}">
+                            </ul>
+                            <ul class="limitations" data-prototype="{{ include('/project/includes/limitations.html.twig',
+                            {'form': my_form.limitations.vars.prototype })|e }}">
+                            </ul>
+                            <ul class="contactPersons" data-prototype="{{ include('/project/includes/contactPersons.html.twig',
+                            {'form': my_form.contactPersons.vars.prototype })|e }}">
+                            </ul>
+                            <ul class="topics" data-prototype="{{ include('/project/includes/topics.html.twig',
+                            {'form': my_form.topics.vars.prototype })|e }}">
+                            </ul>
+                            <ul class="subjectAreas" data-prototype="{{ include('/project/includes/subjectAreas.html.twig',
+                            {'form': my_form.subjectAreas.vars.prototype })|e }}">
+                            </ul>
+                            <ul class="notes" data-prototype="{{ include('/project/includes/notes.html.twig',
+                            {'form': my_form.notes.vars.prototype })|e }}">
+                            </ul>
+                            <div>
+                                {{ form_label(my_form.projectSummary, 'Project Summary'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.projectSummary, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                        {% endif %}
+
                     </div>
 
-            <div>
-                {{ form(my_form) }}
-                {{ form_errors(my_form) }}
-                {{ form_rest(my_form) }}
+                {{ form_end(my_form) }}
             </div>
-            {##}
-            {#<form method="post" action="/project/create">#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_name" class="col-2 col-form-label">Name</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="text" name="appbundle_project[name]" id="appbundle_project_name" required="required">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_description" class="col-2 col-form-label">Description</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="text"  id="appbundle_project_description" name="appbundle_project[description]">#}
-                        {#<div>{{ form_errors(form.description) }}#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_goals" class="col-2 col-form-label">Goals</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="text" id="appbundle_project_goals" name="appbundle_project[goals]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_nameOriginalLetter" class="col-2 col-form-label">Name original letter</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="text" id="appbundle_project_nameOriginalLetter" name="appbundle_project[nameOriginalLetter]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_acronymt" class="col-2 col-form-label">Acronym</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="text" id=appbundle_project_acronym" name="appbundle_project[acronym]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_programId" class="col-2 col-form-label">Program id</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="number" id="appbundle_project_programId" name="appbundle[project_programId]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_status" class="col-2 col-form-label">Status</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="number" id="appbundle_project_status" name="appbundle_project[status]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_scope" class="col-2 col-form-label">Scope</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="number" id="appbundle_project_scope" name="appbundle_project[scope]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_applicationYear" class="col-2 col-form-label">Application year</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="date" id="appbundle_project_applicationYear" name="appbundle_project[applicationYear]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_referenceNumber" class="col-2 col-form-label">Reference time</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="time" id="appbundle_project_referenceNumber" name="appbundle_project[referenceNumber]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_duration" class="col-2 col-form-label">Duration</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="number" id="appbundle_project_duration" name="appbundle_project[duration]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_endDatetime" class="col-2 col-form-label">End date</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="datetime" id="appbundle_project_endDatetime" name="appbundle_project[endDatetime]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_startDatetime" class="col-2 col-form-label">Start date</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="datetime"  id="appbundle_project_startDatetime" name="appbundle_project[startDatetime]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_extendedTime" class="col-2 col-form-label">Extended date</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="datetime" id="appbundle_project_extendedTime" name="appbundle_project[extendedTime]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_grantAmount" class="col-2 col-form-label">Grant amount</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="text" id="appbundle_project_grantAmount" name="appbundle_project[grantAmount]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_coFinancingAmount" class="col-2 col-form-label">Co-financing amount</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="text" id="appbundle_project_coFinancingAmount" name="appbundle_project[coFinancingAmount]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_totalProjectValue" class="col-2 col-form-label">Total project value</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="text"  id="appbundle_project_totalProjectValue" name="appbundle_project[totalProjectValue]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_mark" class="col-2 col-form-label">Mark</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="number" id="appbundle_project_mark" name="appbundle_project[mark]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="form-group row">#}
-                    {#<label for="appbundle_project_markExplanation" class="col-2 col-form-label">Mark explanation</label>#}
-                    {#<div class="col-10">#}
-                        {#<input class="form-control" type="text" id="appbundle_project_markExplanation" name="appbundle_project[markExplanation]">#}
-                    {#</div>#}
-                {#</div>#}
-                {#{{ form_row(form._token) }}#}
-                {#<button type="submit" class="btn btn-default">Create</button>#}
-            {#</form>#}
         </div>
-    </div>
-    </div>
     </section>
 {% endblock %}

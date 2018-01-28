@@ -1,4 +1,4 @@
-var $addPicNumberLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add pic number</a>');
+var $addPicNumberLink = $('<a href="#" class="btn btn-add btn-success"><span aria-hidden="true"></span>add pic number</a>');
 var $newPicNumberDiv = $('<li></li>').append($addPicNumberLink);
 
 jQuery(document).ready(function() {
@@ -59,7 +59,7 @@ function addPicNumberForm($picNumberHolder, $newPicNumberDiv) {
 }
 
 function addPicNumberFormDeleteLink($contactFormDiv) {
-    var $removeFormA = $('<a href="#">delete this contact</a>');
+    var $removeFormA = $('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove pic number</a>');
     $contactFormDiv.append($removeFormA);
 
     $removeFormA.on('click', function(e) {

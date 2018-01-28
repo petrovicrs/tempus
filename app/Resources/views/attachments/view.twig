@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar-view.html.twig' with {'active': 'attachments', 'projectId': projectId} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2-view.html.twig' with {'active': 'attachments', 'projectId': projectId} %}
+        {% endif %}
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="controls results">
+                <div class="col-xs-12">
+                    <h2>{% trans %}Attachments{% endtrans %}</h2>
+
+                    <div class="col-xs-12">
+                        <div class="col-xs-6">
+                            <h2>{% trans %}DMS documents{% endtrans %}</h2>
+
+                            <div class="attachments-holder">
+                                <p>{% trans %}Synchronize documents{% endtrans %}</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <h2>{% trans %}Notes{% endtrans %}</h2>
+                            <p>{{ attachments ? attachments.dmsNotes : ''}}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="col-xs-6">
+                            <h2>{% trans %}Manually uploaded files{% endtrans %}</h2>
+
+                            <div class="attachments-holder">
+                                <ul class="manually-uploaded-files">
+                                    {% if attachments %}
+                                        {% for attach in attachments.manuallyUploadedFiles %}
+                                            <li>
+                                                <b>{% trans %}File{% endtrans %}</b>: {{ attach.originalFilename }}
+                                            </li>
+                                        {% endfor %}
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <h2>{% trans %}Notes{% endtrans %}</h2>
+                            <p>{{ attachments ? attachments.uploadedFilesNotes : ''}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/resources.js')}}"></script>
+    <section id="main">
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar.html.twig' with {'active': 'resources'} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'resources'} %}
+        {% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls resources">
+                {% if keyAction == 'ka1' %}
+                    <a href="{{ localizedPath('project_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                {% endif %}
+                {%  if keyAction == 'ka2' %}
+                    <a href="{{ localizedPath('partner_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                {% endif %}
+                <div class="col-sm-12">
+                    {{ form_start(my_form) }}
+                        <h2>{% trans %}Add Resource{% endtrans %}</h2>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <ul class="resources" data-purpose="create" data-prototype="{{include('resources/includes/resources-details.html.twig',
+                                {'form': my_form.resources.vars.prototype })|e}}">
+                                </ul>
+                            </div>
+                        </div>
+                    {{ form_end(my_form) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

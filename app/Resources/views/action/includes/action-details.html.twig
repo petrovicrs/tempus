@@ -1,0 +1,45 @@
+<div class="block" style="clear: both;">
+    <h2>{% trans %}Action Details{% endtrans %}:</h2>
+    <table class="table table-hover" data-toggle="table">
+        <tr>
+            <td>{{ form_row(form.person) }}</td>
+            <td>{{ form_row(form.institution) }}</td>
+            <td>{{ form_row(form.originCountry) }}</td>
+            <td>{{ form_row(form.destinationCountry) }}</td>
+            <td>{{ form_row(form.city) }}</td>
+            <td>{{ form_row(form.distance) }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>{{ form_row(form.startDate) }}</td>
+            <td>{{ form_row(form.endDate) }}</td>
+            <td>{{ form_row(form.daysWithoutTravel) }}</td>
+            <td>{{ form_row(form.travelDays) }}</td>
+            <td>{{ form_row(form.totalDays) }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>{{ form_row(form.hasSpecialNeeds) }}</td>
+            <td>{{ form_row(form.hasFewerOptions) }}</td>
+            <td>{{ form_row(form.isAccompanyingPerson) }}</td>
+            <td>{{ form_row(form.isLongTerm) }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    {#{{ form_row(form.person) }}#}
+    {#{{ form_row(form.institution) }}#}
+    {#{{ form_row(form.originCountry) }}#}
+    {#{{ form_row(form.destinationCountry) }}#}
+    {#{{ form_row(form.city) }}#}
+    {#{{ form_row(form.distance) }}#}
+    {#{{ form_row(form.startDate) }}#}
+    {#{{ form_row(form.endDate) }}#}
+    {#{{ form_row(form.daysWithoutTravel) }}#}
+    {#{{ form_row(form.travelDays) }}#}
+    {#{{ form_row(form.totalDays) }}#}
+    {#{{ form_row(form.hasSpecialNeeds) }}#}
+    {#{{ form_row(form.hasFewerOptions) }}#}
+    {#{{ form_row(form.isAccompanyingPerson) }}#}
+    {#{{ form_row(form.isLongTerm) }}#}
+</div>

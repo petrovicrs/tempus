@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+        {% include 'sub-navbar.html.twig' with {'active': 'reporting'} %}
+        <div class="container-fluid">
+            <div class="col-xs-12 section-heading">
+                <h2><b>{% trans %}Reporting{% endtrans %}</b></h2>
+                <a href="{{ localizedPath('reporting_create') }}" class="btn btn-add btn-success pull-right"><span aria-hidden="true"></span>{% trans %}Add Reporting{% endtrans %}</a>
+            </div>
+
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                    <tr class="table-heleer">
+                        <th class="sortable"  data-sortable="true">{% trans %}Project{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Monitoring type{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Date{% endtrans %}</th>
+                        {#<th class="sortable"  data-sortable="true">{% trans %}Questions{% endtrans %}</th>#}
+                        <th class="sortable"  data-sortable="true">{% trans %}Monitoring by{% endtrans %}</th>
+                        {#<th class="sortable"  data-sortable="true"></th>#}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for projectReport in projectReporting %}
+                    {% for key, report in projectReport.reporting %}
+                        <tr>
+                            {% if projectReport.project %}
+                                <td><a href="{{ localizedPath('project_view', {'projectId': projectReport.project.id}) }}">{{ projectReport.project.name(app.request.getLocale()) }}</a></td>
+                            {% else %}
+                                <td><a href="#">null</a></td>
+                            {% endif %}
+                            {% if report.type %}
+                                <td>{{ report.type.name(app.request.getLocale()) }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+
+                            <td>{{ report.reportingDate | date('d/m/y') }}</td>
+
+                            {#{% if report.questionsAndAnswers %}#}
+                                {#{% for qa in report.questionsAndAnswers %}#}
+                                    {#{% for question in qa.questions %}#}
+                                        {#{% set suffix = '' %}#}
+
+                                        {#{% if loop.length > 1 %}#}
+                                            {#{% set suffix = '...' %}#}
+                                        {#{% endif %}#}
+
+                                        {#{% if loop.first %}#}
+                                            {#<td>{{ question.questions(app.request.getLocale()) }} {{ suffix }}</td>#}
+                                        {#{% endif %}#}
+                                    {#{% endfor %}#}
+                                {#{% endfor %}#}
+                            {#{% else %}#}
+                                {#<td></td>#}
+                            {#{% endif %}#}
+
+                            {% if report.reportingBy %}
+                                {% for person in report.reportingBy %}
+                                    {% set suffix = '' %}
+
+                                    {% if loop.length > 1 %}
+                                        {% set suffix = '...' %}
+                                    {% endif %}
+
+                                    {% if loop.first %}
+                                        <td>{{ person.name(app.request.getLocale()) }} {{ suffix }}</td>
+                                    {% endif %}
+                                {% endfor %}
+
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+
+                            {#<td><a href="{{ localizedPath('report_view', {'reportId': report.id}) }}">View</a></td>#}
+                            {#<td><a href="{{ localizedPath('report_view', {'reportId': report.id}) }}">Edit</a></td>#}
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <div>
+{% endblock %}

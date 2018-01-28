@@ -3,20 +3,59 @@
 {% block body %}
     <section id="main">
         <div class="container-fluid">
-
+            <div class="col-xs-12 section-heading">
+                <h2><b>{% trans %}Person list{% endtrans %}</b></h2>
+                <a href="{{ localizedPath('person_create') }}" class="btn btn-add btn-success pull-right"><span aria-hidden="true"></span>Add Person</a>
+            </div>
             <table class="table table-hover" data-toggle="table">
                 <thead>
                 <tr class="table-header">
-                    <th class="sortable" data-field="project_title" data-sortable="true">{% trans %}Name{% endtrans %}</th>
-                    <th class="sortable" data-sortable="true">{% trans %}Surname{% endtrans %}</th>
+                    <th class="sortable"  data-sortable="true">{% trans %}Id{% endtrans %}</th>
+                    <th class="sortable"  data-sortable="true">{% trans %}Name and Surname{% endtrans %}</th>
+                    <th class="sortable" data-sortable="true">{% trans %}Email{% endtrans %}</th>
+                    <th class="sortable" data-sortable="true">{% trans %}Telephone{% endtrans %}</th>
+                    <th class="sortable" data-sortable="true">{% trans %}Field of expertise{% endtrans %}</th>
+                    <th class="sortable" data-sortable="true">{% trans %}Country{% endtrans %}</th>
+                    <th class="sortable" data-sortable="true">{% trans %}Town{% endtrans %}</th>
+                    <th class="sortable" data-sortable="true">{% trans %}Institution/Organization{% endtrans %}</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
 
                 <tbody>
                 {% for key,value in persons %}
                     <tr>
-                        <td> <a href="{{ localizedPath('person_view', {'personId':value.id}) }}" >{{ value.name }} </a></td>
-                        <td> {{ value.surname }} </td>
+                        <td> <a href="{{ localizedPath('person_view', {'personId':value.id}) }}" > {{ value.id }} </a> </td>
+                        <td> {{ value.firstName(app.request.locale) }} {{ value.lastName(app.request.locale) }}</td>
+                        <td>{% for contact_key, contact in value.contacts %}
+                                {% if contact.contactType != null and contact.contactType.typeEn == 'E-mail' %}
+                                    {{ contact.contactValue }}
+                                {% endif %}
+                            {% endfor %}</td>
+                        <td>{% for contact_key, contact in value.contacts %}
+                            {% if contact.contactType != null and contact.contactType.typeEn == 'Phone' %}
+                                {{ contact.contactValue }}
+                            {% endif %}
+                            {% endfor %}</td>
+                        <td>{% if value.fieldOfExpertise %}{{ value.fieldOfExpertise.name(app.request.locale) }}{% endif %}</td>
+                        <td>{% for address_key, address in value.addresses %}
+                                {% if address.country != null %}
+                                    {{ address.country.name(app.request.locale)  }}
+                                {% endif %}
+                            {% endfor %}</td>
+                        <td>{% for address_key, address in value.addresses %}
+                                {% if address.town != null %}
+                                    {{ address.town  }}
+                                {% endif %}
+                            {% endfor %}</td>
+                        <td>{% for personInstitutionRelationship_key, personInstitutionRelationship in value.personInstitutionRelationships %}
+                                {% if personInstitutionRelationship.institution != null %}
+                                    {{ personInstitutionRelationship.institution.name(app.request.locale)  }}
+                                {% endif %}
+                            {% endfor %}</td>
+                        <td><a href="{{ localizedPath('person_view', {'personId':value.id}) }}">View</a></td>
+                        <td><a href="{{ localizedPath('person_edit', {'personId':value.id}) }}">Edit</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

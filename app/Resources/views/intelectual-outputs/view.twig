@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/collapsible.js')}}"></script>
+    <section id="main">
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar-view.html.twig' with {'active': 'intelectual_outputs', 'projectId': projectId} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2-view.html.twig' with {'active': 'intelectual_outputs', 'projectId': projectId} %}
+        {% endif %}
+    <div class="container-fluid">
+
+        <h2><b>{% trans %}Intelectual outputs{% endtrans %}</b></h2>
+
+        <table class="table table-hover" data-toggle="table">
+            <thead>
+                <tr class="table-heleer">
+                    <th>{% trans %}Title{% endtrans %}</th>
+                    <th>{% trans %}Type{% endtrans %}</th>
+                    <th>{% trans %}Project{% endtrans %}</th>
+                    <th>{% trans %}Due date{% endtrans %}</th>
+                    <th>{% trans %}Status{% endtrans %}</th>
+                    <th>{% trans %}Public{% endtrans %}</th>
+                    <th>{% trans %}Available on E+Link{% endtrans %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for output in intelectualOutputs %}
+                    <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
+                        <td>{{ output.title(app.request.getLocale()) }}</td>
+
+                        {% if output.type %}
+                            <td>{{ output.type.name(app.request.getLocale()) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+
+                        <td><a href="{{ localizedPath('project_view', {'projectId': projectId}) }}">{{ output.projectIntelectualOutputs.project.name(app.request.getLocale()) }}</a></td>
+
+                        <td>{{ output.dueDate | date('d/m/y')}}</td>
+
+                        {% if output.status %}
+                            <td>{{ output.status.name(app.request.getLocale()) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+
+                        {% if output.isPublic %}
+                            <td class="text-center">{% trans %}Yes{% endtrans %}</td>
+                        {% else %}
+                            <td class="text-center">{% trans %}No{% endtrans %}</td>
+                        {% endif %}
+
+                        {% if output.eLinkAvailable %}
+                            <td class="text-center">{% trans %}Yes{% endtrans %}</td>
+                        {% else %}
+                            <td class="text-center">{% trans %}No{% endtrans %}</td>
+                        {% endif %}
+                    </tr>
+                    <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
+                        <td colspan="7">
+                            <div class="details-wrapper-inner">
+                                <div class="col-xs-12 no-padding">
+                                    <h2>Description</h2>
+                                    <p>{{ output.description(app.request.getLocale()) }}</p>
+                                </div>
+
+                                <div class="col-xs-12 no-padding">
+                                    <h2>Notes</h2>
+                                    {# TODO list filest #}
+                                    <p>{{ output.notes }}</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+    <div>
+{% endblock %}

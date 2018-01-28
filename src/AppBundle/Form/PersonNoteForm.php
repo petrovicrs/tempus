@@ -9,6 +9,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\PersonNote;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,7 +26,7 @@ class PersonNoteForm extends AbstractType
                 'class' => 'AppBundle:PersonNoteType',
                 'choice_label'  => 'name' . ucfirst($options['locale'])
             ])
-            ->add('note');
+            ->add('note', TextareaType::class);
     }
 
     /**

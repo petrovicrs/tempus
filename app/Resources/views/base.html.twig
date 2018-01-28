@@ -8,10 +8,11 @@
 
 
         {% block stylesheets %}
-            {% stylesheets '@bootstrap_css' %}
+            {% stylesheets '@bootstrap_css' '@calendar_css' %}
                 <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
             {% endstylesheets %}
             <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/css/kbs.css') }}"/>
+            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/css/style.css') }}"/>
 
             <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
         {% endblock %}
@@ -22,25 +23,34 @@
         <div id="traka"></div>
         <nav class="navbar navbar-default" style="height: 75px">
             <div class="container-fluid">
-                <div class="navbar-header">
+                <div class="navbar-header col-xs-6">
                     <a class="navbar-brand" href="#">
                         <img alt="Project Database - Erasmus+, Tempus, Erasmus Mundus and Lifelong Learning Programme"
                              src="{{ asset('/images/logo_horizontal_en-470e29804c52b459fae2c00b8ead4843.png') }}">
                     </a>
                 </div>
+                <div class="col-xs-6 text-right login">
+                    <div class="col-xs-9 no-padding">
+                        {% include 'main-navbar.html.twig' with {'active': 'reporting'} %}
+                    </div>
+                    <div class="col-xs-3">
+                        <ul>
+                            {% if is_granted('ROLE_USER') %}
+                                <li><a href="{{ path('security_logout') }}">Logout</a></li>
+                            {% else %}
+                                <li><a href="{{ path('security_login') }}">Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
             </div>
         </nav>
     </head>
     <body class="home project">
-    <ul>
-        {% if is_granted('ROLE_USER') %}
-        <li><a href="{{ path('security_logout') }}">Logout</a></li>
-        {% else %}
-        <li><a href="{{ path('security_login') }}">Login</a></li>
-        {% endif %}
-    </ul>
+    <div class="loader"></div>
+
     {% block javascripts %}
-    {% javascripts '@jquery' '@bootstrap_js' %}
+    {% javascripts '@jquery' '@bootstrap_js' '@calendar_js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
     <!-- Latest compiled and minified JavaScript -->

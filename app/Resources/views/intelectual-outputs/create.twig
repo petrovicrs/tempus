@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/intelectual_outputs.js')}}"></script>
+    <section id="main">
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar.html.twig' with {'active': 'intelectual_outputs'} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'intelectual_outputs'} %}
+        {% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls intelectualOutput">
+                <a href="{{ localizedPath('resource_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                <div class="col-xs-12">
+                    {{ form_start(my_form) }}
+                        <div class="col-xs-12">
+                            <h2>{% trans %}Add Output{% endtrans %}</h2>
+                        </div>
+
+                        <ul class="intelectual-outputs" data-purpose="create" data-prototype="{{include('intelectual-outputs/includes/details.html.twig',
+                        {'my_form': my_form.intelectualOutputs.vars.prototype })|e}}">
+                        </ul>
+
+                        <div class="col-xs-12">
+                            {{ form_end(my_form) }}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

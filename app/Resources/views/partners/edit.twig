@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/partners.js')}}" ></script>
+    <section id="main">
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'partners', 'isCompleted': isCompleted, projectId: projectId} %}
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="page-header">
+                    <h1>{% trans %}Edit Partner{% endtrans %}</h1>
+                </div>
+                <div class="row">
+                    <div class="controls resources">
+                        {% if not isCompleted %}
+                            <a href="{{ localizedPath('monitoring_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                        {% endif %}
+                        {{ form_start(my_form) }}
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    {{ form_label(my_form.partners, 'Partners'|trans, {'label_attr': {'class': 'control-label col-xs-12'}}) }}
+                                    <ul class="partners" data-prototype="{{ include('/partners/includes/partners.html.twig',
+                                    {'my_form': my_form.partners.vars.prototype })|e }}">
+                                        {% for partner in my_form.partners %}
+                                            <li>{{ include('/partners/includes/partners.html.twig', {'my_form': partner }) }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    {{ form_label(my_form.participants, 'Participants'|trans, {'label_attr': {'class': 'control-label col-xs-12'}}) }}
+                                    <ul class="participants" data-prototype="{{ include('/partners/includes/participants.html.twig',
+                                    {'my_form': my_form.participants.vars.prototype })|e }}">
+                                        {% for participant in my_form.participants %}
+                                            <li>{{ include('/partners/includes/participants.html.twig', {'my_form': participant }) }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {{ form_end(my_form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,7 +1,24 @@
 <div class="block" style="clear: both;">
-    {{ form_row(form.streetAndNumber) }}
-    {{ form_row(form.town) }}
-    {{ form_row(form.postalCode) }}
-    {{ form_row(form.country) }}
+    {{ form_label(form.streetAndNumber, 'Street and number'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.streetAndNumber, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
+    {{ form_label(form.town, 'Town'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.town, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
+    {{ form_label(form.postalCode, 'Postal code'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.postalCode, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
+    {{ form_label(form.country, 'Country'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+    <div class="form-inline">
+        {{ form_widget(form.country, {'attr': {'class': 'form-control'}})  }}
+    </div>
+
+
     {{ form_row(form.differentMailingAddress) }}
 </div>

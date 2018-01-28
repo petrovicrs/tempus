@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/collapsible.js')}}"></script>
+    <section id="main">
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar-view.html.twig' with {'active': 'deliverables', 'projectId': projectId} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2-view.html.twig' with {'active': 'deliverables', 'projectId': projectId} %}
+        {% endif %}
+    <div class="container-fluid">
+        <div class="col-xs-12 section-heading">
+            <h2><b>{% trans %}Deliverables/Activities{% endtrans %}</b></h2>
+        </div>
+
+        <div class="col-xs-3">
+            <b>{% trans %}Project{% endtrans %}</b>: {{ project.name(app.request.locale) }}
+        </div>
+        {% if deliverablesActivities %}
+            <div class="col-xs-3">
+                <b>{% trans %}Created on{% endtrans %}</b>: {{ deliverablesActivities.dateCreated | date('d/m/y') }}
+            </div>
+        {% endif %}
+
+        <div class="col-xs-12">
+            <h2>Deliverables</h2>
+        </div>
+        {% if deliverablesActivities %}
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                <tr class="table-heleer">
+                    <th class="sortable"  data-sortable="true">{% trans %}Title{% endtrans %}</th>
+                    <th>{% trans %}Type{% endtrans %}</th>
+                    <th>{% trans %}Status{% endtrans %}</th>
+                    <th class="sortable"  data-sortable="true">{% trans %}Date{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for deliverables in deliverablesActivities.deliverables %}
+                        <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
+                            <td class="text-center">{{ deliverables.title(app.request.locale) }}</td>
+                            {% if deliverables.deliverableType %}
+                                <td class="text-center">{{ deliverables.deliverableType.name(app.request.locale) }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                            {% if deliverables.deliverableStatus %}
+                                <td class="text-center">{{ deliverables.deliverableStatus.name(app.request.locale) }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                            <td class="text-center">{{ deliverables.date | date('d/m/y') }}</td>
+                        </tr>
+                        <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
+                            <td colspan="4">
+                                <div class="details-wrapper-inner">
+                                    <h2>{% trans %}Description{% endtrans %}</h2>
+                                    <p>{{ deliverables.desc(app.request.locale) }}</p>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="col-xs-12">
+                <h2>Activities</h2>
+            </div>
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                <tr class="table-heleer">
+                    <th class="sortable"  data-sortable="true">{% trans %}Title{% endtrans %}</th>
+                    <th>{% trans %}Type{% endtrans %}</th>
+                    <th>{% trans %}Status{% endtrans %}</th>
+                    <th>{% trans %}From{% endtrans %}</th>
+                    <th>{% trans %}To{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for activity in deliverablesActivities.activities %}
+                    <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
+                        <td class="text-center">{{ activity.title(app.request.locale) }}</td>
+                        {% if activity.activityType %}
+                            <td class="text-center">{{ activity.activityType.name(app.request.locale) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        {% if activity.activityStatus %}
+                            <td class="text-center">{{ activity.activityStatus.name(app.request.locale) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        {% if activity.activityFrom %}
+                            <td class="text-center">{{ activity.activityFrom.name(app.request.locale) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        {% if activity.activityTo %}
+                            <td class="text-center">{{ activity.activityTo.name(app.request.locale) }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    </tr>
+                    <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
+                        <td colspan="5">
+                            <div class="details-wrapper-inner">
+                                <h2>{% trans %}Description{% endtrans %}</h2>
+                                <p>{{ activity.desc(app.request.locale) }}</p>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+
+    </div>
+    <div>
+{% endblock %}

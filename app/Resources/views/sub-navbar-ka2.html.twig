@@ -1,0 +1,16 @@
+<nav id="menu-list" class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li class="{% if active == 'project' %}active{% endif %}"><a href="{{ localizedPath('project_ka2_edit', {'projectId': projectId}) }}"  onclick="alert({})">Project</a></li>
+            <li class="{% if active == 'deliverables' %}active{% endif %}"><a href="{{ localizedPath('deliverables_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Deliverables/Activities</a></li>
+            <li class="{% if active == 'monitoring' %}active{% endif %}"><a href="{{ localizedPath('monitoring_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Monitoring/Reporting</a></li>
+            <li class="{% if active == 'partners' %}active{% endif %}"><a href="{{ localizedPath('partner_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Partners</a></li>
+            <li class="{% if active == 'resources' %}active{% endif %}"><a href="{{ localizedPath('resource_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Resources</a></li>
+            <li class="{% if active == 'intelectual_outputs' %}active{% endif %}"><a href="{{ localizedPath('intelectual_output_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Intelectual outputs</a></li>
+            <li class="{% if active == 'results' %}active{% endif %}"><a href="{{ localizedPath('result_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Results</a></li>
+            <li class="{% if active == 'reporting' %}active{% endif %}"><a href="{{ localizedPath('reporting_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Reporting</a></li>
+            <li class="{% if active == 'attachments' %}active{% endif %}"><a href="{{ localizedPath('attachment_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Attachments</a></li>
+            <li class="{% if active == 'group_calendar' %}active{% endif %}"><a href="{{ localizedPath('group_calendar_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Group Calendar</a></li>
+        </ul>
+    </div>
+</nav>

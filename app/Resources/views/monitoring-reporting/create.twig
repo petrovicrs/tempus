@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/monitoring-reporting.js')}}"></script>
+    <section id="main">
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar.html.twig' with {'active': 'monitoring'} %}
+    {% endif %}
+    {%  if keyAction == 'ka2' %}
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'monitoring'} %}
+    {% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls monitoring">
+                <a href="{{ localizedPath('deliverables_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                <div class="col-sm-12">
+                    {{ form_start(my_form) }}
+                        <h2>{% trans %}Monitoring/Reporting{% endtrans %}</h2>
+
+                        <div class="form-group">
+                            <ul class="monitoring-reporting" data-purpose="create" data-prototype="{{include('monitoring-reporting/includes/details.html.twig',
+                            {'my_form': my_form.monitoringReporting.vars.prototype })|e}}">
+                            </ul>
+                        </div>
+                    {{ form_end(my_form) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

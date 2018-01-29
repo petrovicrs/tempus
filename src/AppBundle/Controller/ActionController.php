@@ -12,8 +12,9 @@ use AppBundle\Entity\Action;
 use AppBundle\Entity\ActionDetails;
 use AppBundle\Entity\Activity;
 use AppBundle\Entity\Project;
+use AppBundle\Entity\ProjectMobilityFlows;
 use AppBundle\Form\ActionDetailsForm;
-use AppBundle\Form\ActionForm;
+use AppBundle\Form\ProjectMobilityFlowsForm;
 use AppBundle\Form\ActivityForm;
 use AppBundle\Repository\ActivityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -33,14 +34,14 @@ class ActionController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $activities = $this->getActivityRepository()->findAll();
+        $mobFlows = $this->getProjectMobilityFlowsRepository()->findAll();
         $totals = [];
 
-        foreach ($activities as $activity) {
-            $totals[$activity->getId()] = $this->getTotals($activity->getActionDetails());
+        foreach ($mobFlows as $flow) {
+            $totals[$flow->getId()] = $this->getTotals($flow->getActivities());
         }
 
-        return $this->render('action/list.twig', ['activities' => $activities, 'totals' => $totals]);
+        return $this->render('action/list.twig', ['activities' => $mobFlows, 'totals' => $totals]);
     }
 
     /**
@@ -48,94 +49,131 @@ class ActionController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $activity = new Activity();
+        $mobFlows = new ProjectMobilityFlows();
 
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
-        $activityForm = $this->createForm(ActivityForm::class, $activity, [
+        $mobFlowsForm = $this->createForm(ProjectMobilityFlowsForm::class, $mobFlows, [
             'action' => $this->generateUrl('action_create'),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
 
-        $activityForm->handleRequest($request);
+        $mobFlowsForm->handleRequest($request);
 
-        if ($activityForm->isSubmitted() && $activityForm->isValid()) {
+        if ($mobFlowsForm->isSubmitted() && $mobFlowsForm->isValid()) {
 
-            $project = $this->getLastProjectForCurrentUser();
-            $activity->setProject($project);
-            $this->getActivityRepository()->save($activity);
+            $mobFlows->setProject($project);
+            $this->getProjectMobilityFlowsRepository()->save($mobFlows);
 
+            /*  @var  Activity $activity */
+            foreach($mobFlows->getActivities() as $activity){
+                $activity->setProjectMobilityFlows($mobFlows);
 
-            foreach($activity->getActionDetails() as $action){
-                $action->setActivity($activity);
-                $this->getActionDetailsRepository()->save($action);
+                /* @var ActionDetails $actionDetail */
+                foreach ($activity->getActionDetails() as $actionDetail) {
+                    $actionDetail->setActivity($activity);
+                    $this->getActionDetailsRepository()->save($actionDetail);
+                }
             }
 
             return $this->redirectToRoute('resources_create');
         }
 
-        return $this->render('action/create.twig', ['my_form' => $activityForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr()
+        return $this->render('action/create.twig', [
+            'my_form' => $mobFlowsForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'projectId' => $project->getId(),
         ]);
     }
 
     /**
-     * @Route("/{locale}/action/edit/{activityId}", name="action_edit", requirements={"activityId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/action/edit/{projectId}", name="action_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
-    public function editAction(Request $request, $activityId)
+    public function editAction(Request $request, $projectId)
     {
-        $activity = $this->getActivityRepository()->findOneBy(['id' => $activityId]);
+        $mobFlows = $this->getProjectMobilityFlowsRepository()->findOneBy(['project' => $projectId]);
 
-        $activityForm = $this->createForm(ActivityForm::class, $activity, [
-            'action' => $this->generateUrl('action_edit', ['activityId' => $activityId]),
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        $mobFlowsForm = $this->createForm(ProjectMobilityFlowsForm::class, $mobFlows, [
+            'action' => $this->generateUrl('action_edit', ['projectId' => $projectId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'isCompleted' => $project->getIsCompleted(),
         ]);
 
+        $activities = new ArrayCollection();
         $actionDetails = new ArrayCollection();
 
-        foreach ($activity->getActionDetails() as $action) {
-            $actionDetails->add($action);
+        foreach ($mobFlows->getActivities() as $activity) {
+            $activities->add($activity);
+
+            foreach ($activity->getActionDetails() as $action) {
+                $actionDetails->add($action);
+            }
         }
 
-        $activityForm->handleRequest($request);
+        $mobFlowsForm->handleRequest($request);
 
-        if ($activityForm->isSubmitted() && $activityForm->isValid()) {
+        if ($mobFlowsForm->isSubmitted() && $mobFlowsForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            // remove the relationship between the tag and the Task
-            foreach ($actionDetails as $action) {
-                if (false === $activity->getActionDetails()->contains($action)) {
-                    $em->remove($action);
+
+            foreach ($activities as $activity) {
+                if (false === $mobFlows->getActivities()->contains($activity)) {
+                    $em->remove($activity);
+                }
+
+                foreach ($actionDetails as $action) {
+                    if (false === $activity->getActionDetails()->contains($action)) {
+                        $em->remove($action);
+                    }
                 }
             }
 
-            $this->getActivityRepository()->save($activity);
 
-            return $this->redirectToRoute('action_list');
+            $this->getProjectMobilityFlowsRepository()->save($mobFlows);
+
+            if (!$project->getIsCompleted()) {
+                return $this->redirectToRoute('resources_create');
+            }
         }
 
-        return $this->render('action/edit.twig', ['my_form' => $activityForm->createView()]);
+        return $this->render('action/edit.twig', [
+            'my_form' => $mobFlowsForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'projectId' => $project->getId(),
+            'isCompleted' => $project->getIsCompleted()
+        ]);
     }
 
     /**
-     * @Route("/{locale}/action/view/{activityId}", name="action_view", requirements={"activityId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/action/view/{projectId}", name="action_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
-    public function viewAction($activityId)
+    public function viewAction($projectId)
     {
-        $activity = $this->getActivityRepository()->findOneBy(['id' => $activityId]);
-        $actionDetails = $this->get('doctrine_entity_repository.action_details')->findBy(['activity' => $activityId]);
+        $mobFlows = $this->getProjectMobilityFlowsRepository()->findOneBy(['project' => $projectId]);
+        $activities = $mobFlows->getActivities();
+//        $actionDetails = $this->get('doctrine_entity_repository.action_details')->findBy(['activity' => $projectId]);
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
-        $activityTotals = $this->getTotals($actionDetails);
-//        $contacts = $this->get('doctrine_entity_repository.activity_contact')->findBy(['activity' => $activityId]);
+        $activityTotals = $this->getTotals($activities);
+//        $contacts = $this->get('doctrine_entity_repository.activity_contact')->findBy(['activity' => $projectId]);
 
-        return $this->render('action/view.twig', ['activity' => $activity, 'totals' => $activityTotals]);
+        return $this->render('action/view.twig', [
+            'activities' => $activities,
+            'totals' => $activityTotals,
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'projectId' => $project->getId(),
+        ]);
     }
 
-    private function getTotals($actions) {
+    private function getTotals($activities) {
         $totals = [
             'daysWithoutTravel'      => 0,
             'travelDays'             => 0,
@@ -145,25 +183,36 @@ class ActionController extends AbstractController
             'accompanyingPersons'    => 0
         ];
 
-        for($i = 0; $i < count($actions); $i++) {
-            $actionDetails = $actions[$i];
+        foreach ($activities as $index => $activity) {
 
-            $totals['daysWithoutTravel'] += $actionDetails->getDaysWithoutTravel();
-            $totals['travelDays'] += $actionDetails->getTravelDays();
-            $totals['totalDays'] += $actionDetails->getTotalDays();
+            for($i = 0; $i < count($activity->getActionDetails()); $i++) {
+                $actionDetails = $activity->getActionDetails()[$i];
 
-            if($actionDetails->getHasSpecialNeeds()) {
-               $totals['withSpecialNeeds'] += 1;
-            }
-            if($actionDetails->getHasFewerOptions()) {
-                $totals['withFewerOpportunities'] += 1;
-            }
-            if($actionDetails->getIsAccompanyingPerson()) {
-                $totals['accompanyingPersons'] += 1;
+                $totals['daysWithoutTravel'] += $actionDetails->getDaysWithoutTravel();
+                $totals['travelDays'] += $actionDetails->getTravelDays();
+                $totals['totalDays'] += $actionDetails->getTotalDays();
+
+                if($actionDetails->getHasSpecialNeeds()) {
+                   $totals['withSpecialNeeds'] += 1;
+                }
+                if($actionDetails->getHasFewerOptions()) {
+                    $totals['withFewerOpportunities'] += 1;
+                }
+                if($actionDetails->getIsAccompanyingPerson()) {
+                    $totals['accompanyingPersons'] += 1;
+                }
             }
         }
 
         return $totals;
+    }
+
+    /**
+     * @return ProjectActivityRepository
+     */
+    private function getProjectMobilityFlowsRepository() {
+
+        return $this->get('doctrine_entity_repository.project_mobility_flows');
     }
 
     /**
@@ -180,5 +229,13 @@ class ActionController extends AbstractController
     private function getActionDetailsRepository() {
 
         return $this->get('doctrine_entity_repository.action_details');
+    }
+
+    /**
+     * @return ProjectRepository
+     */
+    private function getProjectRepository() {
+
+        return $this->get('doctrine_entity_repository.project');
     }
 }

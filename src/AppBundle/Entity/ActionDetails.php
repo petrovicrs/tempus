@@ -105,10 +105,36 @@ class ActionDetails extends AbstractAuditable
     protected $totalDays;
 
     /**
+     * @ORM\Column(name="venue", type="string", length=128)
+     */
+    protected $venue;
+
+    /**
+     * @ORM\Column(name="duration_months", type="integer")
+     */
+    protected $durationMonths;
+
+    /**
+     * @ORM\Column(name="duration_extra_days", type="integer")
+     */
+    protected $durationExtraDays;
+
+    /**
      * @Assert\NotBlank()
      * @ORM\Column(name="has_special_needs", type="boolean")
      */
     protected $hasSpecialNeeds;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="student", type="boolean")
+     */
+    protected $student;
+
+    /**
+     * @ORM\Column(name="apprentice", type="boolean")
+     */
+    protected $apprentice;
 
     /**
      * @Assert\NotBlank()
@@ -124,9 +150,9 @@ class ActionDetails extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="is_long_term", type="boolean")
+     * @ORM\Column(name="non_teaching_stuff", type="boolean")
      */
-    protected $isLongTerm;
+    protected $nonTeachingStuff;
 
     /**
      * @return mixed
@@ -339,6 +365,86 @@ class ActionDetails extends AbstractAuditable
     /**
      * @return mixed
      */
+    public function getDurationMonths()
+    {
+        return $this->durationMonths;
+    }
+
+    /**
+     * @param mixed $durationMonths
+     */
+    public function setDurationMonths($durationMonths)
+    {
+        $this->durationMonths = $durationMonths;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDurationExtraDays()
+    {
+        return $this->durationExtraDays;
+    }
+
+    /**
+     * @param mixed $durationExtraDays
+     */
+    public function setDurationExtraDays($durationExtraDays)
+    {
+        $this->durationExtraDays = $durationExtraDays;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVenue()
+    {
+        return $this->venue;
+    }
+
+    /**
+     * @param mixed $venue
+     */
+    public function setVenue($venue)
+    {
+        $this->venue = $venue;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApprentice()
+    {
+        return $this->apprentice;
+    }
+
+    /**
+     * @param mixed $apprentice
+     */
+    public function setApprentice($apprentice)
+    {
+        $this->apprentice = $apprentice;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
+    /**
+     * @param mixed $student
+     */
+    public function setStudent($student)
+    {
+        $this->student = $student;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getHasSpecialNeeds()
     {
         return $this->hasSpecialNeeds;
@@ -387,16 +493,16 @@ class ActionDetails extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getisLongTerm()
+    public function getNonTeachingStuff()
     {
-        return $this->isLongTerm;
+        return $this->nonTeachingStuff;
     }
 
     /**
-     * @param mixed $isLongTerm
+     * @param mixed $nonTeachingStuff
      */
-    public function setIsLongTerm($isLongTerm)
+    public function setNonTeachingStuff($nonTeachingStuff)
     {
-        $this->isLongTerm = $isLongTerm;
+        $this->nonTeachingStuff = $nonTeachingStuff;
     }
 }

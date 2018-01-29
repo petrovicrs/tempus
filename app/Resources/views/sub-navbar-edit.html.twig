@@ -1,8 +1,8 @@
 <nav id="menu-list" class="navbar navbar-default">
     <div class="container-fluid">
         <ul class="nav navbar-nav">
-            <li class="{% if active == 'project' %}active{% endif %}"><a href="{{ localizedPath('project_edit)}}" >Project</a></li>
-            <!--<li class="{% if active == 'action' %}active{% endif %}"><a href="{{ localizedPath('action_list')}}">Action</a></li>-->
+            <li class="{% if active == 'project' %}active{% endif %}"><a href="{{ localizedPath('project_edit')}}">Project</a></li>
+            <li class="{% if active == 'action' %}active{% endif %}"><a href="{{ localizedPath('action_edit')}}">Action</a></li>
             <li class="{% if active == 'resources' %}active{% endif %}"><a href="{{ localizedPath('resource_edit')}}" >Resources</a></li>
             <li class="{% if active == 'intelectual_outputs' %}active{% endif %}"><a href="{{ localizedPath('intelectual_output_edit')}}" >Intelectual outputs</a></li>
             <li class="{% if active == 'results' %}active{% endif %}"><a href="{{ localizedPath('result_edit')}}" >Results</a></li>

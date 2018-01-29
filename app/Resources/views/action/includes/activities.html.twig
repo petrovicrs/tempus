@@ -1,0 +1,20 @@
+
+<div class="col-xs-12">
+        <div class="form-inline">
+            {{ form_label(form.activityType, 'Flow subcategory'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+            {{ form_widget(form.activityType, {'attr': {'class': 'form-control'}})  }}
+        </div>
+        <div class="form-inline">
+            {{ form_label(form.isLongTerm, 'Long Term?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+            {{ form_widget(form.isLongTerm, {'attr': {'class': 'form-control'}})  }}
+        </div>
+</div>
+
+<h2>{% trans %}Action Details{% endtrans %}:</h2>
+
+<ul class="action-details" data-prototype="{{ include('/action/includes/action-details.html.twig',
+    {'form': form.actionDetails.vars.prototype })|e }}">
+    {% for action in form.actionDetails %}
+        <li>{{ include('action/includes/action-details.html.twig', {'form': action }) }}</li>
+    {% endfor %}
+</ul>

@@ -23,6 +23,8 @@ jQuery(document).ready(function() {
 
         // add a new tag form (see code block below)
         $addInstitutionLegalRepresentativeForm($collectionInstitutionLegalRepresentativeHolder, $newInstitutionLegalRepresentativeLinkDiv);
+
+        $('.selectpicker').selectpicker();
     });
 });
 

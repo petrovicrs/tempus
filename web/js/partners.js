@@ -30,6 +30,7 @@ function loadPartners() {
         $addForm($collectionPartnersHolder, $addPartnersLinkDiv);
 
         loadTeamMembers();
+        $('.selectpicker').selectpicker();
     });
 }
 

@@ -1,5 +1,6 @@
 <div class="block" style="clear: both;">
     {{ form_label(form.person) }}
     {{ form_errors(form.person) }}
-    {{ form_widget(form.person, { 'attr': {'data-live-search': 'true', 'class': 'selectpicker'} }) }}
+    {{ form_widget(form.person, { 'attr': {'data-live-search': 'true', 'class': 'selectpicker',
+    'title': 'Choose one of the following...'} }) }}
 </div>

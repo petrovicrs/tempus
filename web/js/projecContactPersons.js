@@ -26,6 +26,8 @@ function load() {
 
         // add a new tag form (see code block below)
         $addProjectContactPersonForm($collectionProjectContactPersonHolder, $addProjectContactPersonLinkDiv);
+
+        $('.selectpicker').selectpicker();
     });
 }
 
@@ -71,19 +73,5 @@ function $addProjectContactPersonFormDeleteLink($contactFormDiv) {
 
         // remove the li for the tag form
         $contactFormDiv.remove();
-    });
-}
-
-function filter(element) {
-    var value = $(element).val();
-    var selectId = $(element).parent("div").find('select').attr('id');
-
-    $('#' + selectId + "> option").each(function() {
-        if ($(this).text().search(value) > -1) {
-            $(this).show();
-        }
-        else {
-            $(this).hide();
-        }
     });
 }

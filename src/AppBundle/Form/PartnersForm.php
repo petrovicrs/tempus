@@ -36,13 +36,15 @@ class PartnersForm extends AbstractType
             ->add('projectCoordinator', EntityType::class, [
                 'class' => 'AppBundle:Person',
                 'choice_label' => function($value, $key, $index) use ($options) {
-                    return $value->getName($options['locale']) . $value->getLastName($options['locale']) . ' - ' . $value->getId();
+                    return $value->getId() . ' - ' . $value->getName($options['locale']) .
+                        $value->getLastAddress($options['locale']);
                 }
             ])
             ->add('legalRepresentative', EntityType::class, [
                 'class' => 'AppBundle:Person',
                 'choice_label' => function($value, $key, $index) use ($options) {
-                    return $value->getName($options['locale']) . $value->getLastName($options['locale']) . ' - ' . $value->getId();
+                    return $value->getId() . ' - ' . $value->getName($options['locale']) .
+                        $value->getLastAddress($options['locale']);
                 }
             ])
             ->add('isAssociatedPartner', CheckboxType::class, array('required' => false))

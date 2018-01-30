@@ -78,7 +78,7 @@ class Project extends AbstractAuditable
     /**
      * @var string $projectSummary
      * @Assert\Type("string")
-     * @ORM\Column(name="project_summary", type="string", length=65535, nullable=true)
+     * @ORM\Column(name="project_summary", type="text", nullable=true)
      */
     protected $projectSummary;
 
@@ -134,42 +134,42 @@ class Project extends AbstractAuditable
     /**
      * @var string $projectSummaryEnglish
      * @Assert\Type("string")
-     * @ORM\Column(name="projectSummaryEnglish", type="string", length=65535, nullable=true)
+     * @ORM\Column(name="projectSummaryEnglish", type="text", nullable=true)
      */
     protected $projectSummaryEnglish;
 
     /**
      * @var string $projectSummarySerbian
      * @Assert\Type("string")
-     * @ORM\Column(name="projectSummarySerbian", type="string", length=65535, nullable=true)
+     * @ORM\Column(name="projectSummarySerbian", type="text", nullable=true)
      */
     protected $projectSummarySerbian;
 
     /**
      * @var string $projectSummaryNative
      * @Assert\Type("string")
-     * @ORM\Column(name="projectSummaryNative", type="string", length=65535, nullable=true)
+     * @ORM\Column(name="projectSummaryNative", type="text", nullable=true)
      */
     protected $projectSummaryNative;
 
     /**
      * @var string $projectObjectivesEnglish
      * @Assert\Type("string")
-     * @ORM\Column(name="projectObjectivesEnglish", type="string", length=65535, nullable=true)
+     * @ORM\Column(name="projectObjectivesEnglish", type="text", nullable=true)
      */
     protected $projectObjectivesEnglish;
 
     /**
      * @var string $projectObjectivesSerbian
      * @Assert\Type("string")
-     * @ORM\Column(name="projectObjectivesSerbian", type="string", length=65535, nullable=true)
+     * @ORM\Column(name="projectObjectivesSerbian", type="text", nullable=true)
      */
     protected $projectObjectivesSerbian;
 
     /**
      * @var string $projectObjectivesNative
      * @Assert\Type("string")
-     * @ORM\Column(name="projectObjectivesNative", type="string", length=65535, nullable=true)
+     * @ORM\Column(name="projectObjectivesNative", type="text", nullable=true)
      */
     protected $projectObjectivesNative;
 

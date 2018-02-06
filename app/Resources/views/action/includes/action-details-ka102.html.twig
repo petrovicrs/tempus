@@ -1,0 +1,39 @@
+
+<table class="table table-striped">
+    <tr>
+        <td>{{ form_row(form.person) }}</td>
+        <td>{{ form_row(form.student) }}</td>
+        <td>{{ form_row(form.trainingShip) }}</td>
+        <td>{{ form_row(form.institution) }}</td>
+        <td>{{ form_row(form.originCountry) }}</td>
+        <td>{{ form_row(form.destinationCountry) }}</td>
+        <td>{{ form_row(form.distance) }}</td>
+    </tr>
+    <tr>
+        <td>{{ form_row(form.venue) }}</td>
+        <td>{{ form_row(form.durationMonths) }}</td>
+        <td>{{ form_row(form.durationExtraDays) }}</td>
+        <td colspan="2">{{ form_row(form.daysWithoutTravel) }}</td>
+        <td>{{ form_row(form.travelDays) }}</td>
+        <td>{{ form_row(form.totalDays) }}</td>
+    </tr>
+    <tr>
+        <td>{{ form_row(form.hasSpecialNeeds) }}</td>
+        <td>{{ form_row(form.hasFewerOptions) }}</td>
+        <td>{{ form_row(form.isAccompanyingPerson) }}</td>
+        <td>{{ form_row(form.apprentice) }}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+<div class="hidden">
+    {{ form_row(form.incomingOutgoing, { 'attr': {'class': 'hidden-row'} }) }}
+    {{ form_row(form.trainingShip, { 'attr': {'class': 'hidden-row'} }) }}
+    {{ form_row(form.startDate, { 'attr': {'class': 'hidden-row'} }) }}
+    {{ form_row(form.endDate, { 'attr': {'class': 'hidden-row'} }) }}
+    {{ form_row(form.nonTeachingStuff, { 'attr': {'class': 'hidden-row'} }) }}
+    {{ form_row(form.student, { 'attr': {'class': 'hidden-row'} }) }}
+    {{ form_row(form.groupLeader, { 'attr': {'class': 'hidden-row'} }) }}
+</div>

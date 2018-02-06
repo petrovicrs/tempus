@@ -3,20 +3,23 @@
     <script type="text/javascript" src="{{ asset('/js/action.js')}}" ></script>
     <section id="main">
 
-        {% include 'sub-navbar.html.twig' with {'active': 'action'} %}
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar.html.twig' with {'active': 'action'} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'action'} %}
+        {% endif %}
         <div class="container-fluid">
             <div class="page-header">
                 <h1>{% trans %}Edit Action{% endtrans %}</h1>
             </div>
 
-
             <div class="row">
                 {{ form_start(my_form) }}
 
                 <div class="controls activities">
-                    <h2>{% trans %}Add Activity{% endtrans %}</h2>
-
                     <div class="col-xs-12">
+                        <h2>{% trans %}Activity{% endtrans %}</h2>
                         <ul class="activities" data-purpose="create" data-prototype="{{include('action/includes/activities.html.twig',
                             {'form': my_form.activities.vars.prototype })|e}}">
                             {% for activity in my_form.activities %}

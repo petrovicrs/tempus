@@ -1,0 +1,41 @@
+<table class="table table-hover" data-toggle="table">
+    <thead>
+    <tr class="table-header">
+        {% if projectAction == 'ka102' or projectAction == 'ka103' %}
+            <th>{% trans %}Distance {% endtrans %}</th>
+            <th>{% trans %}Duration(full months) {% endtrans %}</th>
+            <th>{% trans %}Duration(extra days) {% endtrans %}</th>
+        {% endif %}
+        {% if projectAction == 'ka101' or projectAction == 'ka102' or projectAction == 'ka104' or projectAction == 'ka105' or projectAction == 'ka107'%}
+            <th>{% trans %}Days excluding travel days{% endtrans %}</th>
+            <th>{% trans %}Travel days{% endtrans %}</th>
+            <th>{% trans %}Total days{% endtrans %}</th>
+            <th>{% trans %}Participants with special needs{% endtrans %}</th>
+            <th>{% trans %}Participants with fewer opportunities{% endtrans %}</th>
+            <th>{% trans %}Accompanying persons{% endtrans %}</th>
+        {% endif %}
+        {% if projectAction == 'ka105' %}
+            <th>{% trans %}Group Leaders{% endtrans %}</th>
+        {% endif %}
+    </tr>
+    </thead>
+
+    <tr>
+        {% if projectAction == 'ka102' or projectAction == 'ka103'%}
+            <td>{{ totals[loop.index0]['distance'] }}</td>
+            <td>{{ totals[loop.index0]['durationMonths'] }}</td>
+            <td>{{ totals[loop.index0]['durationExtraDays'] }}</td>
+        {% endif %}
+        {% if projectAction == 'ka101' or projectAction == 'ka102' or projectAction == 'ka104' or projectAction == 'ka105' or projectAction == 'ka107'%}
+            <td>{{ totals[loop.index0]['daysWithoutTravel'] }}</td>
+            <td>{{ totals[loop.index0]['travelDays'] }}</td>
+            <td>{{ totals[loop.index0]['totalDays'] }}</td>
+            <td>{{ totals[loop.index0]['withSpecialNeeds'] }}</td>
+            <td>{{ totals[loop.index0]['withFewerOpportunities'] }}</td>
+            <td>{{ totals[loop.index0]['accompanyingPersons'] }}</td>
+        {% endif %}
+        {% if projectAction == 'ka105' %}
+            <td>{{ totals[loop.index0]['groupLeader'] }}</td>
+        {% endif %}
+    </tr>
+</table>

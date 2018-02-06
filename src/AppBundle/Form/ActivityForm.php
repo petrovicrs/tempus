@@ -10,8 +10,10 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\Activity;
+use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,6 +30,11 @@ class ActivityForm extends AbstractType
         $builder
             ->add('activityType', EntityType::class, [
                 'class'         => 'AppBundle\Entity\ActivityType',
+                'choice_label'  => 'name' . ucfirst($options['locale']),
+            ])
+            ->add('isValidated', CheckboxType::class, ['required' => false, 'label_format' => 'Validation?'])
+            ->add('validationType', EntityType::class, [
+                'class'         => 'AppBundle\Entity\ValidationType',
                 'choice_label'  => 'name' . ucfirst($options['locale']),
             ])
             ->add('isLongTerm')

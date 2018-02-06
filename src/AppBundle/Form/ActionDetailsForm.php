@@ -51,7 +51,14 @@ class ActionDetailsForm extends AbstractType
                 'class' => 'AppBundle\Entity\Country',
                 'choice_label' => 'name' . ucfirst($locale)
             ])
-            ->add('city')
+            ->add('incomingOutgoing', EntityType::class, [
+                'class' => 'AppBundle\Entity\IncomingOutgoing',
+                'choice_label' => 'name' . ucfirst($locale)
+            ])
+            ->add('trainingShip', EntityType::class, [
+                'class' => 'AppBundle\Entity\TrainingShip',
+                'choice_label' => 'name' . ucfirst($locale)
+            ])
             ->add('distance')
             ->add('startDate', DateType::class, ['label_format' => 'Start Date'])
             ->add('endDate', DateType::class, ['label_format' => 'End Date'])
@@ -61,13 +68,13 @@ class ActionDetailsForm extends AbstractType
             ->add('venue', TextType::class, ['required' => false, 'label_format' => 'Venue'])
             ->add('durationMonths', IntegerType::class, ['required' => false, 'label_format' => 'Duration (full months)'])
             ->add('durationExtraDays', IntegerType::class, ['required' => false, 'label_format' => 'Duration (extra days)'])
-            ->add('totalDays', IntegerType::class, ['label_format' => 'Total days'])
             ->add('hasSpecialNeeds', CheckboxType::class, ['required' => false])
             ->add('hasFewerOptions', CheckboxType::class, ['required' => false])
             ->add('isAccompanyingPerson', CheckboxType::class, ['required' => false])
             ->add('student', CheckboxType::class, ['required' => false, 'label_format' => 'Student?'])
             ->add('apprentice', CheckboxType::class, ['required' => false])
-            ->add('nonTeachingStuff', CheckboxType::class, ['required' => false]);
+            ->add('nonTeachingStuff', CheckboxType::class, ['required' => false])
+            ->add('groupLeader', CheckboxType::class, ['label_format' => 'Group Leader']);
     }
 
     /**

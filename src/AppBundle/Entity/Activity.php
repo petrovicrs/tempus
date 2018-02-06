@@ -43,6 +43,17 @@ class Activity extends AbstractAuditable
     protected $isLongTerm;
 
     /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="is_validated", type="boolean")
+     */
+    protected $isValidated;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ValidationType")
+     */
+    protected $validationType;
+
+    /**
      * @ORM\ManyToOne(
      *     targetEntity="AppBundle\Entity\ProjectMobilityFlows", inversedBy="activities"
      * )
@@ -119,6 +130,38 @@ class Activity extends AbstractAuditable
     public function setIsLongTerm($isLongTerm)
     {
         $this->isLongTerm = $isLongTerm;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getisValidated()
+    {
+        return $this->isValidated;
+    }
+
+    /**
+     * @param mixed $isValidated
+     */
+    public function setIsValidated($isValidated)
+    {
+        $this->isValidated = $isValidated;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValidationType()
+    {
+        return $this->validationType;
+    }
+
+    /**
+     * @param mixed $validationType
+     */
+    public function setValidationType($validationType)
+    {
+        $this->validationType = $validationType;
     }
 
     /**

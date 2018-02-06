@@ -1,0 +1,40 @@
+
+<tr>
+    {% if action.person %}
+        <td><b>{% trans %}Person{% endtrans %}:</b> {{ action.person.name(app.request.getLocale()) }}</td>
+    {% endif %}
+
+    {% if action.institution %}
+        <td><b>{% trans %}From Institution / Organization{% endtrans %}:</b> {{ action.institution.name(app.request.getLocale()) }}</td>
+    {% endif %}
+
+    <td><b>{% trans %}Duration (full months){% endtrans %}:</b> {{ action.durationMonths }}</td>
+    <td><b>{% trans %}Duration (extra days){% endtrans %}:</b> {{ action.durationExtraDays }}</td>
+    <td><b>{% trans %}Total days{% endtrans %}:</b> {{ action.totalDays }}</td>
+</tr>
+
+<tr>
+    <td><b>{% trans %}Participants with special needs{% endtrans %}:</b>
+        {%  if(action.hasSpecialNeeds == 1) %}
+            {% trans %}Yes{% endtrans %}
+        {% else %}
+            {% trans %}No{% endtrans %}
+        {% endif  %}
+    </td>
+
+    <td><b>{% trans %}Participants with fewer opportunities{% endtrans %}:</b>
+        {%  if(action.hasFewerOptions == 1) %}
+            {% trans %}Yes{% endtrans %}
+        {% else %}
+            {% trans %}No{% endtrans %}
+        {% endif  %}
+    </td>
+    <td colspan="3"><b>{% trans %}Accompanying persons{% endtrans %}:</b>
+        {%  if(action.isAccompanyingPerson == 1) %}
+            {% trans %}Yes{% endtrans %}
+        {% else %}
+            {% trans %}No{% endtrans %}
+        {% endif  %}
+    </td>
+
+</tr>

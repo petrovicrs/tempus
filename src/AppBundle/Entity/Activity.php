@@ -179,4 +179,8 @@ class Activity extends AbstractAuditable
     {
         $this->projectMobilityFlows = $projectMobilityFlows;
     }
+
+    public function __toString() {
+        return "";
+    }
 }

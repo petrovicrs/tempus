@@ -37,7 +37,7 @@ class ActivityForm extends AbstractType
                 'class'         => 'AppBundle\Entity\ValidationType',
                 'choice_label'  => 'name' . ucfirst($options['locale']),
             ])
-            ->add('isLongTerm')
+            ->add('isLongTerm', CheckboxType::class, ['required' => false, 'label_format' => 'Is this long term activity'])
             ->add('actionDetails', CollectionType::class, array(
                 'entry_type'   => ActionDetailsForm::class,
                 'allow_add'    => true,
@@ -59,7 +59,8 @@ class ActivityForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => Activity::class
+            'data_class' => Activity::class,
+            'isCompleted' => 0,
         ]);
     }
 }

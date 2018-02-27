@@ -63,59 +63,68 @@ class ActionDetails extends AbstractAuditable
     protected $destinationCountry;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="city", type="string", length=128)
+     * @ORM\ManyToOne(
+     *      targetEntity="AppBundle\Entity\IncomingOutgoing"
+     * )
      */
-    protected $city;
+    protected $incomingOutgoing;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="AppBundle\Entity\TrainingShip"
+     * )
+     */
+    protected $trainingShip;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="distance", type="decimal")
+     * @ORM\Column(name="venue", type="string", length=128, nullable=true)
+     */
+    protected $venue;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="distance", type="decimal", nullable=true)
      */
     protected $distance;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="start_date", type="datetime")
+     * @ORM\Column(name="start_date", type="datetime", nullable=true)
      */
     protected $startDate;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="end_date", type="datetime")
+     * @ORM\Column(name="end_date", type="datetime", nullable=true)
      */
     protected $endDate;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="travel_days", type="integer")
+     * @ORM\Column(name="travel_days", type="integer", nullable=true)
      */
     protected $travelDays;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="days_without_travel", type="integer")
+     * @ORM\Column(name="days_without_travel", type="integer", nullable=true)
      */
     protected $daysWithoutTravel;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="total_days", type="integer")
+     * @ORM\Column(name="total_days", type="integer", nullable=true)
      */
     protected $totalDays;
 
     /**
-     * @ORM\Column(name="venue", type="string", length=128)
-     */
-    protected $venue;
-
-    /**
-     * @ORM\Column(name="duration_months", type="integer")
+     * @ORM\Column(name="duration_months", type="integer", nullable=true)
      */
     protected $durationMonths;
 
     /**
-     * @ORM\Column(name="duration_extra_days", type="integer")
+     * @ORM\Column(name="duration_extra_days", type="integer", nullable=true)
      */
     protected $durationExtraDays;
 
@@ -127,14 +136,19 @@ class ActionDetails extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="student", type="boolean")
+     * @ORM\Column(name="student", type="boolean", nullable=true)
      */
     protected $student;
 
     /**
-     * @ORM\Column(name="apprentice", type="boolean")
+     * @ORM\Column(name="apprentice", type="boolean", nullable=true)
      */
     protected $apprentice;
+
+    /**
+     * @ORM\Column(name="group_leader", type="boolean", nullable=true)
+     */
+    protected $groupLeader;
 
     /**
      * @Assert\NotBlank()
@@ -150,7 +164,7 @@ class ActionDetails extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="non_teaching_stuff", type="boolean")
+     * @ORM\Column(name="non_teaching_stuff", type="boolean", nullable=true)
      */
     protected $nonTeachingStuff;
 
@@ -253,17 +267,33 @@ class ActionDetails extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getCity()
+    public function getIncomingOutgoing()
     {
-        return $this->city;
+        return $this->incomingOutgoing;
     }
 
     /**
-     * @param mixed $city
+     * @param mixed $incomingOutgoing
      */
-    public function setCity($city)
+    public function setIncomingOutgoing($incomingOutgoing)
     {
-        $this->city = $city;
+        $this->incomingOutgoing = $incomingOutgoing;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVenue()
+    {
+        return $this->venue;
+    }
+
+    /**
+     * @param mixed $venue
+     */
+    public function setVenue($venue)
+    {
+        $this->venue = $venue;
     }
 
     /**
@@ -397,33 +427,17 @@ class ActionDetails extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getVenue()
+    public function getHasSpecialNeeds()
     {
-        return $this->venue;
+        return $this->hasSpecialNeeds;
     }
 
     /**
-     * @param mixed $venue
+     * @param mixed $hasSpecialNeeds
      */
-    public function setVenue($venue)
+    public function setHasSpecialNeeds($hasSpecialNeeds)
     {
-        $this->venue = $venue;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getApprentice()
-    {
-        return $this->apprentice;
-    }
-
-    /**
-     * @param mixed $apprentice
-     */
-    public function setApprentice($apprentice)
-    {
-        $this->apprentice = $apprentice;
+        $this->hasSpecialNeeds = $hasSpecialNeeds;
     }
 
     /**
@@ -445,17 +459,49 @@ class ActionDetails extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getHasSpecialNeeds()
+    public function getApprentice()
     {
-        return $this->hasSpecialNeeds;
+        return $this->apprentice;
     }
 
     /**
-     * @param mixed $hasSpecialNeeds
+     * @param mixed $apprentice
      */
-    public function setHasSpecialNeeds($hasSpecialNeeds)
+    public function setApprentice($apprentice)
     {
-        $this->hasSpecialNeeds = $hasSpecialNeeds;
+        $this->apprentice = $apprentice;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroupLeader()
+    {
+        return $this->groupLeader;
+    }
+
+    /**
+     * @param mixed $groupLeader
+     */
+    public function setGroupLeader($groupLeader)
+    {
+        $this->groupLeader = $groupLeader;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTrainingShip()
+    {
+        return $this->trainingShip;
+    }
+
+    /**
+     * @param mixed $trainingShip
+     */
+    public function setTrainingShip($trainingShip)
+    {
+        $this->trainingShip = $trainingShip;
     }
 
     /**
@@ -477,7 +523,7 @@ class ActionDetails extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getIsAccompanyingPerson()
+    public function getisAccompanyingPerson()
     {
         return $this->isAccompanyingPerson;
     }

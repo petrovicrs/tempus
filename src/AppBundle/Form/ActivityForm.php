@@ -10,8 +10,10 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\Activity;
+use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,7 +32,12 @@ class ActivityForm extends AbstractType
                 'class'         => 'AppBundle\Entity\ActivityType',
                 'choice_label'  => 'name' . ucfirst($options['locale']),
             ])
-            ->add('isLongTerm')
+            ->add('isValidated', CheckboxType::class, ['required' => false, 'label_format' => 'Validation?'])
+            ->add('validationType', EntityType::class, [
+                'class'         => 'AppBundle\Entity\ValidationType',
+                'choice_label'  => 'name' . ucfirst($options['locale']),
+            ])
+            ->add('isLongTerm', CheckboxType::class, ['required' => false, 'label_format' => 'Is this long term activity'])
             ->add('actionDetails', CollectionType::class, array(
                 'entry_type'   => ActionDetailsForm::class,
                 'allow_add'    => true,
@@ -52,7 +59,8 @@ class ActivityForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => Activity::class
+            'data_class' => Activity::class,
+            'isCompleted' => 0,
         ]);
     }
 }

@@ -1,20 +1,79 @@
 
 <div class="col-xs-12">
-        <div class="form-inline">
-            {{ form_label(form.activityType, 'Flow subcategory'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-            {{ form_widget(form.activityType, {'attr': {'class': 'form-control'}})  }}
+    <div class="form-inline">
+        {% if projectAction != 'KA102' and projectAction != 'KA105' %}
+            <div class="form-group">
+                {{ form_label(form.activityType, 'Flow subcategory'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                {{ form_widget(form.activityType, {'attr': {'class': 'form-control'}})  }}
+            </div>
+        {% else %}
+            <div class="hidden">
+                {{ form_row(form.activityType, { 'attr': {'class': 'hidden-row'} }) }}
+            </div>
+        {% endif %}
+        <div class="form-group">
+            {{ form_label(form.isValidated, 'Validation?'|trans, {'label_attr': {'class': 'control-label'}}) }}
+            {{ form_widget(form.isValidated, {'attr': {'class': 'form-control'}})  }}
         </div>
-        <div class="form-inline">
-            {{ form_label(form.isLongTerm, 'Long Term?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+        <div class="form-group">
+            {{ form_label(form.validationType, 'Type of validation'|trans, {'label_attr': {'class': 'control-label'}}) }}
+            {{ form_widget(form.validationType, {'attr': {'class': 'form-control'}})  }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.isLongTerm, 'Long Term?'|trans, {'label_attr': {'class': 'control-label'}}) }}
             {{ form_widget(form.isLongTerm, {'attr': {'class': 'form-control'}})  }}
         </div>
+    </div>
 </div>
+<div class="col-xs-12">
+    <h2>{% trans %}Action Details{% endtrans %}:</h2>
 
-<h2>{% trans %}Action Details{% endtrans %}:</h2>
-
-<ul class="action-details" data-prototype="{{ include('/action/includes/action-details.html.twig',
-    {'form': form.actionDetails.vars.prototype })|e }}">
-    {% for action in form.actionDetails %}
-        <li>{{ include('action/includes/action-details.html.twig', {'form': action }) }}</li>
-    {% endfor %}
-</ul>
+    {% if projectAction == 'KA101' %}
+        <ul class="action-details" data-prototype="{{ include('/action/includes/action-details-ka101.html.twig',
+            {'form': form.actionDetails.vars.prototype })|e }}">
+            {% for action in form.actionDetails %}
+                    <li>{{ include('action/includes/action-details-ka101.html.twig', {'form': action }) }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if projectAction == 'KA102' %}
+        <ul class="action-details" data-prototype="{{ include('/action/includes/action-details-ka102.html.twig',
+            {'form': form.actionDetails.vars.prototype })|e }}">
+            {% for action in form.actionDetails %}
+                <li>{{ include('action/includes/action-details-ka102.html.twig', {'form': action }) }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if projectAction == 'KA103' %}
+        <ul class="action-details" data-prototype="{{ include('/action/includes/action-details-ka103.html.twig',
+            {'form': form.actionDetails.vars.prototype })|e }}">
+            {% for action in form.actionDetails %}
+                <li>{{ include('action/includes/action-details-ka103.html.twig', {'form': action }) }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if projectAction == 'KA104' %}
+        <ul class="action-details" data-prototype="{{ include('/action/includes/action-details-ka104.html.twig',
+            {'form': form.actionDetails.vars.prototype })|e }}">
+            {% for action in form.actionDetails %}
+                <li>{{ include('action/includes/action-details-ka104.html.twig', {'form': action }) }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if projectAction == 'KA105' %}
+        <ul class="action-details" data-prototype="{{ include('/action/includes/action-details-ka105.html.twig',
+            {'form': form.actionDetails.vars.prototype })|e }}">
+            {% for action in form.actionDetails %}
+                <li>{{ include('action/includes/action-details-ka105.html.twig', {'form': action }) }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if projectAction == 'KA107' %}
+        <ul class="action-details" data-prototype="{{ include('/action/includes/action-details-ka107.html.twig',
+            {'form': form.actionDetails.vars.prototype })|e }}">
+            {% for action in form.actionDetails %}
+                <li>{{ include('action/includes/action-details-ka107.html.twig', {'form': action }) }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

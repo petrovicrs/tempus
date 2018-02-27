@@ -123,7 +123,7 @@ class ProjectController extends AbstractController
                 $this->getProjectNotesRepository()->save($note);
             }
 
-            return $this->redirectToRoute('resources_create');
+            return $this->redirectToRoute('action_create');
 
         }
 

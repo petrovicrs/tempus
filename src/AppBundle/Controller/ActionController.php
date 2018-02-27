@@ -65,7 +65,6 @@ class ActionController extends AbstractController
         if ($mobFlowsForm->isSubmitted() && $mobFlowsForm->isValid()) {
 
             $mobFlows->setProject($project);
-            $this->getProjectMobilityFlowsRepository()->save($mobFlows);
 
             /*  @var  Activity $activity */
             foreach($mobFlows->getActivities() as $activity){
@@ -74,9 +73,11 @@ class ActionController extends AbstractController
                 /* @var ActionDetails $actionDetail */
                 foreach ($activity->getActionDetails() as $actionDetail) {
                     $actionDetail->setActivity($activity);
-                    $this->getActionDetailsRepository()->save($actionDetail);
+//                    $this->getActionDetailsRepository()->save($actionDetail);
                 }
             }
+
+            $this->getProjectMobilityFlowsRepository()->save($mobFlows);
 
             return $this->redirectToRoute('resources_create');
         }
@@ -84,6 +85,7 @@ class ActionController extends AbstractController
         return $this->render('action/create.twig', [
             'my_form' => $mobFlowsForm->createView(),
             'keyAction' => $project->getKeyActions()->getNameSr(),
+            'projectAction' => $project->getActions()->getNameSr(),
             'projectId' => $project->getId(),
         ]);
     }
@@ -106,14 +108,21 @@ class ActionController extends AbstractController
             'isCompleted' => $project->getIsCompleted(),
         ]);
 
-        $activities = new ArrayCollection();
-        $actionDetails = new ArrayCollection();
+        $originalActivities = new ArrayCollection();
+        $originalActionDetails = new ArrayCollection();
 
         foreach ($mobFlows->getActivities() as $activity) {
-            $activities->add($activity);
+            $originalActivities->add($activity);
+//            $originalActionDetails[$activity->getId()] = new ArrayCollection();
+
+//            if (count($activity->getActionDetails())) {
+//                foreach ($activity->getActionDetails() as $actionDetail) {
+//                    $originalActionDetails[$activity->getId()]->add($actionDetail);
+//                }
+//            }
 
             foreach ($activity->getActionDetails() as $action) {
-                $actionDetails->add($action);
+                $originalActionDetails->add($action);
             }
         }
 
@@ -123,18 +132,44 @@ class ActionController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            foreach ($activities as $activity) {
+
+            foreach ($originalActivities as $activity) {
                 if (false === $mobFlows->getActivities()->contains($activity)) {
                     $em->remove($activity);
                 }
 
-                foreach ($actionDetails as $action) {
+//                if (count($activity->getActionDetails())) {
+//                    foreach ($originalActionDetails[$activity->getId()] as $originalActionDetail) {
+//                        if (false === $activity->getActionDetails()->contains($originalActionDetail)) {
+//                            $em->remove($originalActionDetail);
+//                        }
+//                    }
+//                }
+
+                foreach ($originalActionDetails as $action) {
                     if (false === $activity->getActionDetails()->contains($action)) {
                         $em->remove($action);
                     }
                 }
             }
 
+            /** @var ProjectMobilityFlows $mobFlows*/
+            foreach ($mobFlows->getActivities() as $activity) {
+                if (false === $originalActivities->contains($activity)) {
+                    /** @var Activity $activity */
+                    $activity->setProjectMobilityFlows($mobFlows);
+                    $this->getActivityRepository()->save($activity);
+                }
+
+                /** @var Activity $activity */
+                foreach ($activity->getActionDetails() as $actionDetail) {
+                    if (false === $originalActionDetails->contains($actionDetail)) {
+                        /** @var ActionDetails $actionDetail */
+                        $actionDetail->setActivity($activity);
+                        $this->getActionDetailsRepository()->save($actionDetail);
+                    }
+                }
+            }
 
             $this->getProjectMobilityFlowsRepository()->save($mobFlows);
 
@@ -145,7 +180,8 @@ class ActionController extends AbstractController
 
         return $this->render('action/edit.twig', [
             'my_form' => $mobFlowsForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'keyAction' => $project->getKeyActions()->getName($request->getLocale()),
+            'projectAction' => $project->getActions()->getName($request->getLocale()),
             'projectId' => $project->getId(),
             'isCompleted' => $project->getIsCompleted()
         ]);
@@ -157,50 +193,74 @@ class ActionController extends AbstractController
     public function viewAction($projectId)
     {
         $mobFlows = $this->getProjectMobilityFlowsRepository()->findOneBy(['project' => $projectId]);
-        $activities = $mobFlows->getActivities();
+        $activities = null;
+
+        if($mobFlows) {
+            $activities = $mobFlows->getActivities();
+        }
 //        $actionDetails = $this->get('doctrine_entity_repository.action_details')->findBy(['activity' => $projectId]);
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
-
-        $activityTotals = $this->getTotals($activities);
-//        $contacts = $this->get('doctrine_entity_repository.activity_contact')->findBy(['activity' => $projectId]);
+        $activityTotals = $this->getTotals($activities, $project->getActions()->getNameSr());
 
         return $this->render('action/view.twig', [
             'activities' => $activities,
-            'totals' => $activityTotals,
-            'keyAction' => $project->getKeyActions()->getNameSr(),
-            'projectId' => $project->getId(),
+            'totals'     => $activityTotals,
+            'keyAction'  => $project->getKeyActions()->getNameSr(),
+            'projectAction' => strtolower($project->getActions()->getNameSr()),
+            'projectId'  => $project->getId(),
         ]);
     }
 
-    private function getTotals($activities) {
-        $totals = [
-            'daysWithoutTravel'      => 0,
-            'travelDays'             => 0,
-            'totalDays'              => 0,
-            'withSpecialNeeds'       => 0,
-            'withFewerOpportunities' => 0,
-            'accompanyingPersons'    => 0
-        ];
+    private function getTotals($activities, $type) {
+
+        $totals = [];
+
+        if(!$activities) return $totals;
 
         foreach ($activities as $index => $activity) {
 
-            for($i = 0; $i < count($activity->getActionDetails()); $i++) {
-                $actionDetails = $activity->getActionDetails()[$i];
+            $activityTotal = [
+                'daysWithoutTravel'      => 0,
+                'travelDays'             => 0,
+                'totalDays'              => 0,
+                'withSpecialNeeds'       => 0,
+                'withFewerOpportunities' => 0,
+                'accompanyingPersons'    => 0,
+                'distance'               => 0,
+                'durationMonths'         => 0,
+                'durationExtraDays'      => 0,
+                'groupLeader'            => 0
 
-                $totals['daysWithoutTravel'] += $actionDetails->getDaysWithoutTravel();
-                $totals['travelDays'] += $actionDetails->getTravelDays();
-                $totals['totalDays'] += $actionDetails->getTotalDays();
+            ];
 
-                if($actionDetails->getHasSpecialNeeds()) {
-                   $totals['withSpecialNeeds'] += 1;
+            /** @var ActionDetails $actionDetail */
+            foreach ($activity->getActionDetails() as $actionDetail) {
+
+                $activityTotal['daysWithoutTravel'] += $actionDetail->getDaysWithoutTravel();
+                $activityTotal['travelDays'] += $actionDetail->getTravelDays();
+                $activityTotal['totalDays'] += $actionDetail->getTotalDays();
+
+                if($actionDetail->getHasSpecialNeeds()) {
+                   $activityTotal['withSpecialNeeds'] += 1;
                 }
-                if($actionDetails->getHasFewerOptions()) {
-                    $totals['withFewerOpportunities'] += 1;
+                if($actionDetail->getHasFewerOptions()) {
+                    $activityTotal['withFewerOpportunities'] += 1;
                 }
-                if($actionDetails->getIsAccompanyingPerson()) {
-                    $totals['accompanyingPersons'] += 1;
+                if($actionDetail->getIsAccompanyingPerson()) {
+                    $activityTotal['accompanyingPersons'] += 1;
                 }
+                if($actionDetail->getDurationMonths()) {
+                    $activityTotal['durationMonths'] += 1;
+                }
+                if($actionDetail->getDurationExtraDays()) {
+                    $activityTotal['durationExtraDays'] += 1;
+                }
+                if($actionDetail->getGroupLeader()) {
+                    $activityTotal['groupLeader'] += 1;
+                }
+
+                array_push($totals, $activityTotal);
             }
         }
 

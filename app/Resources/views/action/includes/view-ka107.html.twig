@@ -1,0 +1,35 @@
+
+<tr>
+    {% if action.person %}
+        <td><b>{% trans %}Person{% endtrans %}:</b> {{ action.person.name(app.request.getLocale()) }}</td>
+    {% endif %}
+    {% if action.institution %}
+        <td><b>{% trans %}From Institution / Organization{% endtrans %}:</b> {{ action.institution.name(app.request.getLocale()) }}</td>
+    {% endif %}
+
+    <td><b>{% trans %}Country of origin{% endtrans %}:</b> {{ action.originCountry.name(app.request.getLocale()) }}</td>
+    <td><b>{% trans %}Country of destination{% endtrans %}:</b> {{ action.destinationCountry.name(app.request.getLocale()) }}</td>
+    <td><b>{% trans %}Distance{% endtrans %}:</b> {{ action.distance }}</td>
+</tr>
+<tr>
+    <td><b>{% trans %}Days excluding travel days{% endtrans %}:</b> {{ action.daysWithoutTravel }}</td>
+    <td><b>{% trans %}Travel days{% endtrans %}:</b> {{ action.travelDays }}</td>
+    <td colspan="3"><b>{% trans %}Total days{% endtrans %}:</b> {{ action.totalDays }}</td>
+</tr>
+<tr>
+    <td><b>{% trans %}Participants with special needs{% endtrans %}:</b>
+        {%  if(action.hasSpecialNeeds == 1) %}
+            {% trans %}Yes{% endtrans %}
+        {% else %}
+            {% trans %}No{% endtrans %}
+        {% endif  %}
+    </td>
+    <td><b>{% trans %}Participants with fewer opportunities{% endtrans %}:</b>
+        {%  if(action.hasFewerOptions == 1) %}
+            {% trans %}Yes{% endtrans %}
+        {% else %}
+            {% trans %}No{% endtrans %}
+        {% endif  %}
+    </td>
+    <td colspan="3"></td>
+</tr>

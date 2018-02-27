@@ -23,10 +23,7 @@
 
                 <div class="col-xs-12">
                     <ul class="activities" data-purpose="create" data-prototype="{{include('action/includes/activities.html.twig',
-                        {'form': my_form.activities.vars.prototype })|e}}">
-                        {% for activity in my_form.activities %}
-                            <li>{{ include('action/includes/activities.html.twig', {'form': activity }) }}</li>
-                        {% endfor %}
+                        {'form': my_form.activities.vars.prototype })|e('html_attr')}}">
                     </ul>
                 </div>
             </div>

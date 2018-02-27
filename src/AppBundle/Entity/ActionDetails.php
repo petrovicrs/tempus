@@ -28,7 +28,8 @@ class ActionDetails extends AbstractAuditable
     /**
      * @ORM\ManyToOne(
      *      targetEntity="Activity",
-     *      inversedBy="actionDetails"
+     *      inversedBy="actionDetails",
+     *      cascade={"persist"}
      * )
      * @ORM\JoinColumn(onDelete="CASCADE")
      */

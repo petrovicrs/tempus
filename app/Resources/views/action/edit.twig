@@ -20,8 +20,8 @@
                 <div class="controls activities">
                     <div class="col-xs-12">
                         <h2>{% trans %}Activity{% endtrans %}</h2>
-                        <ul class="activities" data-purpose="create" data-prototype="{{include('action/includes/activities.html.twig',
-                            {'form': my_form.activities.vars.prototype })|e}}">
+                        <ul class="activities" data-purpose="edit" data-prototype="{{include('action/includes/activities.html.twig',
+                            {'form': my_form.activities.vars.prototype })|e('html_attr')}}">
                             {% for activity in my_form.activities %}
                                 <li>{{ include('action/includes/activities.html.twig', {'form': activity }) }}</li>
                             {% endfor %}

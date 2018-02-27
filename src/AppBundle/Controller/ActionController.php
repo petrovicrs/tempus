@@ -68,12 +68,14 @@ class ActionController extends AbstractController
 
             /*  @var  Activity $activity */
             foreach($mobFlows->getActivities() as $activity){
+//                dump($activity);die;
                 $activity->setProjectMobilityFlows($mobFlows);
+                $this->getActivityRepository()->save($activity);
 
                 /* @var ActionDetails $actionDetail */
                 foreach ($activity->getActionDetails() as $actionDetail) {
                     $actionDetail->setActivity($activity);
-//                    $this->getActionDetailsRepository()->save($actionDetail);
+                    $this->getActionDetailsRepository()->save($actionDetail);
                 }
             }
 
@@ -110,11 +112,12 @@ class ActionController extends AbstractController
 
         $originalActivities = new ArrayCollection();
         $originalActionDetails = new ArrayCollection();
+//        $originalActionDetails = [];
 
         foreach ($mobFlows->getActivities() as $activity) {
             $originalActivities->add($activity);
 //            $originalActionDetails[$activity->getId()] = new ArrayCollection();
-
+//
 //            if (count($activity->getActionDetails())) {
 //                foreach ($activity->getActionDetails() as $actionDetail) {
 //                    $originalActionDetails[$activity->getId()]->add($actionDetail);

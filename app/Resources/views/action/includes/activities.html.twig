@@ -32,7 +32,7 @@
         <ul class="action-details" data-prototype="{{ include('/action/includes/action-details-ka101.html.twig',
             {'form': form.actionDetails.vars.prototype })|e }}">
             {% for action in form.actionDetails %}
-                    <li>{{ include('action/includes/action-details-ka101.html.twig', {'form': action }) }}</li>
+            <li>{{ include('action/includes/action-details-ka101.html.twig', {'form': action }) }}</li>
             {% endfor %}
         </ul>
     {% endif %}

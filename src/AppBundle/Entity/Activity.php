@@ -55,7 +55,7 @@ class Activity extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *     targetEntity="AppBundle\Entity\ProjectMobilityFlows", inversedBy="activities"
+     *     targetEntity="AppBundle\Entity\ProjectMobilityFlows", inversedBy="activities", cascade={"persist"}
      * )
      * @ORM\JoinColumn(onDelete="CASCADE")
      */

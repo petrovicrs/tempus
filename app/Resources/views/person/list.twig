@@ -51,7 +51,7 @@
                             {% endfor %}</td>
                         <td>{% for personInstitutionRelationship_key, personInstitutionRelationship in value.personInstitutionRelationships %}
                                 {% if personInstitutionRelationship.institution != null %}
-                                    {{ personInstitutionRelationship.institution  }}
+                                    {{ personInstitutionRelationship.institution.name(app.request.locale)  }}
                                 {% endif %}
                             {% endfor %}</td>
                         <td><a href="{{ localizedPath('person_view', {'personId':value.id}) }}">View</a></td>

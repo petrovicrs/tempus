@@ -121,7 +121,7 @@ class Person extends AbstractAuditable
     protected $personInstitutionRelationships;
 
     /**
-    * @ORM\Column(name="field_of_expertise", type="string", length=255)
+    * @ORM\Column(name="field_of_expertise", type="string", length=255, nullable=true)
     */
     protected $fieldOfExpertise;
 

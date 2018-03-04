@@ -28,18 +28,13 @@ class PersonInstitutionRelationship extends AbstractAuditable
      */
     protected $person;
 
-
     /**
-     * @ORM\ManyToOne(
-     *      targetEntity="Institution",
-     * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
+    * @ORM\Column(name="institution", type="string", length=255)
+    */
     protected $institution;
 
-
     /**
-     * @ORM\ManyToOne(targetEntity="PersonInstitutionRelationshipType")
+     * @ORM\Column(name="person_institution_relation_type", type="string", length=255)
      */
     protected $personInstitutionRelationshipType;
 

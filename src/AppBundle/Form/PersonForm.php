@@ -77,10 +77,7 @@ class PersonForm extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ))
-            ->add('fieldOfExpertise', EntityType::class, array(
-                'class'   => 'AppBundle:FieldOfExpertise',
-                'choice_label' => 'name' . ucfirst($options['locale'])
-            ))
+            ->add('fieldOfExpertise')
             ->add('personFacingSituations', CollectionType::class, array(
                 'entry_type'   => PersonFacingSituationForm::class,
                 'allow_add' => true,

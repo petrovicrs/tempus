@@ -121,9 +121,8 @@ class Person extends AbstractAuditable
     protected $personInstitutionRelationships;
 
     /**
-     * @ORM\ManyToOne(targetEntity="FieldOfExpertise")
-     *
-     */
+    * @ORM\Column(name="field_of_expertise", type="string", length=255)
+    */
     protected $fieldOfExpertise;
 
     /**

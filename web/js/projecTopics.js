@@ -2,6 +2,8 @@
 jQuery(document).ready(load);
 jQuery(document).ajaxComplete(load);
 
+console.log($('[id^=appbundle_project_topics]').length);
+
 function load() {
     var $addProjectTopicsLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add topics</a>');
     var $addProjectTopicsLinkDiv = $('<li></li>').append($addProjectTopicsLink);

@@ -38,7 +38,7 @@
                                 {{ contact.contactValue }}
                             {% endif %}
                             {% endfor %}</td>
-                        <td>{% if value.fieldOfExpertise %}{{ value.fieldOfExpertise.name(app.request.locale) }}{% endif %}</td>
+                        <td>{% if value.fieldOfExpertise %}{{ value.fieldOfExpertise }}{% endif %}</td>
                         <td>{% for address_key, address in value.addresses %}
                                 {% if address.country != null %}
                                     {{ address.country.name(app.request.locale)  }}
@@ -51,7 +51,7 @@
                             {% endfor %}</td>
                         <td>{% for personInstitutionRelationship_key, personInstitutionRelationship in value.personInstitutionRelationships %}
                                 {% if personInstitutionRelationship.institution != null %}
-                                    {{ personInstitutionRelationship.institution.name(app.request.locale)  }}
+                                    {{ personInstitutionRelationship.institution  }}
                                 {% endif %}
                             {% endfor %}</td>
                         <td><a href="{{ localizedPath('person_view', {'personId':value.id}) }}">View</a></td>

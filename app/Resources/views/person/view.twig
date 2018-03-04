@@ -35,7 +35,7 @@
             <b>{% trans %}Title (prefix){% endtrans %}</b>: {{ person.titlePrefix }} <br/>
             <b>{% trans %}Title (suffix){% endtrans %}</b>: {{ person.titleSuffix }} <br/>
             <b>{% trans %}Gender{% endtrans %}</b>: {{ person.gender.name(app.request.getLocale()) }} <br/>
-            <b>{% trans %}Field of expertise{% endtrans %}</b>: {% if person.fieldOfExpertise %} {{ person.fieldOfExpertise.name(app.request.getLocale()) }} {% endif %} <br/>
+            <b>{% trans %}Field of expertise{% endtrans %}</b>: {% if person.fieldOfExpertise %} {{ person.fieldOfExpertise }} {% endif %} <br/>
             <b>{% trans %}Person with fewer opportunities{% endtrans %}</b>:
                 {%  if(person.hasFewerOpportunities == 1) %}
                     {% trans %}Yes{% endtrans %}
@@ -143,8 +143,8 @@
             </thead>
             {% for personInstitutionRelationship in person.personInstitutionRelationships %}
                 <tr>
-                    <td>{{ personInstitutionRelationship.institution ? personInstitutionRelationship.institution.name(app.request.getLocale()) : 'N/A'}}</td>
-                    <td>{{ personInstitutionRelationship.personInstitutionRelationshipType ? personInstitutionRelationship.personInstitutionRelationshipType.type(app.request.getLocale()) : 'N/A'}}</td>
+                    <td>{{ personInstitutionRelationship.institution ? personInstitutionRelationship.institution : 'N/A'}}</td>
+                    <td>{{ personInstitutionRelationship.personInstitutionRelationshipType ? personInstitutionRelationship.personInstitutionRelationshipType : 'N/A'}}</td>
                 </tr>
             {% endfor %}
         </table>

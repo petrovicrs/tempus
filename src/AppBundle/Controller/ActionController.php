@@ -63,22 +63,21 @@ class ActionController extends AbstractController
         $mobFlowsForm->handleRequest($request);
 
         if ($mobFlowsForm->isSubmitted() && $mobFlowsForm->isValid()) {
-
-            $mobFlows->setProject($project);
-
+//            dump($mobFlows->getActivities());die;
             /*  @var  Activity $activity */
             foreach($mobFlows->getActivities() as $activity){
-//                dump($activity);die;
-                $activity->setProjectMobilityFlows($mobFlows);
-                $this->getActivityRepository()->save($activity);
 
                 /* @var ActionDetails $actionDetail */
                 foreach ($activity->getActionDetails() as $actionDetail) {
                     $actionDetail->setActivity($activity);
                     $this->getActionDetailsRepository()->save($actionDetail);
                 }
+
+                $activity->setProjectMobilityFlows($mobFlows);
+                $this->getActivityRepository()->save($activity);
             }
 
+            $mobFlows->setProject($project);
             $this->getProjectMobilityFlowsRepository()->save($mobFlows);
 
             return $this->redirectToRoute('resources_create');

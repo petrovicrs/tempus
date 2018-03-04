@@ -60,7 +60,7 @@ class ActivityForm extends AbstractType
         $resolver->setDefaults([
             'locale' => 'en',
             'data_class' => Activity::class,
-            'isCompleted' => 0,
+            'allow_extra_fields' => true,
         ]);
     }
 }

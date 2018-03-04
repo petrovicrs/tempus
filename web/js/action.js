@@ -1,16 +1,15 @@
 
 
 jQuery(document).ready(function() {
-
-    initForm('.activities');
-
+    initActivityForm();
 });
 
-function initForm(className) {
+function initActivityForm() {
     var $addLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
     var $addLinkDiv = $('<li></li>').append($addLink);
 
-    var $collectionHolder = $('ul' + className);
+
+    var $collectionHolder = $('ul.activities');
 
     $collectionHolder.find('li').each(function() {
         $addFormDeleteLink($(this));
@@ -19,20 +18,37 @@ function initForm(className) {
     $collectionHolder.append($addLinkDiv);
     $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
-    if(className == '.action-details' && $collectionHolder.data('purpose') == 'edit') {
-        $addForm($collectionHolder, $addLinkDiv);
-    }
+    $addForm($collectionHolder, $addLinkDiv);
 
     $addLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
-
         // add a new tag form (see code block below)
         $addForm($collectionHolder, $addLinkDiv);
+    });
+}
 
-        if(className == '.activities') {
-            initForm('.action-details');
-        }
+function initActionDetailsForm(parent) {
+    var $addLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
+    var $addLinkDiv = $('<li></li>').append($addLink);
+
+    var $collectionHolder = parent.find('ul.action-details');
+
+    $collectionHolder.find('li').each(function() {
+        $addFormDeleteLink($(this));
+    });
+
+    $collectionHolder.append($addLinkDiv);
+    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+    // if($collectionHolder.data('purpose') == 'edit') {
+    //     $addForm($collectionHolder, $addLinkDiv);
+    // }
+    $addLink.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+        // add a new tag form (see code block below)
+        $addForm($collectionHolder, $addLinkDiv);
     });
 }
 
@@ -70,6 +86,11 @@ function $addForm($collectionHolder, $addLinkDiv) {
     $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove</a>');
 
     $addLinkDiv.before($newFormDiv);
+
+    if($collectionHolder.hasClass('activities')) {
+        initActionDetailsForm($collectionHolder.children().eq(-2));
+    }
+    // console.log($collectionHolder.children().length);
 
     // handle the removal, just for this example
     $('.btn-remove').click(function(e) {

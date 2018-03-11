@@ -139,6 +139,20 @@ class Institution extends AbstractAuditable
     protected $originCountry;
 
     /**
+     * @ORM\ManyToOne(
+     *      targetEntity="EuRegion"
+     * )
+     */
+    protected $euRegion;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="County"
+     * )
+     */
+    protected $county;
+
+    /**
      *  
      * @ORM\Column(name="web_site", type="string")
      */
@@ -447,6 +461,38 @@ class Institution extends AbstractAuditable
     /**
      * @return mixed
      */
+    public function getEuRegion()
+    {
+        return $this->euRegion;
+    }
+
+    /**
+     * @param mixed $euRegion
+     */
+    public function setEuRegion($euRegion)
+    {
+        $this->euRegion = $euRegion;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCounty()
+    {
+        return $this->county;
+    }
+
+    /**
+     * @param mixed $county
+     */
+    public function setCounty($county)
+    {
+        $this->county = $county;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getWebSite()
     {
         return $this->webSite;
@@ -604,10 +650,19 @@ class Institution extends AbstractAuditable
         $this->picNumber->removeElement($picNumber);
     }
 
-    public function getName($locale) {
+    public function getName($locale)
+    {
         if ($locale == "sr"){
             return $this->nameSr;
         }
         return $this->nameEn;
+    }
+
+    public function getAddress($locale)
+    {
+        $address = $this->addresses->first();
+
+        return $address->getStreetAndNumber() . ', ' . $address->getPostalCode() . ' ' .
+            $address->getTown() . ', ' . $address->getCountry()->getName($locale);
     }
 }

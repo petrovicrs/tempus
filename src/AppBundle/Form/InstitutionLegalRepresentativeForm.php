@@ -30,7 +30,8 @@ class InstitutionLegalRepresentativeForm extends AbstractType
             ])
             ->add('position', EntityType::class, [
                 'class' => 'AppBundle:InstitutionLegalRepresentativePosition',
-                'choice_label' => 'name_' . ucfirst($options['locale'])
+                'choice_label' => 'name_' . ucfirst($options['locale']),
+                'placeholder' => 'Choose position'
             ]);
     }
 

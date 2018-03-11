@@ -1346,5 +1346,12 @@ class Project extends AbstractAuditable
         $this->isCompleted = $isCompleted;
     }
 
+    /**
+     * @return ProjectSubjectArea
+     */
+    public function getSubjectArea()
+    {
+        return $this->getSubjectAreas()->first();
+    }
 }
 

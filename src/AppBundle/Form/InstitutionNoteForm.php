@@ -24,7 +24,8 @@ class InstitutionNoteForm extends AbstractType
         $builder
             ->add('institutionNoteType', EntityType::class, [
                 'class' => 'AppBundle:InstitutionNoteType',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Choose type'
             ])
             ->add('note', TextType::class);
     }

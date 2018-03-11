@@ -24,7 +24,8 @@ class InstitutionContactForm extends AbstractType
         $builder
             ->add('contactType', EntityType::class, [
                 'class' => 'AppBundle:ContactType',
-                'choice_label'  => 'type' . ucfirst($options['locale'])
+                'choice_label'  => 'type' . ucfirst($options['locale']),
+                'placeholder' => 'Choose contact type'
             ])
             ->add('contactValue')
             ->add('note')

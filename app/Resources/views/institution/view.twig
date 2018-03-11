@@ -48,6 +48,10 @@
                     <td><b>{% trans %}National Reg. Nr.{% endtrans %}:</b> {{ institution.nationalRegistrationNumber ? institution.nationalRegistrationNumber : 'N/A' }}</td>
                 </tr>
                 <tr>
+                    <td><b>{% trans %}EU Region{% endtrans %}:</b> {{ institution.euRegion ? institution.euRegion.name(app.request.getLocale()) : 'N/A' }}</td>
+                    <td><b>{% trans %}County{% endtrans %}:</b> {{ institution.county ? institution.county.name(app.request.getLocale()) : 'N/A' }}</td>
+                </tr>
+                <tr>
                     <td><b>{% trans %}Vat/Tax Nr.{% endtrans %}:</b> {{ institution.vatNumber ? institution.vatNumber : 'N/A' }}</td>
                     <td><b>{% trans %}Website{% endtrans %}:</b> {{ institution.webSite ? institution.webSite : 'N/A'}}</td>
                 </tr>
@@ -143,6 +147,57 @@
                         </td>
                         <td>
                             {% trans %}Text{% endtrans %}:</b> {{ note.note ? note.note : 'No' }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>{% trans %}Employees{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for employee in employees %}
+                    <tr>
+                        <td>
+                            {{ employee.person.firstName(app.request.getLocale()) }}
+                        </td>
+                        <td>
+                            {{ employee.person.lastName(app.request.getLocale()) }}
+                        </td>
+                        <td>
+                            {{ employee.personInstitutionRelationshipType }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>Affiliated Institutions/Organizations:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for institution in affiliatedInstitutionsOrganizations %}
+                    <tr>
+                        <td>
+                            {{ institution.name(app.request.getLocale()) }}
+                        </td>
+                        <td>
+                            {{ institution.institutionType ? institution.institutionType.name(app.request.getLocale()) : 'N/A' }}
+                        </td>
+                        <td>
+                            {{ institution.address(app.request.getLocale()) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h2>Affiliated Projects</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for affiliatedProject in affiliatedProjects %}
+                    <tr>
+                        <td>
+                            {{ affiliatedProject.project.name(app.request.getLocale()) }}
+                        </td>
+                        <td>
+                            {{ affiliatedProject.project.subjectArea ? affiliatedProject.project.subjectArea.areaType.name(app.request.getLocale()) ? 'N/A' }}
+                        </td>
+                        <td>
+                            {{ affiliatedProject.project.startDatetime | date('d/m/y') }}
+                        </td>
+                        <td>
+                            {{ affiliatedProject.project.endDatetime | date('d/m/y') }}
                         </td>
                     </tr>
                 {% endfor %}

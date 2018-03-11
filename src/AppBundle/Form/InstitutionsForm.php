@@ -37,22 +37,26 @@ class InstitutionsForm extends AbstractType
             ->add('founderOriginalLetter', TextType::class)
             ->add('institutionFounderType', EntityType::class, [
                 'class' => 'AppBundle:InstitutionFounderType',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Choose Institution founder type'
             ])
             ->add('institutionType', EntityType::class, [
                 'class' => 'AppBundle:InstitutionType',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Choose type of Institution'
             ])
             ->add('institutionLevel', EntityType::class, [
                 'class' => 'AppBundle:InstitutionLevel',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Choose Institution level'
             ])
             ->add('parentInstitution', EntityType::class, [
                 'class' => 'AppBundle:Institution',
                 'choice_label' => 'name' . ucfirst($options['locale']),
                 'placeholder' => 'Please choose',
                 'empty_data'  => null,
-                'required' => false
+                'required' => false,
+                'placeholder' => 'Choose Institution/Organisation'
             ])
             ->add('publicBody', ChoiceType::class, array(
                 'choices'  => array(
@@ -68,11 +72,23 @@ class InstitutionsForm extends AbstractType
             ))
             ->add('country',EntityType::class, [
                 'class' => 'AppBundle:Country',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Country'
             ])
             ->add('originCountry',EntityType::class, [
                 'class' => 'AppBundle:Country',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Country of origin'
+            ])
+            ->add('euRegion',EntityType::class, [
+                'class' => 'AppBundle:EuRegion',
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Choose EU Country'
+            ])
+            ->add('county',EntityType::class, [
+                'class' => 'AppBundle:County',
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Choose County'
             ])
             ->add('nationalRegistrationNumber', TextType::class)
             ->add('vatNumber', TextType::class)

@@ -7,6 +7,7 @@
  */
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Person;
 use AppBundle\Entity\ProjectContactPerson;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -25,8 +26,7 @@ class ProjectContactPersonForm extends AbstractType
             ->add('person', EntityType::class, [
                 'class' => 'AppBundle:Person',
                 'choice_label' => function($value, $key, $index) use ($options) {
-                    return $value->getId() . ' - ' . $value->getName($options['locale'])
-                        . $value->getLastAddress($options['locale']);
+                    return $this->getPersonLabel($options['locale'], $value);
                 }
             ]);
     }
@@ -47,5 +47,21 @@ class ProjectContactPersonForm extends AbstractType
             'data_class' => ProjectContactPerson::class,
         ]);
 
+    }
+
+    /**
+     * @param $locale
+     * @param $person Person
+     * @return string
+     */
+    public function getPersonLabel($locale, $person)
+    {
+        $idAndName = $person->getId() . ' - ' . $person->getName($locale);
+
+        $personOrganisation = $person->getPersonOrganisation($locale) ? ' - ' . $person->getPersonOrganisation($locale) : '';
+
+        $personCountry = $person->getPersonCountry($locale) ? ' - ' . $person->getPersonCountry($locale) : '';
+
+        return $idAndName . $personOrganisation . $personCountry;
     }
 }

@@ -27,7 +27,8 @@ class InstitutionAddressForm extends AbstractType
             ->add('postalCode', TextType::class)
             ->add('country', EntityType::class, [
                 'class' => 'AppBundle:Country',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Choose country'
             ])
             ->add('differentMailingAddress', CheckboxType::class, ['required' => false]);
     }

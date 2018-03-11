@@ -13,8 +13,11 @@ use AppBundle\Entity\InstitutionContact;
 use AppBundle\Entity\InstitutionLegalRepresentative;
 use AppBundle\Entity\InstitutionNote;
 use AppBundle\Entity\PicNumber;
+use AppBundle\Entity\ProjectReporting;
 use AppBundle\Repository\InstitutionContactRepository;
 use AppBundle\Repository\InstitutionRepository;
+use AppBundle\Repository\PersonInstitutionRelationshipRepository;
+use AppBundle\Repository\PersonRepository;
 use AppBundle\Repository\PicNumberRepository;
 use AppBundle\Repository\InstitutionNoteRepository;
 use AppBundle\Repository\InstitutionAddressRepository;
@@ -261,9 +264,13 @@ class InstitutionController extends AbstractController
         $accreditations = $this->getInstitutionAccreditationRepository()->findBy(['institution' => $institutionId]);
         $notes = $this->getInstitutionNoteRepository()->findBy(['institution' => $institutionId]);
         $legalRepresentatives = $this->getInstitutionLegalRepresentativeRepository()->findBy(['institution' => $institutionId]);
+        $employees = $this->getPersonInstitutionRelationshipRepository()->findBy(['institution' => $institutionId]);
+        $affiliatedInstitutionsOrganizations = $this->getInstitutionRepository()->findBy(['parentInstitution' => $institutionId]);
+        $affiliatedProjects = $this->getProjectPartnerOrganisationRepository()->findBy(['organisation' => $institutionId]);
 
         return $this->render('institution/view.twig', ['institution' => $institution, 'picNumbers' => $picNumbers, 'contacts' => $contacts, 'addresses' => $addresses,
-            'accreditations' => $accreditations, 'notes' => $notes, 'legalRepresentatives' => $legalRepresentatives]);
+            'accreditations' => $accreditations, 'notes' => $notes, 'legalRepresentatives' => $legalRepresentatives, 'employees' => $employees,
+            'affiliatedInstitutionsOrganizations' => $affiliatedInstitutionsOrganizations, 'affiliatedProjects' => $affiliatedProjects]);
     }
 
     /**
@@ -320,5 +327,21 @@ class InstitutionController extends AbstractController
     private function getInstitutionLegalRepresentativeRepository() {
 
         return $this->get('doctrine_entity_repository.institution_legal_representative');
+    }
+
+    /**
+     * @return PersonInstitutionRelationshipRepository
+     */
+    private function getPersonInstitutionRelationshipRepository() {
+
+        return $this->get('doctrine_entity_repository.person_institution_relationship');
+    }
+
+    /**
+     * @return ProjectRepository
+     */
+    private function getProjectPartnerOrganisationRepository() {
+
+        return $this->get('doctrine_entity_repository.project_partner_organisation');
     }
 }

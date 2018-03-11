@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section id="main">
+
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="controls results">
+                    <div class="col-xs-12">
+                        {{ form_start(my_form) }}
+                        <div class="col-xs-12">
+                            <h2>{% trans %}Search projects{% endtrans %}</h2>
+                        </div>
+
+                        <div class="block" style="clear: both;">
+                            <div>
+                                {{ form_label(my_form.acronym, 'Acronym'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.acronym, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.title, 'Title'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.title, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.referenceNumber, 'Reference number'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.referenceNumber, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.programmes, 'Programmes'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.programmes, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.keyActions, 'Key actions'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.keyActions, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.partnerOrganizationInstitution, 'Partner institution'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.partnerOrganizationInstitution, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.partnerOrganizationInstitutionCountry, 'Partner institution country'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.partnerOrganizationInstitutionCountry, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            {{ form_row(my_form.submit) }}
+                        </div>
+
+
+                        <div class="col-xs-12">
+                            {{ form_end(my_form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <div class="container-fluid">
+        <div class="col-xs-12 section-heading">
+            <h2><b>{% trans %}Projects{% endtrans %}</b></h2>
+        </div>
+        <table id="example" class="table table-striped table-bordered table-hover" data-toggle="table">
+            <thead>
+            <tr class="table-header">
+                <th class="sortable" data-field="project_id" data-sortable="true">{% trans %}Nr.{% endtrans %}</th>
+                <th class="sortable">{% trans %}Name{% endtrans %}</th>
+                <th class="sortable">{% trans %}Acronym{% endtrans %}</th>
+                <th>{% trans %}Project number{% endtrans %}</th>
+                <th>{% trans %}Programme{% endtrans %}</th>
+                <th>{% trans %}Key Action{% endtrans %}</th>
+                <th>{% trans %}Action{% endtrans %}</th>
+                <th>{% trans %}Call{% endtrans %}</th>
+                <th>{% trans %}Round{% endtrans %}</th>
+                <th>{% trans %}On-going{% endtrans %}</th>
+                {% if app.user %}
+                    <th>{% trans %}View{% endtrans %}</th>
+                    <th>{% trans %}Edit{% endtrans %}</th>
+                {% endif %}
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for key,value in results %}
+                <tr>
+                    <td> {{ value.id }} </td>
+                    <td> {{ value.nameEn }} </td>
+                    <td> {{ value.acronym }} </td>
+                    <td> {{ value.projectNumber }} </td>
+                    <td> {{ value.programmes ? value.programmes.name(app.request.locale) }} </td>
+                    <td> {{ value.keyActions ? value.keyActions.name(app.request.locale) }} </td>
+                    <td> {{ value.actions ? value.actions.name(app.request.locale) }} </td>
+                    <td> {{ value.calls ? value.calls.name(app.request.locale) }} </td>
+                    <td> {{ value.rounds ? value.rounds.name(app.request.locale) }} </td>
+                    <td> {{ value.onGoing ? 'Yes' : 'No' }} </td>
+                    {% if app.user %}
+                        {% if value.keyActions.name(app.request.locale) == 'ka1' %}
+                            <td> <a href="{{ localizedPath('project_view', {'projectId':value.id }) }}"> View </a> </td>
+                            <td> <a href="{{ localizedPath('project_edit', {'projectId':value.id }) }}"> Edit </a> </td>
+                        {% elseif value.keyActions.name(app.request.locale) == 'ka2' %}
+                            <td> <a href="{{ localizedPath('project_ka2_view', {'projectId':value.id }) }}"> View </a> </td>
+                            <td> <a href="{{ localizedPath('project_ka2_edit', {'projectId':value.id }) }}"> Edit </a> </td>
+                        {% else %}
+                            <td><span style="color: red"> Unsupported KA</span></td>
+                            <td><span style="color: red"> Unsupported KA</span></td>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+    <div>
+
+        {#todo: move this code to separate js file and on document ready disable seaching for table example#}
+        <script>
+            $('#example').dataTable({searching: false});
+        </script>
+
+{% endblock %}

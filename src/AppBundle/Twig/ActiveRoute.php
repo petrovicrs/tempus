@@ -32,7 +32,7 @@ class ActiveRoute extends \Twig_Extension
     {
         $request = $this->container->get('request_stack')->getCurrentRequest();
 
-        return strpos($request->get('_route'), $route) !== false;
+        return strpos($request->get('_route'), $route) === 0;
     }
 
     public function getName()

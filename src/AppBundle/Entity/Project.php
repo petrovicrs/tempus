@@ -41,14 +41,14 @@ class Project extends AbstractAuditable
     protected $user;
 
     /**
-     * @var string $name
+     * @var string $nameEn
      * @Assert\Type("string")
      * @ORM\Column(name="name_eng", type="string", length=255, nullable=true)
      */
     protected $nameEn;
 
     /**
-     * @var string $name
+     * @var string $nameSr
      * @Assert\Type("string")
      * @ORM\Column(name="name_srb", type="string", length=255, nullable=true)
      */

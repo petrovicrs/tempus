@@ -21,6 +21,9 @@
 
                         <ul class="equipment" data-purpose="create" data-prototype="{{include('equipment/includes/equipment-details.html.twig',
                         {'my_form': my_form.equipment.vars.prototype })|e}}">
+                            {% for one in my_form.equipment %}
+                                <li>{{ include('/equipment/includes/equipment-details.html.twig', {'my_form': one }) }}</li>
+                            {% endfor %}
                         </ul>
 
                         <div class="col-xs-12">

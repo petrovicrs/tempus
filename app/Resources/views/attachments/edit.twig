@@ -10,13 +10,10 @@
         {% include 'sub-navbar-ka2.html.twig' with {'active': 'attachments', 'isCompleted': isCompleted, projectId: projectId} %}
     {% endif %}
     <div class="container-fluid">
-        {% if not isCompleted %}
-            <a href="{{ localizedPath('reporting_edit', {projectId: projectId}) }}"><button>Back</button></a>
-        {% endif %}
         <div class="row">
             <div class="controls attachments">
                 {% if not isCompleted %}
-                    <a href="{{ localizedPath('result_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                    <a href="{{ localizedPath('equipment_edit', {projectId: projectId}) }}"><button>Back</button></a>
                 {% endif %}
                 <div class="col-xs-12">
 

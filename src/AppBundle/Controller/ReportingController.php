@@ -172,7 +172,7 @@ class ReportingController extends AbstractController
             $this->getProjectReportingRepository()->save($projectReporting);
 
             if (!$projectReporting->getProject()->getIsCompleted()) {
-                return $this->redirectToRoute('attachments_create');
+                return $this->redirectToRoute('equipment_create');
             }
         }
 

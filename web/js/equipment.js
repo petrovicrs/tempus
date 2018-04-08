@@ -28,6 +28,8 @@ function loadResults() {
     // if($collectionEquipmentHolder.data('purpose') === 'create') {
     //     $addForm($collectionEquipmentHolder, $addEquipmentLinkDiv);
     // }
+
+    return true;
 }
 
 function $addFormDeleteLink($formDiv) {

@@ -10,13 +10,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Equipment;
 use AppBundle\Entity\Project;
-use AppBundle\Entity\ProjectEquipment;
 use AppBundle\Entity\ProjectResults;
 use AppBundle\Entity\Results;
+use AppBundle\Form\EquipmentForm;
 use AppBundle\Form\EquipmentsForm;
 use AppBundle\Form\ProjectResultsForm;
 use AppBundle\Repository\EquipmentRepository;
-use AppBundle\Repository\ProjectEquipmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,40 +33,45 @@ class EquipmentController extends AbstractController
 
         return $this->render('equipment/list.twig', ['equipment' => $equipment]);
     }
-//
-//    /**
-//     * @Route("/{locale}/equipment/create", name="equipment_create", requirements={"locale": "%app.locales%"})
-//     */
-//    public function createAction(Request $request)
-//    {
-//        /** @var ProjectEquipment $projectEquipment */
-//        $projectEquipment = new ProjectEquipment();
-//
-//        /** @var Project $project */
-//        $project = $this->getLastProjectForCurrentUser();
-//
-//        $projectEquipmentForm = $this->createForm(EquipmentsForm::class, $projectEquipment, [
-//            'action' => $this->generateUrl('equipment_create'),
-//            'method' => 'POST',
-//            'locale' => $request->getLocale()
-//        ]);
-//
-//        $projectEquipmentForm->handleRequest($request);
-//
-//        if ($projectEquipmentForm->isSubmitted() && $projectEquipmentForm->isValid()) {
-//            /** @var Equipment $equipment */
-//            foreach($projectEquipment->getEquipment() as $equipment) {
-//                $equipment->setProjectEquipment($projectEquipment);
-//            }
-//            $projectEquipment->setProject($project);
-//            $this->getProjectEquipmentRepository()->save($projectEquipment);
-//
-//            return $this->redirectToRoute('attachments_create');
-//        }
-//
-//        return $this->render('equipment/create.twig', ['my_form' => $projectEquipmentForm->createView(),
-//            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()]);
-//    }
+
+    /**
+     * @Route("/{locale}/equipment/create", name="equipment_create", requirements={"locale": "%app.locales%"})
+     */
+    public function createAction(Request $request)
+    {
+        /** @var Equipment $equipment */
+        $equipment = new Equipment();
+
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
+
+        $equipmentForm = $this->createForm(EquipmentsForm::class, ['equipment' => []], [
+            'action' => $this->generateUrl('equipment_create'),
+            'method' => 'POST',
+            'locale' => $request->getLocale()
+        ]);
+
+        $equipmentForm->handleRequest($request);
+
+        if ($equipmentForm->isSubmitted() && $equipmentForm->isValid()) {
+
+            foreach($equipmentForm as $equipmentFormEntry) {
+                if ($equipmentFormEntry instanceof Form) {
+                    /** @var Equipment $oneElement */
+                    foreach ($equipmentFormEntry->getData() as $oneElement) {
+                        $oneElement->setProject($project);
+
+                        $this->getEquipmentRepository()->save($oneElement);
+                    }
+                }
+            }
+
+            return $this->redirectToRoute('attachments_create');
+        }
+
+        return $this->render('equipment/create.twig', ['my_form' => $equipmentForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()]);
+    }
 
     /**
      * @Route("/{locale}/equipment/edit/{projectId}", name="equipment_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
@@ -135,26 +139,26 @@ class EquipmentController extends AbstractController
         );
     }
 
-//    /**
-//     * @Route("/{locale}/equipment/view/{projectId}", name="equipment_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
-//     */
-//    public function viewAction($projectId)
-//    {
-//        /** @var ProjectEquipment $projectEquipment */
-//        $projectEquipment = $this->getProjectEquipmentRepository()->findOneBy(['project' => $projectId]);
-//
-//        /** @var Project $project */
-//        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
-//
-//        return $this->render(
-//            'equipment/view.twig',
-//            [
-//                'equipment' => $this->getEquipmentRepository()->findBy(['projectEquipment' => $projectEquipment]),
-//                'projectId' => $projectId,
-//                'keyAction' => $project->getKeyActions()->getNameSr()
-//            ]
-//        );
-//    }
+    /**
+     * @Route("/{locale}/equipment/view/{projectId}", name="equipment_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     */
+    public function viewAction($projectId)
+    {
+        /** @var array[Equipment] $originalEquipments */
+        $originalEquipments = $this->getEquipmentRepository()->findBy(['project' => $projectId]);
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        return $this->render(
+            'equipment/view.twig',
+            [
+                'equipment' => $originalEquipments,
+                'projectId' => $projectId,
+                'keyAction' => $project->getKeyActions()->getNameSr()
+            ]
+        );
+    }
 
 
     /**

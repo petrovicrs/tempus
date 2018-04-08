@@ -121,6 +121,13 @@ class InstitutionsForm extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ))
+            ->add('riskLevel', CollectionType::class, array(
+                'entry_type'  => RiskLevelForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
             ->add('legalRepresentatives', CollectionType::class, array(
                 'entry_type'  => InstitutionLegalRepresentativeForm::class,
                 'allow_add' => true,

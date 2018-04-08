@@ -12,10 +12,13 @@ use AppBundle\Entity\InstitutionAddress;
 use AppBundle\Entity\InstitutionContact;
 use AppBundle\Entity\InstitutionLegalRepresentative;
 use AppBundle\Entity\InstitutionNote;
+use AppBundle\Entity\InstitutionRiskLevel;
 use AppBundle\Entity\PicNumber;
 use AppBundle\Entity\ProjectReporting;
+use AppBundle\Entity\RiskLevelManuallyUploaded;
 use AppBundle\Repository\InstitutionContactRepository;
 use AppBundle\Repository\InstitutionRepository;
+use AppBundle\Repository\InstitutionRiskLevelRepository;
 use AppBundle\Repository\PersonInstitutionRelationshipRepository;
 use AppBundle\Repository\PersonRepository;
 use AppBundle\Repository\PicNumberRepository;
@@ -23,6 +26,7 @@ use AppBundle\Repository\InstitutionNoteRepository;
 use AppBundle\Repository\InstitutionAddressRepository;
 use AppBundle\Repository\InstitutionLegalRepresentativeRepository;
 use AppBundle\Repository\InstitutionAccreditationRepository;
+use AppBundle\Repository\RiskLevelManuallyUploadedRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -33,6 +37,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\FileBag;
+use AppBundle\Util\FileTypeHelper;
 
 class InstitutionController extends AbstractController
 {
@@ -100,6 +108,33 @@ class InstitutionController extends AbstractController
             foreach($institutions->getLegalRepresentatives() as $legalRepresentative){
                 $legalRepresentative->setInstitution($institutions);
                 $this->getInstitutionLegalRepresentativeRepository()->save($legalRepresentative);
+            }
+
+            /** @var InstitutionRiskLevel $institutionRiskLevel */
+            foreach($institutions->getRiskLevel() as $key => $institutionRiskLevel){
+                $institutionRiskLevel->setInstitution($institutions);
+
+                /** @var FileBag $files */
+                $files = $request->files->get('appbundle_project')['riskLevel'];
+
+                    /** @var UploadedFile $file */
+                    $file = $files[$key]['manuallyUploadedFiles'];
+
+                    $manuallyUploadedFile = new RiskLevelManuallyUploaded();
+
+                    if(false == is_null($file) && FileTypeHelper::isTypeAllowed($file)) {
+
+                        /** @var File $uploadedFile */
+                        $uploadedFile = $this->get('util.file_uploader')->upload($file);
+
+                        $manuallyUploadedFile->setFile($uploadedFile->getFilename());
+                        $manuallyUploadedFile->setType($file->getClientOriginalExtension());
+                        $manuallyUploadedFile->setOriginalFileName($file->getClientOriginalName());
+
+                        $this->getRiskLevelManuallyUploadedRepository()->save($manuallyUploadedFile);
+                    }
+
+                $this->getInstitutionRiskLevelRepository()->save($institutionRiskLevel);
             }
             return $this->redirectToRoute('institution_list');
 
@@ -267,10 +302,21 @@ class InstitutionController extends AbstractController
         $employees = $this->getPersonInstitutionRelationshipRepository()->findBy(['institution' => $institutionId]);
         $affiliatedInstitutionsOrganizations = $this->getInstitutionRepository()->findBy(['parentInstitution' => $institutionId]);
         $affiliatedProjects = $this->getProjectPartnerOrganisationRepository()->findBy(['organisation' => $institutionId]);
+        $institutionRiskLevels = $this->getInstitutionRiskLevelRepository()->findBy(['institution' => $institutionId]);
+
+        /** @var InstitutionRiskLevel $one */
+        foreach($institutionRiskLevels as $one) {
+            $manuallyUploadedFiles = $this->getRiskLevelManuallyUploadedRepository()->findBy(['institutionRiskLevel' => $one->getId()]);
+
+            if ($manuallyUploadedFiles) {
+                $institutionRiskLevels['manuallyUploadedFiles'] = $manuallyUploadedFiles;
+            }
+        }
 
         return $this->render('institution/view.twig', ['institution' => $institution, 'picNumbers' => $picNumbers, 'contacts' => $contacts, 'addresses' => $addresses,
             'accreditations' => $accreditations, 'notes' => $notes, 'legalRepresentatives' => $legalRepresentatives, 'employees' => $employees,
-            'affiliatedInstitutionsOrganizations' => $affiliatedInstitutionsOrganizations, 'affiliatedProjects' => $affiliatedProjects]);
+            'affiliatedInstitutionsOrganizations' => $affiliatedInstitutionsOrganizations, 'affiliatedProjects' => $affiliatedProjects,
+            'institutionRiskLevels' => $institutionRiskLevels]);
     }
 
     /**
@@ -311,6 +357,22 @@ class InstitutionController extends AbstractController
     private function getInstitutionAddressRepository() {
 
         return $this->get('doctrine_entity_repository.institution_address');
+    }
+
+    /**
+     * @return InstitutionRiskLevelRepository
+     */
+    private function getInstitutionRiskLevelRepository() {
+
+        return $this->get('doctrine_entity_repository.institution_risk_level');
+    }
+
+    /**
+     * @return RiskLevelManuallyUploadedRepository
+     */
+    private function getRiskLevelManuallyUploadedRepository() {
+
+        return $this->get('doctrine_entity_repository.risk_level_manually_uploaded');
     }
 
     /**

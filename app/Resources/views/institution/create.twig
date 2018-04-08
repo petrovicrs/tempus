@@ -6,6 +6,7 @@
     <script type="text/javascript" src="{{ asset('/js/accreditations.js')}}" ></script>
     <script type="text/javascript" src="{{ asset('/js/legalRepresentatives.js')}}" ></script>
     <script type="text/javascript" src="{{ asset('/js/notes.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/riskLevel.js')}}" ></script>
     <section id="main">
         <div class="container-fluid">
         <div class="row-fluid">
@@ -150,6 +151,9 @@
                     </ul>
                     <ul class="notes" data-prototype="{{ include('/institution/includes/notes.html.twig',
                                                 {'form': my_form.notes.vars.prototype })|e }}">
+                    </ul>
+                    <ul class="riskLevel" data-prototype="{{ include('/institution/includes/riskLevel.html.twig',
+                        {'form': my_form.riskLevel.vars.prototype })|e }}">
                     </ul>
                 {{ form_end(my_form) }}
             </div>

@@ -168,6 +168,12 @@
                         <li>{{ include('/institution/includes/notes.html.twig', {'form': note }) }}</li>
                     {% endfor %}
                 </ul>
+                <ul class="riskLevel" data-prototype="{{ include('/institution/includes/riskLevel.html.twig',
+                    {'form': my_form.riskLevel.vars.prototype })|e }}">
+                    {% for note in my_form.riskLevel %}
+                        <li>{{ include('/institution/includes/riskLevel.html.twig', {'form': riskLevel }) }}</li>
+                    {% endfor %}
+                </ul>
                 {{ form_end(my_form) }}
             </div>
         </div>

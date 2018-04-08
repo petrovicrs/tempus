@@ -169,6 +169,11 @@ class Institution extends AbstractAuditable
     protected $notes;
 
     /**
+     * @ORM\OneToMany(targetEntity="InstitutionRiskLevel", mappedBy="institution", cascade={"persist"})
+     */
+    protected $riskLevel;
+
+    /**
      * @ORM\OneToMany(targetEntity="InstitutionLegalRepresentative", mappedBy="institution", cascade={"persist"})
      */
     protected $legalRepresentatives;
@@ -192,6 +197,7 @@ class Institution extends AbstractAuditable
         $this->accreditations = new ArrayCollection();
         $this->addresses = new ArrayCollection();
         $this->picNumber = new ArrayCollection();
+        $this->riskLevel = new ArrayCollection();
     }
 
     /**
@@ -544,6 +550,26 @@ class Institution extends AbstractAuditable
     public function removeNotes(InstitutionNote $notes)
     {
         $this->notes->removeElement($notes);
+    }
+
+    public function getRiskLevel()
+    {
+        return $this->riskLevel;
+    }
+
+    public function setRiskLevel($riskLevel)
+    {
+        $this->riskLevel = $riskLevel;
+    }
+
+    public function addRiskLevel(InstitutionRiskLevel $riskLevel)
+    {
+        $this->riskLevel->add($riskLevel);
+    }
+
+    public function removeRiskLevel(InstitutionRiskLevel $riskLevel)
+    {
+        $this->riskLevel->removeElement($riskLevel);
     }
 
     /**

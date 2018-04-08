@@ -10,6 +10,7 @@
             <li class="{% if active == 'intelectual_outputs' %}active{% endif %}"><a href="{{ localizedPath('intelectual_output_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Intelectual outputs</a></li>
             <li class="{% if active == 'results' %}active{% endif %}"><a href="{{ localizedPath('result_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Results</a></li>
             <li class="{% if active == 'reporting' %}active{% endif %}"><a href="{{ localizedPath('reporting_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Reporting</a></li>
+            <li class="{% if active == 'equipment' %}active{% endif %}"><a href="{{ localizedPath('equipment_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Equipment</a></li>
             <li class="{% if active == 'attachments' %}active{% endif %}"><a href="{{ localizedPath('attachment_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Attachments</a></li>
             <li class="{% if active == 'group_calendar' %}active{% endif %}"><a href="{{ localizedPath('group_calendar_edit', {'projectId': projectId}) }}"  onclick="if (isCompleted == 0) {return false;}">Group Calendar</a></li>
         </ul>

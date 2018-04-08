@@ -268,6 +268,41 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\Results
+    doctrine_entity_repository.institution_risk_level:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionRiskLevel
+    doctrine_entity_repository.institution_risk_level_type:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\InstitutionRiskLevelType
+    doctrine_entity_repository.equipment_risk_level:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\EquipmentRiskLevel
+    doctrine_entity_repository.risk_level_manually_uploaded:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\RiskLevelManuallyUploaded
+    doctrine_entity_repository.project_equipment:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectEquipment
+    doctrine_entity_repository.equipment_type:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\EquipmentType
+    doctrine_entity_repository.equipment:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\Equipment
     doctrine_entity_repository.project_intelectual_outputs:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

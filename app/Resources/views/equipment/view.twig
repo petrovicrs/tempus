@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/collapsible.js')}}"></script>
+    <section id="main">
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2-view.html.twig' with {'active': 'equipment', 'projectId': projectId} %}
+        {% endif %}
+        {% for oneEquipment in equipment %}
+            <div class="container-fluid">
+                <div class="col-xs-12 section-heading">
+                    <h2><b>{% trans %}Equipment{% endtrans %}</b></h2>
+                </div>
+
+                <div class="col-xs-3">
+                    <b>{% trans %}Institution/Organisation{% endtrans %}</b>: {{ oneEquipment.institution.name(app.request.locale) }}
+                </div>
+                <div class="col-xs-3">
+                    <b>{% trans %}Model{% endtrans %}</b>: {{ oneEquipment.model }}
+                </div>
+                <div class="col-xs-3">
+                    <b>{% trans %}Type{% endtrans %}</b>: {{ oneEquipment.equipmentType.name(app.request.locale) }}
+                </div>
+                <div class="col-xs-3">
+                    <b>{% trans %}Quantity{% endtrans %}</b>: {{ oneEquipment.quantity }}
+                </div>
+                <div class="col-xs-3">
+                    <b>{% trans %}Date of purchase{% endtrans %}</b>: {{ oneEquipment.purchaseDate | date('d/m/y') }}
+                </div>
+                <div class="col-xs-3">
+                    <b>{% trans %}Identity number{% endtrans %}</b>: {{ oneEquipment.inventoryNumber }}
+                </div>
+                <div class="col-xs-12">
+                    <h3>Serbian</h3>
+                </div>
+                <table class="table table-hover" data-toggle="table">
+                    <thead>
+                    <tr class="table-heleer">
+                        <th>{% trans %}Title{% endtrans %}</th>
+                        <th>{% trans %}Location{% endtrans %}</th>
+                        <th>{% trans %}Description{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="details-row">
+                            <td> {{ oneEquipment.titleSr }} </td>
+                            <td> {{ oneEquipment.locationSr }} </td>
+                            <td> {{ oneEquipment.descriptionSr }} </td>
+                        </tr>
+                    </tbody>
+                </table><br/>
+                <div class="col-xs-12">
+                    <h3>English</h3>
+                </div>
+                <table class="table table-hover" data-toggle="table">
+                    <thead>
+                    <tr class="table-heleer">
+                        <th>{% trans %}Title{% endtrans %}</th>
+                        <th>{% trans %}Location{% endtrans %}</th>
+                        <th>{% trans %}Description{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="details-row">
+                        <td> {{ oneEquipment.titleEn }} </td>
+                        <td> {{ oneEquipment.locationEn }} </td>
+                        <td> {{ oneEquipment.descriptionEn }} </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+{% endblock %}

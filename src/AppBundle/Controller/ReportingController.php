@@ -81,7 +81,7 @@ class ReportingController extends AbstractController
             $projectReporting->setProject($project);
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            return $this->redirectToRoute('attachments_create');
+            return $this->redirectToRoute('equipment_create');
         }
 
         return $this->render(

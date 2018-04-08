@@ -203,6 +203,20 @@
                 {% endfor %}
             </table>
         </div>
+        <h2>Risk Levels</h2>
+        <table class="table table-hover" data-toggle="table">
+            {% for institutionRiskLevel in institutionRiskLevels %}
+                <tr>
+                    <td>
+                        {{ institutionRiskLevel.riskLevelType.name(app.request.getLocale()) }}
+                    </td>
+                    <td>
+                        <b>{% trans %}File{% endtrans %}</b>: {{ institutionRiskLevel.manuallyUploadedFiles ? institutionRiskLevel.manuallyUploadedFiles.originalFilename : null}}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
     </div>
 </section>
 {% endblock %}

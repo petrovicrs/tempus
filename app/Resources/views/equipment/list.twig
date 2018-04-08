@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+        {% include 'sub-navbar.html.twig' with {'active': 'results' } %}
+        <div class="container-fluid">
+            <div class="col-xs-12 section-heading">
+                <h2><b>{% trans %}Equipment{% endtrans %}</b></h2>
+                <a href="{{ localizedPath('equipment_create') }}" class="btn btn-add btn-success pull-right"><span aria-hidden="true"></span>{% trans %}Add Equipment{% endtrans %}</a>
+
+            </div>
+
+            <table class="table table-hover" data-toggle="table">
+                <thead>
+                    <tr class="table-heleer">
+                        <th class="sortable"  data-sortable="true">{% trans %}Result title{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Type{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Description{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Project{% endtrans %}</th>
+                        <th class="sortable"  data-sortable="true">{% trans %}Status{% endtrans %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, result in results %}
+                        {% if result.isPublic %}
+                            <tr>
+                                <td><a href="{{ localizedPath('result_view', {'resultId': result.id}) }}">{{ result.title(app.request.getLocale()) }}</a></td>
+
+                                {% if result.resultType %}
+                                    <td>{{ result.resultType.name(app.request.getLocale()) }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+
+                                {% if result.showDescription %}
+                                    <td>{{ result.description(app.request.getLocale()) }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+
+                                <td><a href="{{ localizedPath('project_view', {'projectId': result.projectResults.project.id}) }}">{{ result.projectResults.project.name(app.request.getLocale()) }}</a></td>
+
+                                {% if result.resultStatus %}
+                                    <td>{{ result.resultStatus.name(app.request.getLocale()) }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <div>
+{% endblock %}

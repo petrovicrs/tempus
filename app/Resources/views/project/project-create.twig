@@ -1,5 +1,36 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <script>
+        $(document).ready(function () {
+            $("#appbundle_project_keyActions").change(function(){
+
+                var $appbundle_project_actions = $('#appbundle_project_actions');
+
+                var keyActionId = $(this).val();
+                if(keyActionId) {
+
+                    var url = '{{ localizedPath("project_actions_list", {'keyActionId': '1234'}) }}';
+                    url = url.replace("1234", keyActionId);
+
+                    $.ajax({
+                        type: 'get',
+                        url: url,
+                        success: function (data) {
+                            $appbundle_project_actions.empty();
+                            $appbundle_project_actions.html('<option>--</option>');
+                            for (var i = 0, total = data.length; i < total; i++) {
+                                $appbundle_project_actions.append('<option value="' + data[i].id + '">' + data[i].name_en + '</option>');
+                            }
+                        }
+                    });
+                }
+                else {
+                    $appbundle_project_actions.empty();
+                    $appbundle_project_actions.html('<option>--</option>');
+                }
+            })
+        });
+    </script>
 
     <section id="main">
         <div class="container-fluid">
@@ -44,4 +75,6 @@
             </div>
         </div>
     </section>
+
+
 {% endblock %}

@@ -26,7 +26,6 @@ class SearchController extends AbstractController {
 
         $results = [];
         if ($projectResultsForm->isValid()) {
-
             $data = $projectResultsForm->getData();
 
             $queryBuilder = $this->getProjectRepository()->createQueryBuilder('o');
@@ -52,9 +51,29 @@ class SearchController extends AbstractController {
                 $queryBuilder->andWhere('o.keyActions = :keyActions')
                     ->setParameter("keyActions", $data[ProjectSearchForm::KEY_ACTIONS]);
             }
+            if(!is_null($data[ProjectSearchForm::ACTIONS])) {
+                $queryBuilder->andWhere('o.actions = :actions')
+                    ->setParameter("actions", $data[ProjectSearchForm::ACTIONS]);
+            }
+            if(!is_null($data[ProjectSearchForm::START_DATE_START])) {
+                $queryBuilder->andWhere('o.startDatetime >= :startDateStart')
+                    ->setParameter("startDateStart", $data[ProjectSearchForm::START_DATE_START]);
+            }
+            if(!is_null($data[ProjectSearchForm::START_DATE_END])) {
+                $queryBuilder->andWhere('o.startDatetime <= :startDateEnd')
+                    ->setParameter("startDateEnd", $data[ProjectSearchForm::START_DATE_END]);
+            }
+            if(!is_null($data[ProjectSearchForm::END_DATE_START])) {
+                $queryBuilder->andWhere('o.endDatetime >= :endDateStart')
+                    ->setParameter("endDateStart", $data[ProjectSearchForm::END_DATE_START]);
+            }
+            if(!is_null($data[ProjectSearchForm::END_DATE_END])) {
+                $queryBuilder->andWhere('o.endDatetime <= :endDateEnd')
+                    ->setParameter("endDateEnd", $data[ProjectSearchForm::END_DATE_END]);
+            }
 
             if(!is_null($data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION])
-                || !is_null($data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION_COUNTRY])) {
+                || sizeof($data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION_COUNTRY]) != 0) {
                 $queryBuilder->leftJoin(
                     'AppBundle\Entity\ProjectPartnerOrganisation',
                     'ppo',
@@ -68,7 +87,7 @@ class SearchController extends AbstractController {
                     ->setParameter("partnerOrganizationInstitution", $data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION]);
             }
 
-            if(!is_null($data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION_COUNTRY])) {
+            if(sizeof($data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION_COUNTRY]) != 0) {
                 $queryBuilder->leftJoin(
                     'AppBundle\Entity\Institution',
                     'inst',
@@ -79,9 +98,112 @@ class SearchController extends AbstractController {
                     'inst_addr',
                     \Doctrine\ORM\Query\Expr\Join::WITH,
                     'inst = inst_addr.institution'
-                )->andWhere('inst_addr.country = :partnerOrganizationInstitutionCountry')
+                )->andWhere('inst_addr.country IN (:partnerOrganizationInstitutionCountry)')
                     ->setParameter("partnerOrganizationInstitutionCountry", $data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION_COUNTRY]);
             }
+
+
+            if(!is_null($data[ProjectSearchForm::PARTNER_ORGANIZATION_PERSON])) {
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\ProjectContactPerson',
+                    'projectContactPerson',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'o = projectContactPerson.project'
+                )->leftJoin(
+                    'AppBundle\Entity\Person',
+                    'person3',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'person3 = projectContactPerson.person'
+                )->leftJoin(
+                    'AppBundle\Entity\ProjectPartners',
+                    'projectPartners',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'o = projectPartners.project'
+                )->leftJoin(
+                    'AppBundle\Entity\Partners',
+                    'partners',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'projectPartners = partners.projectPartners'
+                )->leftJoin(
+                    'AppBundle\Entity\Person',
+                    'person',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'person = partners.projectCoordinator'
+                )->leftJoin(
+                    'AppBundle\Entity\Person',
+                    'person2',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'person2 = partners.legalRepresentative'
+                )->andWhere(
+                    'CONCAT(CONCAT(person.firstNameEn, \' \'),  person.lastNameEn) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person.firstNameSr, \' \'),  person.lastNameSr) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person.firstNameOriginalLetter, \' \'),  person.lastNameOriginalLetter) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person2.firstNameEn, \' \'),  person2.lastNameEn) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person2.firstNameSr, \' \'),  person2.lastNameSr) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person2.firstNameOriginalLetter, \' \'),  person2.lastNameOriginalLetter) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person3.firstNameSr, \' \'),  person3.lastNameSr) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person3.firstNameSr, \' \'),  person3.lastNameSr) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person2.firstNameOriginalLetter, \' \'),  person2.lastNameOriginalLetter) LIKE :partnerOrganizationPerson')
+                    ->setParameter('partnerOrganizationPerson', '%'.$data[ProjectSearchForm::PARTNER_ORGANIZATION_PERSON].'%');;
+            }
+
+
+
+
+            /** DELIVERABLES */
+            if(!is_null($data[ProjectSearchForm::DELIVERABLE_TYPE]) ||
+                !is_null($data[ProjectSearchForm::DELIVERABLE_STATUS]) ||
+                !is_null($data[ProjectSearchForm::DELIVERABLE_TITLE])) {
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\ProjectDeliverablesActivities',
+                    'projectDeliverablesActivities',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'o = projectDeliverablesActivities.project'
+                )->leftJoin(
+                    'AppBundle\Entity\ProjectDeliverable',
+                    'projectDeliverable',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'projectDeliverable.projectDeliverablesActivities = projectDeliverablesActivities'
+                );
+            }
+
+            if(!is_null($data[ProjectSearchForm::DELIVERABLE_TYPE])){
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\ProjectDeliverableType',
+                    'projectDeliverableType',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'projectDeliverable.deliverableType = projectDeliverableType'
+                )->andWhere(
+                    'projectDeliverableType = :projectDeliverableType')
+                    ->setParameter("projectDeliverableType", $data[ProjectSearchForm::DELIVERABLE_TYPE]);
+            }
+
+            if(!is_null($data[ProjectSearchForm::DELIVERABLE_STATUS])){
+                $queryBuilder->andWhere(
+                    'projectDeliverable.deliverableStatus = :deliverableStatus')
+                    ->setParameter("deliverableStatus", $data[ProjectSearchForm::DELIVERABLE_STATUS]);
+            }
+            if(!is_null($data[ProjectSearchForm::DELIVERABLE_TITLE])){
+                $queryBuilder->andWhere(
+                    'projectDeliverable.titleEn LIKE :deliverableType OR projectDeliverable.titleSr LIKE :deliverableType')
+                    ->setParameter("deliverableType", '%'.$data[ProjectSearchForm::DELIVERABLE_TITLE].'%');
+            }
+
+
+
+
+            /** SUBJECT AREA */
+            if(!is_null($data[ProjectSearchForm::SUBJECT_AREA])) {
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\ProjectSubjectArea',
+                    'projectSubjectArea',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'o = projectSubjectArea.project'
+                )->andWhere( 'projectSubjectArea.areaType= :subjectArea')
+                    ->setParameter("subjectArea", $data[ProjectSearchForm::SUBJECT_AREA]);
+            }
+
+
 
             $results = $queryBuilder->getQuery()->getResult();
         }
@@ -91,7 +213,6 @@ class SearchController extends AbstractController {
             'results' => $results
         ]);
     }
-
 
     /**
      * @return ProjectRepository

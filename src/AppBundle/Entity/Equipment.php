@@ -26,10 +26,10 @@ class Equipment extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ProjectEquipment", inversedBy="equipment")
+     * @ORM\ManyToOne(targetEntity="Project")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    protected $projectEquipment;
+    protected $project;
 
     /**
      * @ORM\ManyToOne(targetEntity="Institution")
@@ -94,10 +94,6 @@ class Equipment extends AbstractAuditable
      */
     protected $locationEn;
 
-
-    //TODO Add attachment entity
-    //protected $atachments;
-
     /**
      * @return mixed
      */
@@ -117,17 +113,17 @@ class Equipment extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getProjectEquipment()
+    public function getProject()
     {
-        return $this->projectEquipment;
+        return $this->project;
     }
 
     /**
-     * @param mixed $projectEquipment
+     * @param mixed $project
      */
-    public function setProjectEquipment($projectEquipment)
+    public function setProject($project)
     {
-        $this->projectEquipment = $projectEquipment;
+        $this->project = $project;
     }
 
     /**
@@ -145,6 +141,7 @@ class Equipment extends AbstractAuditable
     {
         $this->institution = $institution;
     }
+
 
     /**
      * @return mixed

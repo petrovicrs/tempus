@@ -22,6 +22,11 @@ services:
     util.file_uploader:
         class: AppBundle\Util\FileUploader
         arguments: ["%file_uploads_directory%"]
+    get_set_method_normalizer:
+      class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+      public: false
+      tags:
+        - { name: serializer.normalizer }
 
     doctrine_entity_repository.application:
         class: Doctrine\ORM\EntityRepository
@@ -178,6 +183,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\ProjectKeyAction
+    doctrine_entity_repository.project_action:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectAction
     doctrine_entity_repository.project_partner_organisation:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

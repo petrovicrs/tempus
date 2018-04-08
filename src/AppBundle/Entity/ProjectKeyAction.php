@@ -36,6 +36,11 @@ class ProjectKeyAction extends AbstractAuditable
     protected $nameSr;
 
     /**
+     * @ORM\OneToMany(targetEntity="ProjectAction", mappedBy="keyAction", cascade={"persist"})
+     */
+    protected $keyActions;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -74,6 +79,23 @@ class ProjectKeyAction extends AbstractAuditable
     {
         $this->nameSr = $nameSr;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getKeyActions()
+    {
+        return $this->keyActions;
+    }
+
+    /**
+     * @param mixed $keyActions
+     */
+    public function setKeyActions($keyActions)
+    {
+        $this->keyActions = $keyActions;
+    }
+
 
     public function getName($locale) {
         if ($locale == "sr"){

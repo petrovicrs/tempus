@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProjectActionRepository")
@@ -22,18 +23,28 @@ class ProjectAction extends AbstractAuditable
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"main"})
      */
-    protected $id;
+    public $id;
 
     /**
      * @ORM\Column(name="name_en", type="string")
+     * @Groups({"main"})
      */
-    protected $nameEn;
+    public $nameEn;
 
     /**
      * @ORM\Column(name="name_sr", type="string")
+     * @Groups({"main"})
      */
-    protected $nameSr;
+    public $nameSr;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="ProjectKeyAction"
+     * )
+     */
+    protected $keyAction;
 
     /**
      * @return mixed
@@ -65,6 +76,22 @@ class ProjectAction extends AbstractAuditable
     public function getNameSr()
     {
         return $this->nameSr;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKeyAction()
+    {
+        return $this->keyAction;
+    }
+
+    /**
+     * @param mixed $keyAction
+     */
+    public function setKeyAction($keyAction)
+    {
+        $this->keyAction = $keyAction;
     }
 
     /**

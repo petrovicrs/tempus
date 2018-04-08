@@ -9,14 +9,14 @@
 namespace AppBundle\Form;
 
 
-use AppBundle\Entity\ProjectEquipment;
+use AppBundle\Entity\Equipment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjectEquipmentForm extends AbstractType
+class EquipmentsForm extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -52,7 +52,7 @@ class ProjectEquipmentForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => ProjectEquipment::class,
+//            'data_class' => Equipment::class,
             'allow_extra_fields' => true,
             'isCompleted' => 0,
         ]);

@@ -2,6 +2,40 @@
 
 {% block body %}
 
+    <script>
+        $(document).ready(function () {
+            $("#project_search_form_keyActions").change(function(){
+
+                var $project_search_form_actions = $('#project_search_form_actions');
+
+                var keyActionId = $(this).val();
+                if(keyActionId) {
+
+                    var url = '{{ localizedPath("project_actions_list", {'keyActionId': '1234'}) }}';
+                    url = url.replace("1234", keyActionId);
+
+                    $.ajax({
+                        type: 'get',
+                        url: url,
+                        success: function (data) {
+                            $project_search_form_actions.empty();
+                            $project_search_form_actions.html('<option>--</option>');
+                            for (var i = 0, total = data.length; i < total; i++) {
+                                $project_search_form_actions.append('<option value="' + data[i].id + '">' + data[i].name_en + '</option>');
+                            }
+                        }
+                    });
+                }
+                else {
+                    $project_search_form_actions.empty();
+                    $project_search_form_actions.html('<option>--</option>');
+                }
+            })
+        });
+    </script>
+
+
+
     <section id="main">
 
 
@@ -35,28 +69,117 @@
                             </div>
                             <div>
                                 {{ form_label(my_form.programmes, 'Programmes'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline col-xs-5" style="padding-left: 0">
+                                    {{ form_widget(my_form.programmes, {'attr': {
+                                        'class': 'selectpicker',
+                                        'data-live-search': 'true'
+                                    }})  }}
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div>
+                                {{ form_label(my_form.keyActions, 'Key actions'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline col-xs-5" style="padding-left: 0">
+                                    {{ form_widget(my_form.keyActions, {'attr': {
+                                        'class': 'selectpicker',
+                                        'data-live-search': 'true'
+                                    }})  }}
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div>
+                                {{ form_label(my_form.actions, 'Actions'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline col-xs-5" style="padding-left: 0">
+                                    {{ form_widget(my_form.actions, {'attr': {
+                                        'class': 'selectpicker',
+                                        'data-live-search': 'true'
+                                    }})  }}
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div>
+                                {{ form_label(my_form.startDateStart, 'Start date from'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                                 <div class="form-inline">
-                                    {{ form_widget(my_form.programmes, {'attr': {'class': 'form-control'}})  }}
+                                    {{ form_widget(my_form.startDateStart)  }}
                                 </div>
                             </div>
                             <div>
-                                {{ form_label(my_form.keyActions, 'Key actions'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                {{ form_label(my_form.startDateEnd, 'Stard date until'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                                 <div class="form-inline">
-                                    {{ form_widget(my_form.keyActions, {'attr': {'class': 'form-control'}})  }}
+                                    {{ form_widget(my_form.startDateEnd)  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.endDateStart, 'End date from'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.endDateStart)  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.endDateEnd, 'End date until'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.endDateEnd)  }}
                                 </div>
                             </div>
                             <div>
                                 {{ form_label(my_form.partnerOrganizationInstitution, 'Partner institution'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline col-xs-5" style="padding-left: 0">
+                                    {{ form_widget(my_form.partnerOrganizationInstitution, {'attr': {'class': 'selectpicker','data-live-search': 'true'}})  }}
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div>
+                                {{ form_label(my_form.partnerOrganizationInstitutionCountry, 'Partner institution country'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline col-xs-5" style="padding-left: 0">
+                                    {{ form_widget(my_form.partnerOrganizationInstitutionCountry, {'attr': {
+                                        'class': 'selectpicker',
+                                        'data-live-search': 'true',
+                                        'title': 'Please selectg'|trans}})  }}
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div>
+                                {{ form_label(my_form.partnerOrganizationPerson, 'Partner'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                                 <div class="form-inline">
-                                    {{ form_widget(my_form.partnerOrganizationInstitution, {'attr': {'class': 'form-control'}})  }}
+                                    {{ form_widget(my_form.partnerOrganizationPerson, {'attr': {'class': 'form-control'}})  }}
                                 </div>
                             </div>
                             <div>
-                                {{ form_label(my_form.partnerOrganizationInstitutionCountry, 'Partner institution country'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                                <div class="form-inline">
-                                    {{ form_widget(my_form.partnerOrganizationInstitutionCountry, {'attr': {'class': 'form-control'}})  }}
+                                {{ form_label(my_form.deliverableType, 'Deliverable Type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline col-xs-5" style="padding-left: 0">
+                                    {{ form_widget(my_form.deliverableType, {'attr': {'class': 'selectpicker','data-live-search': 'true'}})  }}
                                 </div>
                             </div>
+                            <br/>
+                            <br/>
+                            <div>
+                                {{ form_label(my_form.deliverableStatus, 'Deliverable Status'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline col-xs-5" style="padding-left: 0">
+                                    {{ form_widget(my_form.deliverableStatus, {'attr': {'class': 'selectpicker','data-live-search': 'true'}})  }}
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div>
+                                {{ form_label(my_form.deliverableTitle, 'Deliverable Title'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.deliverableTitle, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+
+                            <div>
+                                {{ form_label(my_form.subjectArea, 'Subject Area'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline col-xs-5" style="padding-left: 0">
+                                    {{ form_widget(my_form.subjectArea, {'attr': {'class': 'selectpicker','data-live-search': 'true'}})  }}
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
                             {{ form_row(my_form.submit) }}
                         </div>
 
@@ -90,8 +213,8 @@
                 <th>{% trans %}Round{% endtrans %}</th>
                 <th>{% trans %}On-going{% endtrans %}</th>
                 {% if app.user %}
-                    <th>{% trans %}View{% endtrans %}</th>
-                    <th>{% trans %}Edit{% endtrans %}</th>
+                    <th class="noExport">{% trans %}View{% endtrans %}</th>
+                    <th class="noExport">{% trans %}Edit{% endtrans %}</th>
                 {% endif %}
             </tr>
             </thead>
@@ -132,7 +255,16 @@
 
         {#todo: move this code to separate js file and on document ready disable seaching for table example#}
         <script>
-            $('#example').dataTable({searching: false});
+            var table = $('#example').DataTable({
+                searching: false,
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        exportOptions: {columns: ':not(.noExport)'}
+                    }
+                ]
+               });
         </script>
 
 {% endblock %}

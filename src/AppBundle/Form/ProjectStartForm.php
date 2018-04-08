@@ -7,6 +7,7 @@
  */
 namespace AppBundle\Form;
 
+use AppBundle\FormEventListener\AddProjectActionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -28,6 +29,8 @@ class ProjectStartForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventSubscriber(new AddProjectActionSubscriber('actions', 'keyActions'));
+
         $builder
             ->add('programmes', EntityType::class, [
                 'class' => 'AppBundle:ProjectProgramme',
@@ -36,11 +39,7 @@ class ProjectStartForm extends AbstractType
             ->add('keyActions', EntityType::class, [
                 'class' => 'AppBundle:ProjectKeyAction',
                 'choice_label' => 'name' . ucfirst($options['locale']),
-                'data' => 2
-            ])
-            ->add('actions', EntityType::class, [
-                'class' => 'AppBundle:ProjectAction',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'placeholder' => '--',
             ])
             ->add('calls', EntityType::class, [
                 'class' => 'AppBundle:ProjectCall',

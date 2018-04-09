@@ -138,7 +138,7 @@
                                     {{ form_widget(my_form.partnerOrganizationInstitutionCountry, {'attr': {
                                         'class': 'selectpicker',
                                         'data-live-search': 'true',
-                                        'title': 'Please selectg'|trans}})  }}
+                                        'title': 'Please select'|trans}})  }}
                                 </div>
                             </div>
                             <br/>
@@ -176,6 +176,34 @@
                                 {{ form_label(my_form.subjectArea, 'Subject Area'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                                 <div class="form-inline col-xs-5" style="padding-left: 0">
                                     {{ form_widget(my_form.subjectArea, {'attr': {'class': 'selectpicker','data-live-search': 'true'}})  }}
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div>
+                                {{ form_label(my_form.equipmentType, 'Equipment Type'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline col-xs-5" style="padding-left: 0">
+                                    {{ form_widget(my_form.equipmentType, {'attr': {'class': 'selectpicker','data-live-search': 'true'}})  }}
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div>
+                                {{ form_label(my_form.equipmentTitle, 'Equipment Title'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.equipmentTitle, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.equipmentQuantity, 'Equipment Quantity'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.equipmentQuantity, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.equipmentDescription, 'Equipment Description'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.equipmentDescription, {'attr': {'class': 'form-control'}})  }}
                                 </div>
                             </div>
                             <br/>

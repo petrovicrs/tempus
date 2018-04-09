@@ -27,7 +27,6 @@ class InstitutionsForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add('nameEn', TextType::class)
             ->add('nameSr', TextType::class)
@@ -53,7 +52,6 @@ class InstitutionsForm extends AbstractType
             ->add('parentInstitution', EntityType::class, [
                 'class' => 'AppBundle:Institution',
                 'choice_label' => 'name' . ucfirst($options['locale']),
-                'placeholder' => 'Please choose',
                 'empty_data'  => null,
                 'required' => false,
                 'placeholder' => 'Choose Institution/Organisation'
@@ -112,7 +110,7 @@ class InstitutionsForm extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'label' => false
+                'label' => false,
             ))
             ->add('accreditations', CollectionType::class, array(
                 'entry_type'  => InstitutionAccreditationForm::class,
@@ -126,7 +124,9 @@ class InstitutionsForm extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
-                'label' => false
+                'label' => false,
+                'mapped' => false,
+                'required' => false
             ))
             ->add('legalRepresentatives', CollectionType::class, array(
                 'entry_type'  => InstitutionLegalRepresentativeForm::class,
@@ -157,7 +157,7 @@ class InstitutionsForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'locale' => 'en'
+            'locale' => 'en',
         ]);
 
     }

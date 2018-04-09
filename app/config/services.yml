@@ -2,6 +2,8 @@
 # http://symfony.com/doc/current/service_container.html
 parameters:
 #    parameter_name: value
+parameters:
+    my.file_type_extension.class: AppBundle\FormType\FileTypeExtension
 
 services:
     my.twig.extension:
@@ -27,6 +29,11 @@ services:
       public: false
       tags:
         - { name: serializer.normalizer }
+
+    my.file_type_extension:
+      class: %my.file_type_extension.class%
+      tags:
+        - { name: form.type_extension, alias: file, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
 
     doctrine_entity_repository.application:
         class: Doctrine\ORM\EntityRepository
@@ -293,11 +300,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\EquipmentRiskLevel
-    doctrine_entity_repository.risk_level_manually_uploaded:
+    doctrine_entity_repository.file:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
         arguments:
-            - AppBundle\Entity\RiskLevelManuallyUploaded
+            - AppBundle\Entity\File
     doctrine_entity_repository.project_equipment:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

@@ -2,7 +2,7 @@
 
 {% block body %}
     <section id="main">
-        {% include 'sub-navbar-view.html.twig' with {'active': 'project', 'projectId': project.id} %}
+        {% include 'sub-navbar-view.html.twig' with {'active': 'project', 'projectId': project.id, 'actionTab': actionTab} %}
         <div class="container-fluid">
             <div class="page-header">
                 <h1>{% trans %}Project{% endtrans %}</h1>
@@ -28,6 +28,7 @@
                     <td><b>{% trans %}Project Nr.{% endtrans %}</b>: {{ project.projectNumber ? project.projectNumber : 'N/A'}}</td>
                     <td><b>{% trans %}Audited{% endtrans %}</b>: {{ project.audited ? 'Yes' : 'No'}}</td>
                     <td colspan="2"><b>{% trans %}On-Going{% endtrans %}</b>: {{ project.onGoing ? 'Yes' : 'No'}}</td>
+                    <td><b>{% trans %}Published{% endtrans %}</b>: {{ project.published ? 'Yes' : 'No'}}</td>
                 </tr>
                 <tr>
                     <td><b>{% trans %}Start Date Nr.{% endtrans %}</b>: {{ project.startDatetime | date('d/m/y')}}</td>

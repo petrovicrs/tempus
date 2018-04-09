@@ -39,9 +39,10 @@ class ProjectKa2Form extends AbstractType
             ->add('acronym', TextType::class)
             ->add('endDatetime', DateType::class)
             ->add('startDatetime', DateType::class)
-            ->add('durationMonths', TextType::class)
+            ->add('durationMonths', IntegerType::class)
             ->add('extendedUntil', DateType::class)
             ->add('audited', CheckboxType::class, array('required' => false))
+            ->add('published', CheckboxType::class, array('required' => false))
             ->add('applicationYear', TextType::class)
             ->add('projectNumber', TextType::class)
             ->add('website', TextType::class)
@@ -72,12 +73,16 @@ class ProjectKa2Form extends AbstractType
                 }
             ])
             ->add('ftOfficers', EntityType::class, [
-                'class' => 'AppBundle:ProjectFtOfficer',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'class' => 'AppBundle:User',
+                'choice_label' => function($value, $key, $index) use ($options) {
+                    return $value->getName() . ' ' . $value->getSurname();
+                }
             ])
             ->add('eaceaOfficers', EntityType::class, [
-                'class' => 'AppBundle:ProjectEaceaOfficer',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'class' => 'AppBundle:User',
+                'choice_label' => function($value, $key, $index) use ($options) {
+                    return $value->getName() . ' ' . $value->getSurname();
+                }
             ])
             ->add('remarkOfficer', TextareaType::class)
             ->add('projectGradeType', EntityType::class, [
@@ -91,6 +96,14 @@ class ProjectKa2Form extends AbstractType
             ->add('projectObjectivesEnglish', TextareaType::class)
             ->add('projectObjectivesSerbian', TextareaType::class)
             ->add('projectObjectivesNative', TextareaType::class)
+//            ->add('participantFewerOptions', CheckboxType::class, array('required' => false))
+//            ->add('projectTargetGroupFewerOpportunities', CollectionType::class, array(
+//                'entry_type'  => ProjectTargetGroupForm::class,
+//                'allow_add' => true,
+//                'by_reference' => false,
+//                'allow_delete' => true,
+//                'label' => false
+//            ))
             ->add('projectTargetGroup', CollectionType::class, array(
                 'entry_type'  => ProjectTargetGroupForm::class,
                 'allow_add' => true,

@@ -73,7 +73,7 @@ class GroupCalendarController extends AbstractController
         }
 
         return $this->render('group-calendar/create.twig', ['my_form' => $calendarForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(), 'actionTab' => $this->showActionTab($project),
         ]);
     }
 
@@ -142,6 +142,7 @@ class GroupCalendarController extends AbstractController
                 'isCompleted' => $project->getIsCompleted(),
                 'keyAction' => $project->getKeyActions()->getNameSr(),
                 'projectId' => $project->getId(),
+                'actionTab' => $this->showActionTab($project),
             ]
         );
     }
@@ -160,7 +161,8 @@ class GroupCalendarController extends AbstractController
         return $this->render('group-calendar/view.twig', [
             'events' => $events,
             'keyAction' => $project->getKeyActions()->getNameSr(),
-            'projectId' => $projectId
+            'projectId' => $projectId,
+            'actionTab' => $this->showActionTab($project),
         ]);
     }
 

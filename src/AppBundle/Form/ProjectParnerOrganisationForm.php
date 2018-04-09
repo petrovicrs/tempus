@@ -25,7 +25,8 @@ class ProjectParnerOrganisationForm extends AbstractType
             ->add('organisation', EntityType::class, [
                 'class' => 'AppBundle:Institution',
                 'choice_label' => 'name' . ucfirst($options['locale'])
-            ]);
+            ])
+            ->add('associatedPartner', CheckboxType::class, array('required' => false));
     }
 
     /**

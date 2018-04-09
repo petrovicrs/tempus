@@ -206,6 +206,11 @@ class Project extends AbstractAuditable
     protected $onGoing;
 
     /**
+     * @ORM\Column(name="published", type="boolean", nullable=true)
+     */
+    protected $published;
+
+    /**
      * @ORM\Column(name="participant_fewer_options", type="boolean", nullable=true)
      */
     protected $participantFewerOptions;
@@ -271,14 +276,14 @@ class Project extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="ProjectFtOfficer"
+     *      targetEntity="User"
      * )
      */
     protected $ftOfficers;
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="ProjectEaceaOfficer"
+     *      targetEntity="User"
      * )
      */
     protected $eaceaOfficers;
@@ -357,6 +362,11 @@ class Project extends AbstractAuditable
      * @ORM\OneToMany(targetEntity="ProjectTargetGroup", mappedBy="project", cascade={"persist"})
      */
     protected $projectTargetGroup;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ProjectTargetGroupFewerOpportunities", mappedBy="project", cascade={"persist"})
+     */
+    protected $projectTargetGroupFewerOpportunities;
 
     /**
      * @ORM\OneToMany(targetEntity="ProjectPriority", mappedBy="project", cascade={"persist"})
@@ -597,6 +607,22 @@ class Project extends AbstractAuditable
     public function setOnGoing($onGoing)
     {
         $this->onGoing = $onGoing;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * @param mixed $published
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
     }
 
     /**
@@ -1352,6 +1378,22 @@ class Project extends AbstractAuditable
     public function getSubjectArea()
     {
         return $this->getSubjectAreas()->first();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectTargetGroupFewerOpportunities()
+    {
+        return $this->projectTargetGroupFewerOpportunities;
+    }
+
+    /**
+     * @param mixed $projectTargetGroupFewerOpportunities
+     */
+    public function setProjectTargetGroupFewerOpportunities($projectTargetGroupFewerOpportunities)
+    {
+        $this->projectTargetGroupFewerOpportunities = $projectTargetGroupFewerOpportunities;
     }
 }
 

@@ -22,6 +22,7 @@ use AppBundle\Entity\ProjectTopic;
 use AppBundle\Entity\ProjectStart;
 use AppBundle\Repository\ProjectContactRepository;
 use AppBundle\Repository\ProjectSubjectAreaRepository;
+use AppBundle\Repository\ProjectTargetGroupFewerOpportunitiesRepository;
 use AppBundle\Repository\ProjectTargetGroupRepository;
 use AppBundle\Repository\ProjectTopicRepository;
 use AppBundle\Repository\ProjectStartRepository;
@@ -51,6 +52,19 @@ class ProjectController extends AbstractController
 {
     /**
      * @Route("/", name="default_route")
+     * @Route("/statistic", name="statistic_route")
+     */
+    public function statisticAction()
+    {
+        $projects = $this->getProjectRepository()->findBy(['isCompleted' => 1]);
+        $institutions = $this->getInstitutionRepository()->findAll();
+        $person = $persons = $this->getPersonRepository()->findAll();
+
+        return $this->render('project/statistic.twig', ['projects' => $projects, 'institutions' => $institutions,
+            'persons' => $person]);
+    }
+
+     /**
      * @Route("/{locale}/project/list", name="project_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction()
@@ -76,6 +90,8 @@ class ProjectController extends AbstractController
         ]);
 
         $projectForm->handleRequest($request);
+
+        $actionTab = $this->showActionTab($project);
 
         if ($projectForm->isSubmitted() && $projectForm->isValid())
         {
@@ -123,14 +139,18 @@ class ProjectController extends AbstractController
                 $this->getProjectNotesRepository()->save($note);
             }
 
-            return $this->redirectToRoute('action_create');
+            if ($actionTab) {
+                return $this->redirectToRoute('action_create');
+            }
 
+            return $this->redirectToRoute('resources_create');
         }
 
         $data = [
             'my_form' => $projectForm->createView(),
             'projectId' => $project->getId(),
             'isCompleted' => $project->getIsCompleted(),
+            'actionTab' => $actionTab,
         ];
 
         return $this->render('project/create.twig', $data);
@@ -157,13 +177,12 @@ class ProjectController extends AbstractController
             $project->setUser($this->getUser());
             $this->getProjectRepository()->saveProject($project);
 
+
             if ($project->getKeyActions()->getName($request->getLocale()) == 'ka1') {
                 return $this->redirectToRoute('project_create', ['active' => 'project']);
-            } else if ($project->getKeyActions()->getName($request->getLocale()) == 'ka2') {
+            } else {
                 return $this->redirectToRoute('project_ka2_create', ['active' => 'project']);
             }
-
-            return $this->redirectToRoute('project_list');
 
         }
 
@@ -399,6 +418,7 @@ class ProjectController extends AbstractController
                 'my_form' => $projectForm->createView(),
                 'projectId' => $projectId,
                 'isCompleted' => $project->getIsCompleted(),
+                'actionTab' => $this->showActionTab($project),
         ]);
     }
 
@@ -569,7 +589,7 @@ class ProjectController extends AbstractController
             $originalNotes->add($note);
         }
 
-        return $this->render('project/view.twig', ['project' => $project, 'projectId' => $projectId]);
+        return $this->render('project/view.twig', ['project' => $project, 'projectId' => $projectId, 'actionTab' => $this->showActionTab($project)]);
     }
 
     /**
@@ -693,6 +713,15 @@ class ProjectController extends AbstractController
     }
 
     /**
+     * @return ProjectTargetGroupFewerOpportunitiesRepository
+     */
+
+    private function getProjectTargetGroupFewerOpportunitiesRepository() {
+
+        return $this->get('doctrine_entity_repository.project_target_group');
+    }
+
+    /**
      * @return ProjectNoteRepository
      */
     private function getProjectPriorityRepository() {
@@ -716,4 +745,19 @@ class ProjectController extends AbstractController
         return $this->get('doctrine_entity_repository.project_evaluator_grade');
     }
 
+    /**
+     * @return InstitutionRepository
+     */
+    private function getInstitutionRepository() {
+
+        return $this->get('doctrine_entity_repository.institution');
+    }
+
+    /**
+     * @return PersonRepository
+     */
+    private function getPersonRepository() {
+
+        return $this->get('doctrine_entity_repository.person');
+    }
 }

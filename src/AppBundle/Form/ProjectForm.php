@@ -36,9 +36,10 @@ class ProjectForm extends AbstractType
             ->add('endDatetime', DateType::class)
             ->add('startDatetime', DateType::class)
             ->add('projectNumber', TextType::class)
-            ->add('durationMonths', TextType::class)
+            ->add('durationMonths', IntegerType::class)
             ->add('audited', CheckboxType::class, array('required' => false))
             ->add('onGoing', CheckboxType::class, array('required' => false))
+            ->add('published', CheckboxType::class, array('required' => false))
             ->add('applicantOrganisations', CollectionType::class, array(
                 'entry_type'  => ProjectApplicantOrganisationForm::class,
                 'allow_add' => true,
@@ -83,6 +84,20 @@ class ProjectForm extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ))
+            ->add('ftOfficers', EntityType::class, [
+                'class' => 'AppBundle:User',
+                'required' => false,
+                'choice_label' => function($value, $key, $index) use ($options) {
+                    return $value->getName() . ' ' . $value->getSurname();
+                }
+            ])
+            ->add('eaceaOfficers', EntityType::class, [
+                'class' => 'AppBundle:User',
+                'required' => false,
+                'choice_label' => function($value, $key, $index) use ($options) {
+                    return $value->getName() . ' ' . $value->getSurname();
+                }
+            ])
 //            ->add('calls', EntityType::class, [
 //                'class' => 'AppBundle:ProjectFtOfficer',
 //                'choice_label' => 'name' . ucfirst($options['locale'])

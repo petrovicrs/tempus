@@ -61,7 +61,7 @@
             {% endfor %}
         </ul>
     {% endif %}
-    {% if projectAction == 'KA105' %}
+    {% if projectAction == 'KA105' or projectAction == 'KA125' %}
         <ul class="action-details" data-prototype="{{ include('/action/includes/action-details-ka105.html.twig',
             {'form': form.actionDetails.vars.prototype })|e }}">
             {% for action in form.actionDetails %}

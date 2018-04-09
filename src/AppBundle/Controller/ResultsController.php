@@ -59,7 +59,7 @@ class ResultsController extends AbstractController
         }
 
         return $this->render('results/create.twig', ['my_form' => $projectResultsForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()]);
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(), 'actionTab' => $this->showActionTab($project)]);
     }
 
     /**
@@ -120,13 +120,13 @@ class ResultsController extends AbstractController
                 return $this->redirectToRoute('reporting_create');
             }
         }
-
         return $this->render('results/edit.twig',
             [
                 'my_form' => $projectResultForm->createView(),
                 'keyAction' => $project->getKeyActions()->getNameSr(),
                 'projectId' => $project->getId(),
                 'isCompleted' => $project->getIsCompleted(),
+                'actionTab' => $this->showActionTab($project),
             ]
         );
     }

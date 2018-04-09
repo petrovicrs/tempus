@@ -30,6 +30,11 @@ class ProjectPartnerOrganisation extends AbstractAuditable
     protected $organisation;
 
     /**
+     * @ORM\Column(name="associated_partner", type="boolean", nullable=true)
+     */
+    protected $associatedPartner;
+
+    /**
      * @ORM\ManyToOne(
      *      targetEntity="Project",
      *      inversedBy="partnerOrganisations"
@@ -76,6 +81,22 @@ class ProjectPartnerOrganisation extends AbstractAuditable
     public function setProject($project)
     {
         $this->project = $project;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAssociatedPartner()
+    {
+        return $this->associatedPartner;
+    }
+
+    /**
+     * @param mixed $associatedPartner
+     */
+    public function setAssociatedPartner($associatedPartner)
+    {
+        $this->associatedPartner = $associatedPartner;
     }
 
 }

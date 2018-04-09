@@ -49,6 +49,8 @@ class ReportingController extends AbstractController
 
         $projectReportingForm->handleRequest($request);
 
+        $keyAction = $project->getKeyActions()->getNameSr();
+
         if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
 
             /** @var Reporting $reporting */
@@ -81,13 +83,18 @@ class ReportingController extends AbstractController
             $projectReporting->setProject($project);
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            return $this->redirectToRoute('equipment_create');
+            if ($keyAction == 'ka1') {
+                return $this->redirectToRoute('attachments_create');
+            } else {
+                return $this->redirectToRoute('equipment_create');
+            }
         }
 
         return $this->render(
             'reporting/create.twig',
             ['my_form' => $projectReportingForm->createView(), 'questions' => $questions,
-                'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()]);
+                'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(),
+                'actionTab' => $this->showActionTab($project)]);
     }
 
     /**
@@ -182,6 +189,7 @@ class ReportingController extends AbstractController
             'keyAction' => $project->getKeyActions()->getNameSr(),
             'projectId' => $project->getId(),
             'isCompleted' => $project->getIsCompleted(),
+            'actionTab' => $this->showActionTab($project),
         ]);
     }
 

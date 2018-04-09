@@ -65,7 +65,7 @@ class ResourcesController extends AbstractController
         }
 
         return $this->render('resources/create.twig', ['my_form' => $projectResourcesForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()]);
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(), 'actionTab' => $this->showActionTab($project)]);
     }
 
     /**
@@ -134,6 +134,7 @@ class ResourcesController extends AbstractController
                 'keyAction' => $project->getKeyActions()->getNameSr(),
                 'projectId' => $project->getId(),
                 'isCompleted' => $project->getIsCompleted(),
+                'actionTab' => $this->showActionTab($project)
             ]);
     }
 
@@ -152,6 +153,7 @@ class ResourcesController extends AbstractController
             'projectId' => $projectId,
             'keyAction' => $project->getKeyActions()->getNameSr(),
             'project' => $project,
+            'actionTab' => $this->showActionTab($project)
         ]);
     }
 

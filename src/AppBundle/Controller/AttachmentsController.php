@@ -103,7 +103,8 @@ class AttachmentsController extends AbstractController
             'my_form' => $attachmentsForm->createView(),
             'keyAction' => $project->getKeyActions()->getNameSr(),
             'projectId' => $project->getId(),
-            'attachments' => null
+            'attachments' => null,
+            'actionTab' => $this->showActionTab($project),
         ]);
     }
 
@@ -214,6 +215,7 @@ class AttachmentsController extends AbstractController
                 'projectId' => $projectId,
                 'keyAction' => $project->getKeyActions()->getNameSr(),
                 'isCompleted' => $project->getIsCompleted(),
+                'actionTab' => $this->showActionTab($project),
             ]
         );
     }

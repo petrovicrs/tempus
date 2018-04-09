@@ -5,7 +5,7 @@
     <section id="main">
 
     {% if keyAction == 'ka1' %}
-        {% include 'sub-navbar.html.twig' with {'active': 'results'} %}
+        {% include 'sub-navbar.html.twig' with {'active': 'results', 'actionTab': actionTab} %}
     {% endif %}
     {%  if keyAction == 'ka2' %}
         {% include 'sub-navbar-ka2.html.twig' with {'active': 'results'} %}

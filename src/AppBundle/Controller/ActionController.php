@@ -63,14 +63,13 @@ class ActionController extends AbstractController
         $mobFlowsForm->handleRequest($request);
 
         if ($mobFlowsForm->isSubmitted() && $mobFlowsForm->isValid()) {
-//            dump($mobFlows->getActivities());die;
             /*  @var  Activity $activity */
             foreach($mobFlows->getActivities() as $activity){
 
                 /* @var ActionDetails $actionDetail */
                 foreach ($activity->getActionDetails() as $actionDetail) {
                     $actionDetail->setActivity($activity);
-//                    $this->getActionDetailsRepository()->save($actionDetail);
+                    $this->getActionDetailsRepository()->save($actionDetail);
                 }
 
                 $activity->setProjectMobilityFlows($mobFlows);
@@ -83,11 +82,13 @@ class ActionController extends AbstractController
             return $this->redirectToRoute('resources_create');
         }
 
+
         return $this->render('action/create.twig', [
             'my_form' => $mobFlowsForm->createView(),
             'keyAction' => $project->getKeyActions()->getNameSr(),
             'projectAction' => $project->getActions()->getNameSr(),
             'projectId' => $project->getId(),
+            'actionTab' => $this->showActionTab($project),
         ]);
     }
 
@@ -108,6 +109,12 @@ class ActionController extends AbstractController
             'locale' => $request->getLocale(),
             'isCompleted' => $project->getIsCompleted(),
         ]);
+
+        if (count($mobFlows) === 0) {
+            $mobFlows = new ProjectMobilityFlows();
+            $mobFlows->setProject($project);
+            $this->getProjectMobilityFlowsRepository()->save($mobFlows);
+        }
 
         $originalActivities = new ArrayCollection();
         $originalActionDetails = new ArrayCollection();
@@ -187,7 +194,8 @@ class ActionController extends AbstractController
             'keyAction' => $project->getKeyActions()->getName($request->getLocale()),
             'projectAction' => $project->getActions()->getName($request->getLocale()),
             'projectId' => $project->getId(),
-            'isCompleted' => $project->getIsCompleted()
+            'isCompleted' => $project->getIsCompleted(),
+            'actionTab' => $this->showActionTab($project),
         ]);
     }
 
@@ -213,6 +221,7 @@ class ActionController extends AbstractController
             'keyAction'  => $project->getKeyActions()->getNameSr(),
             'projectAction' => strtolower($project->getActions()->getNameSr()),
             'projectId'  => $project->getId(),
+            'actionTab' => $this->showActionTab($project),
         ]);
     }
 

@@ -74,7 +74,7 @@ class PartnersController extends AbstractController
 
             $this->getProjectPartnersRepository()->save($projectPartners);
 
-            return $this->redirectToRoute('action_create');
+            return $this->redirectToRoute('resources_create');
         }
 
         return $this->render('partners/create.twig',

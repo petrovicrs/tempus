@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                     <td><b>{% trans %}Project Nr.{% endtrans %}</b>: {{ project.projectNumber ? project.projectNumber : 'N/A'}}</td>
-                    <td><b>{% trans %}Audited{% endtrans %}</b>: {{ project.audited ? 'Yes' : 'No'}}</td>
+                    <td><b>{% trans %}Audited{% endtrans %}</b>: {{ project.audited ? 'Yes' : 'No'}} <b>{% trans %}Published{% endtrans %}</b>: {{ project.published ? 'Yes' : 'No'}}</td>
                     <td><b>{% trans %}Application Year{% endtrans %}</b>: {{ project.applicationYear ? project.applicationYear : 'N/A'}}</td>
                     <td><b>{% trans %}Web Site{% endtrans %}</b>: {{ project.website ? project.website : 'N/A'}}</td>
                 </tr>

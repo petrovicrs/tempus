@@ -3,7 +3,7 @@
 {% block body %}
     <section id="main">
         {% if keyAction == 'ka1' %}
-            {% include 'sub-navbar-view.html.twig' with {'active': 'attachments', 'projectId': projectId} %}
+            {% include 'sub-navbar-view.html.twig' with {'active': 'attachments', 'projectId': projectId, 'actionTab': actionTab} %}
         {% endif %}
         {%  if keyAction == 'ka2' %}
             {% include 'sub-navbar-ka2-view.html.twig' with {'active': 'attachments', 'projectId': projectId} %}

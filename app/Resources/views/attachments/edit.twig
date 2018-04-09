@@ -4,7 +4,7 @@
     <section id="main">
     <script type="text/javascript" src="{{ asset('/js/attachments.js')}}" ></script>
     {% if keyAction == 'ka1' %}
-        {% include 'sub-navbar.html.twig' with {'active': 'attachments', 'isCompleted': isCompleted, projectId: projectId} %}
+        {% include 'sub-navbar.html.twig' with {'active': 'attachments', 'isCompleted': isCompleted, projectId: projectId, 'actionTab': actionTab} %}
     {% endif %}
     {%  if keyAction == 'ka2' %}
         {% include 'sub-navbar-ka2.html.twig' with {'active': 'attachments', 'isCompleted': isCompleted, projectId: projectId} %}

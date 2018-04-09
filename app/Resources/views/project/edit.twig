@@ -9,7 +9,7 @@
     <script type="text/javascript" src="{{ asset('/js/projecSubjectAreas.js')}}" ></script>
     <script type="text/javascript" src="{{ asset('/js/projecNotes.js')}}" ></script>
     <section id="main">
-    {% include 'sub-navbar.html.twig' with {'active': 'project'} %}
+    {% include 'sub-navbar.html.twig' with {'active': 'project', 'actionTab': actionTab} %}
         <div class="container-fluid">
             <div class="page-header">
                 <h1>{% trans %}Edit Project{% endtrans %}</h1>
@@ -88,6 +88,12 @@
                                 {{ form_widget(my_form.onGoing, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
+                        <div>
+                            {{ form_label(my_form.published, 'Published'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.published, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div>
                         <ul class="applicantOrganisations" data-prototype="{{ include('/project/includes/applicantOrganisations.html.twig',
                         {'form': my_form.applicantOrganisations.vars.prototype })|e }}">
                             {% for applicantOrganisation in my_form.applicantOrganisations %}
@@ -104,6 +110,18 @@
                             {{ form_label(my_form.consortium, 'Consortium?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                             <div class="form-inline">
                                 {{ form_widget(my_form.consortium, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div>
+                        <div>
+                            {{ form_label(my_form.ftOfficers, 'FT Officers'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.ftOfficers, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div>
+                        <div>
+                            {{ form_label(my_form.eaceaOfficers, 'EACEA Officers'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.eaceaOfficers, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
                         <ul class="partnerOrganisations" data-prototype="{{ include('/project/includes/partnerOrganisations.html.twig',

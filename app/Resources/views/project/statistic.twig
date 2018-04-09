@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section id="main">
+
+        <div class="container-fluid">
+            <div class="col-xs-12 section-heading">
+                <h2><b>{% trans %}Statistics{% endtrans %}</b></h2>
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-primary btn-lg"><a style="color:white" href="{{ localizedPath('project_list')}}">Projects - {{ projects|length }}</a></button>
+                <button type="button" class="btn btn-primary btn-lg"><a style="color:white" href="{{ localizedPath('person_list')}}">Persons - {{ persons|length }}</a></button>
+                <button type="button" class="btn btn-primary btn-lg"><a style="color:white" href="{{ localizedPath('institution_list')}}">Institutions - {{ institutions|length }}</a></button>
+            </div>
+
+        </div>
+    <div>
+{% endblock %}

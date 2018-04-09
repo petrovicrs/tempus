@@ -233,6 +233,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\ProjectTargetGroup
+    doctrine_entity_repository.project_target_group_fewer_opportunities:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectTargetGroupFewerOpportunities
     doctrine_entity_repository.project_priority:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

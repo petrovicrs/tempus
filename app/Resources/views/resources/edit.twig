@@ -4,7 +4,7 @@
     <script type="text/javascript" src="{{ asset('/js/resources.js')}}"></script>
     <section id="main">
     {% if keyAction == 'ka1' %}
-        {% include 'sub-navbar.html.twig' with {'active': 'resources', 'isCompleted': isCompleted, projectId: projectId} %}
+        {% include 'sub-navbar.html.twig' with {'active': 'resources', 'isCompleted': isCompleted, projectId: projectId, 'actionTab': actionTab} %}
     {% endif %}
     {%  if keyAction == 'ka2' %}
         {% include 'sub-navbar-ka2.html.twig' with {'active': 'resources', 'isCompleted': isCompleted} %}
@@ -12,10 +12,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="controls resources">
-                {% if keyAction == 'ka1' and not isCompleted %}
-                    <a href="{{ localizedPath('project_edit', {projectId: projectId}) }}"><button>Back</button></a>
-                {% endif %}
-                {%  if keyAction == 'ka2' and not isCompleted %}
+                {% if keyAction == 'ka1' and not isCompleted and actionTab %}
+                    <a href="{{ localizedPath('action_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                {% else %}
                     <a href="{{ localizedPath('partner_edit', {projectId: projectId}) }}"><button>Back</button></a>
                 {% endif %}
                 <div class="col-sm-12">

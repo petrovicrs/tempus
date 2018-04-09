@@ -38,7 +38,7 @@ class GroupCalendar extends AbstractAuditable
     protected $project;
 
     /**
-     * @Column(name="event_date", type="datetime")
+     * @Column(name="event_date", type="datetime", nullable=true)
      */
     protected $eventDate;
 
@@ -48,7 +48,7 @@ class GroupCalendar extends AbstractAuditable
     protected $eventType;
 
     /**
-     * @Column(name="event_description", type="string", length=255)
+     * @Column(name="event_description", type="string", length=255, nullable=true)
      */
     protected $eventDescription;
 

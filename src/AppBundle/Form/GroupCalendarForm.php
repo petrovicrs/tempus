@@ -14,6 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,12 +27,13 @@ class GroupCalendarForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('eventDate', DateType::class)
+            ->add('eventDate', DateType::class, ['required' => false])
             ->add('eventType', EntityType::class, array(
                 'class' => 'AppBundle\Entity\GroupCalendarEventType',
-                'choice_label' => 'name' . ucfirst($options['locale'])
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'required' => false
             ))
-            ->add('eventDescription')
+            ->add('eventDescription', TextType::class, ['required' => false])
             ->add('eventReminder', CollectionType::class, array(
                 'entry_type' => EventReminderForm::class,
                 'allow_add' => true,

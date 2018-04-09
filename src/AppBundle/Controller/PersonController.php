@@ -270,7 +270,6 @@ class PersonController extends AbstractController
         return $this->render('person/edit.twig', ['my_form' => $projectForm->createView()]);
     }
 
-
     /**
      * @return PersonRepository
      */
@@ -278,8 +277,6 @@ class PersonController extends AbstractController
 
         return $this->get('doctrine_entity_repository.person');
     }
-
-
 
     /**
      * @return PersonContactRepository

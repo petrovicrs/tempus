@@ -82,6 +82,12 @@
                             </div>
                         </div>
                         <div>
+                            {{ form_label(my_form.published, 'Published'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.published, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div>
+                        <div>
                             {{ form_label(my_form.applicationYear, 'Application year'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                             <div class="form-inline">
                                 {{ form_widget(my_form.applicationYear, {'attr': {'class': 'form-control'}})  }}

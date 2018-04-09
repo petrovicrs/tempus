@@ -41,9 +41,9 @@ class InstitutionRiskLevel extends AbstractAuditable
     protected $riskLevelType;
 
     /**
-     * @ORM\OneToMany(targetEntity="RiskLevelManuallyUploaded", mappedBy="institutionRiskLevel", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="File", orphanRemoval=true)
      */
-    protected $manuallyUploadedFiles;
+    protected $file;
 
     public function __construct()
     {
@@ -102,16 +102,18 @@ class InstitutionRiskLevel extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getManuallyUploadedFiles()
+    public function getFile()
     {
-        return $this->manuallyUploadedFiles;
+        return $this->file;
     }
 
     /**
-     * @param mixed $manuallyUploadedFiles
+     * @param mixed $file
      */
-    public function setManuallyUploadedFiles($manuallyUploadedFiles)
+    public function setFile($file)
     {
-        $this->manuallyUploadedFiles = $manuallyUploadedFiles;
+        $this->file = $file;
     }
+
+
 }

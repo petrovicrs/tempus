@@ -14,8 +14,8 @@ use AppBundle\Entity\InstitutionLegalRepresentative;
 use AppBundle\Entity\InstitutionNote;
 use AppBundle\Entity\InstitutionRiskLevel;
 use AppBundle\Entity\PicNumber;
-use AppBundle\Entity\ProjectReporting;
-use AppBundle\Entity\RiskLevelManuallyUploaded;
+use AppBundle\Form\RiskLevelForm;
+use AppBundle\Repository\FileRepository;
 use AppBundle\Repository\InstitutionContactRepository;
 use AppBundle\Repository\InstitutionRepository;
 use AppBundle\Repository\InstitutionRiskLevelRepository;
@@ -26,14 +26,15 @@ use AppBundle\Repository\InstitutionNoteRepository;
 use AppBundle\Repository\InstitutionAddressRepository;
 use AppBundle\Repository\InstitutionLegalRepresentativeRepository;
 use AppBundle\Repository\InstitutionAccreditationRepository;
-use AppBundle\Repository\RiskLevelManuallyUploadedRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Form\InstitutionsForm;
 use AppBundle\Entity\Institution;
 use AppBundle\Repository\ProjectRepository;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,6 +42,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\FileBag;
 use AppBundle\Util\FileTypeHelper;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class InstitutionController extends AbstractController
 {
@@ -110,32 +112,36 @@ class InstitutionController extends AbstractController
                 $this->getInstitutionLegalRepresentativeRepository()->save($legalRepresentative);
             }
 
-            /** @var InstitutionRiskLevel $institutionRiskLevel */
-            foreach($institutions->getRiskLevel() as $key => $institutionRiskLevel){
-                $institutionRiskLevel->setInstitution($institutions);
 
-                /** @var FileBag $files */
-                $files = $request->files->get('appbundle_project')['riskLevel'];
+            if($institutionForm->has('riskLevel')){
+
+                $riskLevelDataCollection = $institutionForm->get('riskLevel')->getData();
+                foreach ($riskLevelDataCollection as $riskLevelData){
 
                     /** @var UploadedFile $file */
-                    $file = $files[$key]['manuallyUploadedFiles'];
+                    $file = $riskLevelData['file'];
 
-                    $manuallyUploadedFile = new RiskLevelManuallyUploaded();
-
-                    if(false == is_null($file) && FileTypeHelper::isTypeAllowed($file)) {
-
+                    if (false == is_null($file) && FileTypeHelper::isTypeAllowed($file)) {
                         /** @var File $uploadedFile */
                         $uploadedFile = $this->get('util.file_uploader')->upload($file);
 
-                        $manuallyUploadedFile->setFile($uploadedFile->getFilename());
-                        $manuallyUploadedFile->setType($file->getClientOriginalExtension());
-                        $manuallyUploadedFile->setOriginalFileName($file->getClientOriginalName());
+                        $fileEntity = new \AppBundle\Entity\File();
+                        $fileEntity->setFile($uploadedFile->getFilename());
+                        $fileEntity->setType($file->getClientOriginalExtension());
+                        $fileEntity->setOriginalFileName($file->getClientOriginalName());
 
-                        $this->getRiskLevelManuallyUploadedRepository()->save($manuallyUploadedFile);
+                        $this->getFileRepository()->save($fileEntity);
+
+                        $riskLevel = new InstitutionRiskLevel();
+                        $riskLevel->setInstitution($institutions);
+                        $riskLevel->setFile($fileEntity);
+                        $riskLevel->setRiskLevelType($riskLevelData['riskLevelType']);
+
+                        $this->getInstitutionRiskLevelRepository()->save($riskLevel);
                     }
-
-                $this->getInstitutionRiskLevelRepository()->save($institutionRiskLevel);
+                }
             }
+
             return $this->redirectToRoute('institution_list');
 
         }
@@ -149,13 +155,43 @@ class InstitutionController extends AbstractController
      */
     public function editAction(Request $request, $institutionId)
     {
+
         /** @var Institution $institution */
         $institution = $this->getInstitutionRepository()->findOneBy(['id' => $institutionId]);
+
 
         $institutionForm = $this->createForm(InstitutionsForm::class, $institution, [
             'action' => $this->generateUrl('institution_edit', ['institutionId' => $institutionId]),
             'method' => 'POST',
         ]);
+
+        /**
+         * Create existing risk level form entries
+         */
+        /** @var Form $risKLevelForm */
+        $risKLevelForm = $institutionForm->get('riskLevel');
+
+        $riskLevels = $this->getInstitutionRiskLevelRepository()->findBy(['institution' => $institution]);
+
+        $i = 0;
+        /** @var InstitutionRiskLevel $riskLevel */
+        foreach ($riskLevels as $riskLevel) {
+
+            $file = new \Symfony\Component\HttpFoundation\File\File($this->get('util.file_uploader')->getTargetDir()."/".$riskLevel->getFile()->getFile());;
+            $element['riskLevelType'] = $riskLevel->getRiskLevelType();
+            $element['riskLevelId'] = $riskLevel->getId();
+            $element['file'] = $file;
+
+            $options = [
+                'file_path'=> '/'.$request->getLocale().'/institution/'.$institutionId.'/file/risk-level/'.$riskLevel->getId(),
+                'file_name'=> $riskLevel->getFile()->getOriginalFileName()
+            ];
+            $i++;
+            /** @var FormBuilder $riskLevelFormBuilder */
+            $riskLevelFormBuilder= $this->get('form.factory')->createNamedBuilder( ''.$i, RiskLevelForm::class, $element, $options);
+            $risKLevelForm->add($riskLevelFormBuilder->getForm());
+        }
+
 
         $originalPicNumbers = new ArrayCollection();
         $originalContacts = new ArrayCollection();
@@ -187,6 +223,7 @@ class InstitutionController extends AbstractController
         foreach ($institution->getLegalRepresentatives() as $legalRepresentative){
             $originalLegalRepresentatives->add($legalRepresentative);
         }
+
 
         $institutionForm->handleRequest($request);
 
@@ -278,6 +315,53 @@ class InstitutionController extends AbstractController
                 }
             }
 
+            if($institutionForm->has('riskLevel')){
+
+                $newRiskLevelDataCollection = $institutionForm->get('riskLevel')->getData();
+                $existingRiskLevels = [];
+
+                foreach ($newRiskLevelDataCollection as $riskLevelData){
+
+                    if(isset($riskLevelData['riskLevelId'])){
+                        $existingRiskLevels[] = $riskLevelData['riskLevelId'];
+                        $riskLevel = $this->getInstitutionRiskLevelRepository()->find($riskLevelData['riskLevelId']);
+                        $riskLevel->setRiskLevelType($riskLevelData['riskLevelType']);
+                    }
+                    else {
+                        /** @var UploadedFile $file */
+                        $file = $riskLevelData['file'];
+
+                        if (false == is_null($file) && FileTypeHelper::isTypeAllowed($file)) {
+                            /** @var File $uploadedFile */
+                            $uploadedFile = $this->get('util.file_uploader')->upload($file);
+
+                            $fileEntity = new \AppBundle\Entity\File();
+                            $fileEntity->setFile($uploadedFile->getFilename());
+                            $fileEntity->setType($file->getClientOriginalExtension());
+                            $fileEntity->setOriginalFileName($file->getClientOriginalName());
+
+                            $this->getFileRepository()->save($fileEntity);
+
+                            $riskLevel = new InstitutionRiskLevel();
+                            $riskLevel->setInstitution($institution);
+                            $riskLevel->setFile($fileEntity);
+                            $riskLevel->setRiskLevelType($riskLevelData['riskLevelType']);
+
+                            $this->getInstitutionRiskLevelRepository()->save($riskLevel);
+                        }
+                    }
+                }
+
+                foreach ($riskLevels as $riskLevel){
+                    if(!in_array($riskLevel->getId(), $existingRiskLevels)) {
+                        /** @var \AppBundle\Entity\File $fileEntity */
+                        $fileEntity = $riskLevel->getFile();
+                        $this->get('util.file_uploader')->remove($fileEntity->getFile());
+                        $em->remove($riskLevel);
+                    }
+                }
+            }
+
             $this->getInstitutionRepository()->save($institution);
 
             return $this->redirectToRoute('institution_list');
@@ -289,7 +373,7 @@ class InstitutionController extends AbstractController
     /**
      * @Route("/{locale}/institution/view/{institutionId}", name="institution_view", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
      */
-    public function viewAction($institutionId)
+    public function viewAction(Request $request, $institutionId)
     {
         $institution = $this->getInstitutionRepository()->findOneBy(['id' => $institutionId]);
 
@@ -304,21 +388,35 @@ class InstitutionController extends AbstractController
         $affiliatedProjects = $this->getProjectPartnerOrganisationRepository()->findBy(['organisation' => $institutionId]);
         $institutionRiskLevels = $this->getInstitutionRiskLevelRepository()->findBy(['institution' => $institutionId]);
 
-        /** @var InstitutionRiskLevel $one */
-        foreach($institutionRiskLevels as $one) {
-            $manuallyUploadedFiles = $this->getRiskLevelManuallyUploadedRepository()->findBy(['institutionRiskLevel' => $one->getId()]);
-
-            if ($manuallyUploadedFiles) {
-                $institutionRiskLevels['manuallyUploadedFiles'] = $manuallyUploadedFiles;
-            }
+        $institutionRiskLevelFiles = [];
+        /** @var InstitutionRiskLevel $riskLevel */
+        foreach($institutionRiskLevels as $riskLevel) {
+            $institutionRiskLevelFiles[$riskLevel->getId()]['file_name'] = $riskLevel->getFile()->getOriginalFileName();
+            $institutionRiskLevelFiles[$riskLevel->getId()]['file_path'] = '/'.$request->getLocale().'/institution/'.$institutionId.'/file/risk-level/'.$riskLevel->getId();
         }
 
         return $this->render('institution/view.twig', ['institution' => $institution, 'picNumbers' => $picNumbers, 'contacts' => $contacts, 'addresses' => $addresses,
             'accreditations' => $accreditations, 'notes' => $notes, 'legalRepresentatives' => $legalRepresentatives, 'employees' => $employees,
             'affiliatedInstitutionsOrganizations' => $affiliatedInstitutionsOrganizations, 'affiliatedProjects' => $affiliatedProjects,
-            'institutionRiskLevels' => $institutionRiskLevels]);
+            'institutionRiskLevels' => $institutionRiskLevels,
+            'institutionRiskLevelFiles' => $institutionRiskLevelFiles
+        ]);
     }
 
+
+    /**
+     * @Route("/{locale}/institution/{institutionId}/file/risk-level/{riskLevelId}", name="institution_risk_level_file", requirements={"institutionId": "\d+", "riskLevelId": "\d+", "locale": "%app.locales%"})
+     */
+    public function getFileAction($institutionId, $riskLevelId)
+    {
+        /** @var InstitutionRiskLevel $riskLevel */
+        $riskLevel = $this->getInstitutionRiskLevelRepository()->find($riskLevelId);
+        if($riskLevel != null && $riskLevel->getInstitution()->getId() == $institutionId) {
+            return new BinaryFileResponse($this->get('util.file_uploader')->getTargetDir().'/'.$riskLevel->getFile()->getFile());
+        }
+
+        throw new AccessDeniedHttpException();
+    }
     /**
      * @return InstitutionRepository
      */
@@ -368,11 +466,11 @@ class InstitutionController extends AbstractController
     }
 
     /**
-     * @return RiskLevelManuallyUploadedRepository
+     * @return FileRepository
      */
-    private function getRiskLevelManuallyUploadedRepository() {
+    private function getFileRepository() {
 
-        return $this->get('doctrine_entity_repository.risk_level_manually_uploaded');
+        return $this->get('doctrine_entity_repository.file');
     }
 
     /**

@@ -14,10 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RiskLevelManuallyUploadedRepository")
- * @ORM\Table(name="risk_level_manually_uploaded")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FileRepository")
+ * @ORM\Table(name="files")
  */
-class RiskLevelManuallyUploaded extends AbstractAuditable
+class File extends AbstractAuditable
 {
     /**
      *
@@ -41,12 +41,6 @@ class RiskLevelManuallyUploaded extends AbstractAuditable
      * @ORM\Column(type="string", length=16)
      */
     protected $type;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="InstitutionRiskLevel", inversedBy="manuallyUploadedFiles")
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
-    protected $institutionRiskLevel;
 
     /**
      * @return mixed
@@ -110,21 +104,5 @@ class RiskLevelManuallyUploaded extends AbstractAuditable
     public function setType($type)
     {
         $this->type = $type;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getInstitutionRiskLevel()
-    {
-        return $this->institutionRiskLevel;
-    }
-
-    /**
-     * @param mixed $institutionRiskLevel
-     */
-    public function setInstitutionRiskLevel($institutionRiskLevel)
-    {
-        $this->institutionRiskLevel = $institutionRiskLevel;
     }
 }

@@ -39,6 +39,12 @@ class ProjectSearchForm extends AbstractType
     const DELIVERABLE_STATUS = "deliverableStatus";
     const DELIVERABLE_TITLE = "deliverableTitle";
 
+    /** Equipment */
+    const EQUIPMENT_TYPE = "equipmentType";
+    const EQUIPMENT_TITLE = "equipmentTitle";
+    const EQUIPMENT_QUANTITY = "equipmentQuantity";
+    const EQUIPMENT_DESCRIPTION = "equipmentDescription";
+
     const SUBJECT_AREA = "subjectArea";
 
     /**
@@ -137,6 +143,22 @@ class ProjectSearchForm extends AbstractType
                 'class' => 'AppBundle:ProjectSubjectAreaType',
                 'choice_label' => 'name' . ucfirst($options['locale']),
                 'placeholder' => '--',
+                'required' => false
+            ])
+
+            ->add(self::EQUIPMENT_TYPE, EntityType::class, [
+                'class' => 'AppBundle:EquipmentType',
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => '--',
+                'required' => false
+            ])
+            ->add(self::EQUIPMENT_TITLE, TextType::class, [
+                'required' => false
+            ])
+            ->add(self::EQUIPMENT_QUANTITY, TextType::class, [
+                'required' => false
+            ])
+            ->add(self::EQUIPMENT_DESCRIPTION, TextType::class, [
                 'required' => false
             ])
             ->add('submit', SubmitType::class, array('label_format' => 'Search'));

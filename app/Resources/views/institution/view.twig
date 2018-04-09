@@ -211,12 +211,12 @@
                         {{ institutionRiskLevel.riskLevelType.name(app.request.getLocale()) }}
                     </td>
                     <td>
-                        <b>{% trans %}File{% endtrans %}</b>: {{ institutionRiskLevel.manuallyUploadedFiles ? institutionRiskLevel.manuallyUploadedFiles.originalFilename : null}}
+                        <b>{% trans %}File{% endtrans %}</b>:
+                        <a target="_blank" href="{{ institutionRiskLevelFiles[institutionRiskLevel.id]['file_path'] }}">{{ institutionRiskLevelFiles[institutionRiskLevel.id]['file_name'] }}</a>
                     </td>
                 </tr>
             {% endfor %}
         </table>
-    </div>
     </div>
 </section>
 {% endblock %}

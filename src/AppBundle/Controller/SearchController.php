@@ -203,6 +203,33 @@ class SearchController extends AbstractController {
                     ->setParameter("subjectArea", $data[ProjectSearchForm::SUBJECT_AREA]);
             }
 
+            /** EQUIPMENT */
+            if(!is_null($data[ProjectSearchForm::EQUIPMENT_TYPE]) || !is_null($data[ProjectSearchForm::EQUIPMENT_TITLE]) ||
+                !is_null($data[ProjectSearchForm::EQUIPMENT_QUANTITY]) || !is_null($data[ProjectSearchForm::EQUIPMENT_DESCRIPTION])) {
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\Equipment',
+                    'equipment',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'o = equipment.project'
+                );
+            }
+            if(!is_null($data[ProjectSearchForm::EQUIPMENT_TYPE])) {
+                $queryBuilder->andWhere( 'equipment.equipmentType= :equipmentType')
+                    ->setParameter("equipmentType", $data[ProjectSearchForm::EQUIPMENT_TYPE]);
+            }
+            if(!is_null($data[ProjectSearchForm::EQUIPMENT_TITLE])) {
+                $queryBuilder->andWhere( 'equipment.titleSr LIKE :equipmentTitle OR equipment.titleEn LIKE :equipmentTitle')
+                    ->setParameter("equipmentTitle", '%'.$data[ProjectSearchForm::EQUIPMENT_TITLE].'%');
+            }
+            if(!is_null($data[ProjectSearchForm::EQUIPMENT_QUANTITY])) {
+                $queryBuilder->andWhere( 'equipment.quantity = :quantity')
+                    ->setParameter("quantity", $data[ProjectSearchForm::EQUIPMENT_QUANTITY]);
+            }
+            if(!is_null($data[ProjectSearchForm::EQUIPMENT_DESCRIPTION])) {
+                $queryBuilder->andWhere( 'equipment.descriptionSr LIKE :equipmentDescription OR equipment.descriptionEn LIKE :equipmentDescription')
+                    ->setParameter("equipmentDescription", '%'.$data[ProjectSearchForm::EQUIPMENT_DESCRIPTION].'%');
+            }
+
 
 
             $results = $queryBuilder->getQuery()->getResult();

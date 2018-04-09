@@ -1,0 +1,12 @@
+{% block file_widget %}
+    {% spaceless %}
+
+        {% if file_url is not null and  file_url != "" %}
+            <div><a target="_blank" href="{{ file_url }}">{{ file_name }}</a></div>
+            <div style="display:none">{{ block('form_widget') }}</div>
+        {% else %}
+            {{ block('form_widget') }}
+        {% endif %}
+
+    {% endspaceless %}
+{% endblock %}

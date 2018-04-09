@@ -7,6 +7,7 @@
     <script type="text/javascript" src="{{ asset('/js/accreditations.js')}}" ></script>
     <script type="text/javascript" src="{{ asset('/js/legalRepresentatives.js')}}" ></script>
     <script type="text/javascript" src="{{ asset('/js/notes.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/institutionRiskLevel.js')}}" ></script>
     <section id="main">
         <div class="container-fluid">
             <div class="page-header">
@@ -170,7 +171,7 @@
                 </ul>
                 <ul class="riskLevel" data-prototype="{{ include('/institution/includes/riskLevel.html.twig',
                     {'form': my_form.riskLevel.vars.prototype })|e }}">
-                    {% for note in my_form.riskLevel %}
+                    {% for riskLevel in my_form.riskLevel %}
                         <li>{{ include('/institution/includes/riskLevel.html.twig', {'form': riskLevel }) }}</li>
                     {% endfor %}
                 </ul>

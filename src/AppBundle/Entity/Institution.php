@@ -686,9 +686,10 @@ class Institution extends AbstractAuditable
 
     public function getAddress($locale)
     {
-        $address = $this->addresses->first();
+        foreach ($this->addresses as $address) {
+            return $address->getStreetAndNumber() . ', ' . $address->getPostalCode() . ' ' .
+                $address->getTown() . ', ' . $address->getCountry()->getName($locale);
 
-        return $address->getStreetAndNumber() . ', ' . $address->getPostalCode() . ' ' .
-            $address->getTown() . ', ' . $address->getCountry()->getName($locale);
+        }
     }
 }

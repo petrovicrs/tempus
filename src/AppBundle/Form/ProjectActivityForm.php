@@ -9,6 +9,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\ProjectActivity;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -21,10 +22,10 @@ class ProjectActivityForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titleSr')
+            ->add('titleSr',TextType::class, array('required' => false))
             ->add('titleEn')
-            ->add('descEn')
-            ->add('descSr')
+            ->add('descEn',TextType::class, array('required' => false))
+            ->add('descSr',TextType::class, array('required' => false))
             ->add('activityType', EntityType::class, [
                 'class' => 'AppBundle:ProjectActivityType',
                 'choice_label' => 'name' . ucfirst($options['locale'])

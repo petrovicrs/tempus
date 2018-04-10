@@ -30,10 +30,10 @@ class InstitutionsForm extends AbstractType
         $builder
             ->add('nameEn', TextType::class)
             ->add('nameSr', TextType::class)
-            ->add('nameOriginalLetter', TextType::class)
-            ->add('founderOriginalLetterEn', TextType::class)
-            ->add('founderOriginalLetterSr', TextType::class)
-            ->add('founderOriginalLetter', TextType::class)
+            ->add('nameOriginalLetter', TextType::class, array('required' => false))
+            ->add('founderOriginalLetterEn', TextType::class, array('required' => false))
+            ->add('founderOriginalLetterSr', TextType::class, array('required' => false))
+            ->add('founderOriginalLetter', TextType::class, array('required' => false))
             ->add('institutionFounderType', EntityType::class, [
                 'class' => 'AppBundle:InstitutionFounderType',
                 'choice_label' => 'name' . ucfirst($options['locale']),
@@ -81,12 +81,14 @@ class InstitutionsForm extends AbstractType
             ->add('euRegion',EntityType::class, [
                 'class' => 'AppBundle:EuRegion',
                 'choice_label' => 'name' . ucfirst($options['locale']),
-                'placeholder' => 'Choose EU Country'
+                'placeholder' => 'Choose EU Country',
+                'required' => false
             ])
             ->add('county',EntityType::class, [
                 'class' => 'AppBundle:County',
                 'choice_label' => 'name' . ucfirst($options['locale']),
-                'placeholder' => 'Choose County'
+                'placeholder' => 'Choose County',
+                'required' => false
             ])
             ->add('nationalRegistrationNumber', TextType::class)
             ->add('vatNumber', TextType::class)

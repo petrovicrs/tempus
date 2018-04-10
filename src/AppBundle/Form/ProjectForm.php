@@ -30,8 +30,8 @@ class ProjectForm extends AbstractType
     {
         $builder
             ->add('nameEn', TextType::class)
-            ->add('nameSr', TextType::class)
-            ->add('nameOriginalLetter', TextType::class)
+            ->add('nameSr', TextType::class, array('required' => false))
+            ->add('nameOriginalLetter', TextType::class, array('required' => false))
             ->add('acronym', TextType::class)
             ->add('endDatetime', DateType::class)
             ->add('startDatetime', DateType::class)
@@ -113,7 +113,7 @@ class ProjectForm extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ))
-            ->add('projectSummary', TextareaType::class);
+            ->add('projectSummary', TextareaType::class, array('required' => false));
         if ($options['isCompleted']) {
             $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
         }

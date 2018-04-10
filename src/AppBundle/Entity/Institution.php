@@ -52,25 +52,25 @@ class Institution extends AbstractAuditable
 
     /**
      *  
-     * @ORM\Column(name="name_original_letter", type="string")
+     * @ORM\Column(name="name_original_letter", type="string", nullable=true)
      */
     protected $nameOriginalLetter;
 
     /**
      *  
-     * @ORM\Column(name="founder_original_letter_en", type="string")
+     * @ORM\Column(name="founder_original_letter_en", type="string", nullable=true)
      */
     protected $founderOriginalLetterEn;
 
     /**
      *  
-     * @ORM\Column(name="founder_original_letter_sr", type="string")
+     * @ORM\Column(name="founder_original_letter_sr", type="string", nullable=true)
      */
     protected $founderOriginalLetterSr;
 
     /**
      *  
-     * @ORM\Column(name="founder_original_letter", type="string")
+     * @ORM\Column(name="founder_original_letter", type="string", nullable=true)
      */
     protected $founderOriginalLetter;
 
@@ -140,7 +140,8 @@ class Institution extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="EuRegion"
+     *      targetEntity="EuRegion")
+     *
      * )
      */
     protected $euRegion;

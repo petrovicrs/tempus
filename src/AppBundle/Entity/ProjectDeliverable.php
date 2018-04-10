@@ -20,7 +20,7 @@ class ProjectDeliverable extends AbstractAuditable
     protected $id;
 
     /**
-     * @ORM\Column(name="title_sr", type="string")
+     * @ORM\Column(name="title_sr", type="string", nullable=true)
      */
     protected $titleSr;
 
@@ -30,12 +30,12 @@ class ProjectDeliverable extends AbstractAuditable
     protected $titleEn;
 
     /**
-     * @ORM\Column(name="desc_en", type="string")
+     * @ORM\Column(name="desc_en", type="string", nullable=true)
      */
     protected $descEn;
 
     /**
-     * @ORM\Column(name="desc_sr", type="string")
+     * @ORM\Column(name="desc_sr", type="string", nullable=true )
      */
     protected $descSr;
 

@@ -9,6 +9,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\DifficultiesParticipantsAreFacing;
 use AppBundle\Entity\DifficultyType;
+use AppBundle\Entity\AttachmentsManuallyUploaded;
 use AppBundle\Entity\ProjectApplicantOrganisation;
 use AppBundle\Entity\ProjectContact;
 use AppBundle\Entity\ProjectContactPerson;
@@ -22,8 +23,13 @@ use AppBundle\Entity\ProjectSubjectArea;
 use AppBundle\Entity\ProjectTargetGroup;
 use AppBundle\Entity\ProjectTopic;
 use AppBundle\Entity\ProjectStart;
+use AppBundle\Entity\Resources;
+use AppBundle\Repository\AttachmentsManuallyUploadedRepository;
+use AppBundle\Repository\InstitutionRepository;
+use AppBundle\Repository\PersonRepository;
 use AppBundle\Repository\DifficultiesParticipantsAreFacingRepository;
 use AppBundle\Repository\ProjectContactRepository;
+use AppBundle\Repository\ProjectKeyActionRepository;
 use AppBundle\Repository\ProjectSubjectAreaRepository;
 use AppBundle\Repository\ProjectTargetGroupFewerOpportunitiesRepository;
 use AppBundle\Repository\ProjectTargetGroupRepository;
@@ -46,10 +52,12 @@ use AppBundle\Repository\ProjectPriorityRepository;
 use AppBundle\Repository\ProjectTargetGroupTypeRepository;
 use AppBundle\Repository\ProjectNoteRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class ProjectController extends AbstractController
 {
@@ -665,6 +673,40 @@ class ProjectController extends AbstractController
         return $this->render('project/view-ka2.twig', ['project' => $project, 'projectId' => $projectId]);
     }
 
+
+    /**
+     * @Route("/{locale}/project/{projectId}/file/resource/{resourceId}", name="project_resource_file", requirements={"projectId": "\d+", "resourceId": "\d+", "locale": "%app.locales%"})
+     */
+    public function getFileAction($projectId, $resourceId)
+    {
+        /** @var Resources $resource */
+        $resource = $this->getResourcesRepository()->find($resourceId);
+        if($resource != null && $resource->getProjectResources() != null && $resource->getProjectResources()->getProject() != null &&
+            $resource->getProjectResources()->getProject()->getId() == $projectId) {
+            return new BinaryFileResponse($this->get('util.file_uploader')->getTargetDir().'/'.$resource->getFile()->getFile());
+        }
+
+        throw new AccessDeniedHttpException();
+    }
+
+    /**
+     * @Route("/{locale}/project/{projectId}/file/attachment/{attachmentManuallyUploadedId}", name="project_attachment_file", requirements={"projectId": "\d+", "attachmentManuallyUploadedId": "\d+", "locale": "%app.locales%"})
+     */
+    public function getAttachmentFileAction($projectId, $attachmentManuallyUploadedId)
+    {
+
+        /** @var AttachmentsManuallyUploaded $attachmentManuallyUploaded */
+        $attachmentManuallyUploaded = $this->getAttachmentsManuallyUploadedRepository()->find($attachmentManuallyUploadedId);
+        if($attachmentManuallyUploaded != null && $attachmentManuallyUploaded->getAttachments() != null && $attachmentManuallyUploaded->getAttachments()->getProject() != null &&
+            $attachmentManuallyUploaded->getAttachments()->getProject()->getId() == $projectId) {
+            return new BinaryFileResponse($this->get('util.file_uploader')->getTargetDir().'/'.$attachmentManuallyUploaded->getFile()->getFile());
+        }
+
+        throw new AccessDeniedHttpException();
+    }
+
+
+
     /**
      * @return ProjectRepository
      */
@@ -792,6 +834,20 @@ class ProjectController extends AbstractController
     private function getPersonRepository() {
 
         return $this->get('doctrine_entity_repository.person');
+    }
+
+    /**
+     * @return AttachmentsManuallyUploadedRepository
+     */
+    private function getAttachmentsManuallyUploadedRepository()
+    {
+        return $this->get('doctrine_entity_repository.attachments_manually_uploaded');
+    }
+
+
+    private function getResourcesRepository()
+    {
+        return $this->get('doctrine_entity_repository.resources');
     }
 
     /**

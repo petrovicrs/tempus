@@ -45,7 +45,11 @@
                                 <h2>{% trans %}Authors{% endtrans %}</h2>
                                 <p>{{ resource.authors }}</p>
                                 <h2>{% trans %}Attachments{% endtrans %}</h2>
-                                <p>{% trans %}Files{% endtrans %}</p>
+                                {% if resource.file %}
+                                    <p><a target="_blank" href="{{ '/' ~ app.request.getLocale() ~ '/project/' ~ project.id ~ '/file/resource/' ~ resource.id }}">
+                                            {{ resource.file.originalFileName }}
+                                        </a> </p>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>

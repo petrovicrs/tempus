@@ -177,7 +177,7 @@ class InstitutionController extends AbstractController
         /** @var InstitutionRiskLevel $riskLevel */
         foreach ($riskLevels as $riskLevel) {
 
-            $file = new \Symfony\Component\HttpFoundation\File\File($this->get('util.file_uploader')->getTargetDir()."/".$riskLevel->getFile()->getFile());;
+            $file = new \Symfony\Component\HttpFoundation\File\File($this->get('util.file_uploader')->getTargetDir()."/".$riskLevel->getFile()->getFile());
             $element['riskLevelType'] = $riskLevel->getRiskLevelType();
             $element['riskLevelId'] = $riskLevel->getId();
             $element['file'] = $file;

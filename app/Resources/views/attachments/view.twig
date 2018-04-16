@@ -37,9 +37,14 @@
                                 <ul class="manually-uploaded-files">
                                     {% if attachments %}
                                         {% for attach in attachments.manuallyUploadedFiles %}
-                                            <li>
-                                                <b>{% trans %}File{% endtrans %}</b>: {{ attach.originalFilename }}
-                                            </li>
+                                            {% if attach.file %}
+                                                <li>
+                                                    <b>{% trans %}File{% endtrans %}</b>:
+                                                    <a target="_blank" href="{{ '/' ~  app.request.getLocale()  ~ '/project/' ~  projectId ~ '/file/attachment/' ~ attach.id }}">
+                                                        {{ attach.file.originalFileName }}
+                                                    </a>
+                                                </li>
+                                            {% endif %}
                                         {% endfor %}
                                     {% endif %}
                                 </ul>

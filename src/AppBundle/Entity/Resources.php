@@ -82,8 +82,10 @@ class Resources extends AbstractAuditable
      */
     protected $projectResources;
 
-    //TODO Add attachment entity
-    //protected $atachments;
+    /**
+     * @ORM\OneToOne(targetEntity="File", orphanRemoval=true)
+     */
+    protected $file;
 
     /**
      * @return mixed
@@ -270,4 +272,23 @@ class Resources extends AbstractAuditable
             return $this->titleEn;
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+
+
 }

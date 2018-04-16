@@ -28,19 +28,10 @@ class AttachmentsManuallyUploaded
     protected $id;
 
     /**
-     * @ORM\Column(name="file", type="string", length=255, unique=true)
+     * @ORM\OneToOne(targetEntity="File", orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $file;
-
-    /**
-     * @ORM\Column(type="string", length=128)
-     */
-    protected $originalFileName;
-
-    /**
-     * @ORM\Column(type="string", length=16)
-     */
-    protected $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="Attachments", inversedBy="manuallyUploadedFiles")
@@ -65,7 +56,7 @@ class AttachmentsManuallyUploaded
     }
 
     /**
-     * @return mixed
+     * @return File|null
      */
     public function getFile()
     {
@@ -78,38 +69,6 @@ class AttachmentsManuallyUploaded
     public function setFile($file)
     {
         $this->file = $file;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOriginalFileName()
-    {
-        return $this->originalFileName;
-    }
-
-    /**
-     * @param mixed $originalFileName
-     */
-    public function setOriginalFileName($originalFileName)
-    {
-        $this->originalFileName = $originalFileName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param mixed $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
     }
 
     /**

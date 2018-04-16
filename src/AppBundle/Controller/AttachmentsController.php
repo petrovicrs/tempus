@@ -13,6 +13,8 @@ use AppBundle\Entity\Attachments;
 use AppBundle\Entity\AttachmentsDmsDocuments;
 use AppBundle\Entity\AttachmentsManuallyUploaded;
 use AppBundle\Form\AttachmentsForm;
+use AppBundle\Form\AttachmentsManuallyUploadedForm;
+use AppBundle\Repository\FileRepository;
 use AppBundle\Util\FileTypeHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\FileBag;
@@ -73,28 +76,34 @@ class AttachmentsController extends AbstractController
 
             $attachments->setProject($this->getLastProjectForCurrentUser());
 
+            $this->getAttachmentsRepository()->save($attachments);
+
             /** @var FileBag $files */
             $files = $request->files->get('appbundle_project')['manuallyUploadedFiles'];
 
-            /* @var AttachmentsManuallyUploaded $manuallyUploadedFile */
-            foreach ($attachments->getManuallyUploadedFiles() as $key => $manuallyUploadedFile) {
+            foreach ($files as $fileArray) {
 
-                /** @var UploadedFile $file */
-                $file = $files[$key]['file'];
+                if(isset($fileArray['file']) && FileTypeHelper::isTypeAllowed($fileArray['file'])) {
 
-                if(false == is_null($file) && FileTypeHelper::isTypeAllowed($file)) {
-
+                    /** @var UploadedFile $file */
+                    $file = $fileArray['file'];
                     /** @var File $uploadedFile */
                     $uploadedFile = $this->get('util.file_uploader')->upload($file);
 
-                    $manuallyUploadedFile->setFile($uploadedFile->getFilename());
-                    $manuallyUploadedFile->setType($file->getClientOriginalExtension());
-                    $manuallyUploadedFile->setOriginalFileName($file->getClientOriginalName());
+                    $fileEntity = new \AppBundle\Entity\File();
+                    $fileEntity->setFile($uploadedFile->getFilename());
+                    $fileEntity->setType($file->getClientOriginalExtension());
+                    $fileEntity->setOriginalFileName($file->getClientOriginalName());
+
+                    $this->getFileRepository()->save($fileEntity);
+
+                    $manuallyUploadedFile = new AttachmentsManuallyUploaded();
                     $manuallyUploadedFile->setAttachments($attachments);
+                    $manuallyUploadedFile->setFile($fileEntity);
+
+                    $this->getAttachmentsManuallyUploadedRepository()->save($manuallyUploadedFile);
                 }
             }
-
-            $this->getAttachmentsRepository()->save($attachments);
 
             return $this->redirectToRoute('group_calendar_create');
         }
@@ -126,13 +135,6 @@ class AttachmentsController extends AbstractController
             $this->getAttachmentsRepository()->save($attachments);
         }
 
-        /* @var AttachmentsManuallyUploaded $value */
-        foreach ($attachments->getManuallyUploadedFiles() as $value) {
-            $value->setFile(
-                new File($this->getParameter('file_uploads_directory') . DIRECTORY_SEPARATOR . $value->getFile())
-            );
-        }
-
         $attachmentsForm = $this->createForm(AttachmentsForm::class, $attachments, [
             'action' => $this->generateUrl('attachment_edit', ['projectId' => $projectId]),
             'method' => 'POST',
@@ -148,8 +150,22 @@ class AttachmentsController extends AbstractController
             $dmsDocuments->add($file);
         }
 
-        foreach ($attachments->getManuallyUploadedFiles() as $file) {
-            $uploadedFiles->add($file);
+        /** @var AttachmentsManuallyUploaded $manuallyUploadedFile */
+        foreach ($attachments->getManuallyUploadedFiles() as $i => $manuallyUploadedFile) {
+            $uploadedFiles->add($manuallyUploadedFile);
+
+            $element['file'] = new \Symfony\Component\HttpFoundation\File\File($this->get('util.file_uploader')->getTargetDir()."/".$manuallyUploadedFile->getFile()->getFile());
+            $element['attachmentManuallyUploadedId'] = $manuallyUploadedFile->getId();
+
+            $options = [
+                'file_path'=> '/'.$request->getLocale().'/project/'.$projectId.'/file/attachment/'.$manuallyUploadedFile->getId(),
+                'file_name'=> $manuallyUploadedFile->getFile()->getOriginalFileName()
+            ];
+
+            /** @var FormBuilder $formBuilder */
+            $formBuilder= $this->get('form.factory')->createNamedBuilder(''.$i, AttachmentsManuallyUploadedForm::class, $element, $options);
+            $attachmentsForm->get('manuallyUploadedFiles')->add($formBuilder->getForm());
+
         }
 
         $attachmentsForm->handleRequest($request);
@@ -165,39 +181,50 @@ class AttachmentsController extends AbstractController
                 }
             }
 
-            /** @var AttachmentsManuallyUploaded $file */
-            foreach($uploadedFiles as $file){
-                if(false === $attachments->getManuallyUploadedFiles()->contains($file)) {
-                    $em->remove($file);
+            if($attachmentsForm->has('manuallyUploadedFiles')) {
+
+                $newAttachmentsManuallyUploadedDataCollection = $attachmentsForm->get('manuallyUploadedFiles')->getData();
+
+                $existingAttachmentManuallyUploaded = [];
+                foreach ($newAttachmentsManuallyUploadedDataCollection as $newAttachmentManuallyUploadedData) {
+
+                    if(isset($newAttachmentManuallyUploadedData['attachmentManuallyUploadedId'])){
+                        $existingAttachmentManuallyUploaded[] = $newAttachmentManuallyUploadedData['attachmentManuallyUploadedId'];
+                    }
+                    else {
+                        /** @var UploadedFile $file */
+                        $file = $newAttachmentManuallyUploadedData['file'];
+
+                        if (false == is_null($file) && FileTypeHelper::isTypeAllowed($file)) {
+                            /** @var File $uploadedFile */
+                            $uploadedFile = $this->get('util.file_uploader')->upload($file);
+
+                            $fileEntity = new \AppBundle\Entity\File();
+                            $fileEntity->setFile($uploadedFile->getFilename());
+                            $fileEntity->setType($file->getClientOriginalExtension());
+                            $fileEntity->setOriginalFileName($file->getClientOriginalName());
+
+                            $this->getFileRepository()->save($fileEntity);
+
+                            $attachmentsManuallyUploadedEntity = new AttachmentsManuallyUploaded();
+                            $attachmentsManuallyUploadedEntity->setAttachments($attachments);
+                            $attachmentsManuallyUploadedEntity->setFile($fileEntity);
+
+                            $this->getAttachmentsManuallyUploadedRepository()->save($attachmentsManuallyUploadedEntity);
+
+                            $attachments->getManuallyUploadedFiles()->add($attachmentsManuallyUploadedEntity);
+                        }
+                    }
                 }
-            }
-//            /** @var ProjectTopic $topic */
-//            foreach ($project->getTopics() as $topic) {
-//                if (false === $originalTopics->contains($topic)) {
-//                    $topic->setProject($project);
-//                    $this->getProjectTopicRepository()->save($topic);
-//                }
-//            }
 
-            /** @var FileBag $files */
-            $files = $request->files->get('appbundle_project')['manuallyUploadedFiles'];
-
-            /* @var AttachmentsManuallyUploaded $manuallyUploadedFile */
-            foreach ($attachments->getManuallyUploadedFiles() as $key => $manuallyUploadedFile) {
-
-                /** @var UploadedFile $file */
-                $file = $files[$key]['file'];
-
-                if(false == is_null($file) && FileTypeHelper::isTypeAllowed($file)) {
-                    var_dump($file->getClientOriginalExtension(), $key);
-
-                    /** @var File $uploadedFile */
-                    $uploadedFile = $this->get('util.file_uploader')->upload($file);
-
-                    $manuallyUploadedFile->setFile($uploadedFile->getFilename());
-                    $manuallyUploadedFile->setType($file->getClientOriginalExtension());
-                    $manuallyUploadedFile->setOriginalFileName($file->getClientOriginalName());
-                    $manuallyUploadedFile->setAttachments($attachments);
+                /** @var AttachmentsManuallyUploaded $attachmentsManuallyUploaded */
+                foreach ($uploadedFiles as $attachmentsManuallyUploaded){
+                    if(!in_array($attachmentsManuallyUploaded->getId(), $existingAttachmentManuallyUploaded)) {
+                        /** @var \AppBundle\Entity\File $fileEntity */
+                        $fileEntity = $attachmentsManuallyUploaded->getFile();
+                        $this->get('util.file_uploader')->remove($fileEntity->getFile());
+                        $em->remove($attachmentsManuallyUploaded);
+                    }
                 }
             }
 
@@ -207,6 +234,7 @@ class AttachmentsController extends AbstractController
                 return $this->redirectToRoute('group_calendar_create');
             }
 
+            return $this->redirectToRoute('attachment_edit', ['locale'=> $request->getLocale(), 'projectId' => $projectId]);
         }
 
         return $this->render('attachments/edit.twig',
@@ -261,5 +289,13 @@ class AttachmentsController extends AbstractController
     private function getProjectRepository() {
 
         return $this->get('doctrine_entity_repository.project');
+    }
+
+    /**
+     * @return FileRepository
+     */
+    private function getFileRepository() {
+
+        return $this->get('doctrine_entity_repository.file');
     }
 }

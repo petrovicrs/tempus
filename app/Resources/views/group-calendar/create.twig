@@ -10,7 +10,7 @@
             {% include 'sub-navbar-ka2.html.twig' with {'active': 'group_calendar'} %}
         {% endif %}
         <div class="container-fluid">
-            <a href="{{ localizedPath('attachment_edit', {projectId: projectId}) }}"><button>Back</button></a>
+            <a href="{{ localizedPath('attachment_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
             <div class="row">
                 <div class="controls calendar">
                     <div class="col-xs-12">

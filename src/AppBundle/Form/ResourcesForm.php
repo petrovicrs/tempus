@@ -41,7 +41,8 @@ class ResourcesForm extends AbstractType
             ->add('titleSr', TextType::class, array('required' => false))
             ->add('descriptionEn')
             ->add('descriptionSr', TextType::class, array('required' => false))
-            ->add('abstract');
+            ->add('abstract')
+            ->add('authors');
     }
 
     /**

@@ -37,10 +37,12 @@ class ProjectIntelectualOutputsForm extends AbstractType
                 'label'        => false
             ]);
             if ($options['isCompleted']) {
-                $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
+                $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes',
+                'attr' => ['class' => 'btn btn-info']));
             }
             else {
-                $builder->add('submit', SubmitType::class, array('label_format' => 'Next'));
+                $builder->add('submit', SubmitType::class, array('label_format' => 'Next',
+                    'attr' => ['class' => 'btn btn-info']));
             }
     }
 

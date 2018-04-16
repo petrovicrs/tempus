@@ -71,6 +71,12 @@ class Resources extends AbstractAuditable
     protected $abstract;
 
     /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="authors", type="text")
+     */
+    protected $authors;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProjectResources", inversedBy="resources")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
@@ -237,6 +243,22 @@ class Resources extends AbstractAuditable
     public function setProjectResources($projectResources)
     {
         $this->projectResources = $projectResources;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthors()
+    {
+        return $this->authors;
+    }
+
+    /**
+     * @param mixed $authors
+     */
+    public function setAuthors($authors)
+    {
+        $this->authors = $authors;
     }
 
     public function getTitle($locale)

@@ -551,7 +551,7 @@ class ProjectController extends AbstractController
             $this->getProjectRepository()->saveProject($project);
 
             if (!$project->getIsCompleted()) {
-                return $this->redirectToRoute('monitoring_create');
+                return $this->redirectToRoute('deliverables_create');
             }
 
         }

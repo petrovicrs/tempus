@@ -2,7 +2,7 @@
 
 {% block body %}
     <section id="main">
-        {% include 'sub-navbar.html.twig' with {'active': 'attachments' } %}
+        {% include 'sub-navbar.html.twig' with {'active': 'attachments', 'isCompleted': isCompleted} %}
         <div class="container-fluid">
             <div class="col-xs-12 section-heading">
                 <h2><b>{% trans %}Attachments{% endtrans %}</b></h2>

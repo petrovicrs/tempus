@@ -43,8 +43,7 @@ class Resources extends AbstractAuditable
     protected $isPublic;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="title_sr", type="string")
+     * @ORM\Column(name="title_sr", type="string", nullable=true)
      */
     protected $titleSr;
 
@@ -55,8 +54,7 @@ class Resources extends AbstractAuditable
     protected $titleEn;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="description_sr", type="string")
+     * @ORM\Column(name="description_sr", type="string", nullable=true)
      */
     protected $descriptionSr;
 

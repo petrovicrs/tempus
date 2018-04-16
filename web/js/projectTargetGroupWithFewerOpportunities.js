@@ -3,10 +3,10 @@ jQuery(document).ready(load);
 jQuery(document).ajaxComplete(load);
 
 function load() {
-    var $addprojectTargetGroupFewerOpportunitiesLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add tagert group</a>');
+    var $addprojectTargetGroupFewerOpportunitiesLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add difficulty type</a>');
     var $addprojectTargetGroupFewerOpportunitiesLinkDiv = $('<li></li>').append($addprojectTargetGroupFewerOpportunitiesLink);
     // Get the ul that holds the collection of tags
-    var $collectionprojectTargetGroupFewerOpportunitiesHolder = $('ul.projectTargetGroupFewerOpportunities');
+    var $collectionprojectTargetGroupFewerOpportunitiesHolder = $('ul.difficultiesParticipantsAreFacing');
 
     // add a delete link to all of the existing tag form li elements
     $collectionprojectTargetGroupFewerOpportunitiesHolder.find('li').each(function() {
@@ -47,7 +47,7 @@ function $addprojectTargetGroupFewerOpportunitiesForm($collectionprojectTargetGr
     var $newFormDiv = $('<li></li>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove tagert group</a>');
+    $newFormDiv.append('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove difficulty type</a>');
 
     $addprojectTargetGroupFewerOpportunitiesLinkDiv.before($newFormDiv);
 
@@ -62,7 +62,7 @@ function $addprojectTargetGroupFewerOpportunitiesForm($collectionprojectTargetGr
 }
 
 function $addprojectTargetGroupFewerOpportunitiesFormDeleteLink($contactFormDiv) {
-    var $removeFormA = $('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove tagert group</a>');
+    var $removeFormA = $('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove difficulty type</a>');
     $contactFormDiv.append($removeFormA);
 
     $removeFormA.on('click', function(e) {

@@ -81,7 +81,8 @@ class PartnersController extends AbstractController
             [
                 'my_form' => $projectPartnersForm->createView(),
                 'keyAction' => $project->getKeyActions()->getNameSr(),
-                'projectId' => $project->getId()
+                'projectId' => $project->getId(),
+                'isCompleted' => $project->getIsCompleted()
             ]
         );
     }

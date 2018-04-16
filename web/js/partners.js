@@ -30,7 +30,6 @@ function loadPartners() {
         $addForm($collectionPartnersHolder, $addPartnersLinkDiv);
 
         loadTeamMembers();
-        $('.selectpicker').selectpicker();
     });
 }
 
@@ -55,6 +54,8 @@ function loadTeamMembers() {
 
         // add a new tag form (see code block below)
         $addForm($collectionTeamMembersHolder, $addTeamMembersLinkDiv);
+
+        $('.selectpicker').selectpicker('render');
     });
 }
 

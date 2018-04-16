@@ -58,8 +58,7 @@ class IntelectualOutputs extends AbstractAuditable
     protected $eLinkAvailable;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="title_sr", type="string")
+     * @ORM\Column(name="title_sr", type="string", nullable=true)
      */
     protected $titleSr;
 
@@ -70,8 +69,7 @@ class IntelectualOutputs extends AbstractAuditable
     protected $titleEn;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="description_sr", type="string")
+     * @ORM\Column(name="description_sr", type="string", nullable=true)
      */
     protected $descriptionSr;
 

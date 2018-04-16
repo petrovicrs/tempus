@@ -79,6 +79,7 @@ class ProjectDeliverablesActivitiesController extends AbstractController
                 'my_form' => $projectDeliverableActivitiesForm->createView(),
                 'keyAction' => $project->getKeyActions()->getNameSr(),
                 'projectId' => $project->getId(),
+                'isCompleted' => $project->getIsCompleted()
             ]
         );
     }

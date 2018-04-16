@@ -4,13 +4,13 @@
     <section id="main">
     <script type="text/javascript" src="{{ asset('/js/attachments.js')}}" ></script>
         {% if keyAction == 'ka1' %}
-            {% include 'sub-navbar.html.twig' with {'active': 'attachments', 'actionTab': actionTab} %}
+            {% include 'sub-navbar.html.twig' with {'active': 'attachments', 'actionTab': actionTab, 'isCompleted': isCompleted} %}
         {% endif %}
         {%  if keyAction == 'ka2' %}
             {% include 'sub-navbar-ka2.html.twig' with {'active': 'attachments'} %}
         {% endif %}
     <div class="container-fluid">
-        <a href="{{ localizedPath('equipment_edit', {projectId: projectId}) }}"><button>Back</button></a>
+        <a href="{{ localizedPath('reporting_edit', {projectId: projectId}) }}"><button>Back</button></a>
         <div class="row">
             <div class="controls results">
                 <div class="col-xs-12">

@@ -65,7 +65,8 @@ class ResourcesController extends AbstractController
         }
 
         return $this->render('resources/create.twig', ['my_form' => $projectResourcesForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(), 'actionTab' => $this->showActionTab($project)]);
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(),
+            'actionTab' => $this->showActionTab($project), 'isCompleted' => $project->getIsCompleted()]);
     }
 
     /**

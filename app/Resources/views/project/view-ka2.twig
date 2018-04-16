@@ -52,6 +52,7 @@
                     <td><b>{% trans %}FT Officer{% endtrans %}</b>: {{ project.ftOfficers ? project.ftOfficers.name(app.request.getLocale()) : 'N/A'}}</td>
                     <td><b>{% trans %}EACEA Officer{% endtrans %}</b>: {{ project.eaceaOfficers ? project.eaceaOfficers.name(app.request.getLocale()) : 'N/A'}}</td>
                     <td><b>{% trans %}Remark{% endtrans %}</b>: {{ project.remarkOfficer ? project.remarkOfficer : 'N/A'}}</td>
+                    <td><b>{% trans %}Include participants with fewer opportunities?{% endtrans %}</b>: {{ project.participantFewerOptions ? 'Yes' : 'No'}}</td>
                 </tr>
                 <tr>
                     <td><b>{% trans %}Project Grade{% endtrans %}</b>: {{ project.projectGradeType ? project.projectGradeType.name(app.request.getLocale()) : 'N/A'}}</td>
@@ -71,6 +72,17 @@
                 </tr>
             </table>
 
+            <h2>{% trans %}Difficulties participants are facing{% endtrans %}:</h2>
+            <table class="table table-hover" data-toggle="table">
+                {% for difficulty in project.difficultiesParticipantsAreFacing %}
+                    <tr>
+                        <td>
+                            <b>{% trans %}Difficulty type{% endtrans %}:</b> {{ difficulty.difficultyType.type(app.request.getLocale()) }}
+                            <b>{% trans %}Note{% endtrans %}:</b> {{ difficulty.description ? difficulty.description : 'N/A' }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
             <h2>{% trans %}Partner Tatger Group{% endtrans %}:</h2>
             <table class="table table-hover" data-toggle="table">
                 {% for projectTargetGroup in project.projectTargetGroup %}

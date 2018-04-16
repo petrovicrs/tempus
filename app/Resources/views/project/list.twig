@@ -48,12 +48,13 @@
                             {% if value.keyActions.name(app.request.locale) == 'ka1' %}
                                 <td> <a href="{{ localizedPath('project_view', {'projectId':value.id }) }}"> View </a> </td>
                                 <td> <a href="{{ localizedPath('project_edit', {'projectId':value.id }) }}"> Edit </a> </td>
-                            {% elseif value.keyActions.name(app.request.locale) == 'ka2' %}
+                            {#{% elseif value.keyActions.name(app.request.locale) == 'ka2' %}#}
+                            {% else %}
                                 <td> <a href="{{ localizedPath('project_ka2_view', {'projectId':value.id }) }}"> View </a> </td>
                                 <td> <a href="{{ localizedPath('project_ka2_edit', {'projectId':value.id }) }}"> Edit </a> </td>
-                            {% else %}
-                                <td><span style="color: red"> Unsupported KA</span></td>
-                                <td><span style="color: red"> Unsupported KA</span></td>
+                            {#{% else %}#}
+                                {#<td><span style="color: red"> Unsupported KA</span></td>#}
+                                {#<td><span style="color: red"> Unsupported KA</span></td>#}
                             {% endif %}
                         {% endif %}
                     </tr>

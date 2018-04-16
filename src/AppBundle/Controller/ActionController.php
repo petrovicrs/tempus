@@ -79,7 +79,7 @@ class ActionController extends AbstractController
             $mobFlows->setProject($project);
             $this->getProjectMobilityFlowsRepository()->save($mobFlows);
 
-            return $this->redirectToRoute('resources_create');
+            return $this->redirectToRoute('resources_create', ['projectId' => $project->getId(), 'isCompleted' => $project->getIsCompleted()]);
         }
 
 
@@ -89,6 +89,7 @@ class ActionController extends AbstractController
             'projectAction' => $project->getActions()->getNameSr(),
             'projectId' => $project->getId(),
             'actionTab' => $this->showActionTab($project),
+            'isCompleted' => $project->getIsCompleted()
         ]);
     }
 

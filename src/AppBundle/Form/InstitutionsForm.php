@@ -81,7 +81,7 @@ class InstitutionsForm extends AbstractType
             ->add('euRegion',EntityType::class, [
                 'class' => 'AppBundle:EuRegion',
                 'choice_label' => 'name' . ucfirst($options['locale']),
-                'placeholder' => 'Choose EU Country',
+                'placeholder' => 'Choose EU Region',
                 'required' => false
             ])
             ->add('county',EntityType::class, [

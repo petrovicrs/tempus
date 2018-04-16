@@ -113,7 +113,7 @@ class ProjectForm extends AbstractType
                 'allow_delete' => true,
                 'label' => false
             ))
-            ->add('projectSummary', TextareaType::class, array('required' => false));
+            ->add('projectSummary', TextareaType::class, array('required' => false, 'attr' => array('cols' => '100', 'rows' => '10')));
         if ($options['isCompleted']) {
             $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
         }

@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+
 {% block body %}
     <script type="text/javascript" src="{{ asset('/js/pic_numbers.js')}}" ></script>
     <script type="text/javascript" src="{{ asset('/js/institution_contacts.js')}}" ></script>
@@ -62,10 +63,13 @@
                     </div>
                     <div style="padding-bottom: 1em">
                         {{ form_label(my_form.institutionType, 'Type of Institution/Organisation'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.institutionType, {'attr': {'class': 'form-control'}})  }}
+                        <div class="form-inline col-xs-5" style="padding-left: 0">
+                            {{ form_widget(my_form.institutionType, {'attr': {
+                                'class': 'selectpicker',
+                                'data-live-search': 'true'
+                            }})  }}
                         </div>
-                    </div>
+                    </div><br/><br/>
                     <div>
                         {{ form_label(my_form.institutionLevel, 'Level'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
@@ -74,10 +78,13 @@
                     </div>
                     <div style="padding-bottom: 1em">
                         {{ form_label(my_form.parentInstitution, 'Parent Institution/Organisation'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.parentInstitution, {'attr': {'class': 'form-control'}})  }}
+                        <div class="form-inline col-xs-5" style="padding-left: 0">
+                            {{ form_widget(my_form.parentInstitution, {'attr': {
+                                'class': 'selectpicker',
+                                'data-live-search': 'true'
+                            }})  }}
                         </div>
-                    </div>
+                    </div><br/><br/>
                     <div>
                         {{ form_label(my_form.publicBody, 'Public body'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
@@ -92,10 +99,13 @@
                     </div>
                     <div>
                         {{ form_label(my_form.country, 'Country'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
-                        <div class="form-inline">
-                            {{ form_widget(my_form.country, {'attr': {'class': 'form-control'}})  }}
+                        <div class="form-inline col-xs-5" style="padding-left: 0">
+                            {{ form_widget(my_form.country, {'attr': {
+                                'class': 'selectpicker',
+                                'data-live-search': 'true'
+                            }})  }}
                         </div>
-                    </div>
+                    </div><br/><br/>
                     <div>
                         {{ form_label(my_form.originCountry, 'Country of Origin'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                         <div class="form-inline">
@@ -142,7 +152,7 @@
                     </ul>
                     <ul class="addresses" data-prototype="{{ include('/institution/includes/addresses.html.twig',
                                     {'form': my_form.addresses.vars.prototype })|e }}">
-                    </ul>
+                    </ul><br/><br/>
                     <ul class="accreditations" data-prototype="{{ include('/institution/includes/accreditations.html.twig',
                                         {'form': my_form.accreditations.vars.prototype })|e }}">
                     </ul>

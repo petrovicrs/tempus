@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <script type="text/javascript" src="{{ asset('/js/partners.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/participants.js')}}" ></script>
     <section id="main">
         {% include 'sub-navbar-ka2.html.twig' with {'active': 'partners', 'isCompleted': isCompleted, projectId: projectId} %}
         <div class="container-fluid">
@@ -21,16 +22,6 @@
                                     {'my_form': my_form.partners.vars.prototype })|e }}">
                                         {% for partner in my_form.partners %}
                                             <li>{{ include('/partners/includes/partners.html.twig', {'my_form': partner }) }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-
-                                <div class="col-xs-12">
-                                    {{ form_label(my_form.participants, 'Participants'|trans, {'label_attr': {'class': 'control-label col-xs-12'}}) }}
-                                    <ul class="participants" data-prototype="{{ include('/partners/includes/participants.html.twig',
-                                    {'my_form': my_form.participants.vars.prototype })|e }}">
-                                        {% for participant in my_form.participants %}
-                                            <li>{{ include('/partners/includes/participants.html.twig', {'my_form': participant }) }}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>

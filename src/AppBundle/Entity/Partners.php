@@ -59,6 +59,11 @@ class Partners extends AbstractAuditable
     protected $isAssociatedPartner;
 
     /**
+     * @ORM\Column(name="without_team", type="boolean")
+     */
+    protected $withoutTeam;
+
+    /**
      * @ORM\Column(name="budget", type="string", length=64)
      */
     protected $budget;
@@ -284,4 +289,21 @@ class Partners extends AbstractAuditable
     public function __toString() {
         return "";
     }
+
+    /**
+     * @return mixed
+     */
+    public function getWithoutTeam()
+    {
+        return $this->withoutTeam;
+    }
+
+    /**
+     * @param mixed $withoutTeam
+     */
+    public function setWithoutTeam($withoutTeam)
+    {
+        $this->withoutTeam = $withoutTeam;
+    }
+
 }

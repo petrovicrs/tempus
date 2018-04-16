@@ -364,9 +364,9 @@ class Project extends AbstractAuditable
     protected $projectTargetGroup;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProjectTargetGroupFewerOpportunities", mappedBy="project", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="DifficultiesParticipantsAreFacing", mappedBy="project", cascade={"persist"})
      */
-    protected $projectTargetGroupFewerOpportunities;
+    protected $difficultiesParticipantsAreFacing;
 
     /**
      * @ORM\OneToMany(targetEntity="ProjectPriority", mappedBy="project", cascade={"persist"})
@@ -1383,17 +1383,18 @@ class Project extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getProjectTargetGroupFewerOpportunities()
+    public function getDifficultiesParticipantsAreFacing()
     {
-        return $this->projectTargetGroupFewerOpportunities;
+        return $this->difficultiesParticipantsAreFacing;
     }
 
     /**
-     * @param mixed $projectTargetGroupFewerOpportunities
+     * @param mixed $difficultiesParticipantsAreFacing
      */
-    public function setProjectTargetGroupFewerOpportunities($projectTargetGroupFewerOpportunities)
+    public function setDifficultiesParticipantsAreFacing($difficultiesParticipantsAreFacing)
     {
-        $this->projectTargetGroupFewerOpportunities = $projectTargetGroupFewerOpportunities;
+        $this->difficultiesParticipantsAreFacing = $difficultiesParticipantsAreFacing;
     }
+
 }
 

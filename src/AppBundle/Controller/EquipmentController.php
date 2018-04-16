@@ -70,7 +70,7 @@ class EquipmentController extends AbstractController
         }
 
         return $this->render('equipment/create.twig', ['my_form' => $equipmentForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()]);
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(), 'isCompleted' => $project->getIsCompleted()]);
     }
 
     /**

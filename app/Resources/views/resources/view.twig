@@ -28,7 +28,7 @@
                 {% for resource in projectResources.resources %}
                     <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
                         <td>{{ resource.title(app.request.getLocale()) }}</td>
-                        <td>{{ resource.resourceType.name(app.request.getLocale()) }}</td>
+                        <td>{{ resource.resourceType ? resource.resourceType.name(app.request.getLocale()) : 'N/A'}}</td>
                         <td>{{ resource.keywords }}</td>
                         <td><a href="{{ localizedPath('project_view', {'projectId': resource.projectResources.project.id}) }}">{{ resource.projectResources.project.name(app.request.getLocale()) }}</a></td>
                         {% if resource.isPublic %}

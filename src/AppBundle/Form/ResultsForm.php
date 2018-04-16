@@ -44,9 +44,9 @@ class ResultsForm extends AbstractType
                 'required' => false
             ])
             ->add('titleEn')
-            ->add('titleSr')
+            ->add('titleSr', TextType::class, array('required' => false))
             ->add('descriptionEn')
-            ->add('descriptionSr')
+            ->add('descriptionSr', TextType::class, array('required' => false))
             ->add('notes');
     }
 

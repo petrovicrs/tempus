@@ -7,6 +7,8 @@
  */
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\DifficultiesParticipantsAreFacing;
+use AppBundle\Entity\DifficultyType;
 use AppBundle\Entity\ProjectApplicantOrganisation;
 use AppBundle\Entity\ProjectContact;
 use AppBundle\Entity\ProjectContactPerson;
@@ -20,6 +22,7 @@ use AppBundle\Entity\ProjectSubjectArea;
 use AppBundle\Entity\ProjectTargetGroup;
 use AppBundle\Entity\ProjectTopic;
 use AppBundle\Entity\ProjectStart;
+use AppBundle\Repository\DifficultiesParticipantsAreFacingRepository;
 use AppBundle\Repository\ProjectContactRepository;
 use AppBundle\Repository\ProjectSubjectAreaRepository;
 use AppBundle\Repository\ProjectTargetGroupFewerOpportunitiesRepository;
@@ -213,6 +216,12 @@ class ProjectController extends AbstractController
         if ($projectForm->isSubmitted() && $projectForm->isValid())
         {
             $this->getProjectRepository()->saveProject($project);
+
+            /** @var DifficultiesParticipantsAreFacing $difficulty */
+            foreach($project->getDifficultiesParticipantsAreFacing() as $difficulty){
+                $difficulty->setProject($project);
+                $this->getProjectTargetGroupRepository()->save($difficulty);
+            }
 
             /** @var ProjectTargetGroup $targetGroup */
             foreach($project->getProjectTargetGroup() as $targetGroup){
@@ -409,7 +418,7 @@ class ProjectController extends AbstractController
             $this->getProjectRepository()->saveProject($project);
 
             if (!$project->getIsCompleted()) {
-                return $this->redirectToRoute('resources_create');
+                return $this->redirectToRoute('action_create');
             }
         }
 
@@ -437,10 +446,15 @@ class ProjectController extends AbstractController
             'isCompleted' => $project->getIsCompleted(),
         ]);
 
+        $originalDifficulties = new ArrayCollection();
         $originalTargetGroups = new ArrayCollection();
         $originalSubjectAreas = new ArrayCollection();
         $originalPriorities = new ArrayCollection();
         $originalContacts = new ArrayCollection();
+
+        foreach ($project->getDifficultiesParticipantsAreFacing() as $difficulty) {
+            $originalDifficulties->add($difficulty);
+        }
 
         foreach ($project->getProjectTargetGroup() as $targetGroup) {
             $originalTargetGroups->add($targetGroup);
@@ -463,6 +477,20 @@ class ProjectController extends AbstractController
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+
+            foreach ($originalDifficulties as $difficulty) {
+                if (false === $project->getDifficultiesParticipantsAreFacing()->contains($difficulty)) {
+                    $em->remove($difficulty);
+                }
+            }
+
+            /** @var DifficultiesParticipantsAreFacing $difficulty */
+            foreach ($project->getDifficultiesParticipantsAreFacing() as $difficulty) {
+                if (false === $originalDifficulties->contains($difficulty)) {
+                    $difficulty->setProject($project);
+                    $this->getDifficultiesParticipantsAreFacingRepository()->save($difficulty);
+                }
+            }
 
             foreach ($originalTargetGroups as $targetGroup) {
                 if (false === $project->getProjectTargetGroup()->contains($targetGroup)) {
@@ -608,10 +636,15 @@ class ProjectController extends AbstractController
             );
         }
 
+        $originalDifficulties = new ArrayCollection();
         $originalTargetGroups = new ArrayCollection();
         $originalSubjectAreas = new ArrayCollection();
         $originalPriorities = new ArrayCollection();
         $originalContacts = new ArrayCollection();
+
+        foreach ($project->getDifficultiesParticipantsAreFacing() as $difficulty) {
+            $originalDifficulties->add($difficulty);
+        }
 
         foreach ($project->getProjectTargetGroup() as $targetGroup) {
             $originalTargetGroups->add($targetGroup);
@@ -759,5 +792,13 @@ class ProjectController extends AbstractController
     private function getPersonRepository() {
 
         return $this->get('doctrine_entity_repository.person');
+    }
+
+    /**
+     * @return DifficultiesParticipantsAreFacingRepository
+     */
+    private function getDifficultiesParticipantsAreFacingRepository() {
+
+        return $this->get('doctrine_entity_repository.difficultiesParticipantsAreFacing');
     }
 }

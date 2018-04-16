@@ -105,6 +105,7 @@ class AttachmentsController extends AbstractController
             'projectId' => $project->getId(),
             'attachments' => null,
             'actionTab' => $this->showActionTab($project),
+            'isCompleted' => $project->getIsCompleted()
         ]);
     }
 
@@ -234,7 +235,8 @@ class AttachmentsController extends AbstractController
         return $this->render('attachments/view.twig', [
             'attachments' => $attachments,
             'projectId' => $project->getId(),
-            'keyAction' => $project->getKeyActions()->getNameSr()
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'actionTab' => $this->showActionTab($project),
         ]);
     }
 

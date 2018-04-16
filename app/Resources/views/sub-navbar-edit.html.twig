@@ -1,14 +1,25 @@
 <nav id="menu-list" class="navbar navbar-default">
     <div class="container-fluid">
         <ul class="nav navbar-nav">
-            <li class="{% if active == 'project' %}active{% endif %}"><a href="{{ localizedPath('project_edit')}}">Project</a></li>
-            <li class="{% if active == 'action' %}active{% endif %}"><a href="{{ localizedPath('action_edit')}}">Action</a></li>
-            <li class="{% if active == 'resources' %}active{% endif %}"><a href="{{ localizedPath('resource_edit')}}" >Resources</a></li>
-            <li class="{% if active == 'intelectual_outputs' %}active{% endif %}"><a href="{{ localizedPath('intelectual_output_edit')}}" >Intelectual outputs</a></li>
-            <li class="{% if active == 'results' %}active{% endif %}"><a href="{{ localizedPath('result_edit')}}" >Results</a></li>
-            <li class="{% if active == 'reporting' %}active{% endif %}"><a href="{{ localizedPath('reporting_edit')}}" >Reporting</a></li>
-            <li class="{% if active == 'attachments' %}active{% endif %}"><a href="{{ localizedPath('attachments_edit')}}" >Attachments</a></li>
-            <li class="{% if active == 'group_calendar' %}active{% endif %}"><a href="{{ localizedPath('group_calendar_edit')}}" >Group Calendar</a></li>
+            {{ if isCompleted == 1 }}
+                <li class="{% if active == 'project' %}active{% endif %}"><a href="{{ localizedPath('project_edit')}}" >Project</a></li>
+                <li class="{% if active == 'action' %}active{% endif %}"><a href="{{ localizedPath('action_edit')}}">Action</a></li>
+                <li class="{% if active == 'resources' %}active{% endif %}"><a href="{{ localizedPath('resource_edit')}}" >Resources</a></li>
+                <li class="{% if active == 'intelectual_outputs' %}active{% endif %}"><a href="{{ localizedPath('intelectual_output_edit')}}" >Intelectual outputs</a></li>
+                <li class="{% if active == 'results' %}active{% endif %}"><a href="{{ localizedPath('result_edit')}}" >Results</a></li>
+                <li class="{% if active == 'reporting' %}active{% endif %}"><a href="{{ localizedPath('reporting_edit')}}" >Reporting</a></li>
+                <li class="{% if active == 'attachments' %}active{% endif %}"><a href="{{ localizedPath('attachments_edit')}}" >Attachments</a></li>
+                <li class="{% if active == 'group_calendar' %}active{% endif %}"><a href="{{ localizedPath('group_calendar_edit')}}" >Group Calendar</a></li>
+            {{ else }}
+                <li class="{% if active == 'project' %}active{% endif %}"><a>Project</a></li>
+                <li class="{% if active == 'action' %}active{% endif %}"><a>Action</a></li>
+                <li class="{% if active == 'resources' %}active{% endif %}"><a>Resources</a></li>
+                <li class="{% if active == 'intelectual_outputs' %}active{% endif %}"><a>Intelectual outputs</a></li>
+                <li class="{% if active == 'results' %}active{% endif %}"><a>Results</a></li>
+                <li class="{% if active == 'reporting' %}active{% endif %}"><a>Reporting</a></li>
+                <li class="{% if active == 'attachments' %}active{% endif %}"><a>Attachments</a></li>
+                <li class="{% if active == 'group_calendar' %}active{% endif %}"><a>Group Calendar</a></li>
+            {{ endif }}
         </ul>
     </div>
 </nav>

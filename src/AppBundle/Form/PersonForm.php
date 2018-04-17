@@ -29,13 +29,13 @@ class PersonForm extends AbstractType
         $builder
             ->add('firstNameEn')
             ->add('firstNameSr')
-            ->add('firstNameOriginalLetter')
+            ->add('firstNameOriginalLetter', TextType::class, array('required' => false))
             ->add('lastNameEn')
             ->add('lastNameSr')
-            ->add('lastNameOriginalLetter')
+            ->add('lastNameOriginalLetter', TextType::class, array('required' => false))
             ->add('initials')
-            ->add('titlePrefix')
-            ->add('titleSuffix')
+            ->add('titlePrefix', TextType::class, array('required' => false))
+            ->add('titleSuffix', TextType::class, array('required' => false))
             ->add('gender', EntityType::class, [
                 'class' => 'AppBundle:Gender',
                 'choice_label' => 'name' . ucfirst($options['locale'])

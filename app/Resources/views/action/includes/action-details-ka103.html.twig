@@ -1,8 +1,22 @@
 
 <table class="table table-striped">
     <tr>
-        <td>{{ form_row(form.person) }}</td>
-        <td>{{ form_row(form.institution) }}</td>
+        <td>
+            {{ form_label(form.person) }}
+            {{ form_widget(form.person, {'attr': {
+                'class': 'selectpicker',
+                'data-live-search': 'true',
+                'title': 'Choose one of the following...'
+            }}) }}
+        </td>
+        <td>
+            {{ form_label(form.institution) }}
+            {{ form_widget(form.institution, {'attr': {
+                'class': 'selectpicker',
+                'data-live-search': 'true',
+                'title': 'Choose one of the following...'
+            }}) }}
+        </td>
         <td>{{ form_row(form.durationMonths) }}</td>
         <td>{{ form_row(form.durationExtraDays) }}</td>
         <td>{{ form_row(form.totalDays) }}</td>

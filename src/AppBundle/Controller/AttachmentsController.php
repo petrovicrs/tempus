@@ -81,29 +81,32 @@ class AttachmentsController extends AbstractController
             /** @var FileBag $files */
             $files = $request->files->get('appbundle_project')['manuallyUploadedFiles'];
 
-            foreach ($files as $fileArray) {
+            if ($files) {
+                foreach ($files as $fileArray) {
 
-                if(isset($fileArray['file']) && FileTypeHelper::isTypeAllowed($fileArray['file'])) {
+                    if(isset($fileArray['file']) && FileTypeHelper::isTypeAllowed($fileArray['file'])) {
 
-                    /** @var UploadedFile $file */
-                    $file = $fileArray['file'];
-                    /** @var File $uploadedFile */
-                    $uploadedFile = $this->get('util.file_uploader')->upload($file);
+                        /** @var UploadedFile $file */
+                        $file = $fileArray['file'];
+                        /** @var File $uploadedFile */
+                        $uploadedFile = $this->get('util.file_uploader')->upload($file);
 
-                    $fileEntity = new \AppBundle\Entity\File();
-                    $fileEntity->setFile($uploadedFile->getFilename());
-                    $fileEntity->setType($file->getClientOriginalExtension());
-                    $fileEntity->setOriginalFileName($file->getClientOriginalName());
+                        $fileEntity = new \AppBundle\Entity\File();
+                        $fileEntity->setFile($uploadedFile->getFilename());
+                        $fileEntity->setType($file->getClientOriginalExtension());
+                        $fileEntity->setOriginalFileName($file->getClientOriginalName());
 
-                    $this->getFileRepository()->save($fileEntity);
+                        $this->getFileRepository()->save($fileEntity);
 
-                    $manuallyUploadedFile = new AttachmentsManuallyUploaded();
-                    $manuallyUploadedFile->setAttachments($attachments);
-                    $manuallyUploadedFile->setFile($fileEntity);
+                        $manuallyUploadedFile = new AttachmentsManuallyUploaded();
+                        $manuallyUploadedFile->setAttachments($attachments);
+                        $manuallyUploadedFile->setFile($fileEntity);
 
-                    $this->getAttachmentsManuallyUploadedRepository()->save($manuallyUploadedFile);
+                        $this->getAttachmentsManuallyUploadedRepository()->save($manuallyUploadedFile);
+                    }
                 }
             }
+
 
             return $this->redirectToRoute('group_calendar_create');
         }

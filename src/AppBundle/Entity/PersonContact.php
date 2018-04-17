@@ -40,8 +40,7 @@ class PersonContact extends AbstractAuditable
     protected $contactValue;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="note", type="string")
+     * @ORM\Column(name="note", type="string", nullable=true)
      */
     protected $note;
 

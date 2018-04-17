@@ -25,6 +25,7 @@ function initActivityForm() {
         e.preventDefault();
         // add a new tag form (see code block below)
         $addForm($collectionHolder, $addLinkDiv);
+
     });
 }
 
@@ -49,6 +50,8 @@ function initActionDetailsForm(parent) {
         e.preventDefault();
         // add a new tag form (see code block below)
         $addForm($collectionHolder, $addLinkDiv);
+
+        $('.selectpicker').selectpicker('render');
     });
 }
 

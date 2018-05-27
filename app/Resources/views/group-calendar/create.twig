@@ -4,12 +4,13 @@
     <section id="main">
     <script type="text/javascript" src="{{ asset('/js/calendar.js')}}" ></script>
         {% if keyAction == 'ka1' %}
-            {% include 'sub-navbar.html.twig' with {'active': 'group_calendar', 'actionTab': actionTab} %}
+            {% include 'sub-navbar.html.twig' with {'active': 'group_calendar', 'actionTab': actionTab, 'isCompleted': isCompleted} %}
         {% endif %}
         {%  if keyAction == 'ka2' %}
             {% include 'sub-navbar-ka2.html.twig' with {'active': 'group_calendar'} %}
         {% endif %}
         <div class="container-fluid">
+            <a href="{{ localizedPath('attachment_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
             <div class="row">
                 <div class="controls calendar">
                     <div class="col-xs-12">

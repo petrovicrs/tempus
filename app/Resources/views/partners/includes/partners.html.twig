@@ -34,6 +34,11 @@
     </div>
 </div>
 
+<div class="form-inline">
+    {{ form_label(my_form.withoutTeam, 'Without Team'|trans, {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(my_form.withoutTeam, {'attr': {'class': 'form-control'}}) }}
+</div>
+
 <div class="col-xs-12">
     {{ form_label(my_form.teamMembers, 'Team members'|trans, {'label_attr': {'class': 'control-label'}}) }}
     <ul class="team-members" data-prototype="{{ include('/partners/includes/team-members.html.twig',
@@ -46,12 +51,16 @@
 
 <div class="col-xs-12">
 
-    <!--{{ form_label(my_form.allDepartments, 'All departments?'|trans, {'label_attr': {'class': 'control-label'}}) }}-->
-    <!--<div class="form-inline">-->
-        <!--{{ form_widget(my_form.allDepartments, {'attr': {'class': 'form-control'}}) }}-->
-    <!--</div>-->
+    {{ form_label(my_form.allDepartments, 'All departments?'|trans, {'label_attr': {'class': 'control-label'}}) }}
+    <div class="form-inline">
+        {{ form_widget(my_form.allDepartments, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <span>Departments</span>
+    <div>
+        {% for entity in my_form.teamDepartments %}
+            {{ form_widget(entity, {'attr': {'class': 'form-control', 'checked': 'checked'}}) }}
+        {% endfor %}
+    </div>
 
-    <!--<div class="form-inline">-->
-        <!--{{ form_widget(my_form.teamDepartments, {'attr': {'class': 'form-control'}}) }}-->
-    <!--</div>-->
+
 </div>

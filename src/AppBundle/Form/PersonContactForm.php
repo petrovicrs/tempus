@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class PersonContactForm extends AbstractType
@@ -30,7 +31,7 @@ class PersonContactForm extends AbstractType
                 'choice_label'  => 'type' . ucfirst($options['locale'])
             ])
             ->add('contactValue')
-            ->add('note')
+            ->add('note', TextType::class, array('required' => false))
             ->add('isPublic', CheckboxType::class, array('required' => false))
             ->add('isPrimary', CheckboxType::class, array('required' => false));
     }

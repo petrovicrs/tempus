@@ -9,7 +9,7 @@
     <script type="text/javascript" src="{{ asset('/js/projecSubjectAreas.js')}}" ></script>
     <script type="text/javascript" src="{{ asset('/js/projecNotes.js')}}" ></script>
     <section id="main">
-    {% include 'sub-navbar.html.twig' with {'active': 'project', 'actionTab': actionTab} %}
+    {% include 'sub-navbar.html.twig' with {'active': 'project', 'actionTab': actionTab, 'isCompleted': isCompleted} %}
         <div class="container-fluid">
             <div class="page-header">
                 <h1>{% trans %}Edit Project{% endtrans %}</h1>

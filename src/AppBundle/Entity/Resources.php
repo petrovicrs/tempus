@@ -43,8 +43,7 @@ class Resources extends AbstractAuditable
     protected $isPublic;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="title_sr", type="string")
+     * @ORM\Column(name="title_sr", type="string", nullable=true)
      */
     protected $titleSr;
 
@@ -55,8 +54,7 @@ class Resources extends AbstractAuditable
     protected $titleEn;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="description_sr", type="string")
+     * @ORM\Column(name="description_sr", type="string", nullable=true)
      */
     protected $descriptionSr;
 
@@ -73,13 +71,21 @@ class Resources extends AbstractAuditable
     protected $abstract;
 
     /**
+     * @Assert\NotBlank()
+     * @ORM\Column(name="authors", type="text")
+     */
+    protected $authors;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProjectResources", inversedBy="resources")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $projectResources;
 
-    //TODO Add attachment entity
-    //protected $atachments;
+    /**
+     * @ORM\OneToOne(targetEntity="File", orphanRemoval=true)
+     */
+    protected $file;
 
     /**
      * @return mixed
@@ -241,6 +247,22 @@ class Resources extends AbstractAuditable
         $this->projectResources = $projectResources;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAuthors()
+    {
+        return $this->authors;
+    }
+
+    /**
+     * @param mixed $authors
+     */
+    public function setAuthors($authors)
+    {
+        $this->authors = $authors;
+    }
+
     public function getTitle($locale)
     {
         if($locale == 'sr') {
@@ -250,4 +272,23 @@ class Resources extends AbstractAuditable
             return $this->titleEn;
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+
+
 }

@@ -1,7 +1,13 @@
 <div class="block" style="clear: both;">
     {{ form_row(form.streetAndNumber) }}
     {{ form_row(form.town) }}
-    {{ form_row(form.country) }}
+    {{ form_label(form.country) }}
+    {{ form_errors(form.country) }}
+    {{ form_widget(form.country, {'attr': {
+        'data-live-search': 'true',
+        'class': 'selectpicker',
+        'title': 'Choose one of the following...'
+    } }) }}
     {{ form_row(form.postalCode) }}
     {{ form_row(form.differentMailingAddress) }}
 </div>

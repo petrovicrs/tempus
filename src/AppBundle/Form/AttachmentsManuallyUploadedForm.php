@@ -13,6 +13,7 @@ use AppBundle\Entity\AttachmentsManuallyUploaded;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,11 +27,15 @@ class AttachmentsManuallyUploadedForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('attachmentManuallyUploadedId', HiddenType::class)
             ->add('file', FileType::class, array(
                 'label' => false,
-                'attr'=>
+                'file_path' => $options['file_path'],
+                'file_name' => $options['file_name'],
+                'attr' =>
                     array(
-                        'class'=>'form-control btn btn-add btn-success')
+                        'class' => 'form-control btn btn-add btn-success'
+                    )
             ));
     }
 
@@ -46,7 +51,9 @@ class AttachmentsManuallyUploadedForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => AttachmentsManuallyUploaded::class
+            'file_path' => '',
+            'file_name' => '',
+            'auto_initialize' => false
         ]);
     }
 }

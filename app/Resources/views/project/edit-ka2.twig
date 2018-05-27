@@ -11,6 +11,7 @@
     <script type="text/javascript" src="{{ asset('/js/projectTargetGroups.js')}}" ></script>
     <script type="text/javascript" src="{{ asset('/js/projectPriorities.js')}}" ></script>
     <script type="text/javascript" src="{{ asset('/js/projectContacts.js')}}" ></script>
+    <script type="text/javascript" src="{{ asset('/js/projectTargetGroupWithFewerOpportunities.js')}}" ></script>
     <section id="main">
     {% include 'sub-navbar-ka2.html.twig' with {'active': 'project', 'isCompleted': isCompleted, projectId: id} %}
         <div class="container-fluid">
@@ -224,6 +225,18 @@
                                 {{ form_widget(my_form.projectObjectivesNative, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
+                        <div>
+                            {{ form_label(my_form.participantFewerOptions, 'Include participants with fewer opportunities?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.participantFewerOptions, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div>
+                        <ul class="difficultiesParticipantsAreFacing" data-prototype="{{ include('/project/includes/difficultiesParticipantsAreFacing.html.twig',
+                            {'form': my_form.difficultiesParticipantsAreFacing.vars.prototype })|e }}">
+                            {% for difficulty in my_form.difficultiesParticipantsAreFacing %}
+                                <li>{{ include('/project/includes/difficultiesParticipantsAreFacing.html.twig', {'form': difficulty }) }}</li>
+                            {% endfor %}
+                        </ul>
                         <ul class="projectTargetGroup" data-prototype="{{ include('/project/includes/projectTargetGroup.html.twig',
                                     {'form': my_form.projectTargetGroup.vars.prototype })|e }}">
                             {% for projectTargetGroup in my_form.projectTargetGroup %}

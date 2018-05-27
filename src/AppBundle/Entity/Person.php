@@ -34,8 +34,7 @@ class Person extends AbstractAuditable
     protected $firstNameSr;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="first_name_original_letter", type="string", length=255)
+     * @ORM\Column(name="first_name_original_letter", type="string", length=255, nullable=true)
      */
     protected $firstNameOriginalLetter;
 
@@ -52,8 +51,7 @@ class Person extends AbstractAuditable
     protected $lastNameSr;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="last_name_original_letter", type="string", length=255)
+     * @ORM\Column(name="last_name_original_letter", type="string", length=255, nullable=true)
      */
     protected $lastNameOriginalLetter;
 
@@ -65,15 +63,13 @@ class Person extends AbstractAuditable
 
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="title_prefix", type="string", length=255)
+     * @ORM\Column(name="title_prefix", type="string", length=255, nullable=true)
      */
     protected $titlePrefix;
 
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="title_suffix", type="string", length=255)
+     * @ORM\Column(name="title_suffix", type="string", length=255, nullable=true)
      */
     protected $titleSuffix;
 

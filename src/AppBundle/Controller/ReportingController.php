@@ -94,7 +94,8 @@ class ReportingController extends AbstractController
             'reporting/create.twig',
             ['my_form' => $projectReportingForm->createView(), 'questions' => $questions,
                 'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(),
-                'actionTab' => $this->showActionTab($project)]);
+                'actionTab' => $this->showActionTab($project),
+                'isCompleted' => $project->getIsCompleted()]);
     }
 
     /**
@@ -212,7 +213,8 @@ class ReportingController extends AbstractController
                 'reports' => $projectReporting ? $projectReporting->getReporting() : null,
                 'projectId' => $projectId,
                 'questions' => $questions,
-                'keyAction' => $project->getKeyActions()->getNameSr()
+                'keyAction' => $project->getKeyActions()->getNameSr(),
+                'actionTab' => $this->showActionTab($project)
             ]
         );
     }

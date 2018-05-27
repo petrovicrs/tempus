@@ -2,7 +2,7 @@
 
 {% block body %}
     <section id="main">
-    {% include 'sub-navbar.html.twig' with {'active': 'group_calendar' } %}
+    {% include 'sub-navbar.html.twig' with {'active': 'group_calendar', 'isCompleted': isCompleted} %}
     <div class="container-fluid">
         <div class="col-xs-12 section-heading">
             <h2><b>{% trans %}Group Calendar{% endtrans %}</b></h2>

@@ -4,7 +4,7 @@
     <script type="text/javascript" src="{{ asset('/js/resources.js')}}"></script>
     <section id="main">
         {% if keyAction == 'ka1' %}
-            {% include 'sub-navbar.html.twig' with {'active': 'resources', 'actionTab': actionTab} %}
+            {% include 'sub-navbar.html.twig' with {'active': 'resources', 'actionTab': actionTab, 'isCompleted': isCompleted} %}
         {% endif %}
         {%  if keyAction == 'ka2' %}
             {% include 'sub-navbar-ka2.html.twig' with {'active': 'resources'} %}
@@ -13,13 +13,13 @@
         <div class="row">
             <div class="controls resources">
                 {% if keyAction == 'ka1' and actionTab == false %}
-                    <a href="{{ localizedPath('project_edit', {projectId: projectId }) }}"><button>Back</button></a>
+                    <a href="{{ localizedPath('project_edit', {projectId: projectId }) }}"><button type="button" class="btn btn-info">Back</button></a>
                 {% endif %}
                 {% if keyAction == 'ka1' and actionTab %}
-                    <a href="{{ localizedPath('action_edit', {projectId: projectId }) }}"><button>Back</button></a>
+                    <a href="{{ localizedPath('action_edit', {projectId: projectId }) }}"><button type="button" class="btn btn-info">Back</button></a>
                 {% endif %}
                 {%  if keyAction == 'ka2' %}
-                    <a href="{{ localizedPath('partner_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                    <a href="{{ localizedPath('partner_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
                 {% endif %}
                 <div class="col-sm-12">
                     {{ form_start(my_form) }}

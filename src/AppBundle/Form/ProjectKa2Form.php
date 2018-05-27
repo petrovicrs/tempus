@@ -96,14 +96,15 @@ class ProjectKa2Form extends AbstractType
             ->add('projectObjectivesEnglish', TextareaType::class)
             ->add('projectObjectivesSerbian', TextareaType::class, array('required' => false))
             ->add('projectObjectivesNative', TextareaType::class, array('required' => false))
-//            ->add('participantFewerOptions', CheckboxType::class, array('required' => false))
-//            ->add('projectTargetGroupFewerOpportunities', CollectionType::class, array(
-//                'entry_type'  => ProjectTargetGroupForm::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//                'allow_delete' => true,
-//                'label' => false
-//            ))
+            ->add('participantFewerOptions', CheckboxType::class, array('required' => false,
+                'label' => 'Include participants with fewer opportunities?'))
+            ->add('difficultiesParticipantsAreFacing', CollectionType::class, array(
+                'entry_type'  => DifficultiesParticipantsAreFacingForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
             ->add('projectTargetGroup', CollectionType::class, array(
                 'entry_type'  => ProjectTargetGroupForm::class,
                 'allow_add' => true,

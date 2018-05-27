@@ -23,6 +23,8 @@ jQuery(document).ready(function() {
 
         // add a new tag form (see code block below)
         $addAddressesForm($collectionAddressHolder, $newAddressLinkDiv);
+
+        $('.selectpicker').selectpicker('render');
     });
 });
 

@@ -54,7 +54,8 @@ class UsersController extends AbstractController
         }
 
         return $this->render('results/create.twig', ['my_form' => $resultsForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId()]);
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(),
+            'isCompleted' => $project->getIsCompleted()]);
     }
 
     /**
@@ -86,7 +87,8 @@ class UsersController extends AbstractController
 
         }
 
-        return $this->render('results/edit.twig', ['my_form' => $resultForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
+        return $this->render('results/edit.twig', ['my_form' => $resultForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'isCompleted' => $project->getIsCompleted()]);
     }
 
     /**

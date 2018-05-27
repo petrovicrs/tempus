@@ -34,7 +34,9 @@ class AttachmentsForm extends AbstractType
                 'entry_type' => AttachmentsManuallyUploadedForm::class,
                 'allow_add' => true,
                 'by_reference' => false,
-                'label' => false
+                'label' => false,
+                'mapped' => false,
+                'required' => false
             ))
             ->add('dmsNotes')
             ->add('uploadedFilesNotes');

@@ -2,7 +2,7 @@
 <div class="col-xs-12">
     <h2>{% trans %}Activity{% endtrans %}</h2>
     <div class="form-inline">
-        {% if projectAction != 'KA102' and projectAction != 'KA105' %}
+        {% if projectAction != 'KA105' %}
             <div class="form-group">
                 {{ form_label(form.activityType, 'Flow subcategory'|trans, {'label_attr': {'class': 'control-label'}}) }}
                 {{ form_widget(form.activityType, {'attr': {'class': 'form-control'}})  }}

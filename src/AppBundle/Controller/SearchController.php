@@ -30,9 +30,12 @@ class SearchController extends AbstractController {
 
             $queryBuilder = $this->getProjectRepository()->createQueryBuilder('o');
 
+            $queryBuilder->where('o.isCompleted = :isCompleted')
+                ->setParameter("isCompleted", true);
+
             //project project query builder
             if(!is_null($data[ProjectSearchForm::ACRONYM])) {
-                $queryBuilder->where('o.acronym LIKE :acronym')
+                $queryBuilder->andWhere('o.acronym LIKE :acronym')
                     ->setParameter('acronym', '%'.$data[ProjectSearchForm::ACRONYM].'%');
             }
             if(!is_null($data[ProjectSearchForm::TITLE])) {

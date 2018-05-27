@@ -4,7 +4,7 @@
     <script type="text/javascript" src="{{ asset('/js/intelectual_outputs.js')}}"></script>
     <section id="main">
         {% if keyAction == 'ka1' %}
-            {% include 'sub-navbar.html.twig' with {'active': 'intelectual_outputs', 'actionTab': actionTab} %}
+            {% include 'sub-navbar.html.twig' with {'active': 'intelectual_outputs', 'actionTab': actionTab, 'isCompleted': isCompleted} %}
         {% endif %}
         {%  if keyAction == 'ka2' %}
             {% include 'sub-navbar-ka2.html.twig' with {'active': 'intelectual_outputs'} %}
@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="controls intelectualOutput">
-                <a href="{{ localizedPath('resource_edit', {projectId: projectId}) }}"><button>Back</button></a>
+                <a href="{{ localizedPath('resource_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
                 <div class="col-xs-12">
                     {{ form_start(my_form) }}
                         <div class="col-xs-12">

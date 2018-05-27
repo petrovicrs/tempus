@@ -52,8 +52,7 @@ class Results extends AbstractAuditable
     protected $showDescription;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="title_sr", type="string")
+     * @ORM\Column(name="title_sr", type="string", nullable=true)
      */
     protected $titleSr;
 
@@ -64,8 +63,7 @@ class Results extends AbstractAuditable
     protected $titleEn;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="description_sr", type="string")
+     * @ORM\Column(name="description_sr", type="string", nullable=true)
      */
     protected $descriptionSr;
 

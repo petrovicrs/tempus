@@ -14,6 +14,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,10 +39,23 @@ class ResourcesForm extends AbstractType
                 'required' => false
             ])
             ->add('titleEn')
-            ->add('titleSr')
+            ->add('titleSr', TextType::class, array('required' => false))
             ->add('descriptionEn')
-            ->add('descriptionSr')
-            ->add('abstract');
+            ->add('descriptionSr', TextType::class, array('required' => false))
+            ->add('abstract')
+            ->add('authors')
+            ->add('file', FileType::class, array(
+                'label' => false,
+                'file_path' => $options['file_path'],
+                'file_name' => $options['file_name'],
+                'attr' =>
+                    array(
+                        'class' => 'form-control btn btn-add btn-success'
+                    ),
+                'mapped' => false,
+                'auto_initialize' => false,
+                'required' => false
+            ));
     }
 
     /**
@@ -56,7 +70,10 @@ class ResourcesForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => Resources::class
+            'file_path' => '',
+            'file_name' => '',
+            'data_class' => Resources::class,
+            'auto_initialize' => false
         ]);
     }
 }

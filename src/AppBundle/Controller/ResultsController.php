@@ -59,7 +59,8 @@ class ResultsController extends AbstractController
         }
 
         return $this->render('results/create.twig', ['my_form' => $projectResultsForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(), 'actionTab' => $this->showActionTab($project)]);
+            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(),
+            'actionTab' => $this->showActionTab($project), 'isCompleted' => $project->getIsCompleted()]);
     }
 
     /**
@@ -147,7 +148,8 @@ class ResultsController extends AbstractController
             [
                 'results' => $projectResults ? $projectResults->getResults() : null,
                 'projectId' => $projectId,
-                'keyAction' => $project->getKeyActions()->getNameSr()
+                'keyAction' => $project->getKeyActions()->getNameSr(),
+                'actionTab' => $this->showActionTab($project)
             ]
         );
     }

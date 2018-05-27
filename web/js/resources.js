@@ -6,16 +6,16 @@ jQuery(document).ready(function() {
 
 function loadResources() {
     var $addResourcesLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
-    var $addResourcesLinkDiv = $('<li></li>').append($addResourcesLink);
+    var $addResourcesLinkDiv = $('<li class="actions"></li>').append($addResourcesLink);
 
     var $collectionResourcesHolder = $('ul.resources');
 
-    $collectionResourcesHolder.find('li').each(function() {
+    $collectionResourcesHolder.find('li:not(.actions)').each(function() {
         $addFormDeleteLink($(this));
     });
 
     $collectionResourcesHolder.append($addResourcesLinkDiv);
-    $collectionResourcesHolder.data('index', $collectionResourcesHolder.find(':input').length);
+    $collectionResourcesHolder.data('index', $collectionResourcesHolder.find('li:not(.actions)').length - 1);
 
     $addResourcesLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
@@ -31,7 +31,7 @@ function loadResources() {
 }
 
 function $addFormDeleteLink($formDiv) {
-    var $removeFormA = $('<a href="#">delete</a>');
+    var $removeFormA = $('<a href="#" class="btn btn-remove btn-danger"><span aria-hidden="true"></span>remove</a>');
     $formDiv.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
@@ -50,12 +50,14 @@ function $addForm($collectionHolder, $addLinkDiv) {
     // get the new index
     var index = $collectionHolder.data('index');
 
+    index = index + 1
+
     // Replace '$$name$$' in the prototype's HTML to
     // instead be a number based on how many items we have
     var newForm = prototype.replace(/__name__/g, index);
 
     // increase the index with one for the next item
-    $collectionHolder.data('index', index + 1);
+    $collectionHolder.data('index', index);
 
     // Display the form in the page in an li, before the "Add a tag" link li
     var $newFormDiv = $('<li></li>').append(newForm);

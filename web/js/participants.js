@@ -20,6 +20,8 @@ jQuery(document).ready(function() {
         e.preventDefault();
         // add a new tag form (see code block below)
         $addForm($collectionParticipantsHolder, $addParticipantsLinkDiv);
+
+        $('.selectpicker').selectpicker('render');
     });
 });
 

@@ -62,6 +62,7 @@ class IntelectualOutputsController extends AbstractController
 
         return $this->render('intelectual-outputs/create.twig', ['my_form' => $projectIntelectualOutputsForm->createView(),
             'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(), 'actionTab' => $this->showActionTab($project),
+            'isCompleted' => $project->getIsCompleted()
         ]);
     }
 

@@ -48,6 +48,7 @@ class PartnersForm extends AbstractType
                 }
             ])
             ->add('isAssociatedPartner', CheckboxType::class, array('required' => false))
+            ->add('withoutTeam', CheckboxType::class, array('required' => false))
             ->add('budget')
             ->add('isWithoutTeam', CheckboxType::class, array('required' => false))
             ->add('allDepartments', CheckboxType::class, array('required' => false))

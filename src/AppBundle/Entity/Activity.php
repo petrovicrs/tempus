@@ -116,12 +116,6 @@ class Activity extends AbstractAuditable
         $this->actionDetails = $actionDetails;
     }
 
-    public function addActionDetails(ActionDetails $actionDetails)
-    {
-        $actionDetails->setActivity($this);
-        $this->actionDetails->add($actionDetails);
-    }
-
     /**
      * @return mixed
      */
@@ -141,7 +135,7 @@ class Activity extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getisValidated()
+    public function getIsValidated()
     {
         return $this->isValidated;
     }
@@ -185,8 +179,8 @@ class Activity extends AbstractAuditable
     {
         $this->projectMobilityFlows = $projectMobilityFlows;
     }
-//
-//    public function __toString() {
-//        return "";
-//    }
+
+    public function __toString() {
+        return "";
+    }
 }

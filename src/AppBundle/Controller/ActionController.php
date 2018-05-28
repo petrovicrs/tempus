@@ -63,6 +63,7 @@ class ActionController extends AbstractController
         $mobFlowsForm->handleRequest($request);
 
         if ($mobFlowsForm->isSubmitted() && $mobFlowsForm->isValid()) {
+//            dump($mobFlows->getActivities());die();
             /*  @var  Activity $activity */
             foreach($mobFlows->getActivities() as $activity){
 

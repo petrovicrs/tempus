@@ -95,7 +95,8 @@ class ActionDetailsForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => ActionDetails::class
+            'data_class' => ActionDetails::class,
+            'allow_extra_fields' => true,
         ]);
     }
 }

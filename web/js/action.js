@@ -77,6 +77,8 @@ function initActionDetailsForm(parent) {
         e.preventDefault();
         // add a new tag form (see code block below)
         $addActionDetailsForm($collectionHolder, $addLinkDiv);
+
+        $('.selectpicker').selectpicker('render');
     });
 }
 

@@ -1516,8 +1516,12 @@ pre code {
 table {
     max-width: 100%;
     background-color: transparent;
+}
+
+.table-hidden {
     display: none;
 }
+
 th {
     text-align: left
 }

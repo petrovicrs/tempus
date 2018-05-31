@@ -125,7 +125,7 @@ class ProjectSearchForm extends AbstractType
             /** DELIVERABLES */
             ->add(self::DELIVERABLE_TYPE, EntityType::class, [
                 'class' => 'AppBundle:ProjectDeliverableType',
-                'choice_label' => 'title' . ucfirst($options['locale']),
+                'choice_label' => 'name' . ucfirst($options['locale']),
                 'placeholder' => '--',
                 'required' => false
             ])

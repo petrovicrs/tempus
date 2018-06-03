@@ -440,6 +440,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\EventReminder
+    doctrine_entity_repository.user:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\User
     doctrine_entity_repository.user_permission:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
@@ -455,6 +460,26 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\ExistingInstitutionPermission
+    doctrine_entity_repository.user_role:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\UserRole
+    doctrine_entity_repository.user_project:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\UserProject
+    doctrine_entity_repository.user_institution:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\UserInstitution
+    doctrine_entity_repository.roles:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\Roles
     doctrine_entity_repository.project_mobility_flows:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

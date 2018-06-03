@@ -58,6 +58,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ProjectController extends AbstractController
 {
@@ -79,7 +80,7 @@ class ProjectController extends AbstractController
      * @Route("/{locale}/project/list", name="project_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction()
-    {//* @Security("is_granted('ROLE_ADMIN')")
+    {
         $result = $this->getProjectRepository()->findBy(['isCompleted' => 1]);
 
         return $this->render('project/list.twig', ['result' => $result]);
@@ -87,7 +88,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{locale}/project/create", name="project_create", requirements={"locale": "%app.locales%"})
-     *
+     * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_PROJECT_CREATE') or is_granted('ROLE_ADMIN')")
      */
     public function createAction(Request $request)
     {
@@ -169,6 +170,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{locale}/project/create-project", name="project_create_start", requirements={"locale": "%app.locales%"})
+     * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_PROJECT_CREATE') or is_granted('ROLE_ADMIN')")
      *
      */
     public function createProjectAction(Request $request)
@@ -206,7 +208,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{locale}/project-ka2/create", name="project_ka2_create", requirements={"locale": "%app.locales%"})
-     *
+     * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_PROJECT_CREATE') or is_granted('ROLE_ADMIN')")
      */
     public function createKa2Action(Request $request)
     {
@@ -270,12 +272,22 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{locale}/project/edit/{projectId}", name="project_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
-     *
+     * @Security("is_granted('ROLE_USER_EDIT') or is_granted('ROLE_USER_PROJECT_EDIT_MY') or is_granted('ROLE_USER_PROJECT_EDIT_ALL') or is_granted('ROLE_ADMIN')")
      */
     public function editAction(Request $request, $projectId)
     {
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER_PROJECT_EDIT_MY') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_USER_EDIT') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_USER_PROJECT_EDIT_ALL') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if (!$this->getUserProjectRepository()->isUserProject($project, $this->getUser())) {
+                // Permissions were denied
+                throw new AccessDeniedException("You don't have access to this page!");
+            }
+        }
 
         $projectForm = $this->createForm(ProjectForm::class, $project, [
             'action' => $this->generateUrl('project_edit', ['projectId' => $projectId]),
@@ -441,12 +453,22 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{locale}/project-ka2/edit/{projectId}", name="project_ka2_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
-     *
+     * @Security("is_granted('ROLE_USER_EDIT') or is_granted('ROLE_USER_PROJECT_EDIT_MY') or is_granted('ROLE_USER_PROJECT_EDIT_ALL') or is_granted('ROLE_ADMIN')")
      */
     public function editKa2Action(Request $request, $projectId)
     {
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER_PROJECT_EDIT_MY') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_USER_EDIT') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_USER_PROJECT_EDIT_ALL') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if (!$this->getUserProjectRepository()->isUserProject($project, $this->getUser())) {
+                // Permission denied
+                throw new AccessDeniedException("You don't have access to this page!");
+            }
+        }
 
         $projectForm = $this->createForm(ProjectKa2Form::class, $project, [
             'action' => $this->generateUrl('project_ka2_edit', ['projectId' => $projectId]),
@@ -575,14 +597,23 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{locale}/project/{projectId}", name="project_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
-     *
-     * }
+     * @Security("is_granted('ROLE_USER_VIEW') or is_granted('ROLE_USER_PROJECT_VIEW_MY') or is_granted('ROLE_USER_PROJECT_VIEW_ALL') or is_granted('ROLE_ADMIN')")
      */
     public function viewProjectAction($projectId)
     {
-        /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER_PROJECT_VIEW_MY') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_USER_VIEW') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_USER_PROJECT_VIEW_ALL') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if (!$this->getUserProjectRepository()->isUserProject($project, $this->getUser())) {
+                // Permissions were denied
+                throw new AccessDeniedException("You don't have access to this page!");
+            }
+        }
+
+        /** @var Project $project */
         if (!$project) {
             throw $this->createNotFoundException(
                 'No project found for id '. $projectId
@@ -630,13 +661,22 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{locale}/project-ka2/{projectId}", name="project_ka2_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
-     *
-     * }
+     * @Security("is_granted('ROLE_USER_VIEW') or is_granted('ROLE_USER_PROJECT_VIEW_MY') or is_granted('ROLE_USER_PROJECT_VIEW_ALL') or is_granted('ROLE_ADMIN')")
      */
     public function viewProjectKa2Action($projectId)
     {
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER_PROJECT_VIEW_MY') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_USER_VIEW') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_USER_PROJECT_VIEW_ALL') &&
+            !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if (!$this->getUserProjectRepository()->isUserProject($project, $this->getUser())) {
+                // Permissions were denied
+                throw new AccessDeniedException("You don't have access to this page!");
+            }
+        }
 
         if (!$project) {
             throw $this->createNotFoundException(
@@ -856,5 +896,9 @@ class ProjectController extends AbstractController
     private function getDifficultiesParticipantsAreFacingRepository() {
 
         return $this->get('doctrine_entity_repository.difficultiesParticipantsAreFacing');
+    }
+
+    private function getUserProjectRepository() {
+        return $this->get('doctrine_entity_repository.user_project');
     }
 }

@@ -8,376 +8,464 @@
         <div class="row">
             <div class="controls reporting">
                 {{ form_start(my_form) }}
-                    <div class="col-xs-12">
+                    Application permissions:
+                    <div>
                         <div class="col-xs-2">
-                            {{ form_label(my_form.peopleView, 'People view'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_label(my_form.create, 'Create'|trans, {'label_attr': {'class': 'control-label'}}) }}
                             <div class="form">
-                                {{ form_widget(my_form.peopleView, {'attr': {'class': 'form-control'}})  }}
+                                {{ form_widget(my_form.create, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
                         <div class="col-xs-2">
-                            {{ form_label(my_form.peopleEdit, 'People edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_label(my_form.view, 'View'|trans, {'label_attr': {'class': 'control-label'}}) }}
                             <div class="form">
-                                {{ form_widget(my_form.peopleEdit, {'attr': {'class': 'form-control'}})  }}
+                                {{ form_widget(my_form.view, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
                         <div class="col-xs-2">
-                            {{ form_label(my_form.peopleDelete, 'People delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_label(my_form.edit, 'Edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
                             <div class="form">
-                                {{ form_widget(my_form.peopleDelete)  }}
+                                {{ form_widget(my_form.edit, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
                         <div class="col-xs-2">
-                            {{ form_label(my_form.peopleExport, 'People export'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_label(my_form.delete, 'Delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
                             <div class="form">
-                                {{ form_widget(my_form.peopleExport) }}
+                                {{ form_widget(my_form.delete, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xs-12">
+                    </div><br/><br/><br/>
+                    All Projects permissions:
+                    <div>
                         <div class="col-xs-2">
-                            {{ form_label(my_form.activitiesView, 'Activities view'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_label(my_form.projectCreate, 'Project Create'|trans, {'label_attr': {'class': 'control-label'}}) }}
                             <div class="form">
-                                {{ form_widget(my_form.activitiesView, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.activitiesEdit, 'Activities edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.activitiesEdit, {'attr': {'class': 'form-control'}})  }}
+                                {{ form_widget(my_form.projectCreate, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
                         <div class="col-xs-2">
-                            {{ form_label(my_form.activitiesDelete, 'Activities delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_label(my_form.projectViewAll, 'Project View All'|trans, {'label_attr': {'class': 'control-label'}}) }}
                             <div class="form">
-                                {{ form_widget(my_form.activitiesDelete)  }}
+                                {{ form_widget(my_form.projectViewAll, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
                         <div class="col-xs-2">
-                            {{ form_label(my_form.activitiesExport, 'Activities export'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_label(my_form.projectEditAll, 'Project Edit All'|trans, {'label_attr': {'class': 'control-label'}}) }}
                             <div class="form">
-                                {{ form_widget(my_form.activitiesExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.deliverablesView, 'Deliverables view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.deliverablesView, {'attr': {'class': 'form-control'}})  }}
+                                {{ form_widget(my_form.projectEditAll, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
                         <div class="col-xs-2">
-                            {{ form_label(my_form.deliverablesEdit, 'Deliverables edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_label(my_form.projectDeleteAll, 'Project Delete All'|trans, {'label_attr': {'class': 'control-label'}}) }}
                             <div class="form">
-                                {{ form_widget(my_form.deliverablesEdit, {'attr': {'class': 'form-control'}})  }}
+                                {{ form_widget(my_form.projectDeleteAll, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div>
+                    </div><br/><br/><br/>
+                    All Institution permissions
+                    <div>
+                        <div class="col-xs-2">
+                            {{ form_label(my_form.institutionCreate, 'Institution Create'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            <div class="form">
+                                {{ form_widget(my_form.institutionCreate, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
                         <div class="col-xs-2">
-                            {{ form_label(my_form.deliverablesDelete, 'Deliverables delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_label(my_form.institutionViewAll, 'Institution View All'|trans, {'label_attr': {'class': 'control-label'}}) }}
                             <div class="form">
-                                {{ form_widget(my_form.deliverablesDelete)  }}
+                                {{ form_widget(my_form.institutionViewAll, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
                         <div class="col-xs-2">
-                            {{ form_label(my_form.deliverablesExport, 'Deliverables export'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_label(my_form.institutionEditAll, 'Institution Edit All'|trans, {'label_attr': {'class': 'control-label'}}) }}
                             <div class="form">
-                                {{ form_widget(my_form.deliverablesExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.monitoringView, 'Monitoring view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.monitoringView, {'attr': {'class': 'form-control'}})  }}
+                                {{ form_widget(my_form.institutionEditAll, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
                         <div class="col-xs-2">
-                            {{ form_label(my_form.monitoringEdit, 'Monitoring edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_label(my_form.institutionDeleteAll, 'Institution Delete All'|trans, {'label_attr': {'class': 'control-label'}}) }}
                             <div class="form">
-                                {{ form_widget(my_form.monitoringEdit, {'attr': {'class': 'form-control'}})  }}
+                                {{ form_widget(my_form.institutionDeleteAll, {'attr': {'class': 'form-control'}})  }}
                             </div>
                         </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.monitoringDelete, 'Monitoring delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.monitoringDelete)  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.monitoringExport, 'Monitoring export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.monitoringExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.partnersView, 'Partners view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.partnersView, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.partnersEdit, 'Partners edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.partnersEdit, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.partnersDelete, 'Partners delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.partnersDelete)  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.partnersExport, 'Partners export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.partnersExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.resourcesView, 'Resources view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.resourcesView, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.resourcesEdit, 'Resources edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.resourcesEdit, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.resourcesDelete, 'Resources delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.resourcesDelete)  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.resourcesExport, 'Resources export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.resourcesExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.intoutputsView, 'Intoutputs view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.intoutputsView, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.intoutputsEdit, 'Intoutputs edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.intoutputsEdit, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.intoutputsDelete, 'Intoutputs delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.intoutputsDelete)  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.intoutputsExport, 'Intoutputs export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.intoutputsExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.resultsView, 'Results view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.resultsView, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.resultsEdit, 'Results edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.resultsEdit, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.resultsDelete, 'Results delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.resultsDelete)  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.resultsExport, 'Results export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.resultsExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.reportingView, 'Reporting view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.reportingView, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.reportingEdit, 'Reporting edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.reportingEdit, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.reportingDelete, 'Reporting delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.reportingDelete)  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.reportingExport, 'Reporting export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.reportingExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.attachmentsView, 'Attachments view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.attachmentsView, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.attachmentsEdit, 'Attachments edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.attachmentsEdit, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.attachmentsDelete, 'Attachments delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.attachmentsDelete)  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.attachmentsExport, 'Attachments export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.attachmentsExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.calendarView, 'Calendar view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.calendarView, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.calendarEdit, 'Calendar edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.calendarEdit, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.calendarDelete, 'Calendar delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.calendarDelete)  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.calendarExport, 'Calendar export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.calendarExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.usersView, 'Users view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.usersView, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.usersEdit, 'Users edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.usersEdit, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.usersDelete, 'Users delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.usersDelete)  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.usersExport, 'Users export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.usersExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.newprojectView, 'New Project view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.newprojectView, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.newprojectEdit, 'New Project edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.newprojectEdit, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.newprojectDelete, 'New Project delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.newprojectDelete)  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.newprojectExport, 'New Project export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.newprojectExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.newinstitutionView, 'New Institution view'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.newinstitutionView, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.newinstitutionEdit, 'New Institution edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.newinstitutionEdit, {'attr': {'class': 'form-control'}})  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.newinstitutionDelete, 'New Institution delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.newinstitutionDelete)  }}
-                            </div>
-                        </div>
-                        <div class="col-xs-2">
-                            {{ form_label(my_form.newinstitutionExport, 'New Institution export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                            <div class="form">
-                                {{ form_widget(my_form.newinstitutionExport) }}
-                            </div>
-                        </div>
-                    </div>
-                    <ul class="existingProject" data-prototype="{{ include('/user-permission/includes/existingProject.html.twig',
-                                {'form': my_form.existingProjectPermission.vars.prototype })|e }}">
-                    </ul>
-                    <ul class="existingInstitution" data-prototype="{{ include('/user-permission/includes/existingInstitution.html.twig',
-                                {'form': my_form.existingInstitutionPermission.vars.prototype })|e }}">
-                    </ul>
+                    </div><br/><br/><br/>
+                    User Project permissions:
+                    <div>
+                        <ul class="existingProject" data-prototype="{{ include('/user-permission/includes/existingProject.html.twig',
+                            {'form': my_form.existingProjectPermission.vars.prototype })|e }}">
+                        </ul>
+                    </div><br/><br/><br/>
+                    User Institution permissions:
+                    <div>
+                        <ul class="existingInstitution" data-prototype="{{ include('/user-permission/includes/existingInstitution.html.twig',
+                            {'form': my_form.existingInstitutionPermission.vars.prototype })|e }}">
+                        </ul>
+                    </div><br/><br/><br/>
+
+
+
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.peopleView, 'People view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.peopleView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.peopleEdit, 'People edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.peopleEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.peopleDelete, 'People delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.peopleDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.peopleExport, 'People export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.peopleExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.activitiesView, 'Activities view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.activitiesView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.activitiesEdit, 'Activities edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.activitiesEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.activitiesDelete, 'Activities delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.activitiesDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.activitiesExport, 'Activities export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.activitiesExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.deliverablesView, 'Deliverables view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.deliverablesView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.deliverablesEdit, 'Deliverables edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.deliverablesEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.deliverablesDelete, 'Deliverables delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.deliverablesDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.deliverablesExport, 'Deliverables export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.deliverablesExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.monitoringView, 'Monitoring view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.monitoringView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.monitoringEdit, 'Monitoring edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.monitoringEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.monitoringDelete, 'Monitoring delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.monitoringDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.monitoringExport, 'Monitoring export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.monitoringExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.partnersView, 'Partners view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.partnersView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.partnersEdit, 'Partners edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.partnersEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.partnersDelete, 'Partners delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.partnersDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.partnersExport, 'Partners export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.partnersExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.resourcesView, 'Resources view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.resourcesView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.resourcesEdit, 'Resources edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.resourcesEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.resourcesDelete, 'Resources delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.resourcesDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.resourcesExport, 'Resources export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.resourcesExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.intoutputsView, 'Intoutputs view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.intoutputsView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.intoutputsEdit, 'Intoutputs edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.intoutputsEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.intoutputsDelete, 'Intoutputs delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.intoutputsDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.intoutputsExport, 'Intoutputs export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.intoutputsExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.resultsView, 'Results view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.resultsView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.resultsEdit, 'Results edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.resultsEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.resultsDelete, 'Results delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.resultsDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.resultsExport, 'Results export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.resultsExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.reportingView, 'Reporting view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.reportingView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.reportingEdit, 'Reporting edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.reportingEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.reportingDelete, 'Reporting delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.reportingDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.reportingExport, 'Reporting export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.reportingExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.attachmentsView, 'Attachments view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.attachmentsView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.attachmentsEdit, 'Attachments edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.attachmentsEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.attachmentsDelete, 'Attachments delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.attachmentsDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.attachmentsExport, 'Attachments export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.attachmentsExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.calendarView, 'Calendar view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.calendarView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.calendarEdit, 'Calendar edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.calendarEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.calendarDelete, 'Calendar delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.calendarDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.calendarExport, 'Calendar export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.calendarExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.usersView, 'Users view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.usersView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.usersEdit, 'Users edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.usersEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.usersDelete, 'Users delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.usersDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.usersExport, 'Users export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.usersExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.newprojectView, 'New Project view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.newprojectView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.newprojectEdit, 'New Project edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.newprojectEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.newprojectDelete, 'New Project delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.newprojectDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.newprojectExport, 'New Project export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.newprojectExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="col-xs-12">#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.newinstitutionView, 'New Institution view'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.newinstitutionView, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.newinstitutionEdit, 'New Institution edit'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.newinstitutionEdit, {'attr': {'class': 'form-control'}})  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.newinstitutionDelete, 'New Institution delete'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.newinstitutionDelete)  }}#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="col-xs-2">#}
+                            {#{{ form_label(my_form.newinstitutionExport, 'New Institution export'|trans, {'label_attr': {'class': 'control-label'}}) }}#}
+                            {#<div class="form">#}
+                                {#{{ form_widget(my_form.newinstitutionExport) }}#}
+                            {#</div>#}
+                        {#</div>#}
                 {{ form_end(my_form) }}
             </div>
         </div>

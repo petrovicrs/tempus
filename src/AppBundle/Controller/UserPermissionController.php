@@ -13,12 +13,18 @@ use AppBundle\Entity\ExistingProjectPermission;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\UserPermission;
 use AppBundle\Entity\Results;
+use AppBundle\Entity\UserRole;
+use AppBundle\Form\ChooseUserForm;
 use AppBundle\Form\ProjectResultsForm;
 use AppBundle\Form\UserPermissionForm;
+use AppBundle\Repository\RolesRepository;
+use AppBundle\Repository\UserRepository;
+use AppBundle\Repository\UserRoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Repository\ProjectRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UserPermissionController extends AbstractController
 {
@@ -33,16 +39,46 @@ class UserPermissionController extends AbstractController
 //    }
 //
     /**
+     * @Route("/{locale}/user-permission/choose-user", name="choose_user", requirements={"locale": "%app.locales%"})
+     */
+    public function chooseUserAction(Request $request)
+    {
+        $chooseUserForm = $this->createForm(ChooseUserForm::class, null, [
+            'action' => $this->generateUrl('choose_user'),
+            'method' => 'POST',
+            'locale' => $request->getLocale(),
+        ]);
+
+        $chooseUserForm->handleRequest($request);
+
+        if ($chooseUserForm->isSubmitted() && $chooseUserForm->isValid())
+        {
+            $data = $chooseUserForm->getData();
+
+            $user = $data['user'];
+
+            return $this->redirectToRoute('permission_edit', ['userId' => $user->getId()]);
+        }
+
+        $data = [
+            'my_form' => $chooseUserForm->createView()
+        ];
+
+        return $this->render('user-permission/choose-user.twig', $data);
+    }
+
+    /**
      * @Route("/{locale}/user-permission/create", name="user_permission_create", requirements={"locale": "%app.locales%"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function createAction(Request $request)
     {
-        $userPermission = new UserPermission();
+        $userPermission = [];
 
-        $userPermissionForm = $this->createForm(UserPermissionForm::class, $userPermission, [
+        $userPermissionForm = $this->createForm(UserPermissionForm::class, null, [
             'action' => $this->generateUrl('user_permission_create'),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
         ]);
 
         $userPermissionForm->handleRequest($request);
@@ -77,54 +113,219 @@ class UserPermissionController extends AbstractController
 
         return $this->render('user-permission/create.twig', ['my_form' => $userPermissionForm->createView()]);
     }
-//
-//    /**
-//     * @Route("/{locale}/results/edit/{projectId}", name="result_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
-//     *
-//     */
-//    public function editAction(Request $request, $projectId)
-//    {
-//        /** @var ProjectResults $projectResult */
-//        $projectResult = $this->getProjectResultsRepository()->findOneBy(['project' => $projectId]);
-//
-//        /** @var Project $project */
-//        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
-//
-//        $projectResultForm = $this->createForm(ProjectResultsForm::class, $projectResult, [
-//            'action' => $this->generateUrl('result_edit', ['projectId' => $projectId]),
-//            'method' => 'POST',
-//            'locale' => $request->getLocale()
-//        ]);
-//
-//        $results = new ArrayCollection();
-//
-//        foreach ($projectResult->getResults() as $result) {
-//            $results->add($result);
-//        }
-//
-//        $projectResultForm->handleRequest($request);
-//
-//        if ($projectResultForm->isSubmitted() && $projectResultForm->isValid()) {
-//
-//            $em = $this->getDoctrine()->getManager();
-//
-//            foreach ($results as $result) {
-//                if (false === $projectResult->getResults()->contains($result)) {
-//                    $em->remove($result);
-//                }
-//
-//                $this->getResultsRepository()->save($result);
-//            }
-//
-//            $this->getProjectResultsRepository()->save($projectResult);
-//
-//            if (!$projectResult->getProject()->getIsCompleted()) {
-//                return $this->redirectToRoute('reporting_create');
-//            }
-//        }
-//
-//        return $this->render('user-permission/edit.twig', ['my_form' => $projectResultForm->createView(), 'keyAction' => $project->getKeyActions()->getNameSr()]);
-//    }
+
+    /**
+     * @Route("/{locale}/user-permission/edit/{userId}", name="permission_edit", requirements={"userId": "\d+", "locale": "%app.locales%"})
+     *
+     */
+    public function editAction(Request $request, $userId)
+    {
+        $user = $this->getUserRepository()->findOneBy(['id' => $userId]);
+
+        $userPermissions = $this->getUserRoleRepository()->findBy(['user' => $user, 'isActive' => 1]);
+
+        $create = $edit = $delete = $view = $projectCreate = $projectViewAll = $projectEditAll = $projectDeleteAll =
+            $institutionCreate = $institutionViewAll = $institutionEditAll = $institutionDeleteAll = false;
+
+        $permissionArray = [];
+
+        /** @var UserRole $permission */
+        foreach ($userPermissions as $permission) {
+            switch ($permission->getRole()->getName()) {
+                case 'ROLE_USER_CREATE':
+                    {
+                        $permissionArray[] = 'ROLE_USER_CREATE';
+                        $create = 'checked';
+                        break;
+                    }
+                case 'ROLE_USER_EDIT':
+                    {
+                        $permissionArray[] = 'ROLE_USER_EDIT';
+                        $edit = 'checked';
+                        break;
+                    }
+                case 'ROLE_USER_DELETE':
+                    {
+                        $permissionArray[] = 'ROLE_USER_DELETE';
+                        $delete = 'checked';
+                        break;
+                    }
+                case 'ROLE_USER_VIEW':
+                    {
+                        $permissionArray[] = 'ROLE_USER_VIEW';
+                        $view = 'checked';
+                        break;
+                    }
+                case 'ROLE_USER_PROJECT_CREATE':
+                    {
+                        $permissionArray[] = 'ROLE_USER_PROJECT_CREATE';
+                        $projectCreate = 'checked';
+                        break;
+                    }
+                case 'ROLE_USER_PROJECT_VIEW_ALL':
+                    {
+                        $permissionArray[] = 'ROLE_USER_PROJECT_VIEW_ALL';
+                        $projectViewAll = 'checked';
+                        break;
+                    }
+                case 'ROLE_USER_PROJECT_EDIT_ALL':
+                    {
+                        $permissionArray[] = 'ROLE_USER_PROJECT_EDIT_ALL';
+                        $projectEditAll = 'checked';
+                        break;
+                    }
+                case 'ROLE_USER_PROJECT_DELETE_ALL':
+                    {
+                        $permissionArray[] = 'ROLE_USER_PROJECT_DELETE_ALL';
+                        $projectDeleteAll = 'checked';
+                        break;
+                    }
+                case 'ROLE_USER_INSTITUTION_CREATE':
+                    {
+                        $permissionArray[] = 'ROLE_USER_INSTITUTION_CREATE';
+                        $institutionCreate = 'checked';
+                        break;
+                    }
+                case 'ROLE_USER_INSTITUTION_VIEW_ALL':
+                    {
+                        $permissionArray[] = 'ROLE_USER_INSTITUTION_VIEW_ALL';
+                        $institutionViewAll = 'checked';
+                        break;
+                    }
+                case 'ROLE_USER_INSTITUTION_EDIT_ALL':
+                    {
+                        $permissionArray[] = 'ROLE_USER_INSTITUTION_EDIT_ALL';
+                        $institutionEditAll = 'checked';
+                        break;
+                    }
+                case 'ROLE_USER_INSTITUTION_DELETE_ALL':
+                    {
+                        $permissionArray[] = 'ROLE_USER_INSTITUTION_DELETE_ALL';
+                        $institutionDeleteAll = 'checked';
+                        break;
+                    }
+            }
+        }
+
+        $userPermissionForm = $this->createForm(UserPermissionForm::class, null, [
+            'action' => $this->generateUrl('permission_edit', ['userId' => $user->getId()]),
+            'method' => 'POST',
+            'locale' => $request->getLocale(),
+            'create' => $create,
+            'edit' => $edit,
+            'delete' => $delete,
+            'view' => $view,
+            'projectCreate' => $projectCreate,
+            'projectViewAll' => $projectViewAll,
+            'projectEditAll' => $projectEditAll,
+            'projectDeleteAll' => $projectDeleteAll,
+            'institutionCreate' => $institutionCreate,
+            'institutionViewAll' => $institutionViewAll,
+            'institutionEditAll' => $institutionEditAll,
+            'institutionDeleteAll' => $institutionDeleteAll,
+        ]);
+
+        $userPermissionForm->handleRequest($request);
+
+        if ($userPermissionForm->isSubmitted() && $userPermissionForm->isValid()) {
+
+            $formData = $userPermissionForm->getData();
+            $postPermissionArray = [];
+
+            foreach ($formData as $key => $value) {
+                if ($value){
+                    switch ($key) {
+                        case 'create':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_CREATE';
+                                break;
+                            }
+                        case 'edit':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_EDIT';
+                                break;
+                            }
+                        case 'delete':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_DELETE';
+                                break;
+                            }
+                        case 'view':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_VIEW';
+                                break;
+                            }
+                        case 'projectCreate':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_PROJECT_CREATE';
+                                break;
+                            }
+                        case 'projectViewAll':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_PROJECT_VIEW_ALL';
+                                break;
+                            }
+                        case 'projectEditAll':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_PROJECT_EDIT_ALL';
+                                break;
+                            }
+                        case 'projectDeleteAll':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_PROJECT_DELETE_ALL';
+                                break;
+                            }
+                        case 'institutionCreate':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_INSTITUTION_CREATE';
+                                break;
+                            }
+                        case 'institutionViewAll':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_INSTITUTION_VIEW_ALL';
+                                break;
+                            }
+                        case 'institutionEditAll':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_INSTITUTION_EDIT_ALL';
+                                break;
+                            }
+                        case 'institutionDeleteAll':
+                            {
+                                $postPermissionArray[] = 'ROLE_USER_INSTITUTION_DELETE_ALL';
+                                break;
+                            }
+                    }
+                }
+            }
+
+            $newPermissions = array_diff($postPermissionArray, $permissionArray);
+            foreach ($newPermissions as $newPermission) {
+                $role = $this->getRolesRepository()->findOneBy(['name' => $newPermission]);
+                $userRole = new UserRole();
+                $userRole->setUser($user);
+                $userRole->setRole($role);
+                $userRole->setIsActive(1);
+                $this->getUserRoleRepository()->save($userRole);
+
+            }
+
+            $permissionsForRemoval = array_diff($permissionArray, $postPermissionArray);
+            foreach ($permissionsForRemoval as $permissionForRemoval) {
+                $role = $this->getRolesRepository()->findOneBy(['name' => $permissionForRemoval]);
+
+                $userRole = $this->getUserRoleRepository()->findOneBy(['user' => $user, 'isActive' => 1, 'role' => $role]);
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($userRole);
+                $em->flush();
+            }
+
+            return $this->redirectToRoute('permission_edit', ['userId' => $user->getId()]);
+
+        }
+
+        return $this->render('user-permission/edit.twig', ['my_form' => $userPermissionForm->createView(), 'user' => $user]);
+    }
 //
 //    /**
 //     * @Route("/{locale}/results/view/{resultId}", name="result_view", requirements={"resultId": "\d+", "locale": "%app.locales%"})
@@ -151,8 +352,33 @@ class UserPermissionController extends AbstractController
     {
         return $this->get('doctrine_entity_repository.existing_project_permission');
     }
+
     private function getExistingInstitutionPermissionRepository()
     {
         return $this->get('doctrine_entity_repository.existing_institution_permission');
+    }
+
+    /**
+     * @return UserRepository
+     */
+    private function getUserRepository()
+    {
+        return $this->get('doctrine_entity_repository.user');
+    }
+
+    /**
+     * @return UserRoleRepository
+     */
+    private function getUserRoleRepository()
+    {
+        return $this->get('doctrine_entity_repository.user_role');
+    }
+
+    /**
+     * @return RolesRepository
+     */
+    private function getRolesRepository()
+    {
+        return $this->get('doctrine_entity_repository.roles');
     }
 }

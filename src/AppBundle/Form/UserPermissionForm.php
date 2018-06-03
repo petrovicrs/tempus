@@ -28,76 +28,38 @@ class UserPermissionForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('peopleView', CheckboxType::class, array('required' => false))
-            ->add('peopleEdit', CheckboxType::class, array('required' => false))
-            ->add('peopleDelete', CheckboxType::class, array('required' => false))
-            ->add('peopleExport', CheckboxType::class, array('required' => false))
-            ->add('activitiesView', CheckboxType::class, array('required' => false))
-            ->add('activitiesEdit', CheckboxType::class, array('required' => false))
-            ->add('activitiesDelete', CheckboxType::class, array('required' => false))
-            ->add('activitiesExport', CheckboxType::class, array('required' => false))
-            ->add('deliverablesView', CheckboxType::class, array('required' => false))
-            ->add('deliverablesEdit', CheckboxType::class, array('required' => false))
-            ->add('deliverablesDelete', CheckboxType::class, array('required' => false))
-            ->add('deliverablesExport', CheckboxType::class, array('required' => false))
-            ->add('monitoringView', CheckboxType::class, array('required' => false))
-            ->add('monitoringEdit', CheckboxType::class, array('required' => false))
-            ->add('monitoringDelete', CheckboxType::class, array('required' => false))
-            ->add('monitoringExport', CheckboxType::class, array('required' => false))
-            ->add('partnersView', CheckboxType::class, array('required' => false))
-            ->add('partnersEdit', CheckboxType::class, array('required' => false))
-            ->add('partnersDelete', CheckboxType::class, array('required' => false))
-            ->add('partnersExport', CheckboxType::class, array('required' => false))
-            ->add('resourcesView', CheckboxType::class, array('required' => false))
-            ->add('resourcesEdit', CheckboxType::class, array('required' => false))
-            ->add('resourcesDelete', CheckboxType::class, array('required' => false))
-            ->add('resourcesExport', CheckboxType::class, array('required' => false))
-            ->add('intoutputsView', CheckboxType::class, array('required' => false))
-            ->add('intoutputsEdit', CheckboxType::class, array('required' => false))
-            ->add('intoutputsDelete', CheckboxType::class, array('required' => false))
-            ->add('intoutputsExport', CheckboxType::class, array('required' => false))
-            ->add('resultsView', CheckboxType::class, array('required' => false))
-            ->add('resultsEdit', CheckboxType::class, array('required' => false))
-            ->add('resultsDelete', CheckboxType::class, array('required' => false))
-            ->add('resultsExport', CheckboxType::class, array('required' => false))
-            ->add('reportingView', CheckboxType::class, array('required' => false))
-            ->add('reportingEdit', CheckboxType::class, array('required' => false))
-            ->add('reportingDelete', CheckboxType::class, array('required' => false))
-            ->add('reportingExport', CheckboxType::class, array('required' => false))
-            ->add('attachmentsView', CheckboxType::class, array('required' => false))
-            ->add('attachmentsEdit', CheckboxType::class, array('required' => false))
-            ->add('attachmentsDelete', CheckboxType::class, array('required' => false))
-            ->add('attachmentsExport', CheckboxType::class, array('required' => false))
-            ->add('calendarView', CheckboxType::class, array('required' => false))
-            ->add('calendarEdit', CheckboxType::class, array('required' => false))
-            ->add('calendarDelete', CheckboxType::class, array('required' => false))
-            ->add('calendarExport', CheckboxType::class, array('required' => false))
-            ->add('usersView', CheckboxType::class, array('required' => false))
-            ->add('usersEdit', CheckboxType::class, array('required' => false))
-            ->add('usersDelete', CheckboxType::class, array('required' => false))
-            ->add('usersExport', CheckboxType::class, array('required' => false))
-            ->add('newprojectView', CheckboxType::class, array('required' => false))
-            ->add('newprojectEdit', CheckboxType::class, array('required' => false))
-            ->add('newprojectDelete', CheckboxType::class, array('required' => false))
-            ->add('newprojectExport', CheckboxType::class, array('required' => false))
-            ->add('newinstitutionView', CheckboxType::class, array('required' => false))
-            ->add('newinstitutionEdit', CheckboxType::class, array('required' => false))
-            ->add('newinstitutionDelete', CheckboxType::class, array('required' => false))
-            ->add('newinstitutionExport', CheckboxType::class, array('required' => false))
-            ->add('existingProjectPermission', CollectionType::class, array(
-                'entry_type'  => ExistingProjectPermissionForm::class,
-                'allow_add' => true,
-                'by_reference' => false,
-                'allow_delete' => true,
-                'label' => false
-            ))
-            ->add('existingInstitutionPermission', CollectionType::class, array(
-                'entry_type'  => ExistingInstitutionPermissionForm::class,
-                'allow_add' => true,
-                'by_reference' => false,
-                'allow_delete' => true,
-                'label' => false
-            ))
+            ->add('create', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['create']]))
+            ->add('view', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['view']]))
+            ->add('delete', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['delete']]))
+            ->add('edit', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['edit']]))
+            ->add('projectCreate', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['projectCreate']]))
+//            ->add('projectViewMy', CheckboxType::class, array('required' => false))
+            ->add('projectViewAll', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['projectViewAll']]))
+//            ->add('projectEditMy', CheckboxType::class, array('required' => false))
+            ->add('projectEditAll', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['projectEditAll']]))
+//            ->add('projectDeleteMy', CheckboxType::class, array('required' => false))
+            ->add('projectDeleteAll', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['projectDeleteAll']]))
+            ->add('institutionCreate', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['institutionCreate']]))
+//            ->add('institutionViewMy', CheckboxType::class, array('required' => false))
+            ->add('institutionViewAll', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['institutionViewAll']]))
+//            ->add('institutionDeleteMy', CheckboxType::class, array('required' => false))
+            ->add('institutionDeleteAll', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['institutionDeleteAll']]))
+//            ->add('institutionEditMy', CheckboxType::class, array('required' => false))
+            ->add('institutionEditAll', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['institutionEditAll']]))
+//            ->add('existingProjectPermission', CollectionType::class, array(
+//                'entry_type'  => ExistingProjectPermissionForm::class,
+//                'allow_add' => true,
+//                'by_reference' => false,
+//                'allow_delete' => true,
+//                'label' => false
+//            ))
+//            ->add('existingInstitutionPermission', CollectionType::class, array(
+//                'entry_type'  => ExistingInstitutionPermissionForm::class,
+//                'allow_add' => true,
+//                'by_reference' => false,
+//                'allow_delete' => true,
+//                'label' => false
+//            ))
             ->add('submit', SubmitType::class);
     }
 
@@ -113,8 +75,20 @@ class UserPermissionForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'create' => false,
+            'edit' => false,
+            'delete' => false,
+            'view' => false,
+            'projectCreate' => false,
+            'projectViewAll' => false,
+            'projectEditAll' => false,
+            'projectDeleteAll' => false,
+            'institutionCreate' => false,
+            'institutionViewAll' => false,
+            'institutionEditAll' => false,
+            'institutionDeleteAll' => false,
             'locale' => 'en',
-            'data_class' => UserPermission::class,
+            'data_class' => null,
         ]);
 
     }

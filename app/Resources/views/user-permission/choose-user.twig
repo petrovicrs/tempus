@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls reporting">
+                {{ form_start(my_form) }}
+                <div class="form">
+                    {{ form_widget(my_form.user, {'attr': {'class': 'form-control'}})  }}
+                </div>
+                {{ form_end(my_form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

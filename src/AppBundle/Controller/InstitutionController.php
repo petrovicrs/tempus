@@ -26,6 +26,7 @@ use AppBundle\Repository\InstitutionNoteRepository;
 use AppBundle\Repository\InstitutionAddressRepository;
 use AppBundle\Repository\InstitutionLegalRepresentativeRepository;
 use AppBundle\Repository\InstitutionAccreditationRepository;
+use AppBundle\Repository\UserInstitutionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -43,6 +44,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\FileBag;
 use AppBundle\Util\FileTypeHelper;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class InstitutionController extends AbstractController
 {
@@ -58,7 +61,7 @@ class InstitutionController extends AbstractController
 
     /**
      * @Route("/{locale}/institution/create", name="institution_create", requirements={"locale": "%app.locales%"})
-     *
+     * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_INSTITUTION_CREATE') or is_granted('ROLE_ADMIN')")
      */
     public function createAction(Request $request)
     {
@@ -151,14 +154,22 @@ class InstitutionController extends AbstractController
 
     /**
      * @Route("/{locale}/institution/edit/{institutionId}", name="institution_edit", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
-     *
+     * @Security("is_granted('ROLE_USER_EDIT') or is_granted('ROLE_USER_INSTITUTION_EDIT_MY') or is_granted('ROLE_USER_INSTITUTION_EDIT_ALL') or is_granted('ROLE_ADMIN')")
      */
     public function editAction(Request $request, $institutionId)
     {
-
         /** @var Institution $institution */
         $institution = $this->getInstitutionRepository()->findOneBy(['id' => $institutionId]);
 
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER_INSTITUTION_EDIT_MY') &&
+            $this->get('security.authorization_checker')->isGranted('ROLE_USER_EDIT') &&
+            $this->get('security.authorization_checker')->isGranted('ROLE_USER_INSTITUTION_EDIT_ALL') &&
+            $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if (!$this->getUserInstitutionRepository()->isUserInstitution($institution, $this->getUser())) {
+                // Permissions were denied
+                throw new AccessDeniedException("You don't have access to this page!");
+            }
+        }
 
         $institutionForm = $this->createForm(InstitutionsForm::class, $institution, [
             'action' => $this->generateUrl('institution_edit', ['institutionId' => $institutionId]),
@@ -372,10 +383,21 @@ class InstitutionController extends AbstractController
 
     /**
      * @Route("/{locale}/institution/view/{institutionId}", name="institution_view", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
+     * @Security("is_granted('ROLE_USER_VIEW') or is_granted('ROLE_USER_INSTITUTION_VIEW_MY') or is_granted('ROLE_USER_INSTITUTION_VIEW_ALL') or is_granted('ROLE_ADMIN')")
      */
     public function viewAction(Request $request, $institutionId)
     {
         $institution = $this->getInstitutionRepository()->findOneBy(['id' => $institutionId]);
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER_INSTITUTION_VIEW_MY') &&
+            $this->get('security.authorization_checker')->isGranted('ROLE_USER_VIEW') &&
+            $this->get('security.authorization_checker')->isGranted('ROLE_USER_INSTITUTION_VIEW_ALL') &&
+            $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if (!$this->getUserInstitutionRepository()->isUserInstitution($institution, $this->getUser())) {
+                // Permissions were denied
+                throw new AccessDeniedException("You don't have access to this page!");
+            }
+        }
 
         $picNumbers = $this->getPicNumberRepository()->findBy(['institution' => $institutionId]);
         $contacts = $this->getInstitutionContactRepository()->findBy(['institution' => $institutionId]);
@@ -503,5 +525,13 @@ class InstitutionController extends AbstractController
     private function getProjectPartnerOrganisationRepository() {
 
         return $this->get('doctrine_entity_repository.project_partner_organisation');
+    }
+
+    /**
+     * @return UserInstitutionRepository
+     */
+    private function getUserInstitutionRepository() {
+
+        return $this->get('doctrine_entity_repository.user_institution');
     }
 }

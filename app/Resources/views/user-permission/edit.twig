@@ -1,29 +1,110 @@
 {% extends 'base.html.twig' %}
-{#TODO - left for finish#}
-{% block body %}
-    <script type="text/javascript" src="{{ asset('/js/reporting.js')}}"></script>
-    <section id="main">
-        {% if keyAction == 'ka1' %}
-            {% include 'sub-navbar.html.twig' with {'active': 'reporting', 'isCompleted': isCompleted} %}
-        {% endif %}
-        {%  if keyAction == 'ka2' %}
-            {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting'} %}
-        {% endif %}
-        <div class="container-fluid">
-            <div class="row">
-                <div class="controls reporting">
-                    <div class="col-xs-12">
-                        {{ form_start(my_form) }}
-                        <div class="col-xs-12">
-                            <h2>{% trans %}Edit Reporting{% endtrans %}</h2>
-                        </div>
 
-                        <ul class="reporting" data-purpose="edit" data-prototype="{{include('/reporting/includes/reporting.html.twig',
-                        {'form': my_form.reporting.vars.prototype })|e}}">
-                        </ul>
-                        {{ form_end(my_form) }}
+{% block body %}
+<script type="text/javascript" src="{{ asset('/js/existingProjectPermission.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('/js/existingInstitutionPermission.js')}}" ></script>
+<section id="main">
+    <div class="container-fluid">
+        <a href="{{ localizedPath('choose_user') }}"><button type="button" class="btn btn-info">Back</button></a>
+        <div class="row">
+            <div class="controls reporting">
+                User: {{ user.name }} {{ user.surname }}<br/><br/><br/>
+                {{ form_start(my_form) }}
+                Application permissions:
+                <div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.create, 'Create'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.create, {'attr': {'class': 'form-control'}})  }}
+                        </div>
                     </div>
-                </div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.view, 'View'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.view, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.edit, 'Edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.edit, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.delete, 'Delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.delete, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                </div><br/><br/><br/>
+                All Projects permissions:
+                <div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.projectCreate, 'Project Create'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.projectCreate, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.projectViewAll, 'Project View All'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.projectViewAll, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.projectEditAll, 'Project Edit All'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.projectEditAll, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.projectDeleteAll, 'Project Delete All'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.projectDeleteAll, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                </div><br/><br/><br/>
+                All Institution permissions
+                <div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.institutionCreate, 'Institution Create'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.institutionCreate, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.institutionViewAll, 'Institution View All'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.institutionViewAll, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.institutionEditAll, 'Institution Edit All'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.institutionEditAll, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        {{ form_label(my_form.institutionDeleteAll, 'Institution Delete All'|trans, {'label_attr': {'class': 'control-label'}}) }}
+                        <div class="form">
+                            {{ form_widget(my_form.institutionDeleteAll, {'attr': {'class': 'form-control'}})  }}
+                        </div>
+                    </div>
+                </div><br/><br/><br/>
+                {#User Project permissions:#}
+                {#<div>#}
+                    {#<ul class="existingProject" data-prototype="{{ include('/user-permission/includes/existingProject.html.twig',#}
+                        {#{'form': my_form.existingProjectPermission.vars.prototype })|e }}">#}
+                    {#</ul>#}
+                {#</div><br/><br/><br/>#}
+                {#User Institution permissions:#}
+                {#<div>#}
+                    {#<ul class="existingInstitution" data-prototype="{{ include('/user-permission/includes/existingInstitution.html.twig',#}
+                        {#{'form': my_form.existingInstitutionPermission.vars.prototype })|e }}">#}
+                    {#</ul>#}
+                {#</div><br/><br/><br/>#}
+                {{ form_end(my_form) }}
             </div>
         </div>
+    </div>
 {% endblock %}

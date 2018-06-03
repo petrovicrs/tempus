@@ -4,9 +4,10 @@ namespace AppBundle\Entity;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
 class User implements UserInterface
@@ -56,11 +57,20 @@ class User implements UserInterface
      */
     protected $permission;
 
-
     /**
-     * @ORM\Column(type="json_array")
+     * @ORM\OneToMany(targetEntity="UserRole", mappedBy="user", cascade={"persist"})
      */
-    private $roles = [];
+    private $roles;
+
+    public function __construct()
+    {
+        //$this->roles = new ArrayCollection();
+    }
+
+//    public function getRoles()
+//    {
+//        return $this->roles->toArray();
+//    }
 
     public function getId()
     {
@@ -79,11 +89,13 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        $roles = $this->roles;
+        $roles = [];
 
-        if (!in_array('ROLE_USER', $roles)) {
-            $roles[] = 'ROLE_USER';
+        /** @var UserRole $role */
+        foreach($this->roles as $role) {
+            $roles[] = $role->getRole()->getName();
         }
+
         return $roles;
     }
 

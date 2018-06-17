@@ -1,32 +1,7 @@
-<div class="col-xs-12">
-    <div class="col-xs-2">
-        {{ form_label(form.existingProjectView, 'View'|trans, {'label_attr': {'class': 'control-label'}}) }}
-        <div class="form">
-            {{ form_widget(form.existingProjectView, {'attr': {'class': 'form-control'}})  }}
-        </div>
-    </div>
-    <div class="col-xs-2">
-        {{ form_label(form.existingProjectEdit, 'Edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-        <div class="form">
-            {{ form_widget(form.existingProjectEdit, {'attr': {'class': 'form-control'}})  }}
-        </div>
-    </div>
-    <div class="col-xs-2">
-        {{ form_label(form.existingProjectDelete, 'Delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-        <div class="form">
-            {{ form_widget(form.existingProjectDelete)  }}
-        </div>
-    </div>
-    <div class="col-xs-2">
-        {{ form_label(form.existingProjectExport, 'Export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-        <div class="form">
-            {{ form_widget(form.existingProjectExport) }}
-        </div>
-    </div>
-    <div class="col-xs-2">
-        {{ form_label(form.project, 'Project'|trans, {'label_attr': {'class': 'control-label'}}) }}
-        <div class="form">
-            {{ form_widget(form.project) }}
-        </div>
-    </div>
+<div class="block" style="clear: both;">
+    {{ form_row(form.projectView) }}
+    {{ form_row(form.projectEdit) }}
+    {{ form_row(form.projectDelete) }}
+    {{ form_row(form.project) }}
 </div>
+

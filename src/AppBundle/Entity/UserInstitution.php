@@ -38,6 +38,33 @@ class UserInstitution extends AbstractAuditable
     private $isActive;
 
     /**
+     * @ORM\ManyToOne(
+     *      targetEntity="Roles"
+     * )
+     */
+    private $roles;
+
+    /**
+     * @ORM\Column(name="institution_view", type="boolean")
+     */
+    protected $institutionView;
+
+    /**
+     * @ORM\Column(name="institution_edit", type="boolean")
+     */
+    protected $institutionEdit;
+
+    /**
+     * @ORM\Column(name="institution_delete", type="boolean")
+     */
+    protected $institutionDelete;
+
+    /**
+     * @ORM\Column(name="institution_export", type="boolean")
+     */
+    protected $institutionExport;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -93,5 +120,84 @@ class UserInstitution extends AbstractAuditable
         $this->isActive = $isActive;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param mixed $roles
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstitutionView()
+    {
+        return $this->institutionView;
+    }
+
+    /**
+     * @param mixed $institutionView
+     */
+    public function setInstitutionView($institutionView)
+    {
+        $this->institutionView = $institutionView;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstitutionEdit()
+    {
+        return $this->institutionEdit;
+    }
+
+    /**
+     * @param mixed $institutionEdit
+     */
+    public function setInstitutionEdit($institutionEdit)
+    {
+        $this->institutionEdit = $institutionEdit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstitutionDelete()
+    {
+        return $this->institutionDelete;
+    }
+
+    /**
+     * @param mixed $institutionDelete
+     */
+    public function setInstitutionDelete($institutionDelete)
+    {
+        $this->institutionDelete = $institutionDelete;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstitutionExport()
+    {
+        return $this->institutionExport;
+    }
+
+    /**
+     * @param mixed $institutionExport
+     */
+    public function setInstitutionExport($institutionExport)
+    {
+        $this->institutionExport = $institutionExport;
+    }
 
 }

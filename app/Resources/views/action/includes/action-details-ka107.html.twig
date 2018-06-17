@@ -37,9 +37,9 @@
         <td>{{ form_row(form.distance) }}</td>
     </tr>
     <tr>
-        <td>{{ form_row(form.daysWithoutTravel) }}</td>
-        <td>{{ form_row(form.travelDays) }}</td>
-        <td>{{ form_row(form.totalDays) }}</td>
+        <td class="days_without_travel" onchange="addDays.call(this, event)">{{ form_row(form.daysWithoutTravel) }}</td>
+        <td class="days_travel" onchange="addDays.call(this, event)">{{ form_row(form.travelDays) }}</td>
+        <td class="days_total">{{ form_row(form.totalDays) }}</td>
         <td>{{ form_row(form.durationMonths) }}</td>
         <td colspan="2">{{ form_row(form.durationExtraDays) }}</td>
 

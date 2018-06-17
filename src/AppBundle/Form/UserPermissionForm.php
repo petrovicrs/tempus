@@ -46,20 +46,20 @@ class UserPermissionForm extends AbstractType
             ->add('institutionDeleteAll', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['institutionDeleteAll']]))
 //            ->add('institutionEditMy', CheckboxType::class, array('required' => false))
             ->add('institutionEditAll', CheckboxType::class, array('required' => false, 'attr' => ['checked' => $options['institutionEditAll']]))
-//            ->add('existingProjectPermission', CollectionType::class, array(
-//                'entry_type'  => ExistingProjectPermissionForm::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//                'allow_delete' => true,
-//                'label' => false
-//            ))
-//            ->add('existingInstitutionPermission', CollectionType::class, array(
-//                'entry_type'  => ExistingInstitutionPermissionForm::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//                'allow_delete' => true,
-//                'label' => false
-//            ))
+            ->add('existingProjectPermission', CollectionType::class, array(
+                'entry_type'  => ExistingProjectPermissionForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
+            ->add('existingInstitutionPermission', CollectionType::class, array(
+                'entry_type'  => ExistingInstitutionPermissionForm::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false
+            ))
             ->add('submit', SubmitType::class);
     }
 

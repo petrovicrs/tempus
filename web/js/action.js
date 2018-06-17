@@ -12,6 +12,24 @@ function initActivityForm() {
 
     $collectionHolder.find('li').each(function() {
         $addFormDeleteLink($(this));
+        if($(this).parent().hasClass('action-details') && $(this).is(':last-child')) {
+            var $addLink = $('<a href="#" class="btn btn-add btn-success "><span aria-hidden="true"></span>add</a>');
+            var $addLinkDiv = $('<li></li>').append($addLink);
+
+            var $collectionHolder = $(this).parent();
+            $collectionHolder.append($addLinkDiv);
+
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addLink.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+                // add a new tag form (see code block below)
+                $addActionDetailsForm($collectionHolder, $addLinkDiv);
+
+                $('.selectpicker').selectpicker('render');
+            });
+        }
     });
 
     $collectionHolder.append($addLinkDiv);
@@ -121,4 +139,25 @@ function $addFormDeleteLink($formDiv) {
         // remove the li for the tag form
         $formDiv.remove();
     });
+}
+
+function addDays(event) {
+    var daysWithoutTravel = $(this).parent().find('.days_without_travel').find('input').val();
+    var daysTravel = $(this).parent().find('.days_travel').find('input').val();
+
+    if (daysWithoutTravel) {
+        daysWithoutTravel = parseInt(daysWithoutTravel);
+    } else {
+        daysWithoutTravel = parseInt(0);
+    }
+
+    if (daysTravel) {
+        daysTravel = parseInt(daysTravel);
+    } else {
+        daysTravel = parseInt(0);
+    }
+
+    var totalDays = daysTravel + daysWithoutTravel;
+
+    $(this).parent().find('.days_total').find('input').val(parseInt(totalDays));
 }

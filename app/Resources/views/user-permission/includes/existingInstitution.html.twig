@@ -1,32 +1,6 @@
-<div class="col-xs-12">
-    <div class="col-xs-2">
-        {{ form_label(form.existingInstitutionView, 'View'|trans, {'label_attr': {'class': 'control-label'}}) }}
-        <div class="form">
-            {{ form_widget(form.existingInstitutionView, {'attr': {'class': 'form-control'}})  }}
-        </div>
-    </div>
-    <div class="col-xs-2">
-        {{ form_label(form.existingInstitutionEdit, 'Edit'|trans, {'label_attr': {'class': 'control-label'}}) }}
-        <div class="form">
-            {{ form_widget(form.existingInstitutionEdit, {'attr': {'class': 'form-control'}})  }}
-        </div>
-    </div>
-    <div class="col-xs-2">
-        {{ form_label(form.existingInstitutionDelete, 'Delete'|trans, {'label_attr': {'class': 'control-label'}}) }}
-        <div class="form">
-            {{ form_widget(form.existingInstitutionDelete)  }}
-        </div>
-    </div>
-    <div class="col-xs-2">
-        {{ form_label(form.existingInstitutionExport, 'Export'|trans, {'label_attr': {'class': 'control-label'}}) }}
-        <div class="form">
-            {{ form_widget(form.existingInstitutionExport) }}
-        </div>
-    </div>
-    <div class="col-xs-2">
-        {{ form_label(form.institution, 'Institution'|trans, {'label_attr': {'class': 'control-label'}}) }}
-        <div class="form">
-            {{ form_widget(form.institution) }}
-        </div>
-    </div>
+<div class="block" style="clear: both;">
+    {{ form_row(form.institutionView) }}
+    {{ form_row(form.institutionEdit) }}
+    {{ form_row(form.institutionDelete) }}
+    {{ form_row(form.institution) }}
 </div>

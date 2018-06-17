@@ -91,18 +91,14 @@
                         </div>
                     </div>
                 </div><br/><br/><br/>
-                {#User Project permissions:#}
-                {#<div>#}
-                    {#<ul class="existingProject" data-prototype="{{ include('/user-permission/includes/existingProject.html.twig',#}
-                        {#{'form': my_form.existingProjectPermission.vars.prototype })|e }}">#}
-                    {#</ul>#}
-                {#</div><br/><br/><br/>#}
-                {#User Institution permissions:#}
-                {#<div>#}
-                    {#<ul class="existingInstitution" data-prototype="{{ include('/user-permission/includes/existingInstitution.html.twig',#}
-                        {#{'form': my_form.existingInstitutionPermission.vars.prototype })|e }}">#}
-                    {#</ul>#}
-                {#</div><br/><br/><br/>#}
+
+                    <ul class="existingProject" data-prototype="{{ include('/user-permission/includes/existingProject.html.twig',
+                        {'form': my_form.existingProjectPermission.vars.prototype })|e }}">
+                    </ul>
+                    <ul class="existingInstitution" data-prototype="{{ include('/user-permission/includes/existingInstitution.html.twig',
+                        {'form': my_form.existingInstitutionPermission.vars.prototype })|e }}">
+                    </ul>
+
                 {{ form_end(my_form) }}
             </div>
         </div>

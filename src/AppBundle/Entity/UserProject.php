@@ -38,6 +38,33 @@ class UserProject extends AbstractAuditable
     private $isActive;
 
     /**
+     * @ORM\ManyToOne(
+     *      targetEntity="Roles"
+     * )
+     */
+    private $role;
+
+    /**
+     * @ORM\Column(name="project_view", type="boolean")
+     */
+    protected $projectView;
+
+    /**
+     * @ORM\Column(name="project_edit", type="boolean")
+     */
+    protected $projectEdit;
+
+    /**
+     * @ORM\Column(name="project_delete", type="boolean")
+     */
+    protected $projectDelete;
+
+    /**
+     * @ORM\Column(name="project_export", type="boolean")
+     */
+    protected $projectExport;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -84,7 +111,6 @@ class UserProject extends AbstractAuditable
     {
         return $this->isActive;
     }
-
     /**
      * @param mixed $isActive
      */
@@ -93,5 +119,84 @@ class UserProject extends AbstractAuditable
         $this->isActive = $isActive;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectView()
+    {
+        return $this->projectView;
+    }
+
+    /**
+     * @param mixed $projectView
+     */
+    public function setProjectView($projectView)
+    {
+        $this->projectView = $projectView;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectEdit()
+    {
+        return $this->projectEdit;
+    }
+
+    /**
+     * @param mixed $projectEdit
+     */
+    public function setProjectEdit($projectEdit)
+    {
+        $this->projectEdit = $projectEdit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectDelete()
+    {
+        return $this->projectDelete;
+    }
+
+    /**
+     * @param mixed $projectDelete
+     */
+    public function setProjectDelete($projectDelete)
+    {
+        $this->projectDelete = $projectDelete;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectExport()
+    {
+        return $this->projectExport;
+    }
+
+    /**
+     * @param mixed $projectExport
+     */
+    public function setProjectExport($projectExport)
+    {
+        $this->projectExport = $projectExport;
+    }
 
 }

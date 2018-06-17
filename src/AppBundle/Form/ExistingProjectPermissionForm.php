@@ -9,6 +9,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\ExistingProjectPermission;
 use AppBundle\Entity\FieldOfExpertise;
+use AppBundle\Entity\UserProject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -27,15 +28,15 @@ class ExistingProjectPermissionForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('existingProjectView', CheckboxType::class, array('required' => false))
-            ->add('existingProjectEdit', CheckboxType::class, array('required' => false))
-            ->add('existingProjectDelete', CheckboxType::class, array('required' => false))
-            ->add('existingProjectExport', CheckboxType::class, array('required' => false))
+            ->add('projectView', CheckboxType::class, array('required' => false))
+            ->add('projectEdit', CheckboxType::class, array('required' => false))
+            ->add('projectDelete', CheckboxType::class, array('required' => false))
+            //->add('projectExport', CheckboxType::class, array('required' => false))
             ->add('project', EntityType::class, [
                 'class' => 'AppBundle:Project',
-                'choice_label' => 'name' . ucfirst($options['locale'])
-            ])
-            ->add('submit', SubmitType::class);
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Choose Project'
+            ]);
     }
 
     /**
@@ -51,7 +52,7 @@ class ExistingProjectPermissionForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => ExistingProjectPermission::class,
+            'data_class' => UserProject::class,
         ]);
 
     }

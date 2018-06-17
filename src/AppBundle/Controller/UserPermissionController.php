@@ -13,11 +13,15 @@ use AppBundle\Entity\ExistingProjectPermission;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\UserPermission;
 use AppBundle\Entity\Results;
+use AppBundle\Entity\UserProject;
+use AppBundle\Entity\UserProjectPermission;
 use AppBundle\Entity\UserRole;
 use AppBundle\Form\ChooseUserForm;
 use AppBundle\Form\ProjectResultsForm;
 use AppBundle\Form\UserPermissionForm;
 use AppBundle\Repository\RolesRepository;
+use AppBundle\Repository\UserInstitutionRepository;
+use AppBundle\Repository\UserProjectRepository;
 use AppBundle\Repository\UserRepository;
 use AppBundle\Repository\UserRoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,16 +32,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UserPermissionController extends AbstractController
 {
-//    /**
-//     * @Route("/{locale}/user-permission/list", name="results_list", requirements={"locale": "%app.locales%"})
-//     */
-//    public function listAction(Request $request)
-//    {
-//        $results = $this->getResultsRepository()->findAll();
-//
-//        return $this->render('user-permission/list.twig', ['results' => $results]);
-//    }
-//
     /**
      * @Route("/{locale}/user-permission/choose-user", name="choose_user", requirements={"locale": "%app.locales%"})
      */
@@ -68,53 +62,6 @@ class UserPermissionController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/user-permission/create", name="user_permission_create", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_ADMIN')")
-     */
-    public function createAction(Request $request)
-    {
-        $userPermission = [];
-
-        $userPermissionForm = $this->createForm(UserPermissionForm::class, null, [
-            'action' => $this->generateUrl('user_permission_create'),
-            'method' => 'POST',
-            'locale' => $request->getLocale(),
-        ]);
-
-        $userPermissionForm->handleRequest($request);
-
-        if ($userPermissionForm->isSubmitted() && $userPermissionForm->isValid()) {
-
-//            foreach($userPermission->getUser() as $result) {
-//                $result->setProjectResults($projectResults);
-//            }
-            //$userPermission->setUser(1);
-
-            $this->getUserPermissionRepository()->save($userPermission);
-
-            /** @var ExistingProjectPermission $projectPermission */
-            foreach($userPermission->getExistingProjectPermission() as $projectPermission) {
-                $projectPermission->setUser($this->getUser());
-                $projectPermission->setPermission($userPermission);
-
-                $this->getExistingProjectPermissionRepository()->save($projectPermission);
-            }
-
-            /** @var ExistingInstitutionPermission $institutionPermission */
-            foreach($userPermission->getExistingInstitutionPermission() as $institutionPermission) {
-                $institutionPermission->setUser($this->getUser());
-                $institutionPermission->setPermission($userPermission);
-
-                $this->getExistingInstitutionPermissionRepository()->save($institutionPermission);
-            }
-
-            return $this->redirectToRoute('project_list');
-        }
-
-        return $this->render('user-permission/create.twig', ['my_form' => $userPermissionForm->createView()]);
-    }
-
-    /**
      * @Route("/{locale}/user-permission/edit/{userId}", name="permission_edit", requirements={"userId": "\d+", "locale": "%app.locales%"})
      *
      */
@@ -123,6 +70,10 @@ class UserPermissionController extends AbstractController
         $user = $this->getUserRepository()->findOneBy(['id' => $userId]);
 
         $userPermissions = $this->getUserRoleRepository()->findBy(['user' => $user, 'isActive' => 1]);
+
+        $projectPermissions = $this->getUserProjectRepository()->findBy(['user' => $user, 'isActive' => 1]);
+
+        $institutionPermissions = $this->getUserInstitutionRepository()->findBy(['user' => $user, 'isActive' => 1]);
 
         $create = $edit = $delete = $view = $projectCreate = $projectViewAll = $projectEditAll = $projectDeleteAll =
             $institutionCreate = $institutionViewAll = $institutionEditAll = $institutionDeleteAll = false;
@@ -204,6 +155,7 @@ class UserPermissionController extends AbstractController
                         $institutionDeleteAll = 'checked';
                         break;
                     }
+                default: break;
             }
         }
 
@@ -225,12 +177,17 @@ class UserPermissionController extends AbstractController
             'institutionDeleteAll' => $institutionDeleteAll,
         ]);
 
+        $userPermissionForm->get('existingProjectPermission')->setData($projectPermissions);
+        $userPermissionForm->get('existingInstitutionPermission')->setData($institutionPermissions);
+
         $userPermissionForm->handleRequest($request);
 
         if ($userPermissionForm->isSubmitted() && $userPermissionForm->isValid()) {
 
             $formData = $userPermissionForm->getData();
             $postPermissionArray = [];
+            $postProjectPermissions = [];
+            $postInstitutionPermissions = [];
 
             foreach ($formData as $key => $value) {
                 if ($value){
@@ -295,6 +252,15 @@ class UserPermissionController extends AbstractController
                                 $postPermissionArray[] = 'ROLE_USER_INSTITUTION_DELETE_ALL';
                                 break;
                             }
+                        case 'existingProjectPermission':
+                            {
+                                $postProjectPermissions = $value;
+                            }
+                        case 'existingInstitutionPermission':
+                            {
+                                $postInstitutionPermissions = $value;
+                            }
+                        default: break;
                     }
                 }
             }
@@ -320,29 +286,24 @@ class UserPermissionController extends AbstractController
                 $em->flush();
             }
 
+            $newPermissions = array_diff($postProjectPermissions, $projectPermissions);
+            var_dump($newPermissions);die;
+//            /** @var UserProject $postProjectPermission */
+//            foreach ($postProjectPermissions as $postProjectPermission) {
+//
+//            }
+//
+//            foreach ($postInstitutionPermissions as $postInstitutionPermission) {
+//
+//            }
+
             return $this->redirectToRoute('permission_edit', ['userId' => $user->getId()]);
 
         }
 
         return $this->render('user-permission/edit.twig', ['my_form' => $userPermissionForm->createView(), 'user' => $user]);
     }
-//
-//    /**
-//     * @Route("/{locale}/results/view/{resultId}", name="result_view", requirements={"resultId": "\d+", "locale": "%app.locales%"})
-//     */
-//    public function viewAction($resultId)
-//    {
-//        $result = $this->getResultsRepository()->findOneBy(['id' => $resultId]);
-//
-//        return $this->render(
-//            'user-permission/view.twig',
-//            [
-//                'result' => $result,
-//                'keyAction' => $result->getProjectResults()->getProject()->getKeyActions()->getNameSr()
-//            ]
-//        );
-//    }
-//
+
     private function getUserPermissionRepository()
     {
         return $this->get('doctrine_entity_repository.user_permission');
@@ -380,5 +341,21 @@ class UserPermissionController extends AbstractController
     private function getRolesRepository()
     {
         return $this->get('doctrine_entity_repository.roles');
+    }
+
+    /**
+     * @return UserProjectRepository
+     */
+    private function getUserProjectRepository()
+    {
+        return $this->get('doctrine_entity_repository.user_project');
+    }
+
+    /**
+     * @return UserInstitutionRepository
+     */
+    private function getUserInstitutionRepository()
+    {
+        return $this->get('doctrine_entity_repository.user_institution');
     }
 }

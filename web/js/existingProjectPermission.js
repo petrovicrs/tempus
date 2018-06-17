@@ -29,7 +29,7 @@ function load() {
     });
 }
 
-function $addExistingProjectPermissionForm($collectionProjectTargetGroupHolder, $addExistingProjectPermissionLinkDiv) {
+function $addExistingProjectPermissionForm($collectionProjectTargetGroupHolder, $addExistingProjectPermissionLinkDiv) {console.log('usao');
     // Get the data-prototype explained earlier
     var prototype = $collectionProjectTargetGroupHolder.data('prototype');
 

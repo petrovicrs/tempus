@@ -9,6 +9,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\ExistingInstitutionPermission;
 use AppBundle\Entity\FieldOfExpertise;
+use AppBundle\Entity\UserInstitution;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -27,15 +28,15 @@ class ExistingInstitutionPermissionForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('existingInstitutionView', CheckboxType::class, array('required' => false))
-            ->add('existingInstitutionEdit', CheckboxType::class, array('required' => false))
-            ->add('existingInstitutionDelete', CheckboxType::class, array('required' => false))
-            ->add('existingInstitutionExport', CheckboxType::class, array('required' => false))
+            ->add('institutionView', CheckboxType::class, array('required' => false))
+            ->add('institutionEdit', CheckboxType::class, array('required' => false))
+            ->add('institutionDelete', CheckboxType::class, array('required' => false))
+            //->add('institutionExport', CheckboxType::class, array('required' => false))
             ->add('institution', EntityType::class, [
                 'class' => 'AppBundle:Institution',
-                'choice_label' => 'name' . ucfirst($options['locale'])
-            ])
-            ->add('submit', SubmitType::class);
+                'choice_label' => 'name' . ucfirst($options['locale']),
+                'placeholder' => 'Choose Institutions'
+            ]);
     }
 
     /**
@@ -51,7 +52,7 @@ class ExistingInstitutionPermissionForm extends AbstractType
     {
         $resolver->setDefaults([
             'locale' => 'en',
-            'data_class' => ExistingInstitutionPermission::class,
+            'data_class' => UserInstitution::class,
         ]);
 
     }

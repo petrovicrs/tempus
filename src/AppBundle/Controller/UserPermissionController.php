@@ -287,7 +287,7 @@ class UserPermissionController extends AbstractController
             }
 
             $newPermissions = array_diff($postProjectPermissions, $projectPermissions);
-            var_dump($newPermissions);die;
+
 //            /** @var UserProject $postProjectPermission */
 //            foreach ($postProjectPermissions as $postProjectPermission) {
 //

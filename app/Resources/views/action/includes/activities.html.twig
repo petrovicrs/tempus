@@ -2,16 +2,10 @@
 <div class="col-xs-12">
     <h2>{% trans %}Activity{% endtrans %}</h2>
     <div class="form-inline">
-        {% if projectAction != 'KA105' %}
-            <div class="form-group">
-                {{ form_label(form.activityType, 'Flow subcategory'|trans, {'label_attr': {'class': 'control-label'}}) }}
-                {{ form_widget(form.activityType, {'attr': {'class': 'form-control'}})  }}
-            </div>
-        {% else %}
-            <div class="hidden">
-                {{ form_row(form.activityType, { 'attr': {'class': 'hidden-row'} }) }}
-            </div>
-        {% endif %}
+        <div class="form-group">
+            {{ form_label(form.activityType, 'Flow subcategory'|trans, {'label_attr': {'class': 'control-label'}}) }}
+            {{ form_widget(form.activityType, {'attr': {'class': 'form-control'}})  }}
+        </div>
         <div class="form-group">
             {{ form_label(form.isValidated, 'Validation?'|trans, {'label_attr': {'class': 'control-label'}}) }}
             {{ form_widget(form.isValidated, {'attr': {'class': 'form-control'}})  }}

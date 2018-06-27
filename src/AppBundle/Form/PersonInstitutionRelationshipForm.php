@@ -28,7 +28,9 @@ class PersonInstitutionRelationshipForm extends AbstractType
         $builder
             ->add('institution', EntityType::class, [
                 'class' => 'AppBundle:Institution',
-                'choice_label'  => 'name' . ucfirst($options['locale'])
+                'choice_label'  => function($value, $key) use ($options) {
+                    return 'id: ' . $value->getId() . ' - ' . $value->getName($options['locale']);
+                }
             ])
             ->add('personInstitutionRelationshipType');
     }

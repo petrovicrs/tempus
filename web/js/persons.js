@@ -96,6 +96,7 @@ jQuery(document).ready(function() {
     $addInstitutionRelationshipLink.on('click', function(e) {
         e.preventDefault();
         addInstitutionRelationshipForm($institutionRelationshipCollectionHolder, $newInstitutionRelationshipLinkLi);
+        $('.selectpicker').selectpicker('render');
     });
 
 

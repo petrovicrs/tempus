@@ -12,4 +12,11 @@ class InstitutionRepository extends \Doctrine\ORM\EntityRepository
         $this->_em->persist($institution);
         $this->_em->flush();
     }
+
+    public function delete($institution)
+    {
+        $this->_em->remove($institution);
+        $this->_em->flush();
+    }
 }
+

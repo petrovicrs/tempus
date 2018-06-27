@@ -378,7 +378,7 @@ class InstitutionController extends AbstractController
             return $this->redirectToRoute('institution_list');
         }
 
-        return $this->render('institution/edit.twig', ['my_form' => $institutionForm->createView()]);
+        return $this->render('institution/edit.twig', ['my_form' => $institutionForm->createView(), 'institution' => $institution]);
     }
 
     /**
@@ -425,6 +425,20 @@ class InstitutionController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{locale}/institution/delete/{institutionId}", name="delete_institution", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
+     * @Security("is_granted('ROLE_USER_VIEW') or is_granted('ROLE_USER_INSTITUTION_VIEW_MY') or is_granted('ROLE_USER_INSTITUTION_VIEW_ALL') or is_granted('ROLE_ADMIN')")
+     */
+    public function deleteInstitution($institutionId)
+    {
+        /** @var Institution $institution */
+        $institution = $this->getInstitutionRepository()->findOneBy(['id' => $institutionId]);
+        $this->getInstitutionRepository()->delete($institution);
+
+        $institutions = $this->getInstitutionRepository()->findAll();
+
+        return $this->render('institution/list.twig', ['result' => $institutions]);
+    }
 
     /**
      * @Route("/{locale}/institution/{institutionId}/file/risk-level/{riskLevelId}", name="institution_risk_level_file", requirements={"institutionId": "\d+", "riskLevelId": "\d+", "locale": "%app.locales%"})

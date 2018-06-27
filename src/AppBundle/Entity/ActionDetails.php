@@ -85,7 +85,7 @@ class ActionDetails extends AbstractAuditable
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="distance", type="decimal", nullable=true)
+     * @ORM\Column(name="distance", type="string", nullable=true)
      */
     protected $distance;
 

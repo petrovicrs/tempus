@@ -39,6 +39,7 @@ class ActionDetails extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Person"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $person;
 
@@ -46,6 +47,7 @@ class ActionDetails extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Institution"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $institution;
 
@@ -53,6 +55,7 @@ class ActionDetails extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Country"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $originCountry;
 
@@ -60,6 +63,7 @@ class ActionDetails extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Country"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $destinationCountry;
 
@@ -67,6 +71,7 @@ class ActionDetails extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="AppBundle\Entity\IncomingOutgoing"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $incomingOutgoing;
 
@@ -74,6 +79,7 @@ class ActionDetails extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="AppBundle\Entity\TrainingShip"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $trainingShip;
 

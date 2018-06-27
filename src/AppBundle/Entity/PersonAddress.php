@@ -52,6 +52,7 @@ class PersonAddress extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $country;
 

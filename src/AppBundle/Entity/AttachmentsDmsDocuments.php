@@ -49,6 +49,7 @@ class AttachmentsDmsDocuments
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Attachments", inversedBy="dmsDocuments")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $attachments;
 

@@ -28,6 +28,7 @@ class ReportingQuestionsAndAnswers extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="Questions", inversedBy="reportingQuestionsAndAnswers", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $questions;
 
@@ -47,6 +48,7 @@ class ReportingQuestionsAndAnswers extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="Reporting", inversedBy="questionsAndAnswers", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $reporting;
 

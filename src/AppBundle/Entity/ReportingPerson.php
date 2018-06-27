@@ -30,6 +30,7 @@ class ReportingPerson extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="AppBundle\Entity\Person"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $person;
 

@@ -32,6 +32,7 @@ class InstitutionNote extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="InstitutionNoteType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $institutionNoteType;
 

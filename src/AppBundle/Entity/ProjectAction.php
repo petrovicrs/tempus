@@ -43,6 +43,7 @@ class ProjectAction extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectKeyAction"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $keyAction;
 

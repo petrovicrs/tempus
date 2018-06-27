@@ -36,6 +36,7 @@ class ProjectApplicantOrganisation extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Institution"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $organisation;
 

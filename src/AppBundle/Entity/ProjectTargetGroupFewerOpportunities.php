@@ -36,6 +36,7 @@ class ProjectTargetGroupFewerOpportunities extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectTargetGroupType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $targetGroup;
 

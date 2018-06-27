@@ -23,6 +23,7 @@ class ExistingInstitutionPermission extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="User"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $user;
 
@@ -30,6 +31,7 @@ class ExistingInstitutionPermission extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Institution"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $institution;
 

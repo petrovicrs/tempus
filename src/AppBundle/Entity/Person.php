@@ -75,6 +75,7 @@ class Person extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="Gender")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $gender;
 

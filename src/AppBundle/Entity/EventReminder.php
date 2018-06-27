@@ -27,6 +27,7 @@ class EventReminder extends AbstractAuditable
     protected $id;
     /**
      * @ORM\ManyToOne(targetEntity="EventReminderType")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $remindType;
     /**

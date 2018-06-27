@@ -29,11 +29,13 @@ class PartnersParticipants
 
     /**
      * @ORM\ManyToOne(targetEntity="PartnersParticipantType")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $participantType;
 
     /**
      * @ORM\ManyToOne(targetEntity="Person")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $participant;
 

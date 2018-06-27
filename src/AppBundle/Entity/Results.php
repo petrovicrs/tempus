@@ -33,11 +33,13 @@ class Results extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="ResultType")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $resultType;
 
     /**
      * @ORM\ManyToOne(targetEntity="ResultStatus")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $resultStatus;
 

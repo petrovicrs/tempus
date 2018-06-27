@@ -22,6 +22,7 @@ class UserProject extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="User"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $user;
 
@@ -29,6 +30,7 @@ class UserProject extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Project"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $project;
 
@@ -41,6 +43,7 @@ class UserProject extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Roles"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $role;
 

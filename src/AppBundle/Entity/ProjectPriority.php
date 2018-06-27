@@ -36,6 +36,7 @@ class ProjectPriority extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectPriorityType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $priority;
 

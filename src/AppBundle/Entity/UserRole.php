@@ -31,6 +31,7 @@ class UserRole extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Roles"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $role;
 

@@ -35,6 +35,7 @@ class ProjectTopic extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectTopicType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $topic;
 

@@ -35,21 +35,25 @@ class Partners extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Institution")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $institution;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\PartnerType")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $partnerType;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Person")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $projectCoordinator;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Person")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $legalRepresentative;
 
@@ -84,7 +88,7 @@ class Partners extends AbstractAuditable
     protected $allDepartments;
 
     /**
-     * @ORM\OneToMany(targetEntity="PartnersTeamDepartments", mappedBy="partners")
+     * @ORM\OneToMany(targetEntity="PartnersTeamDepartments", mappedBy="partners", cascade={"persist"})
      */
     protected $teamDepartments;
 

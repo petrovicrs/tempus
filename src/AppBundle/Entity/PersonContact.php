@@ -30,6 +30,7 @@ class PersonContact extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="ContactType")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $contactType;
 

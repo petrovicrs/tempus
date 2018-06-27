@@ -34,7 +34,7 @@ class Program extends AbstractAuditable
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Project", mappedBy="program")
+     * @ORM\OneToMany(targetEntity="Project", mappedBy="program", cascade={"persist"})
      */
     protected $projects;
 

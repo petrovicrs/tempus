@@ -32,6 +32,7 @@ class InstitutionLegalRepresentative extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Person"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $person;
 
@@ -39,6 +40,7 @@ class InstitutionLegalRepresentative extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="InstitutionLegalRepresentativePosition"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $position;
 

@@ -40,7 +40,7 @@ class Questions extends AbstractAuditable
     protected $questionsSr;
 
     /**
-     * @ORM\OneToMany(targetEntity="ReportingQuestionsAndAnswers", mappedBy="questions")
+     * @ORM\OneToMany(targetEntity="ReportingQuestionsAndAnswers", mappedBy="questions", cascade={"persist"})
      */
     protected $reportingQuestionsAndAnswers;
 

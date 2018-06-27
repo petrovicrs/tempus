@@ -34,6 +34,7 @@ class GroupCalendar extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $project;
 
@@ -44,6 +45,7 @@ class GroupCalendar extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="GroupCalendarEventType")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $eventType;
 

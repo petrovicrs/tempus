@@ -39,6 +39,7 @@ class PartnersTeamDepartments
 
     /**
      * @ORM\ManyToOne(targetEntity="Partners", inversedBy="teamDepartments")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $partners;
 

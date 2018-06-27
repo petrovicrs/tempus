@@ -30,6 +30,7 @@ class Attachments extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $project;
 

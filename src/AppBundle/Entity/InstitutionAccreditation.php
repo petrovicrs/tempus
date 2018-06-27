@@ -32,6 +32,7 @@ class InstitutionAccreditation extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="InstitutionAccreditationType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $accreditationType;
 

@@ -30,6 +30,7 @@ class PersonNote extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="PersonNoteType")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $personNoteType;
 

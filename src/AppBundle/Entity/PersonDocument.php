@@ -30,6 +30,7 @@ class PersonDocument extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="PersonDocumentType")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $personDocumentType;
 

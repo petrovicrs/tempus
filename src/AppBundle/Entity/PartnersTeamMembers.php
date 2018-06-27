@@ -28,11 +28,13 @@ class PartnersTeamMembers extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="TeamMemberPositions")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $memberPosition;
 
     /**
      * @ORM\ManyToOne(targetEntity="Person")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $member;
 

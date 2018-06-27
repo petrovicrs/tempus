@@ -37,6 +37,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="User"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $user;
 
@@ -229,6 +230,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectProgramme"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $programmes;
 
@@ -236,6 +238,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectKeyAction"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $keyActions;
 
@@ -243,6 +246,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectAction"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $actions;
 
@@ -250,6 +254,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $types;
 
@@ -257,6 +262,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Person"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $contactPersonKa2;
 
@@ -264,6 +270,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectCall"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $calls;
 
@@ -271,6 +278,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectRound"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $rounds;
 
@@ -278,6 +286,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="User"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $ftOfficers;
 
@@ -285,6 +294,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="User"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $eaceaOfficers;
 
@@ -292,6 +302,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="HorizontalPriorityType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $horizontalPriorityType;
 
@@ -299,6 +310,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="VerticalPriorityType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $verticalPriorityType;
 
@@ -306,6 +318,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectStatusType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $projectStatusType;
 
@@ -313,6 +326,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectGradeType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $projectGradeType;
 
@@ -320,6 +334,7 @@ class Project extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectScopeType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $projectScopeType;
 

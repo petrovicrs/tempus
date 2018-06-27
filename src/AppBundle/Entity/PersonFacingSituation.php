@@ -30,6 +30,7 @@ class PersonFacingSituation extends AbstractAuditable
 
     /**
      * @ORM\ManyToOne(targetEntity="FacingSituation")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $facingSituation;
 

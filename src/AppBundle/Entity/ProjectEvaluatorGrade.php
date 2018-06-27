@@ -32,6 +32,7 @@ class ProjectEvaluatorGrade extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectGradeType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $gradeType;
 

@@ -43,6 +43,7 @@ class ProjectActivity extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectActivityType"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $activityType;
 
@@ -50,6 +51,7 @@ class ProjectActivity extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="ProjectActivityStatus"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $activityStatus;
 
@@ -57,6 +59,7 @@ class ProjectActivity extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="Institution"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $activityFrom;
 
@@ -64,6 +67,7 @@ class ProjectActivity extends AbstractAuditable
      * @ORM\ManyToOne(
      *      targetEntity="AppBundle\Entity\Institution"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $activityTo;
 

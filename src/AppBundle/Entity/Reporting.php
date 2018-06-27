@@ -48,7 +48,7 @@ class Reporting extends AbstractAuditable
     protected $reportingDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="ReportingQuestionsAndAnswers", mappedBy="reporting")
+     * @ORM\OneToMany(targetEntity="ReportingQuestionsAndAnswers", mappedBy="reporting", cascade={"persist"})
      */
     protected $questionsAndAnswers;
 

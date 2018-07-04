@@ -549,10 +549,22 @@ class Person extends AbstractAuditable
         $this->personFacingSituations->removeElement($personFacingSituation);
     }
 
+    /**
+     * @param $locale
+     * @return null
+     */
     public function getPersonOrganisation($locale)
     {
-        $personInstitutionRelationships = $this->getPersonInstitutionRelationships() ? $this->getPersonInstitutionRelationships()->toArray() : null;
-        return $personInstitutionRelationships ? $personInstitutionRelationships[0]->getInstitution()->getName($locale) : null;
+        $personInstitutionRelationships = $this->getPersonInstitutionRelationships() ?: null;
+
+        /** @var PersonInstitutionRelationship $institutionRelationship */
+        foreach($personInstitutionRelationships as $institutionRelationship) {
+            /** @var Institution $institution */
+            if ($institution = $institutionRelationship->getInstitution()) {
+                return $institution->getName($locale);
+            }
+            return null;
+        }
     }
 
     public function getPersonCountry($locale)

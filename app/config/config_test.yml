@@ -15,11 +15,3 @@ web_profiler:
 swiftmailer:
     disable_delivery: true
 
-doctrine:
-    dbal:
-        driver:   pdo_mysql
-        host:     "mysql1.casumotest.local"
-        port:     "3306"
-        dbname:   "careers_platform_test"
-        user:     "casumowp"
-        password: "casumo123"

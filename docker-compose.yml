@@ -15,7 +15,7 @@ services:
       - kbs-db
 
   kbs-db:
-    image: mysql:latest
+    build: ./db-local
     container_name: kbs_db
     expose:
       - 3306

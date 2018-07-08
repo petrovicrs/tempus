@@ -3,8 +3,8 @@ parameters:
     database_host: kbs_db
     database_port: 3306
     database_name: tempus
-    database_user: tempus
-    database_password: 123456
+    database_user: root
+    database_password: root
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null

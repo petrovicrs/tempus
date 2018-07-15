@@ -22,4 +22,4 @@ services:
     ports:
       - "3306:3306"
     env_file:
-      - ./db-local/conf/db-config.ini
+      - ./db-local/conf/db-config-prod.ini

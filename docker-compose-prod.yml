@@ -13,6 +13,8 @@ services:
     restart: always
     depends_on:
       - kbs-db
+    environment:
+      - SYMFONY_ENV=prod
 
   kbs-db:
     build: ./db-local

@@ -12,4 +12,9 @@ namespace AppBundle\Repository;
  */
 class ContactTypeRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function save($action) {
+
+        $this->_em->persist($action);
+        $this->_em->flush();
+    }
 }

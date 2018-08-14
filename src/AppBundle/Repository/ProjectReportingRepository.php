@@ -14,4 +14,9 @@ namespace AppBundle\Repository;
  */
 class ProjectReportingRepository extends AbstractRepository
 {
+    public function save($action) {
+
+        $this->_em->persist($action);
+        $this->_em->flush();
+    }
 }

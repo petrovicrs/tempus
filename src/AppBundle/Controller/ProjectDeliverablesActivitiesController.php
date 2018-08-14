@@ -127,8 +127,6 @@ class ProjectDeliverablesActivitiesController extends AbstractController
         if ($projectDeliverableActivitiesForm->isSubmitted() && $projectDeliverableActivitiesForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $this->getDeliverablesActivitiesRepository()->save($projectDeliverableActivities);
-
             /** @var ProjectDeliverable $deliverable */
             foreach ($originalDeliverables as $deliverable) {
                 if(false === $projectDeliverableActivities->getDeliverables()->contains($deliverable)) {
@@ -157,6 +155,8 @@ class ProjectDeliverablesActivitiesController extends AbstractController
                     $this->getProjectActivitiesRepository()->save($activity);
                 }
             }
+
+            $this->getDeliverablesActivitiesRepository()->save($projectDeliverableActivities);
 
             if (!$projectDeliverableActivities->getProject()->getIsCompleted()) {
                 return $this->redirectToRoute('monitoring_create');

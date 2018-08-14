@@ -12,4 +12,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class QuestionsRepository extends EntityRepository
 {
+    public function save($action) {
+
+        $this->_em->persist($action);
+        $this->_em->flush();
+    }
 }

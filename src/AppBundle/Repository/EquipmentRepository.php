@@ -11,4 +11,9 @@ namespace AppBundle\Repository;
  */
 class EquipmentRepository extends AbstractRepository
 {
+    public function save($action) {
+
+        $this->_em->persist($action);
+        $this->_em->flush();
+    }
 }

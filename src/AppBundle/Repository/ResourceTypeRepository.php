@@ -11,5 +11,9 @@ namespace AppBundle\Repository;
 
 class ResourceTypeRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function save($action) {
 
+        $this->_em->persist($action);
+        $this->_em->flush();
+    }
 }

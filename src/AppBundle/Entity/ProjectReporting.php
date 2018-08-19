@@ -854,7 +854,7 @@ class ProjectReporting extends AbstractAuditable
      */
     public function setPitanje9($pitanje9)
     {
-        $this->pitanje8 = $pitanje9;
+        $this->pitanje9 = $pitanje9;
     }
 
     /**

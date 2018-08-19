@@ -2,6 +2,62 @@
 jQuery(document).ready(function() {
 
     loadReporting();
+    var planiranih = 0;
+    var zapocetih = 0;
+    var sprovedenih = 0;
+    var potpisanih = 0;
+
+    $('.planiranih').each(function (i, obj) {
+        planiranih = planiranih + +this.value;
+    })
+    $("#ukupnoPlaniranih").text(planiranih);
+
+    $('.zapocetih').each(function (i, obj) {
+        zapocetih = zapocetih + +this.value;
+    })
+    $("#ukupnoZapocetih").text(zapocetih);
+
+    $('.sprovedenih').each(function (i, obj) {
+        sprovedenih = sprovedenih + +this.value;
+    })
+    $("#ukupnoSprovedenih").text(sprovedenih);
+
+    $('.potpisanih').each(function (i, obj) {
+        potpisanih = potpisanih + +this.value;
+    })
+    $("#ukupnoPotpisanih").text(potpisanih);
+
+    $( ".planiranih" ).change(function() {
+        planiranih = 0;
+        $('.planiranih').each(function (i, obj) {
+            planiranih = planiranih + +this.value;
+        })
+        $("#ukupnoPlaniranih").text(planiranih);
+    });
+
+    $( ".zapocetih" ).change(function() {
+        zapocetih = 0;
+        $('.zapocetih').each(function (i, obj) {
+            zapocetih = zapocetih + +this.value;
+        })
+        $("#ukupnoZapocetih").text(zapocetih);
+    });
+
+    $( ".sprovedenih" ).change(function() {
+        sprovedenih = 0;
+        $('.sprovedenih').each(function (i, obj) {
+            sprovedenih = sprovedenih + +this.value;
+        })
+        $("#ukupnoSprovedenih").text(sprovedenih);
+    });
+
+    $( ".potpisanih" ).change(function() {
+        potpisanih = 0;
+        $('.potpisanih').each(function (i, obj) {
+            potpisanih = potpisanih + +this.value;
+        })
+        $("#ukupnoPotpisanih").text(potpisanih);
+    });
 });
 
 function loadReporting() {

@@ -136,6 +136,7 @@ class ReportingController extends AbstractController
             ]
         );
     }
+
     /**
     * @Route("/{locale}/reporting/create", name="reporting_create", requirements={"locale": "%app.locales%"})
      */

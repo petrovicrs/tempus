@@ -34,43 +34,7 @@
                     <td><b>{% trans %}Da li su uvazene preporuke za monitoringa posete?{% endtrans %}</b> {{ reports.uvazenePrporuke ? reports.uvazenePrporuke : 'N/A'}}</td>
                 </tr>
             </table>
-            <div class="col-xs-12">
-                <h2>{% trans %}Analiza projektnih aktivnosti i ishoda{% endtrans %}</h2>
-            </div>
-            <div class="col-xs-12">
-                <h3>{% trans %}Pitanja koja se odnose na obradu izvestaja o napretku, srednjerocnog i zavrsnog izvestaja {% endtrans %}</h3>
-            </div>
-            <div class="col-xs-12">
-                <h3><b>{% trans %}Pripremne aktivnosti {% endtrans %}</b></h3>
-            </div><br/>
-            <table class="table table-hover" data-toggle="table">
-                <tr>
-                    <td><b>{% trans %}Da li je Evropski razvojni plan usvojen na nivou organizacije?{% endtrans %}</b> {{ reports.pitanje1 ? reports.pitanje1 : 'N/A'}}</td>
-                    <td><b>{% trans %}Da li je projekat doprineo realizaciji Evropskog razvojnog plana?{% endtrans %}</b> {{ reports.pitanje2 ? reports.pitanje2 : 'N/A'}}</td>
-                    <td><b>{% trans %}Ukoliko jeste na koji nacin?{% endtrans %}</b> {{ reports.pitanje2pp1 ? reports.pitanje2pp1 : 'N/A'}}</td>
-                </tr>
-                <tr>
-                    <td><b>{% trans %}Da li se sprovode aktivnosti diseminacije rezultata u skladu sa projektnom prijavom?{% endtrans %}</b> {{ reports.pitanje3 ? reports.pitanje3 : 'N/A'}}</td>
-                    <td><b>{% trans %}Ukoliko ne, navesti uzroke, prepreke i preporuke:{% endtrans %}</b> {{ reports.pitanje3pp1 ? reports.pitanje3pp1 : 'N/A'}}</td>
-                    <td><b>{% trans %}Da li se postuju zahtevi vidljivosti (koriscenje E+ logoa)?{% endtrans %}</b> {{ reports.pitanje4 ? reports.pitanje4 : 'N/A'}}</td>
-                </tr>
-            </table>
-            <div class="col-xs-12">
-                <h3><b>{% trans %}Sprovodjenje mobilnosti {% endtrans %}</b></h3>
-            </div><br/>
-            <table class="table table-hover" data-toggle="table">
-                <tr>
-                    <td><b>{% trans %}Da li je proces izbora ucesnika mobilnosti bio transparentan?{% endtrans %}</b> {{ reports.pitanje5 ? reports.pitanje5 : 'N/A'}}</td>
-                    <td><b>{% trans %}Da li su definisani kriterijumi selekcije ucesika mobilnosti?{% endtrans %}</b> {{ reports.pitanje6 ? reports.pitanje6 : 'N/A'}}</td>
-                    <td><b>{% trans %}Da li su ispostovani kriterijumi selekcije ucesnika mobilnosti?{% endtrans %}</b> {{ reports.pitanje7 ? reports.pitanje7 : 'N/A'}}</td>
-                </tr>
-                <tr>
-                    <td><b>{% trans %}U kojoj meri je priprema ucesnika bila u skladu sa aplikacijom? (Orijentacioni kursevi i jezicke pripreme){% endtrans %}</b>: {{ reports.pitanje8 ? reports.pitanje8 : 'N/A'}}</td>
-                    <td colspan="2"><b>{% trans %}Da li se redovno koristi Mobility Tool, u rokovima koje propisuje Ugovor?{% endtrans %}</b> {{ reports.pitanje9 ? reports.pitanje9 : 'N/A'}}</td>
-                </tr>
-            </table>
 
-            
         {% else %}
             <h2><b>{% trans %}Reporting no added{% endtrans %}</b></h2>
         {% endif %}

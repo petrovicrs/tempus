@@ -161,17 +161,17 @@ class ProjectReportingForm extends AbstractType
                     '4' => '4',
                     '5' => '4',
                 ),
-                'placeholder' => 'Select a value',
-                'required' => false
+                'required' => false,
+                'expanded'=>true
             ))
             ->add('pitanje9', ChoiceType::class, array(
                 'choices' => array(
                     'DA' => 'DA',
                     'NE' => 'NE',
-                    'N/A' => 'N/A',
                 ),
-                'placeholder' => 'Select a value',
-                'required' => false
+                'placeholder' => 'N/A',
+                'required' => false,
+                'expanded'=>true
             ))
             ->add('planiranihUcenja', TextType::class, array('required' => false))
             ->add('planiranihObuka', TextType::class, array('required' => false))

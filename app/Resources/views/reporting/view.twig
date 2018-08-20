@@ -2,6 +2,7 @@
 
 {% block body %}
     <script type="text/javascript" src="{{ asset('/js/collapsible.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('/js/reporting.js')}}"></script>
     <section id="main">
         {% if keyAction == 'ka1' %}
             {% include 'sub-navbar-view.html.twig' with {'active': 'reporting', 'projectId': projectId, 'actionTab': actionTab} %}
@@ -10,66 +11,266 @@
             {% include 'sub-navbar-ka2-view.html.twig' with {'active': 'reporting', 'projectId': projectId} %}
         {% endif %}
     <div class="container-fluid">
-
-        <h2><b>{% trans %}Reporting{% endtrans %}</b></h2>
-
-        <table class="table table-hover" data-toggle="table">
-            <thead>
-                <tr class="table-heleer">
-                    <th>{% trans %}Id{% endtrans %}</th>
-                    <th>{% trans %}Type{% endtrans %}</th>
-                    <th>{% trans %}Date{% endtrans %}</th>
-                    <th>{% trans %}Reporting by{% endtrans %}</th>
+        {% if reports %}
+            <h2><b>{% trans %}Reporting{% endtrans %}</b></h2>
+            <div class="col-xs-12">
+                <h2>{% trans %}Osnovne informacije{% endtrans %}</h2>
+            </div>
+            <table class="table table-hover" data-toggle="table">
+                <tr>
+                    <td><b>{% trans %}Savetnik za projekte koji obradjuje izvestaj{% endtrans %}</b>: {{ reports.savetnik ? reports.savetnik.fullName : 'N/A'}}</td>
+                    <td><b>{% trans %}Kontrolu izvrsio{% endtrans %}</b>: {{ reports.kontroluIzvrsio ? reports.kontroluIzvrsio : 'N/A'}}</td>
+                    <td><b>{% trans %}Datum prijema izvestaja{% endtrans %}</b>: {{ reports.datumPrijemaIzvestaja ? reports.datumPrijemaIzvestaja | date('d/m/y') : 'N/A'}}</td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for report in reports %}
-                    <tr class="details-row" data-collapsible-open="{{ loop.index0 }}">
-                        <td class="text-center">{{ report.id }}</td>
+                <tr>
+                    <td><b>{% trans %}Izvestaj porkiva period od{% endtrans %}</b>: {{ reports.periodOd ? reports.periodOd | date('d/m/y') : 'N/A'}}
+                    <b>{% trans %}do{% endtrans %}</b>: {{ reports.periodDo ? reports.periodDo | date('d/m/y') : 'N/A'}}</td>
+                    <td><b>{% trans %}Da li je projektna dokumentacija potpuna?{% endtrans %}</b> {{ reports.dokumentacijaPotupna ? reports.dokumentacijaPotupna : 'N/A'}}</td>
+                    <td><b>{% trans %}Da li je korisnik dostavio trazenu dodatnu dokumentaciju?{% endtrans %}</b> {{ reports.korisnikDostavioDodatnuDokumentaciju ? reports.korisnikDostavioDodatnuDokumentaciju : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Da li je projekat bio predmet monitoringa?{% endtrans %}</b> {{ reports.predmetMonitoringa ? reports.predmetMonitoringa : 'N/A'}}</td>
+                    <td><b>{% trans %}Datum poslednjeg monitoringa{% endtrans %}</b>: {{ reports.poslednjiMonitoring ? reports.poslednjiMonitoring | date('d/m/y') : 'N/A'}}</td>
+                    <td><b>{% trans %}Da li su uvazene preporuke za monitoringa posete?{% endtrans %}</b> {{ reports.uvazenePrporuke ? reports.uvazenePrporuke : 'N/A'}}</td>
+                </tr>
+            </table>
+            <div class="col-xs-12">
+                <h2>{% trans %}Analiza projektnih aktivnosti i ishoda{% endtrans %}</h2>
+            </div>
+            <div class="col-xs-12">
+                <h3>{% trans %}Pitanja koja se odnose na obradu izvestaja o napretku, srednjerocnog i zavrsnog izvestaja {% endtrans %}</h3>
+            </div>
+            <div class="col-xs-12">
+                <h3><b>{% trans %}Pripremne aktivnosti {% endtrans %}</b></h3>
+            </div><br/>
+            <table class="table table-hover" data-toggle="table">
+                <tr>
+                    <td><b>{% trans %}Da li je Evropski razvojni plan usvojen na nivou organizacije?{% endtrans %}</b> {{ reports.pitanje1 ? reports.pitanje1 : 'N/A'}}</td>
+                    <td><b>{% trans %}Da li je projekat doprineo realizaciji Evropskog razvojnog plana?{% endtrans %}</b> {{ reports.pitanje2 ? reports.pitanje2 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ukoliko jeste na koji nacin?{% endtrans %}</b> {{ reports.pitanje2pp1 ? reports.pitanje2pp1 : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Da li se sprovode aktivnosti diseminacije rezultata u skladu sa projektnom prijavom?{% endtrans %}</b> {{ reports.pitanje3 ? reports.pitanje3 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ukoliko ne, navesti uzroke, prepreke i preporuke:{% endtrans %}</b> {{ reports.pitanje3pp1 ? reports.pitanje3pp1 : 'N/A'}}</td>
+                    <td><b>{% trans %}Da li se postuju zahtevi vidljivosti (koriscenje E+ logoa)?{% endtrans %}</b> {{ reports.pitanje4 ? reports.pitanje4 : 'N/A'}}</td>
+                </tr>
+            </table>
+            <div class="col-xs-12">
+                <h3><b>{% trans %}Sprovodjenje mobilnosti {% endtrans %}</b></h3>
+            </div><br/>
+            <table class="table table-hover" data-toggle="table">
+                <tr>
+                    <td><b>{% trans %}Da li je proces izbora ucesnika mobilnosti bio transparentan?{% endtrans %}</b> {{ reports.pitanje5 ? reports.pitanje5 : 'N/A'}}</td>
+                    <td><b>{% trans %}Da li su definisani kriterijumi selekcije ucesika mobilnosti?{% endtrans %}</b> {{ reports.pitanje6 ? reports.pitanje6 : 'N/A'}}</td>
+                    <td><b>{% trans %}Da li su ispostovani kriterijumi selekcije ucesnika mobilnosti?{% endtrans %}</b> {{ reports.pitanje7 ? reports.pitanje7 : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}U kojoj meri je priprema ucesnika bila u skladu sa aplikacijom? (Orijentacioni kursevi i jezicke pripreme){% endtrans %}</b>: {{ reports.pitanje8 ? reports.pitanje8 : 'N/A'}}</td>
+                    <td colspan="2"><b>{% trans %}Da li se redovno koristi Mobility Tool, u rokovima koje propisuje Ugovor?{% endtrans %}</b> {{ reports.pitanje9 ? reports.pitanje9 : 'N/A'}}</td>
+                </tr>
+            </table>
 
-                        {% if report.type %}
-                            <td>{{ report.type.name(app.request.locale) }}</td>
-                        {% else %}
-                            <td></td>
-                        {% endif %}
-
-                        <td class="text-center">{{ report.reportingDate | date('d/m/y') }}</td>
-
-                        {% if report.reportingBy %}
-                            {% for by in report.reportingBy %}
-                                <td>{{ by.name(app.request.locale) }}</td>
-                            {% endfor %}
-                        {% else %}
-                            <td>none</td>
-                        {% endif %}
+                <b> Odnos planiranih i ostvarenih mobilnosti</b><br/>
+                <table border="1px">
+                    <tr>
+                        <td>
+                            Mobilnosti <br/>u svrhu
+                        </td>
+                        <td>
+                            Broj planiranih <br/>mobilnosti
+                        </td>
+                        <td>
+                            Broj zapocetih<br/>mobilnosti
+                        </td>
+                        <td>
+                            Broj sprovedenih<br/>mobilnosti
+                        </td>
+                        <td>
+                            Broj potpisanih<br/>ugovora
+                        </td>
                     </tr>
-                    <tr class="details-wrapper" data-collapsible-close="{{ loop.index0 }}">
-                        <td colspan="4">
-                            <div class="details-wrapper-inner">
-                                <h2>Questions and answers</h2>
-
-                                <div class="col-xs-12 no-padding">
-                                    <div class="col-xs-6 no-padding">
-                                        {% for key, q in questions %}
-                                            <p>{{ q.questions(app.request.getLocale()) }}</p>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="col-xs-6 no-padding">
-                                        {% for a in report.questionsAndAnswers %}
-                                            <p>{{ a.answer(app.request.getLocale()) }}</p>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-12 no-padding">
-                                    <h2>Comments and suggestions</h2>
-                                    <p>{{ report.commentsAndSuggestions }}</p>
-                                </div>
+                    <tr>
+                        <td>
+                            ucenja
+                        </td>
+                        <td>
+                            <div class="form-inline planiranih">
+                                {{ reports.planiranihUcenja ?: 'N/A' }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline zapocetih">
+                                {{ reports.zapocetihUcenja ?: 'N/A' }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline sprovedenih">
+                                {{ reports.sprovedenihUcenja ?: 'N/A' }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline potpisanih">
+                                {{ reports.potpisanihUcenja ?: 'N/A' }}
                             </div>
                         </td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    <tr>
+                        <td>
+                            obuka
+                        </td>
+                        <td>
+                            <div class="form-inline planiranih">
+                                {{ reports.planiranihObuka ?: 'N/A'  }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline zapocetih">
+                                {{ reports.zapocetihObuka ?: 'N/A' }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline sprovedenih">
+                                {{ reports.sprovedenihObuka ?: 'N/A' }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline potpisanih">
+                                {{ reports.potpisanihObuka ?: 'N/A' }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            praksi
+                        </td>
+                        <td>
+                            <div class="form-inline planiranih">
+                                {{ reports.planiranihPraksi ?: 'N/A'  }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline zapocetih">
+                                {{ reports.zapocetihPraksi ?: 'N/A' }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline sprovedenih">
+                                {{ reports.sprovedenihPraksi ?: 'N/A' }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline potpisanih">
+                                {{ reports.potpisanihPraksi ?: 'N/A' }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            posmatranja na poslu
+                        </td>
+                        <td>
+                            <div class="form-inline planiranih">
+                                {{ reports.planiranihPosmatranja ?: 'N/A'  }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline zapocetih">
+                                {{ reports.zapocetihPosmatranja ?: 'N/A' }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline sprovedenih">
+                                {{ reports.sprovedenihPosmatranja ?: 'N/A' }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-inline potpisanih">
+                                {{ reports.potpisanihPosmatranja ?: 'N/A' }}
+                            </div>
+                        </td>
+                    </tr><tr>
+                        <td>
+                            Ukupno
+                        </td>
+                        <td>
+                            <div id="ukupnoPlaniranih"></div>
+                        </td>
+                        <td>
+                            <div id="ukupnoZapocetih"></div>
+                        </td>
+                        <td>
+                            <div id="ukupnoSprovedenih"></div>
+                        </td>
+                        <td>
+                            <div id="ukupnoPotpisanih"></div>
+                        </td>
+                    </tr>
+                </table><br/><br/>
+
+            <table class="table table-hover" data-toggle="table">
+                <tr>
+                    <td><b>{% trans %}Da li je profil ucesnika mobilnosti u skladu sa aplikacijom?{% endtrans %}</b> {{ reports.pitanje11 ? reports.pitanje11 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ukoliko postoji negativan uticaj izmene profila ucesnika na ishode projekta objasniti{% endtrans %}</b>: {{ reports.pitanje12 ? reports.pitanje12 : 'N/A'}}</td>
+                    <td><b>{% trans %}Da li projektna prijava predvidja ukljucivanje ucesnika sa hendikepom?'{% endtrans %}</b> {{ reports.pitanje13 ? reports.pitanje13 : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>{% trans %}Da li su procesi i sihodi ucenja prepoznati upotrebom alata Europasa ili relevantnih alata?{% endtrans %}</b>: {{ reports.pitanje14 ? reports.pitanje14 : 'N/A'}}</td>
+                </tr>
+            </table>
+            <div class="col-xs-12">
+                <h3><b>{% trans %}Ocena implementacije projekata za obradu sredjorocnog i izvestaja o napretku{% endtrans %}</b></h3>
+            </div><br/>
+            <table class="table table-hover" data-toggle="table">
+                <tr>
+                    <td><b>{% trans %}Ostvarenost i kvalitet diseminacionih aktivnosti{% endtrans %}</b>:{{ reports.pitanje15pp1 ? reports.pitanje15pp1 : 'N/A'}}</td>
+                    <td><b>{% trans %}Sprovodjenje u skladu sa ugovorom{% endtrans %}</b>: {{ reports.pitanje15pp2 ? reports.pitanje15pp2 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ostvarenost ciljeva projekta (sekcija H)'{% endtrans %}</b>: {{ reports.pitanje15pp3 ? reports.pitanje15pp3 : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Kvalitet saradnje sa partnerima na projektu{% endtrans %}</b>: {{ reports.pitanje15pp4 ? reports.pitanje15pp4 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ostvarenost mobilnosti u svrhu: ucenja{% endtrans %}</b>: {{ reports.pitanje15pp5pp1 ? reports.pitanje15pp5pp1 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ostvarenost mobilnosti u svrhu: obuka{% endtrans %}</b>: {{ reports.pitanje15pp5pp2 ? reports.pitanje15pp5pp2 : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Ostvarenost mobilnosti u svrhu: praksi{% endtrans %}</b>: {{ reports.pitanje15pp5pp3 ? reports.pitanje15pp5pp3 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ostvarenost mobilnosti u svrhu: posmatranja na poslu{% endtrans %}</b>: {{ reports.pitanje15pp5pp4 ? reports.pitanje15pp5pp4 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ukupna ocena projekta{% endtrans %}</b>: {{ reports.pitanje16 ? reports.pitanje16 : 'N/A'}}</td>
+                </tr>
+            </table>
+            <div class="col-xs-12">
+                <h3><b>{% trans %}Pitanja koja se popunjavaju samo u toku obrade zavrsnog izvestaja {% endtrans %}</b></h3>
+            </div><br/>
+            <table class="table table-hover" data-toggle="table">
+                <tr>
+                    <td><b>{% trans %}Ostvarenost i kvalitet diseminacionih aktivnosti{% endtrans %}</b>:{{ reports.pitanje17pp1 ? reports.pitanje17pp1 : 'N/A'}}</td>
+                    <td><b>{% trans %}Sprovodjenje u skladu sa ugovorom{% endtrans %}</b>: {{ reports.pitanje17pp2 ? reports.pitanje17pp2 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ostvarenost ciljeva projekta (sekcija H)'{% endtrans %}</b>: {{ reports.pitanje17pp3 ? reports.pitanje17pp3 : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Kvalitet saradnje sa partnerima na projektu{% endtrans %}</b>: {{ reports.pitanje17pp4 ? reports.pitanje17pp4 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ostvarenost mobilnosti u svrhu: ucenja{% endtrans %}</b>: {{ reports.pitanje17pp5pp1 ? reports.pitanje17pp5pp1 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ostvarenost mobilnosti u svrhu: obuka{% endtrans %}</b>: {{ reports.pitanje17pp5pp2 ? reports.pitanje17pp5pp2 : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><b>{% trans %}Ostvarenost mobilnosti u svrhu: praksi{% endtrans %}</b>: {{ reports.pitanje17pp5pp3 ? reports.pitanje17pp5pp3 : 'N/A'}}</td>
+                    <td><b>{% trans %}Ostvarenost mobilnosti u svrhu: posmatranja na poslu{% endtrans %}</b>: {{ reports.pitanje17pp5pp4 ? reports.pitanje17pp5pp4 : 'N/A'}}</td>
+                    <td><b>{% trans %}Da li se rezultati vezani za projekat mogu uzeti kao promeri dobre prakse?{% endtrans %}</b>: {{ reports.pitanje16 ? reports.pitanje18 : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>{% trans %}Ukupna ocena projekta{% endtrans %}</b>: {{ reports.pitanje19 ? reports.pitanje19 : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>{% trans %}Dodatni komentari (za internu upotrebu){% endtrans %}</b>: {{ reports.pitanje20 ? reports.pitanje20 : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>{% trans %}Ukratko sumirati rezultate projekta{% endtrans %}</b>: {{ reports.pitanje21 ? reports.pitanje21 : 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>{% trans %}Preporuke na osnovu sprovedene evaluacije{% endtrans %}</b>: {{ reports.pitanje22 ? reports.pitanje22 : 'N/A'}}</td>
+                </tr>
+            </table>
+        {% else %}
+            <h2><b>{% trans %}Reporting no added{% endtrans %}</b></h2>
+        {% endif %}
     </div>
 {% endblock %}

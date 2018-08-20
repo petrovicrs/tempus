@@ -59,83 +59,7 @@ class ReportingController extends AbstractController
     const PITANJE_20 = '20. Dodatni komentari (za internu upotrebu)';
     const PITANJE_21 = '21. Ukratko sumirati rezultate projekta:';
     const PITANJE_22 = '22. Preporuke na osnovu sprovedene evaluacije:';
-//    /**
-//     * @Route("/{locale}/reporting/list", name="reporting_list", requirements={"locale": "%app.locales%"})
-//     */
-//    public function listAction()
-//    {
-//        $projectReporting = $this->getProjectReportingRepository()->findAll();
-//        return $this->render('reporting/list.twig', ['projectReporting' => $projectReporting]);
-//    }
-//
-//    /**
-//     * @Route("/{locale}/reporting/create", name="reporting_create", requirements={"locale": "%app.locales%"})
-//     */
-//    public function createAction(Request $request)
-//    {
-//        $projectReporting = new ProjectReporting();
-//        $questions = $this->getQuestionsRepository()->findAll();
-//
-//        /** @var Project $project */
-//        $project = $this->getLastProjectForCurrentUser();
-//
-//        $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
-//            'action' => $this->generateUrl('reporting_create'),
-//            'method' => 'POST',
-//            'locale' => $request->getLocale()
-//        ]);
-//
-//        $projectReportingForm->handleRequest($request);
-//
-//        $keyAction = $project->getKeyActions()->getNameSr();
-//
-//        if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
-//
-//            /** @var Reporting $reporting */
-//            foreach ($projectReporting->getReporting() as $reporting) {
-//
-//                foreach($reporting->getReportingBy() as $reportingPerson){
-//                    $reportingPerson->setReportingBy($reporting);
-//                    $this->getReportingPersonRepository()->save($reportingPerson);
-//                }
-//
-//                // Save questions and answers to ReportingQuestionsAndAnswers
-//                foreach ($questions as $index => $qa) {
-//
-//                    $reportingQuestionsAndAnswers = new ReportingQuestionsAndAnswers();
-//
-//                    $answer = $request->request->get('appbundle_project')['questionsAndAnswers'][$index];
-//                    $dynamicFunction = 'setAnswer' . ucfirst($request->getLocale());
-//                    $reportingQuestionsAndAnswers->$dynamicFunction($answer['answer'.ucfirst($request->getLocale())]);
-//
-//                    $reportingQuestionsAndAnswers->setQuestions($qa);
-//                    $reportingQuestionsAndAnswers->setReporting($reporting);
-//
-//                    $this->getQuestionAndAnswersRepository()->save($reportingQuestionsAndAnswers);
-//                }
-//
-//                $reporting->setProjectReporting($projectReporting);
-//                $this->getReportingRepository()->save($reporting);
-//            }
-//
-//            $projectReporting->setProject($project);
-//            $this->getProjectReportingRepository()->save($projectReporting);
-//
-//            if ($keyAction == 'ka1') {
-//                return $this->redirectToRoute('attachments_create');
-//            } else {
-//                return $this->redirectToRoute('equipment_create');
-//            }
-//        }
-//
-//        return $this->render(
-//            'reporting/create.twig',
-//            ['my_form' => $projectReportingForm->createView(), 'questions' => $questions,
-//                'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(),
-//                'actionTab' => $this->showActionTab($project),
-//                'isCompleted' => $project->getIsCompleted()]);
-//    }
-//
+
     /**
      * @Route("/{locale}/reporting/edit/{projectId}", name="reporting_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
@@ -173,10 +97,12 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if ($keyAction == 'ka1') {
-                return $this->redirectToRoute('attachments_create');
-            } else {
-                return $this->redirectToRoute('equipment_create');
+            if (!$project->getIsCompleted()) {
+                if ($keyAction == 'ka1') {
+                    return $this->redirectToRoute('attachments_create');
+                } else {
+                    return $this->redirectToRoute('equipment_create');
+                }
             }
         }
 
@@ -188,31 +114,28 @@ class ReportingController extends AbstractController
             'actionTab' => $this->showActionTab($project),
         ]);
     }
-//
-//    /**
-//     * @Route("/{locale}/reporting/view/{projectId}", name="reporting_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
-//     */
-//    public function viewAction($projectId)
-//    {
-//        /** @var ProjectReporting $projectReporting */
-//        $projectReporting = $this->getProjectReportingRepository()->findOneBy(['project' => $projectId]);
-//
-//        $questions = $this->getQuestionsRepository()->findAll();
-//
-//        /** @var Project $project */
-//        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
-//
-//        return $this->render(
-//            'reporting/view.twig',
-//            [
-//                'reports' => $projectReporting ? $projectReporting->getReporting() : null,
-//                'projectId' => $projectId,
-//                'questions' => $questions,
-//                'keyAction' => $project->getKeyActions()->getNameSr(),
-//                'actionTab' => $this->showActionTab($project)
-//            ]
-//        );
-//    }
+
+    /**
+     * @Route("/{locale}/reporting/view/{projectId}", name="reporting_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     */
+    public function viewAction($projectId)
+    {
+        /** @var ProjectReporting $projectReporting */
+        $projectReporting = $this->getProjectReportingRepository()->findOneBy(['project' => $projectId]);
+
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        return $this->render(
+            'reporting/view.twig',
+            [
+                'reports' => $projectReporting ?: null,
+                'projectId' => $projectId,
+                'keyAction' => $project->getKeyActions()->getNameSr(),
+                'actionTab' => $this->showActionTab($project)
+            ]
+        );
+    }
     /**
     * @Route("/{locale}/reporting/create", name="reporting_create", requirements={"locale": "%app.locales%"})
      */

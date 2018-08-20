@@ -8,22 +8,31 @@ jQuery(document).ready(function() {
     var potpisanih = 0;
 
     $('.planiranih').each(function (i, obj) {
-        planiranih = planiranih + +this.value;
+        if (this.value != undefined) {
+            planiranih = planiranih + +this.value;
+        }
+
     })
     $("#ukupnoPlaniranih").text(planiranih);
 
     $('.zapocetih').each(function (i, obj) {
-        zapocetih = zapocetih + +this.value;
+        if (this.value != undefined) {
+            zapocetih = zapocetih + +this.value;
+        }
     })
     $("#ukupnoZapocetih").text(zapocetih);
 
     $('.sprovedenih').each(function (i, obj) {
-        sprovedenih = sprovedenih + +this.value;
+        if (this.value != undefined) {
+            sprovedenih = sprovedenih + +this.value;
+        }
     })
     $("#ukupnoSprovedenih").text(sprovedenih);
 
     $('.potpisanih').each(function (i, obj) {
-        potpisanih = potpisanih + +this.value;
+        if (this.value != undefined) {
+            potpisanih = potpisanih + +this.value;
+        }
     })
     $("#ukupnoPotpisanih").text(potpisanih);
 

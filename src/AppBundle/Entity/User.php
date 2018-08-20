@@ -184,5 +184,8 @@ class User implements UserInterface
         $this->permission = $permission;
     }
 
-
+    public function getFullName()
+    {
+        return $this->getName() . ' ' . $this->getSurname();
+    }
 }

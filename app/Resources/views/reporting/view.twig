@@ -18,8 +18,7 @@
             </div>
             <table class="table table-hover" data-toggle="table">
                 <tr>
-                    <td><b>{% trans %}Savetnik za projekte koji obradjuje izvestaj{% endtrans %}</b>: {{ reports.savetnik ? reports.savetnik.fullName : 'N/A'}}</td>
-                    <td><b>{% trans %}Kontrolu izvrsio{% endtrans %}</b>: {{ reports.kontroluIzvrsio ? reports.kontroluIzvrsio : 'N/A'}}</td>
+                    
                     <td><b>{% trans %}Datum prijema izvestaja{% endtrans %}</b>: {{ reports.datumPrijemaIzvestaja ? reports.datumPrijemaIzvestaja | date('d/m/y') : 'N/A'}}</td>
                 </tr>
                 <tr>

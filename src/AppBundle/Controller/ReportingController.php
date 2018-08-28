@@ -10,17 +10,23 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Project;
 use AppBundle\Entity\ProjectReporting;
+use AppBundle\Entity\ProjectReportingProveraDokumentacije;
 use AppBundle\Entity\Reporting;
 use AppBundle\Entity\ReportingQuestionsAndAnswers;
 use AppBundle\Form\ProjectReportingForm;
-use AppBundle\Form\ReportingForm;
+use AppBundle\Form\ProjectReportingProveraDokumentacijeForm;
+use AppBundle\Form\ReportingStartForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Repository\ProjectRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ReportingController extends AbstractController
 {
+    //Izvestaj o napretku/Srednjorocni izvestaj 101, 102, 104
     const PITANJE_1 = '1. Da li je Evropski razvojni plan usvojen na nivou organizacije?';
     const PITANJE_2 = '2. Da li je projekat doprineo realizaciji Evropskog razvojnog plana?';
     const PITANJE_2_1 = '2.1. Ukoliko jeste na koji nacin?';
@@ -59,6 +65,54 @@ class ReportingController extends AbstractController
     const PITANJE_20 = '20. Dodatni komentari (za internu upotrebu)';
     const PITANJE_21 = '21. Ukratko sumirati rezultate projekta:';
     const PITANJE_22 = '22. Preporuke na osnovu sprovedene evaluacije:';
+
+    //Provera dokumentacije na licu mesta 101, 104
+
+    /**
+     * @Route("/{locale}/reporting/create-report", name="reporting_start", requirements={"locale": "%app.locales%"})
+     * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_PROJECT_CREATE') or is_granted('ROLE_ADMIN')")
+     *
+     */
+    public function createReportAction(Request $request)
+    {
+        /** @var Project $project */
+        $project = $this->getLastProjectForCurrentUser();
+
+        /** @var Reporting $reporting */
+        $reporting = new Reporting();
+
+        $reportingStartForm = $this->createForm(ReportingStartForm::class, $reporting, [
+            'method' => 'POST',
+            'locale' => $request->getLocale(),
+        ]);
+
+        $reportingStartForm->handleRequest($request);
+
+        if ($reportingStartForm->isSubmitted() && $reportingStartForm->isValid())
+        {
+            $reporting->setProject($project);
+            $this->getReportingRepository()->save($reporting);
+
+            $reportingType = $reporting->getType()->getName($request->getLocale());
+
+//            if ($reportingType === 'Srednjerocni izvestaj') {
+//                return $this->redirectToRoute('reporting', ['active' => 'project']);
+//            } else {
+//                return $this->redirectToRoute('project_ka2_create', ['active' => 'project']);
+//            }
+
+        }
+
+        $data = [
+            'my_form' => $reportingStartForm->createView(),
+            'keyAction' => $project->getKeyActions(),
+            'isCompleted' => $project->getIsCompleted(),
+            'actionTab' => $this->showActionTab($project),
+            'projectId' => $project->getId(),
+        ];
+
+        return $this->render('reporting/create-report.twig', $data);
+    }
 
     /**
      * @Route("/{locale}/reporting/edit/{projectId}", name="reporting_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
@@ -112,6 +166,7 @@ class ReportingController extends AbstractController
             'projectId' => $project->getId(),
             'isCompleted' => $project->getIsCompleted(),
             'actionTab' => $this->showActionTab($project),
+            'action' => $project->getActions()->getNameSr()
         ]);
     }
 
@@ -132,7 +187,8 @@ class ReportingController extends AbstractController
                 'reports' => $projectReporting ?: null,
                 'projectId' => $projectId,
                 'keyAction' => $project->getKeyActions()->getNameSr(),
-                'actionTab' => $this->showActionTab($project)
+                'actionTab' => $this->showActionTab($project),
+                'action' => $project->getActions()->getNameSr()
             ]
         );
     }
@@ -177,7 +233,8 @@ class ReportingController extends AbstractController
                 'keyAction' => $project->getKeyActions()->getNameSr(),
                 'projectId' => $project->getId(),
                 'actionTab' => $this->showActionTab($project),
-                'isCompleted' => $project->getIsCompleted()
+                'isCompleted' => $project->getIsCompleted(),
+                'action' => $project->getActions()->getNameSr()
             ]
         );
     }

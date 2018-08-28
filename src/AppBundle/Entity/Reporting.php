@@ -27,15 +27,26 @@ class Reporting extends AbstractAuditable
      */
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(
-     *      targetEntity="ProjectReporting",
-     *      inversedBy="reporting",
-     *      cascade={"persist"}
-     * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
-    protected $projectReporting;
+//    /**
+//     * @ORM\ManyToOne(
+//     *      targetEntity="ProjectReporting",
+//     *      inversedBy="reporting",
+//     *      cascade={"persist"}
+//     * )
+//     * @ORM\JoinColumn(onDelete="CASCADE")
+//     */
+//    protected $projectReporting;
+//
+//    /**
+//     * @ORM\ManyToOne(
+//     *      targetEntity="ProjectReportingProveraDokumentacije",
+//     *      inversedBy="reporting",
+//     *      cascade={"persist"}
+//     * )
+//     * @ORM\JoinColumn(onDelete="CASCADE")
+//     */
+//    protected $projectReportingProveraDokumentacije;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="ReportingType")
@@ -43,31 +54,10 @@ class Reporting extends AbstractAuditable
     protected $type;
 
     /**
-     * @ORM\Column(name="reporting_date", type="datetime", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Project")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    protected $reportingDate;
-
-    /**
-     * @ORM\OneToMany(targetEntity="ReportingQuestionsAndAnswers", mappedBy="reporting", cascade={"persist"})
-     */
-    protected $questionsAndAnswers;
-
-    /**
-     * @ORM\OneToMany(targetEntity="ReportingPerson", mappedBy="reporting", cascade={"persist"})
-     */
-    protected $reportingBy;
-
-    /**
-     * @ORM\Column(name="comments_and_suggestions", type="text", nullable=true)
-     * @Assert\Type("string")
-     */
-    protected $commentsAndSuggestions;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->reportingBy = new ArrayCollection();
-    }
+    protected $project;
 
     /**
      * @return mixed
@@ -75,30 +65,6 @@ class Reporting extends AbstractAuditable
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProjectReporting()
-    {
-        return $this->projectReporting;
-    }
-
-    /**
-     * @param mixed $projectReporting
-     */
-    public function setProjectReporting($projectReporting)
-    {
-        $this->projectReporting = $projectReporting;
     }
 
     /**
@@ -120,76 +86,17 @@ class Reporting extends AbstractAuditable
     /**
      * @return mixed
      */
-    public function getReportingDate()
+    public function getProject()
     {
-        return $this->reportingDate;
+        return $this->project;
     }
 
     /**
-     * @param mixed $reportingDate
+     * @param mixed $project
      */
-    public function setReportingDate($reportingDate)
+    public function setProject($project)
     {
-        $this->reportingDate = $reportingDate;
+        $this->project = $project;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getQuestionsAndAnswers()
-    {
-        return $this->questionsAndAnswers;
-    }
-
-    /**
-     * Add $questionsAndAnswers
-     *
-     * @param ReportingQuestionsAndAnswers $questionsAndAnswers
-     * @return Reporting
-     */
-    public function setQuestionsAndAnswers(ReportingQuestionsAndAnswers $questionsAndAnswers)
-    {
-        $this->questionsAndAnswers = $questionsAndAnswers;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getReportingBy()
-    {
-        return $this->reportingBy;
-    }
-
-    /**
-     * @param mixed $reportingBy
-     */
-    public function setReportingBy($reportingBy)
-    {
-        $this->reportingBy = $reportingBy;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCommentsAndSuggestions()
-    {
-        return $this->commentsAndSuggestions;
-    }
-
-    /**
-     * @param mixed $commentsAndSuggestions
-     */
-    public function setCommentsAndSuggestions($commentsAndSuggestions)
-    {
-        $this->commentsAndSuggestions = $commentsAndSuggestions;
-    }
-
-    public function validate(ExecutionContextInterface $context, $payload)
-    {
-        // somehow you have an array of "fake names"
-        if($this->questionsAndAnswers) {
-            return true;
-        }
-    }
 }

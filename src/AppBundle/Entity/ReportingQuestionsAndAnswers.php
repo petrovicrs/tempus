@@ -47,12 +47,6 @@ class ReportingQuestionsAndAnswers extends AbstractAuditable
     protected $answerSr;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Reporting", inversedBy="questionsAndAnswers", cascade={"persist"})
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
-    protected $reporting;
-
-    /**
      * @return mixed
      */
     public function getId()
@@ -121,21 +115,5 @@ class ReportingQuestionsAndAnswers extends AbstractAuditable
             return $this->answerSr;
         }
         return $this->answerEn;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getReporting()
-    {
-        return $this->reporting;
-    }
-
-    /**
-     * @param mixed $reporting
-     */
-    public function setReporting($reporting)
-    {
-        $this->reporting = $reporting;
     }
 }

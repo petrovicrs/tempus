@@ -345,6 +345,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\ProjectReporting
+    doctrine_entity_repository.project_reporting_provera_dokumentacije:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\ProjectReportingProveraDokumentacije
     doctrine_entity_repository.reporting:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]

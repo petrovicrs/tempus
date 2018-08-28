@@ -35,15 +35,6 @@ class ReportingPerson extends AbstractAuditable
     protected $person;
 
     /**
-     * @ORM\ManyToOne(
-     *      targetEntity="Reporting",
-     *      inversedBy="reportingBy"
-     * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
-    protected $reporting;
-
-    /**
      * @return mixed
      */
     public function getId()
@@ -75,19 +66,5 @@ class ReportingPerson extends AbstractAuditable
         $this->person = $person;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getReporting()
-    {
-        return $this->reporting;
-    }
 
-    /**
-     * @param mixed $reporting
-     */
-    public function setReporting($reporting)
-    {
-        $this->reporting = $reporting;
-    }
 }

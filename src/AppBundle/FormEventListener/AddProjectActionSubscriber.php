@@ -38,7 +38,7 @@ class AddProjectActionSubscriber implements EventSubscriberInterface
             'class'         => 'AppBundle:ProjectAction',
             'choice_label' => 'nameEn', # todo: figure out how to get locale . ucfirst($options['locale']),
             'placeholder' => '--',
-            'required' => false,
+            'required' => true,
             'query_builder' => function (EntityRepository $repository) use ($keyAction) {
                 $qb = $repository->createQueryBuilder('projectAction')
                     ->where('projectAction.keyAction = :keyAction')

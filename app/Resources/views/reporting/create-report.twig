@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/reporting.js')}}"></script>
+    <section id="main">
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar.html.twig' with {'active': 'reporting', 'actionTab': actionTab, 'isCompleted': isCompleted} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting'} %}
+        {% endif %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="controls reporting">
+                    <a href="{{ localizedPath('result_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
+                    <div class="general-info">
+                        <div>
+                            {{ form_label(my_form.type, 'Tip Reporta'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.type, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

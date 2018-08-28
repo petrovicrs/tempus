@@ -34,6 +34,7 @@ class ResultsController extends AbstractController
      */
     public function createAction(Request $request)
     {
+        /** @var ProjectResults $projectResults */
         $projectResults = new ProjectResults();
 
         /** @var Project $project */
@@ -49,13 +50,14 @@ class ResultsController extends AbstractController
 
         if ($projectResultsForm->isSubmitted() && $projectResultsForm->isValid()) {
 
+            /** @var Results $result */
             foreach($projectResults->getResults() as $result) {
                 $result->setProjectResults($projectResults);
             }
             $projectResults->setProject($project);
             $this->getProjectResultsRepository()->save($projectResults);
 
-            return $this->redirectToRoute('reporting_create');
+            return $this->redirectToRoute('reporting_start');
         }
 
         return $this->render('results/create.twig', ['my_form' => $projectResultsForm->createView(),

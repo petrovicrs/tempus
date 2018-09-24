@@ -9,6 +9,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Project;
+use AppBundle\Entity\Reporting;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -62,5 +63,23 @@ abstract class AbstractController extends Controller {
         }
 
         return false;
+    }
+
+    /**
+     * @param $project
+     * @return Reporting
+     */
+    protected function getLastReportForCurrentUserByProject($project): Reporting
+    {
+        $user = $this->getUser();
+        /** @var Reporting $lastProject */
+        $lastReport = $this->get('doctrine_entity_repository.reporting')
+            ->findOneBy(
+                ['project' => $project],
+                ['user' => $user],
+                ['id' => 'DESC']
+            );
+
+        return $lastReport;
     }
 }

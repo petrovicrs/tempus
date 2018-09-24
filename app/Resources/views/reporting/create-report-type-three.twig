@@ -1,0 +1,638 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/reporting.js')}}"></script>
+    <section id="main">
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar.html.twig' with {'active': 'reporting', 'actionTab': actionTab, 'isCompleted': isCompleted} %}
+    {% endif %}
+    {%  if keyAction == 'ka2' %}
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting'} %}
+    {% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls reporting">
+                <a href="{{ localizedPath('result_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
+                <div class="general-info">
+                    {% if (action == 'KA101' or action == 'KA104') %}
+                        {{ form_start(my_form) }}
+                            <div class="col-xs-12">
+                                <h2>{% trans %}Osnovne informacije{% endtrans %}</h2>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.ulazakIzvestaja, 'Datum ulaska izvestaja u GF'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.ulazakIzvestaja) }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.proveruIzvrsio, 'Proveru izvrsio/la:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.proveruIzvrsio, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.potpunaFinansijskaDokumentacija, 'Da li je finansijska dokumentacija potpuna?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.potpunaFinansijskaDokumentacija, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.datumPosete, 'Datum poste'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.datumPosete) }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.periodDo, 'Pregledao/la:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.periodDo, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.potpunaDodatnaDokumentacija, 'Da li je dodatna dokumentacija potpuna?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.potpunaDodatnaDokumentacija, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.razlogNepotpuneDokumentacije, 'Ako nije, sta je i do kog kora trazeno korisniku?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.razlogNepotpuneDokumentacije, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                {{ form_label(my_form.datumTrazenjaDodatneDokumentacije, 'Datum trazenja dodatne dokumentacije'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.datumTrazenjaDodatneDokumentacije, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.datumDostavljanjaDodatneDokumentacije, 'Datum dostavljanja dodatne dokumentacije'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.datumDostavljanjaDodatneDokumentacije, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.apsorbovatiAlociranBudzet, 'Da li deluje da ce korisnik apsorbovati alocirani budzet?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.apsorbovatiAlociranBudzet, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>Ako jeste:
+                            <div>
+                                {{ form_label(my_form.datumZavrsetkaObrade, 'Datum zavrsetka obrade izvestaja'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.datumZavrsetkaObrade) }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                Rok za obradu izvestaja 30 dana
+                            </div><br/>
+                            <div class="col-xs-12">
+                                <h2>{% trans %}Kriterijumi za proveru finansijske prihvatljivosti{% endtrans %}</h2>
+                            </div>
+                            <div>
+                                <b>1. Provera prijavljenih mobilnosti:</b><br/>
+                                {{ form_label(my_form.pitanje1pp1, '1.1 Ukupan broj prijavljnih mobilnosti je manji ili jednak odobrenim mobilnostima'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje1pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <b>2. Provera datuma odrzavanja aktivnosti:</b><br/>
+                                {{ form_label(my_form.pitanje2pp1, '2.1. Datumi aktivnosti moraju biti u okviru datuma pocetka i kraja projekta'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje2pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <b>3. Provera provedenog broja dana aktivnosti i prihvatljivost obracuna u skladu sa Aneksom II Ugovora:</b><br/>
+                                <b>3.1. Broj dana/meseci aktivnosti za svaku pojedinu mobilnost u skladu s odobrenim brojem dana/meseci</b><br/>
+                                {{ form_label(my_form.pitanje3pp1pp1, '3.1.1. Nastavno i nenastavno osoblje: 2 dana do 2 meseca iskljucujuci dane putovanja'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje3pp1pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje3, constant('AppBundle\\Controller\\ReportingController::PITANJE_3')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje3, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje3pp1, constant('AppBundle\\Controller\\ReportingController::PITANJE_3_1')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje3pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje4, constant('AppBundle\\Controller\\ReportingController::PITANJE_4')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje4, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div class="col-xs-12">
+                                <h3><b>{% trans %}Sprovodjenje mobilnosti {% endtrans %}</b></h3>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje5, constant('AppBundle\\Controller\\ReportingController::PITANJE_5')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje5, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje6, constant('AppBundle\\Controller\\ReportingController::PITANJE_6')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje6, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje7, constant('AppBundle\\Controller\\ReportingController::PITANJE_7')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje7, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje8, constant('AppBundle\\Controller\\ReportingController::PITANJE_8')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje8, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje9, constant('AppBundle\\Controller\\ReportingController::PITANJE_9')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje9, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <b> 10. Odnos planiranih i ostvarenih mobilnosti</b><br/>
+                                <table border="1px">
+                                    <tr>
+                                        <td>
+                                            Mobilnosti <br/>u svrhu
+                                        </td>
+                                        <td>
+                                            Broj planiranih <br/>mobilnosti
+                                        </td>
+                                        <td>
+                                            Broj zapocetih<br/>mobilnosti
+                                        </td>
+                                        <td>
+                                            Broj sprovedenih<br/>mobilnosti
+                                        </td>
+                                        <td>
+                                            Broj potpisanih<br/>ugovora
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            ucenja
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.planiranihUcenja, {'attr': {'class': 'form-control planiranih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zapocetihUcenja, {'attr': {'class': 'form-control zapocetih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.sprovedenihUcenja, {'attr': {'class': 'form-control sprovedenih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.potpisanihUcenja, {'attr': {'class': 'form-control potpisanih'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            obuka
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.planiranihObuka, {'attr': {'class': 'form-control planiranih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zapocetihObuka, {'attr': {'class': 'form-control zapocetih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.sprovedenihObuka, {'attr': {'class': 'form-control sprovedenih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.potpisanihObuka, {'attr': {'class': 'form-control potpisanih'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            praksi
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.planiranihPraksi, {'attr': {'class': 'form-control planiranih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zapocetihPraksi, {'attr': {'class': 'form-control zapocetih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.sprovedenihPraksi, {'attr': {'class': 'form-control sprovedenih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.potpisanihPraksi, {'attr': {'class': 'form-control potpisanih'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            posmatranja na poslu
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.planiranihPosmatranja, {'attr': {'class': 'form-control planiranih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zapocetihPosmatranja, {'attr': {'class': 'form-control zapocetih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.sprovedenihPosmatranja, {'attr': {'class': 'form-control sprovedenih'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.potpisanihPosmatranja, {'attr': {'class': 'form-control potpisanih'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr><tr>
+                                        <td>
+                                            Ukupno
+                                        </td>
+                                        <td>
+                                            <div id="ukupnoPlaniranih"></div>
+                                        </td>
+                                        <td>
+                                            <div id="ukupnoZapocetih"></div>
+                                        </td>
+                                        <td>
+                                            <div id="ukupnoSprovedenih"></div>
+                                        </td>
+                                        <td>
+                                            <div id="ukupnoPotpisanih"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.pitanje11, constant('AppBundle\\Controller\\ReportingController::PITANJE_11')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje11, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje12, constant('AppBundle\\Controller\\ReportingController::PITANJE_12')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje12, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje13, constant('AppBundle\\Controller\\ReportingController::PITANJE_13')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje13, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje14, constant('AppBundle\\Controller\\ReportingController::PITANJE_14')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje14, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div class="col-xs-12">
+                                <h3><b>{% trans %}Ocena implementacije projekata za obradu sredjorocnog i izvestaja o napretku{% endtrans %}</b></h3>
+                            </div><br/>
+                            <div>
+                                15. Na osnovi sprovedenih mobilnosti i ciljeva projekta oceniti u kojoj meri su ostvareni ishodi projekta u odnosu na projektnu prijavu.<br/>
+                                Na skali od 1 do 5 ocena 1 je najniza, ocena 5 je najvisa<br/>
+                                Ocena n/a se dodeljuje u slucaju kada mobilnosti jos uvek nisu implementirane ili zato sto nisu bile predvidjene projektnom prijavom.<br/>
+                                Sprovodjednje u skladu sa ugovorom - znaci da projekat nije imao vece izmene aktivnosti koje nisu validirane aneksom ugovora. Projekti
+                                koji su cinili manje izmene u odnosu na ugovor ili su vece izmene definisali kroz aneks ugovora mogu dobiti visoke ocene na ovoj dimenziji.<br/>
+                                Pored ostvarenog broja mobilnosti u obzir uzeti obecane pripremne aktivnosti, dinamiku potpisivanja ugovora, tehnicku izvedbu mobilnosti.
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje15pp1, constant('AppBundle\\Controller\\ReportingController::PITANJE_15_1')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje15pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje15pp2, constant('AppBundle\\Controller\\ReportingController::PITANJE_15_2')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje15pp2, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje15pp3, constant('AppBundle\\Controller\\ReportingController::PITANJE_15_3')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje15pp3, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje15pp4, constant('AppBundle\\Controller\\ReportingController::PITANJE_15_4')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje15pp4, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje15pp5pp1, constant('AppBundle\\Controller\\ReportingController::PITANJE_15_5_1')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje15pp5pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje15pp5pp2, constant('AppBundle\\Controller\\ReportingController::PITANJE_15_5_2')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje15pp5pp2, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje15pp5pp3, constant('AppBundle\\Controller\\ReportingController::PITANJE_15_5_3')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje15pp5pp3, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje15pp5pp4, constant('AppBundle\\Controller\\ReportingController::PITANJE_15_5_4')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje15pp5pp4, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje16, constant('AppBundle\\Controller\\ReportingController::PITANJE_16')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje16, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                Tumacenje ocene projekta:<br/>
+                                Ukupna ocena projekta povezana je sa rizikom projekta.
+                                Ocena se dodeljuje na osnovu analize implementacije projekta bez finansijske ocene u skladu sa sledecim kriterijumima: <br/>
+                                1. Ostvarenost ciljeva projekrta<br/>
+                                2. Implementacija aktivnosti u skadu sa ugovorom<br/>
+                                3. Realizovanost aktivnosti predvidjenih projektnom projavom<br/>
+                                4. Intenzitet diseminacionih aktivnosti<br/>
+                                Ocena mora biti u skaldu sa ocenama datim u pitanju 16 po sledecem kljucu:<br/>
+                                <table border="1px">
+                                    <tr>
+                                        <td>Analiza pitanja 16</td>
+                                        <td>Ocena</td>
+                                        <td>Uticaj na rizik</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Projekat ne postuje odredbe ugovora</td>
+                                        <td>Projekat postuje odredbe ugovora na ocenjivanim <br/> dimenzijama nema visoke ocene</td>
+                                        <td>Projekat postuje odredbe ugovora na ocenjivanim <br/> dimenzijama ima visoke ocene</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Niska</td>
+                                        <td>Srednja</td>
+                                        <td>Visoka</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rizik se povecava bez obzira na finansijsku procenu</td>
+                                        <td>Nema uticaj na rizik</td>
+                                        <td>Rizik se moze smanjiti ukoliko je finansijska <br/> evaluacija identifikovala znacajne propuste</td>
+                                    </tr>
+                                </table><br/>
+                                <b>Napomena: Ukoliko projekat ima ocenu manju od 3 za postovanje ugovora rizik projekta se automatski povecava i projekat,
+                                    bez obzira na ostale rezultate, dobija nisku ocenu i povecan rizik.</b>
+                            </div>
+                            <div class="col-xs-12">
+                                <h3><b>{% trans %}Pitanja koja se popunjavaju samo u toku obrade zavrsnog izvestaja {% endtrans %}</b></h3>
+                            </div><br/>
+                            <div>
+                                17. Na osnovi sprovedenih mobilnosti i ciljeva projekta oceniti u kojoj meri su ostvareni ishodi projekta u odnosu na projektnu prijavu.<br/>
+                                Na skali od 1 do 5 ocena 1 je najniza, ocena 5 je najvisa<br/>
+                                Ocena n/a se dodeljuje u slucaju kada mobilnosti jos uvek nisu implementirane ili zato sto nisu bile predvidjene projektnom prijavom.<br/>
+                                Sprovodjednje u skladu sa ugovorom - znaci da projekat nije imao vece izmene aktivnosti koje nisu validirane aneksom ugovora. Projekti
+                                koji su cinili manje izmene u odnosu na ugovor ili su vece izmene definisali kroz aneks ugovora mogu dobiti visoke ocene na ovoj dimenziji.<br/>
+                                Pored ostvarenog broja mobilnosti u obzir uzeti obecane pripremne aktivnosti, dinamiku potpisivanja ugovora, tehnicku izvedbu mobilnosti.
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje17pp1, constant('AppBundle\\Controller\\ReportingController::PITANJE_17_1')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje17pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje17pp2, constant('AppBundle\\Controller\\ReportingController::PITANJE_17_2')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje17pp2, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje17pp3, constant('AppBundle\\Controller\\ReportingController::PITANJE_17_3')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje17pp3, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje17pp4, constant('AppBundle\\Controller\\ReportingController::PITANJE_17_4')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje17pp4, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje17pp5pp1, constant('AppBundle\\Controller\\ReportingController::PITANJE_17_5_1')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje17pp5pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje17pp5pp2, constant('AppBundle\\Controller\\ReportingController::PITANJE_17_5_2')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje17pp5pp2, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje17pp5pp3, constant('AppBundle\\Controller\\ReportingController::PITANJE_17_5_3')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje17pp5pp3, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje17pp5pp4, constant('AppBundle\\Controller\\ReportingController::PITANJE_17_5_4')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje17pp5pp4, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje18, constant('AppBundle\\Controller\\ReportingController::PITANJE_18')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje18, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                Projekat moze biti primerdobre prakse ukoliko je na prethodnom pitanju ostvario prosek ocena 4 ili vise i samo ukoliko nijedna ocenjena
+                                kategorija nije dobila ocenu manju od 4. <br/> Napomena: Mobilnosti dobijaju jednu ocenu (na primer ukoliko je implementacija mobilnosti u svrhu
+                                ucenja 4 a u svrhu ubuks 5, ocena za mobilnosti iznosi (4+5)/2=4.5)
+                            </div>
+                            <div>
+                                {{ form_label(my_form.pitanje19, constant('AppBundle\\Controller\\ReportingController::PITANJE_19')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje19, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                Tumacenje ocene projekta:<br/>
+                                Ukupna ocena projekta povezana je sa rizikom projekta.
+                                Ocena se dodeljuje na osnovu analize implementacije projekta bez finansijske ocene u skladu sa sledecim kriterijumima: <br/>
+                                1. Ostvarenost ciljeva projekrta<br/>
+                                2. Implementacija aktivnosti u skadu sa ugovorom<br/>
+                                3. Realizovanost aktivnosti predvidjenih projektnom projavom<br/>
+                                4. Intenzitet diseminacionih aktivnosti<br/>
+                                Ocena mora biti u skaldu sa ocenama datim u pitanju 19 po sledecem kljucu:<br/>
+                                <table border="1px">
+                                    <tr>
+                                        <td>Analiza pitanja 16</td>
+                                        <td>Ocena</td>
+                                        <td>Uticaj na rizik</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Projekat ne postuje odredbe ugovora</td>
+                                        <td>Projekat postuje odredbe ugovora na ocenjivanim <br/> dimenzijama nema visoke ocene</td>
+                                        <td>Projekat postuje odredbe ugovora na ocenjivanim <br/> dimenzijama ima visoke ocene</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Niska</td>
+                                        <td>Srednja</td>
+                                        <td>Visoka</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rizik se povecava bez obzira na finansijsku procenu</td>
+                                        <td>Nema uticaj na rizik</td>
+                                        <td>Rizik se moze smanjiti ukoliko je finansijska <br/> evaluacija identifikovala znacajne propuste</td>
+                                    </tr>
+                                </table><br/>
+                                <b>Napomena: Ukoliko projekat ima ocenu manju od 3 za postovanje ugovora rizik projekta se automatski povecava i projekat,
+                                    bez obzira na ostale rezultate, dobija nisku ocenu i povecan rizik.</b><br/>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.pitanje20, constant('AppBundle\\Controller\\ReportingController::PITANJE_20')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje20, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div class="col-xs-12">
+                                <h3><b>{% trans %}Zakljukci i preporuke za korisnike {% endtrans %}</b></h3>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje21, constant('AppBundle\\Controller\\ReportingController::PITANJE_21')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje21, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.pitanje22, constant('AppBundle\\Controller\\ReportingController::PITANJE_22')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje22, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                        {% elseif ('action' == 'KA105') %}
+                            {{ form_start(my_form) }}
+                            <div class="col-xs-12">
+                                <h2>{% trans %}Osnovne informacije{% endtrans %}</h2>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.savetnik, 'Savetnik za projekte koji obradjuje izvestaj:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.savetnik, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.kontroluIzvrsio, 'Kontrolu izvrsio:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.kontroluIzvrsio, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.datumPrijemaIzvestaja, 'Datum prijema izvestaja:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.datumPrijemaIzvestaja) }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.periodOd, 'Izvestaj porkiva period od'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.periodOd) }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.periodDo, 'Izvestaj porkiva period do'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.periodDo) }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.dokumentacijaPotupna, 'Da li je projektna dokumentacija potpuna?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.dokumentacijaPotupna, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.korisnikDostavioDodatnuDokumentaciju, 'Da li je korisnik dostavio trazenu dodatnu dokumentaciju?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.korisnikDostavioDodatnuDokumentaciju, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                {{ form_label(my_form.predmetMonitoringa, 'Da li je projekat bio predmet monitoringa?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.predmetMonitoringa, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>Ako jeste:
+                            <div>
+                                {{ form_label(my_form.poslednjiMonitoring, 'Datum poslednjeg monitoringa'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.poslednjiMonitoring) }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.uvazenePrporuke, 'Da li su uvazene preporuke za monitoringa posete?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.uvazenePrporuke, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+
+                        {% endif %}
+
+
+
+
+                        {#<ul class="reporting" data-purpose="create" data-prototype="{{include('/reporting/includes/reporting.html.twig',#}
+                        {#{'form': my_form.reporting.vars.prototype })|e}}">#}
+                        {#</ul>#}
+                    {{ form_end(my_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -14,6 +14,9 @@
                 <div class="controls reporting">
                     <a href="{{ localizedPath('result_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
                     <div class="general-info">
+                        {% for report in projectReporting %}
+                            Report type - <a href="{{ localizedPath('reporting_edit_type_one', {'reportId': report.id, 'projectId': projectId}) }}" > {{ report.reportingType.nameSr }} </a><br/><br/>
+                        {% endfor %}
                         {{ form_start(my_form) }}
                         <div>
                             {{ form_label(my_form.type, 'Tip Reporta'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}

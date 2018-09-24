@@ -269,9 +269,9 @@
                         <td colspan="3"><b>{% trans %}Preporuke na osnovu sprovedene evaluacije{% endtrans %}</b>: {{ reports.pitanje22 ? reports.pitanje22 : 'N/A'}}</td>
                     </tr>
                 </table>
+
+            {% else %}
+                <h2><b>{% trans %}Reporting no added{% endtrans %}</b></h2>
             {% endif %}
-        {% else %}
-            <h2><b>{% trans %}Reporting no added{% endtrans %}</b></h2>
-        {% endif %}
     </div>
 {% endblock %}

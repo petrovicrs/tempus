@@ -34,6 +34,12 @@ class ProjectReporting extends AbstractAuditable
     protected $project;
 
     /**
+     * @ORM\ManyToOne(targetEntity="ReportingType")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $reportingType;
+
+    /**
      * @ORM\OneToMany(targetEntity="Reporting", mappedBy="projectReporting", cascade={"persist"})
      */
     protected $reporting;
@@ -178,6 +184,13 @@ class ProjectReporting extends AbstractAuditable
      * @ORM\Column(name="pitanje_9", type="string", length=255, nullable=true)
      */
     protected $pitanje9;
+
+    /**
+     * @var string $pitanje10
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_10", type="string", length=255, nullable=true)
+     */
+    protected $pitanje10;
 
     /**
      * @var string $pitanje11
@@ -473,7 +486,54 @@ class ProjectReporting extends AbstractAuditable
      */
     protected $potpisanihPosmatranja;
 
+    /**
+     * @var string $pitanje_105_1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_105_1", type="string", length=255, nullable=true)
+     */
+    protected $pitanje_105_1;
 
+    /**
+     * @var string $pitanje_105_1_1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_105_1_1", type="text", nullable=true)
+     */
+    protected $pitanje_105_1_1;
+
+    /**
+     * @var string $pitanje_105_2
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_105_2", type="string", length=255, nullable=true)
+     */
+    protected $pitanje_105_2;
+
+    /**
+     * @var string $pitanje_105_2_1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_105_2_1", type="text", nullable=true)
+     */
+    protected $pitanje_105_2_1;
+
+    /**
+     * @var string $pitanje_105_4
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_105_4", type="string", length=255, nullable=true)
+     */
+    protected $pitanje_105_4;
+
+    /**
+     * @var string $pitanje_105_13
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_105_13", type="string", length=255, nullable=true)
+     */
+    protected $pitanje_105_13;
+
+    /**
+     * @var string $pitanje_105_14
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_105_14", type="string", length=255, nullable=true)
+     */
+    protected $pitanje_105_14;
 
     public function __construct()
     {
@@ -855,6 +915,22 @@ class ProjectReporting extends AbstractAuditable
     public function setPitanje9($pitanje9)
     {
         $this->pitanje9 = $pitanje9;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje10()
+    {
+        return $this->pitanje10;
+    }
+
+    /**
+     * @param mixed $pitanje10
+     */
+    public function setPitanje10($pitanje10)
+    {
+        $this->pitanje9 = $pitanje10;
     }
 
     /**
@@ -1525,6 +1601,134 @@ class ProjectReporting extends AbstractAuditable
     public function setPitanje22($pitanje22)
     {
         $this->pitanje22 = $pitanje22;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReportingType()
+    {
+        return $this->reportingType;
+    }
+
+    /**
+     * @param mixed $reportingType
+     */
+    public function setReportingType($reportingType)
+    {
+        $this->reportingType = $reportingType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje1051()
+    {
+        return $this->pitanje_105_1;
+    }
+
+    /**
+     * @param string $pitanje_105_1
+     */
+    public function setPitanje1051($pitanje_105_1)
+    {
+        $this->pitanje_105_1 = $pitanje_105_1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje10511()
+    {
+        return $this->pitanje_105_1_1;
+    }
+
+    /**
+     * @param mixed $pitanje_105_1_1
+     */
+    public function setPitanje10511($pitanje_105_1_1)
+    {
+        $this->pitanje_105_1_1 = $pitanje_105_1_1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje1052()
+    {
+        return $this->pitanje_105_2;
+    }
+
+    /**
+     * @param mixed $pitanje_105_2
+     */
+    public function setPitanje1052($pitanje_105_2)
+    {
+        $this->pitanje_105_2 = $pitanje_105_2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje10521()
+    {
+        return $this->pitanje_105_2_1;
+    }
+
+    /**
+     * @param mixed $pitanje_105_2_1
+     */
+    public function setPitanje10521($pitanje_105_2_1)
+    {
+        $this->pitanje_105_2_1 = $pitanje_105_2_1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje1054()
+    {
+        return $this->pitanje_105_4;
+    }
+
+    /**
+     * @param mixed $pitanje_105_4
+     */
+    public function setPitanje1054($pitanje_105_4)
+    {
+        $this->pitanje_105_4 = $pitanje_105_4;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPitanje10513(): string
+    {
+        return $this->pitanje_105_13;
+    }
+
+    /**
+     * @param string $pitanje_105_13
+     */
+    public function setPitanje10513(string $pitanje_105_13)
+    {
+        $this->pitanje_105_13 = $pitanje_105_13;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPitanje10514(): string
+    {
+        return $this->pitanje_105_14;
+    }
+
+    /**
+     * @param string $pitanje_105_14
+     */
+    public function setPitanje10514(string $pitanje_105_14)
+    {
+        $this->pitanje_105_14 = $pitanje_105_14;
     }
 
 

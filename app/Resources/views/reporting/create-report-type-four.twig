@@ -14,11 +14,15 @@
                 <div class="controls reporting">
                     <a href="{{ localizedPath('reporting_start', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
                     <div class="general-info">
+                        <h2>{{ projectName }}</h2>
                         {% if (action == 'KA101' or action == 'KA104') %}
                             {{ form_start(my_form) }}
                             <div class="col-xs-12">
                                 <h1>Obrazac za proveru finansijskog dela izvestaja</h1>
                                 <h2>{% trans %}Osnovne informacije{% endtrans %}</h2>
+                            </div>
+                            <div>
+                                {{ form_errors(my_form) }}
                             </div>
                             <div>
                                 {{ form_label(my_form.ulazakIzvestaja, 'Datum ulaska izvestaja u GF'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
@@ -596,6 +600,9 @@
                             {{ form_end(my_form) }}
                         {% elseif (action == 'KA102') %}
                             {{ form_start(my_form) }}
+                                <div>
+                                    {{ form_errors(my_form) }}
+                                </div>
                                 <div class="col-xs-12">
                                     <h1>{% trans %}Obrazac za proveru finansijskog dela izvestaja{% endtrans %}</h1>
                                     <h2>{% trans %}Osnovne informacije{% endtrans %}</h2>
@@ -1158,6 +1165,9 @@
                             {{ form_end(my_form) }}
                         {% elseif (action == 'KA105') %}
                             {{ form_start(my_form) }}
+                                <div>
+                                    {{ form_errors(my_form) }}
+                                </div>
                                 <div class="col-xs-12">
                                     <h1>{% trans %}Obrazac za proveru finansijskog dela izvestaja{% endtrans %}</h1>
                                     <h2>{% trans %}Osnovne informacije{% endtrans %}</h2>

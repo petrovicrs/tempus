@@ -541,9 +541,10 @@ class ProjectReporting extends AbstractAuditable
     protected $ulazakIzvestaja;
 
     /**
-     * @var string $proveruIzvrsio
-     * @Assert\Type("string")
-     * @ORM\Column(name="proveru_izvrsio", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(
+     *      targetEntity="User"
+     * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $proveruIzvrsio;
 

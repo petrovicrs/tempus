@@ -104,14 +104,16 @@ class ReportingController extends AbstractController
     const PITANJE_105_22 = '22. Preporuke na osnovu sprovedene evaluacije:';
 
     /**
-     * @Route("/{locale}/reporting/create-report", name="reporting_start", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/reporting/create-report/{project}", name="reporting_start", requirements={"locale": "%app.locales%", "project": "\d+"})
      * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_PROJECT_CREATE') or is_granted('ROLE_ADMIN')")
      *
      */
-    public function createReportAction(Request $request)
+    public function createReportAction(Request $request, Project $project=null)
     {
-        /** @var Project $project */
-        $project = $this->getLastProjectForCurrentUser();
+        if (!$project) {
+            /** @var Project $project */
+            $project = $this->getLastProjectForCurrentUser();
+        }
 
         /** @var Reporting $reporting */
         $reporting = new Reporting();
@@ -140,19 +142,19 @@ class ReportingController extends AbstractController
             $reportingType = $reporting->getType()->getName($request->getLocale());
 
             if ($reportingType === 'Srednjerocni izvestaj') {
-                return $this->redirectToRoute('reporting_create_type_one', ['active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+                return $this->redirectToRoute('reporting_create_type_one', ['project' => $project->getId(), 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
             if ($reportingType === 'Zavrsni izvestaj') {
-                return $this->redirectToRoute('reporting_create_type_two', ['active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+                return $this->redirectToRoute('reporting_create_type_two', ['project' => $project->getId(), 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
             if ($reportingType === 'Provera dokumentacije na licu mesta') {
-                return $this->redirectToRoute('reporting_create_type_three', ['active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+                return $this->redirectToRoute('reporting_create_type_three', ['project' => $project->getId(), 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
             if ($reportingType === 'Obrazac za proveru finansijskog dela izvestaja') {
-                return $this->redirectToRoute('reporting_create_type_four', ['active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+                return $this->redirectToRoute('reporting_create_type_four', ['project' => $project->getId(), 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
             if ($reportingType === 'Obrazac za prveru formalne prihvatljivosti finalnog izvestaja') {
-                return $this->redirectToRoute('reporting_create_type_five', ['active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+                return $this->redirectToRoute('reporting_create_type_five', ['project' => $project->getId(), 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
         }
 
@@ -162,37 +164,38 @@ class ReportingController extends AbstractController
             'isCompleted' => $isCompleted,
             'actionTab' => $this->showActionTab($project),
             'projectId' => $project->getId(),
-            'projectReporting' => $projectReporting
+            'projectReporting' => $projectReporting,
+            'projectName' => $project->getNameEn()
         ];
 
         return $this->render('reporting/create-report.twig', $data);
     }
 
     /**
-     * @Route("/{locale}/reporting/create-report-type-one", name="reporting_create_type_one", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/reporting/create-report-type-one/{project}", name="reporting_create_type_one", requirements={"locale": "%app.locales%", "project": "\d+"})
      */
-    public function createReportTypeOneAction(Request $request)
+    public function createReportTypeOneAction(Request $request, Project $project = null)
     {
         $projectReporting = new ProjectReporting();
 
-        /** @var Project $project */
-        $project = $this->getLastProjectForCurrentUser();
+        if (!$project) {
+            /** @var Project $project */
+            $project = $this->getLastProjectForCurrentUser();
+        }
 
         if ($project->getActions()->getNameSr() === 'KA105') {
             $projectReportingForm = $this->createForm(ProjectReportingStepOne105Form::class, $projectReporting, [
-                'action' => $this->generateUrl('reporting_create_type_one'),
+                'action' => $this->generateUrl('reporting_create_type_one', ['project' => $project->getId()]),
                 'method' => 'POST',
                 'locale' => $request->getLocale()
             ]);
         } else {
             $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
-                'action' => $this->generateUrl('reporting_create_type_one'),
+                'action' => $this->generateUrl('reporting_create_type_one', ['project' => $project->getId()]),
                 'method' => 'POST',
                 'locale' => $request->getLocale()
             ]);
         }
-
-        $keyAction = $project->getKeyActions()->getNameSr();
 
         $projectReportingForm->handleRequest($request);
 
@@ -208,11 +211,7 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if ($keyAction === 'ka1') {
-                return $this->redirectToRoute('attachments_create');
-            }
-
-            return $this->redirectToRoute('equipment_create');
+            return $this->redirectToRoute('reporting_start', ['project' => $project->getId()]);
         }
 
         return $this->render(
@@ -223,36 +222,37 @@ class ReportingController extends AbstractController
                 'projectId' => $project->getId(),
                 'actionTab' => $this->showActionTab($project),
                 'isCompleted' => $project->getIsCompleted(),
-                'action' => $project->getActions()->getNameSr()
+                'action' => $project->getActions()->getNameSr(),
+                'projectName' => $project->getNameEn()
             ]
         );
     }
 
     /**
-     * @Route("/{locale}/reporting/create-report-type-two", name="reporting_create_type_two", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/reporting/create-report-type-two/{project}", name="reporting_create_type_two", requirements={"locale": "%app.locales%", "project": "\d+"})
      */
-    public function createReportTypeTwoAction(Request $request)
+    public function createReportTypeTwoAction(Request $request, Project $project = null)
     {
         $projectReporting = new ProjectReporting();
 
-        /** @var Project $project */
-        $project = $this->getLastProjectForCurrentUser();
+        if (!$project) {
+            /** @var Project $project */
+            $project = $this->getLastProjectForCurrentUser();
+        }
 
         if ($project->getActions()->getNameSr() === 'KA105') {
             $projectReportingForm = $this->createForm(ProjectReportingStepOne105Form::class, $projectReporting, [
-                'action' => $this->generateUrl('reporting_create_type_two'),
+                'action' => $this->generateUrl('reporting_create_type_two', ['project' => $project->getId()]),
                 'method' => 'POST',
                 'locale' => $request->getLocale()
             ]);
         } else {
             $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
-                'action' => $this->generateUrl('reporting_create_type_two'),
+                'action' => $this->generateUrl('reporting_create_type_two', ['project' => $project->getId()]),
                 'method' => 'POST',
                 'locale' => $request->getLocale()
             ]);
         }
-
-        $keyAction = $project->getKeyActions()->getNameSr();
 
         $projectReportingForm->handleRequest($request);
 
@@ -268,12 +268,7 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if ($keyAction === 'ka1') {
-                return $this->redirectToRoute('attachments_create');
-            }
-
-            return $this->redirectToRoute('equipment_create');
-
+            return $this->redirectToRoute('reporting_start', ['project' => $project->getId()]);
         }
 
         return $this->render(
@@ -284,44 +279,45 @@ class ReportingController extends AbstractController
                 'projectId' => $project->getId(),
                 'actionTab' => $this->showActionTab($project),
                 'isCompleted' => $project->getIsCompleted(),
-                'action' => $project->getActions()->getNameSr()
+                'action' => $project->getActions()->getNameSr(),
+                'projectName' => $project->getNameEn()
             ]
         );
     }
 
     /**
-     * @Route("/{locale}/reporting/create-report-type-three", name="reporting_create_type_three", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/reporting/create-report-type-three/{project}", name="reporting_create_type_three", requirements={"locale": "%app.locales%", "project": "\d+"})
      */
-    public function createReportTypeThreeAction(Request $request)
+    public function createReportTypeThreeAction(Request $request, Project $project = null)
     {
         $projectReporting = new ProjectReporting();
 
-        /** @var Project $project */
-        $project = $this->getLastProjectForCurrentUser();
+        if (!$project) {
+            /** @var Project $project */
+            $project = $this->getLastProjectForCurrentUser();
+        }
 
         $projectAction = $project->getActions()->getNameSr();
 
         if ($projectAction === 'KA101' || $projectAction === 'KA104') {
             $projectReportingForm = $this->createForm(ProjectReportingStepThree101Form::class, $projectReporting, [
-                'action' => $this->generateUrl('reporting_create_type_three'),
+                'action' => $this->generateUrl('reporting_create_type_three', ['project' => $project->getId()]),
                 'method' => 'POST',
                 'locale' => $request->getLocale()
             ]);
         } elseif ($projectAction === 'KA102') {
             $projectReportingForm = $this->createForm(ProjectReportingStepThree102Form::class, $projectReporting, [
-                'action' => $this->generateUrl('reporting_create_type_three'),
+                'action' => $this->generateUrl('reporting_create_type_three', ['project' => $project->getId()]),
                 'method' => 'POST',
                 'locale' => $request->getLocale()
             ]);
         } elseif ($projectAction === 'KA105') {
             $projectReportingForm = $this->createForm(ProjectReportingStepThree105Form::class, $projectReporting, [
-                'action' => $this->generateUrl('reporting_create_type_three'),
+                'action' => $this->generateUrl('reporting_create_type_three', ['project' => $project->getId()]),
                 'method' => 'POST',
                 'locale' => $request->getLocale()
             ]);
         }
-
-        $keyAction = $project->getKeyActions()->getNameSr();
 
         $projectReportingForm->handleRequest($request);
 
@@ -337,14 +333,11 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if ($keyAction === 'ka1') {
-                return $this->redirectToRoute('attachments_create');
-            }
-
-            return $this->redirectToRoute('equipment_create');
-
+            return $this->redirectToRoute('reporting_start', ['project' => $project->getId()]);
         }
-
+//        if (!$projectReportingForm->isValid()) {
+//            var_dump($this->getErrorMessages($projectReportingForm));die;
+//        }
         return $this->render(
             'reporting/create-report-type-three.twig',
             [
@@ -353,44 +346,45 @@ class ReportingController extends AbstractController
                 'projectId' => $project->getId(),
                 'actionTab' => $this->showActionTab($project),
                 'isCompleted' => $project->getIsCompleted(),
-                'action' => $project->getActions()->getNameSr()
+                'action' => $project->getActions()->getNameSr(),
+                'projectName' => $project->getNameEn()
             ]
         );
     }
 
     /**
-     * @Route("/{locale}/reporting/create-report-type-four", name="reporting_create_type_four", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/reporting/create-report-type-four/{project}", name="reporting_create_type_four", requirements={"locale": "%app.locales%", "project": "\d+"})
      */
-    public function createReportTypeFourAction(Request $request)
+    public function createReportTypeFourAction(Request $request, Project $project = null)
     {
         $projectReporting = new ProjectReporting();
 
-        /** @var Project $project */
-        $project = $this->getLastProjectForCurrentUser();
+        if (!$project) {
+            /** @var Project $project */
+            $project = $this->getLastProjectForCurrentUser();
+        }
 
         $projectAction = $project->getActions()->getNameSr();
 
         if ($projectAction === 'KA101' || $projectAction === 'KA104') {
             $projectReportingForm = $this->createForm(ProjectReportingStepThree101Form::class, $projectReporting, [
-                'action' => $this->generateUrl('reporting_create_type_three'),
+                'action' => $this->generateUrl('reporting_create_type_four', ['project' => $project->getId()]),
                 'method' => 'POST',
                 'locale' => $request->getLocale()
             ]);
         } elseif ($projectAction === 'KA102') {
             $projectReportingForm = $this->createForm(ProjectReportingStepThree102Form::class, $projectReporting, [
-                'action' => $this->generateUrl('reporting_create_type_three'),
+                'action' => $this->generateUrl('reporting_create_type_four', ['project' => $project->getId()]),
                 'method' => 'POST',
                 'locale' => $request->getLocale()
             ]);
         } elseif ($projectAction === 'KA105') {
             $projectReportingForm = $this->createForm(ProjectReportingStepThree105Form::class, $projectReporting, [
-                'action' => $this->generateUrl('reporting_create_type_three'),
+                'action' => $this->generateUrl('reporting_create_type_four', ['project' => $project->getId()]),
                 'method' => 'POST',
                 'locale' => $request->getLocale()
             ]);
         }
-
-        $keyAction = $project->getKeyActions()->getNameSr();
 
         $projectReportingForm->handleRequest($request);
 
@@ -406,11 +400,7 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if ($keyAction == 'ka1') {
-                return $this->redirectToRoute('attachments_create');
-            } else {
-                return $this->redirectToRoute('equipment_create');
-            }
+            return $this->redirectToRoute('reporting_start', ['project' => $project->getId()]);
         }
 
         return $this->render(
@@ -421,28 +411,29 @@ class ReportingController extends AbstractController
                 'projectId' => $project->getId(),
                 'actionTab' => $this->showActionTab($project),
                 'isCompleted' => $project->getIsCompleted(),
-                'action' => $project->getActions()->getNameSr()
+                'action' => $project->getActions()->getNameSr(),
+                'projectName' => $project->getNameEn()
             ]
         );
     }
 
     /**
-     * @Route("/{locale}/reporting/create-report-type-five", name="reporting_create_type_five", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/reporting/create-report-type-five/{project}", name="reporting_create_type_five", requirements={"locale": "%app.locales%", "project": "\d+"})
      */
-    public function createReportTypeFiveAction(Request $request)
+    public function createReportTypeFiveAction(Request $request, Project $project = null)
     {
         $projectReporting = new ProjectReporting();
 
-        /** @var Project $project */
-        $project = $this->getLastProjectForCurrentUser();
+        if (!$project) {
+            /** @var Project $project */
+            $project = $this->getLastProjectForCurrentUser();
+        }
 
         $projectReportingForm = $this->createForm(ProjectReportingStepFiveForm::class, $projectReporting, [
-            'action' => $this->generateUrl('reporting_create_type_five'),
+            'action' => $this->generateUrl('reporting_create_type_five', ['project' => $project->getId()]),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
-
-        $keyAction = $project->getKeyActions()->getNameSr();
 
         $projectReportingForm->handleRequest($request);
 
@@ -458,11 +449,7 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if ($keyAction == 'ka1') {
-                return $this->redirectToRoute('attachments_create');
-            } else {
-                return $this->redirectToRoute('equipment_create');
-            }
+            return $this->redirectToRoute('reporting_start', ['project' => $project->getId()]);
         }
 
         return $this->render(
@@ -473,7 +460,8 @@ class ReportingController extends AbstractController
                 'projectId' => $project->getId(),
                 'actionTab' => $this->showActionTab($project),
                 'isCompleted' => $project->getIsCompleted(),
-                'action' => $project->getActions()->getNameSr()
+                'action' => $project->getActions()->getNameSr(),
+                'projectName' => $project->getNameEn()
             ]
         );
     }
@@ -511,19 +499,19 @@ class ReportingController extends AbstractController
             $reportingType = $reporting->getType()->getName($request->getLocale());
 
             if ($reportingType === 'Srednjerocni izvestaj') {
-                return $this->redirectToRoute('reporting_edit_type_one', ['projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+                return $this->redirectToRoute('reporting_edit_type_one', ['reportId' => $reporting->getId(), 'projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
             if ($reportingType === 'Zavrsni izvestaj') {
-                return $this->redirectToRoute('reporting_edit_type_two', ['projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+                return $this->redirectToRoute('reporting_edit_type_two', ['reportId' => $reporting->getId(), 'projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
             if ($reportingType === 'Provera dokumentacije na licu mesta') {
-                return $this->redirectToRoute('reporting_edit_type_three', ['projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+                return $this->redirectToRoute('reporting_edit_type_three', ['reportId' => $reporting->getId(), 'projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
             if ($reportingType === 'Obrazac za proveru finansijskog dela izvestaja') {
-                return $this->redirectToRoute('reporting_edit_type_four', ['projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+                return $this->redirectToRoute('reporting_edit_type_four', ['reportId' => $reporting->getId(), 'projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
             if ($reportingType === 'Obrazac za prveru formalne prihvatljivosti finalnog izvestaja') {
-                return $this->redirectToRoute('reporting_edit_type_five', ['projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+                return $this->redirectToRoute('reporting_edit_type_five', ['reportId' => $reporting->getId(), 'projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
         }
 
@@ -533,7 +521,8 @@ class ReportingController extends AbstractController
             'isCompleted' => $isCompleted,
             'actionTab' => $this->showActionTab($project),
             'projectId' => $project->getId(),
-            'projectReporting' => $projectReporting ?: null
+            'projectReporting' => $projectReporting ?: null,
+            'projectName' => $project->getNameEn()
         ];
 
         return $this->render('reporting/edit-report.twig', $data);
@@ -590,8 +579,6 @@ class ReportingController extends AbstractController
             }
         }
 
-        $keyAction = $project->getKeyActions()->getNameSr();
-
         $projectReportingForm->handleRequest($request);
 
         if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
@@ -606,14 +593,7 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if (!$project->getIsCompleted()) {
-                if ($keyAction === 'ka1') {
-                    return $this->redirectToRoute('attachments_create');
-                }
-
-                return $this->redirectToRoute('equipment_create');
-
-            }
+            return $this->redirectToRoute('reporting_edit', ['projectId' => $project->getId()]);
         }
 
         return $this->render('reporting/edit.twig', [
@@ -622,7 +602,8 @@ class ReportingController extends AbstractController
             'projectId' => $project->getId(),
             'isCompleted' => $project->getIsCompleted(),
             'actionTab' => $this->showActionTab($project),
-            'action' => $project->getActions()->getNameSr()
+            'action' => $project->getActions()->getNameSr(),
+            'projectName' => $project->getNameEn()
         ]);
     }
 
@@ -677,8 +658,6 @@ class ReportingController extends AbstractController
             }
         }
 
-        $keyAction = $project->getKeyActions()->getNameSr();
-
         $projectReportingForm->handleRequest($request);
 
         if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
@@ -693,14 +672,7 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if (!$project->getIsCompleted()) {
-                if ($keyAction === 'ka1') {
-                    return $this->redirectToRoute('attachments_create');
-                }
-
-                return $this->redirectToRoute('equipment_create');
-
-            }
+            return $this->redirectToRoute('reporting_edit', ['projectId' => $project->getId()]);
         }
 
         return $this->render('reporting/edit-report-type-two.twig', [
@@ -709,7 +681,8 @@ class ReportingController extends AbstractController
             'projectId' => $project->getId(),
             'isCompleted' => $project->getIsCompleted(),
             'actionTab' => $this->showActionTab($project),
-            'action' => $project->getActions()->getNameSr()
+            'action' => $project->getActions()->getNameSr(),
+            'projectName' => $project->getNameEn()
         ]);
     }
 
@@ -773,8 +746,6 @@ class ReportingController extends AbstractController
             }
         }
 
-        $keyAction = $project->getKeyActions()->getNameSr();
-
         $projectReportingForm->handleRequest($request);
 
         if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
@@ -789,7 +760,7 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            return $this->redirectToRoute('reporting_edit');
+            return $this->redirectToRoute('reporting_edit', ['projectId' => $project->getId()]);
         }
 
         return $this->render('reporting/edit-report-type-three.twig', [
@@ -799,6 +770,7 @@ class ReportingController extends AbstractController
             'isCompleted' => $project->getIsCompleted(),
             'actionTab' => $this->showActionTab($project),
             'action' => $project->getActions()->getNameSr(),
+            'projectName' => $project->getNameEn()
         ]);
     }
 
@@ -862,8 +834,6 @@ class ReportingController extends AbstractController
             }
         }
 
-        $keyAction = $project->getKeyActions()->getNameSr();
-
         $projectReportingForm->handleRequest($request);
 
         if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
@@ -878,14 +848,7 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if (!$project->getIsCompleted()) {
-                if ($keyAction === 'ka1') {
-                    return $this->redirectToRoute('attachments_create');
-                }
-
-                return $this->redirectToRoute('equipment_create');
-
-            }
+            return $this->redirectToRoute('reporting_edit', ['projectId' => $project->getId()]);
         }
 
         return $this->render('reporting/edit-report-type-four.twig', [
@@ -895,6 +858,7 @@ class ReportingController extends AbstractController
             'isCompleted' => $project->getIsCompleted(),
             'actionTab' => $this->showActionTab($project),
             'action' => $project->getActions()->getNameSr(),
+            'projectName' => $project->getNameEn()
         ]);
     }
 
@@ -929,8 +893,6 @@ class ReportingController extends AbstractController
 
         }
 
-        $keyAction = $project->getKeyActions()->getNameSr();
-
         $projectReportingForm->handleRequest($request);
 
         if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
@@ -945,14 +907,7 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if (!$project->getIsCompleted()) {
-                if ($keyAction === 'ka1') {
-                    return $this->redirectToRoute('attachments_create');
-                }
-
-                return $this->redirectToRoute('equipment_create');
-
-            }
+            return $this->redirectToRoute('reporting_edit', ['projectId' => $project->getId()]);
         }
 
         return $this->render('reporting/edit-report-type-five.twig', [
@@ -962,6 +917,7 @@ class ReportingController extends AbstractController
             'isCompleted' => $project->getIsCompleted(),
             'actionTab' => $this->showActionTab($project),
             'action' => $project->getActions()->getNameSr(),
+            'projectName' => $project->getNameEn()
         ]);
     }
 
@@ -986,6 +942,26 @@ class ReportingController extends AbstractController
                 'action' => $project->getActions()->getNameSr()
             ]
         );
+    }
+
+    private function getErrorMessages(\Symfony\Component\Form\Form $form) {
+        $errors = array();
+
+        foreach ($form->getErrors() as $key => $error) {
+            if ($form->isRoot()) {
+                $errors['#'][] = $error->getMessage();
+            } else {
+                $errors[] = $error->getMessage();
+            }
+        }
+
+        foreach ($form->all() as $child) {
+            if (!$child->isValid()) {
+                $errors[$child->getName()] = $this->getErrorMessages($child);
+            }
+        }
+
+        return $errors;
     }
 
     private function getProjectReportingRepository()

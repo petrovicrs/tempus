@@ -14,6 +14,7 @@
                 <div class="controls reporting">
                     <a href="{{ localizedPath('reporting_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
                     <div class="general-info">
+                        <h2>{{ projectName }}</h2>
                         {% if (action == 'KA101' or action == 'KA104' or action == 'KA102') %}
                             {{ form_start(my_form) }}
                                 <div class="col-xs-12">

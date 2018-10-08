@@ -57,7 +57,7 @@ class ResultsController extends AbstractController
             $projectResults->setProject($project);
             $this->getProjectResultsRepository()->save($projectResults);
 
-            return $this->redirectToRoute('reporting_start');
+            return $this->redirectToRoute('reporting_start', ['project' => $project->getId()]);
         }
 
         return $this->render('results/create.twig', ['my_form' => $projectResultsForm->createView(),

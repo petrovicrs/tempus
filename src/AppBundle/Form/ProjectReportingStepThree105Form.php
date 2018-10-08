@@ -302,7 +302,8 @@ class ProjectReportingStepThree105Form extends AbstractType
                 ->add('odobrenihUgovorom1', TextType::class, array('required' => false))
                 ->add('odobrenihUgovorom2', TextType::class, array('required' => false))
                 ->add('odobrenihUgovorom3', TextType::class, array('required' => false))
-                ->add('odobrenihUgovorom4', TextType::class, array('required' => false))
+                ->add('odobrenihUgovorom4', TextType::class, array('required' => false));
+            $builder
                 ->add('odobrenihUgovorom5', TextType::class, array('required' => false))
                 ->add('odobrenihUgovorom6', TextType::class, array('required' => false))
                 ->add('zatrazenihZavrsimIzvescem1', TextType::class, array('required' => false))
@@ -327,7 +328,8 @@ class ProjectReportingStepThree105Form extends AbstractType
                 ->add('finansijskaKorelacija2', TextType::class, array('required' => false))
                 ->add('finansijskaKorelacija3', TextType::class, array('required' => false))
                 ->add('finansijskaKorelacija4', TextType::class, array('required' => false))
-                ->add('finansijskaKorelacija5', TextType::class, array('required' => false))
+                ->add('finansijskaKorelacija5', TextType::class, array('required' => false));
+            $builder
                 ->add('finansijskaKorelacija6', TextType::class, array('required' => false))
                 ->add('ukupnoDoSadaUpalceno', TextType::class, array('required' => false))
                 ->add('preostaloZaIsplatu', TextType::class, array('required' => false))

@@ -12,6 +12,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="controls reporting">
+                    <h2>{{ projectName }}</h2>
                     <a href="{{ localizedPath('result_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
                     <div class="general-info">
                         {% for report in projectReporting %}

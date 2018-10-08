@@ -704,19 +704,19 @@ class ReportingController extends AbstractController
 
             if ($projectAction === 'KA101' || $projectAction === 'KA104') {
                 $projectReportingForm = $this->createForm(ProjectReportingStepThree101Form::class, $projectReporting, [
-                    'action' => $this->generateUrl('reporting_edit_type_three', ['projectId' => $projectId]),
+                    'action' => $this->generateUrl('reporting_edit_type_three', ['reportId' => $reportId, 'projectId' => $projectId]),
                     'method' => 'POST',
                     'locale' => $request->getLocale(),
                 ]);
             } elseif ($projectAction === 'KA102') {
                 $projectReportingForm = $this->createForm(ProjectReportingStepThree102Form::class, $projectReporting, [
-                    'action' => $this->generateUrl('reporting_edit_type_three', ['projectId' => $projectId]),
+                    'action' => $this->generateUrl('reporting_edit_type_three', ['reportId' => $reportId, 'projectId' => $projectId]),
                     'method' => 'POST',
                     'locale' => $request->getLocale()
                 ]);
             } elseif ($projectAction === 'KA105') {
                 $projectReportingForm = $this->createForm(ProjectReportingStepThree105Form::class, $projectReporting, [
-                    'action' => $this->generateUrl('reporting_edit_type_three', ['projectId' => $projectId]),
+                    'action' => $this->generateUrl('reporting_edit_type_three', ['reportId' => $reportId, 'projectId' => $projectId]),
                     'method' => 'POST',
                     'locale' => $request->getLocale()
                 ]);
@@ -792,19 +792,19 @@ class ReportingController extends AbstractController
 
             if ($projectAction === 'KA101' || $projectAction === 'KA104') {
                 $projectReportingForm = $this->createForm(ProjectReportingStepThree101Form::class, $projectReporting, [
-                    'action' => $this->generateUrl('reporting_edit_type_four', ['projectId' => $projectId]),
+                    'action' => $this->generateUrl('reporting_edit_type_four', ['reportId' => $reportId, 'projectId' => $projectId]),
                     'method' => 'POST',
                     'locale' => $request->getLocale(),
                 ]);
             } elseif ($projectAction === 'KA102') {
                 $projectReportingForm = $this->createForm(ProjectReportingStepThree102Form::class, $projectReporting, [
-                    'action' => $this->generateUrl('reporting_edit_type_four', ['projectId' => $projectId]),
+                    'action' => $this->generateUrl('reporting_edit_type_four', ['reportId' => $reportId, 'projectId' => $projectId]),
                     'method' => 'POST',
                     'locale' => $request->getLocale()
                 ]);
             } elseif ($projectAction === 'KA105') {
                 $projectReportingForm = $this->createForm(ProjectReportingStepThree105Form::class, $projectReporting, [
-                    'action' => $this->generateUrl('reporting_edit_type_four', ['projectId' => $projectId]),
+                    'action' => $this->generateUrl('reporting_edit_type_four', ['reportId' => $reportId, 'projectId' => $projectId]),
                     'method' => 'POST',
                     'locale' => $request->getLocale()
                 ]);
@@ -877,7 +877,7 @@ class ReportingController extends AbstractController
                 ['id' => $reportId]
             );
             $projectReportingForm = $this->createForm(ProjectReportingStepFiveForm::class, $projectReporting, [
-                'action' => $this->generateUrl('reporting_edit_type_five', ['projectId' => $projectId]),
+                'action' => $this->generateUrl('reporting_edit_type_five', ['reportId' => $reportId, 'projectId' => $projectId]),
                 'method' => 'POST',
                 'locale' => $request->getLocale(),
             ]);

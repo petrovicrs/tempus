@@ -3,21 +3,21 @@
 {% block body %}
     <script type="text/javascript" src="{{ asset('/js/reporting.js')}}"></script>
     <section id="main">
-    {% if keyAction == 'ka1' %}
-        {% include 'sub-navbar.html.twig' with {'active': 'reporting', 'actionTab': actionTab, 'isCompleted': isCompleted} %}
-    {% endif %}
-    {%  if keyAction == 'ka2' %}
-        {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting'} %}
-    {% endif %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="controls reporting">
-                <a href="{{ localizedPath('reporting_start', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
-                <div class="general-info">
+        {% if keyAction == 'ka1' %}
+            {% include 'sub-navbar.html.twig' with {'active': 'reporting', 'actionTab': actionTab, 'isCompleted': isCompleted} %}
+        {% endif %}
+        {%  if keyAction == 'ka2' %}
+            {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting'} %}
+        {% endif %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="controls reporting">
+                    <a href="{{ localizedPath('reporting_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
+                    <div class="general-info">
                         {% if (action == 'KA101' or action == 'KA104' or action == 'KA102') %}
                             {{ form_start(my_form) }}
                                 <div class="col-xs-12">
-                                    <h2>{% trans %}Srednjerocni izvestaj{% endtrans %}</h2>
+                                    <h2>{% trans %}Zavrsni izvestaj{% endtrans %}</h2>
                                     <h2>{% trans %}Osnovne informacije{% endtrans %}</h2>
                                 </div>
                                 <div>
@@ -860,27 +860,26 @@
                                         <div class="form-inline">
                                             {{ form_widget(my_form.pitanje20, {'attr': {'class': 'form-control'}})  }}
                                         </div>
-                                    </div><br/>
+                                    </div><br/><br/>
                                     <div class="col-xs-12">
                                         <h3><b>{% trans %}Zakljukci i preporuke za korisnike {% endtrans %}</b></h3>
-                                    </div><br/>
+                                    </div><br/><br/>
                                     <div>
                                         {{ form_label(my_form.pitanje21, constant('AppBundle\\Controller\\ReportingController::PITANJE_105_21')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                                         <div class="form-inline">
                                             {{ form_widget(my_form.pitanje21, {'attr': {'class': 'form-control'}})  }}
                                         </div>
-                                    </div><br/>
+                                    </div><br/><br/>
                                     <div>
                                         {{ form_label(my_form.pitanje22, constant('AppBundle\\Controller\\ReportingController::PITANJE_105_22')|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
                                         <div class="form-inline">
                                             {{ form_widget(my_form.pitanje22, {'attr': {'class': 'form-control'}})  }}
                                         </div>
-                                    </div><br/>
-                                </div>
+                                    </div><br/><br/>
                             {{ form_end(my_form) }}
                         {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 {% endblock %}

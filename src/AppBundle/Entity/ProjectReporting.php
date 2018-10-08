@@ -535,6 +535,730 @@ class ProjectReporting extends AbstractAuditable
      */
     protected $pitanje_105_14;
 
+    /**
+     * @ORM\Column(name="ulazak_izvestaja", type="date", nullable=true)
+     */
+    protected $ulazakIzvestaja;
+
+    /**
+     * @var string $proveruIzvrsio
+     * @Assert\Type("string")
+     * @ORM\Column(name="proveru_izvrsio", type="string", length=255, nullable=true)
+     */
+    protected $proveruIzvrsio;
+
+    /**
+     * @var string $potpunaFinansijskaDokumentacija
+     * @Assert\Type("string")
+     * @ORM\Column(name="potpuna_finansijska_dokumentacija", type="string", length=255, nullable=true)
+     */
+    protected $potpunaFinansijskaDokumentacija;
+
+    /**
+     * @ORM\Column(name="datum_posete", type="date", nullable=true)
+     */
+    protected $datumPosete;
+
+    /**
+     * @ORM\ManyToOne(
+     *      targetEntity="User"
+     * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $dokumentPregledao;
+
+    /**
+     * @var string $potpunaDodatnaDokumentacija
+     * @Assert\Type("string")
+     * @ORM\Column(name="potpuna_dodatna_dokumentacija", type="string", length=255, nullable=true)
+     */
+    protected $potpunaDodatnaDokumentacija;
+
+    /**
+     * @var string $razlogNepotpuneDokumentacije
+     * @Assert\Type("string")
+     * @ORM\Column(name="razlog_nepotpune_dokumentacije", type="text", nullable=true)
+     */
+    protected $razlogNepotpuneDokumentacije;
+
+    /**
+     * @ORM\Column(name="datum_trazenja_dodatne_dokumentacije", type="date", nullable=true)
+     */
+    protected $datumTrazenjaDodatneDokumentacije;
+
+    /**
+     * @ORM\Column(name="datum_dostavljanja_dodatne_dokumentacije", type="date", nullable=true)
+     */
+    protected $datumDostavljanjaDodatneDokumentacije;
+
+    /**
+     * @var string $apsorbovatiAlociranBudzet
+     * @Assert\Type("string")
+     * @ORM\Column(name="apsorbovati_alociran_budzet", type="string", length=255, nullable=true)
+     */
+    protected $apsorbovatiAlociranBudzet;
+
+    /**
+     * @ORM\Column(name="datum_Zavrsetka_obrade", type="date", nullable=true)
+     */
+    protected $datumZavrsetkaObrade;
+
+    /**
+     * @var string $pitanje1pp1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_1_pp_1", type="string", length=20, nullable=true)
+     */
+    protected $pitanje1pp1;
+
+    /**
+     * @var string $pitanje3pp1pp1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_3_pp_1_pp_1", type="string", length=20, nullable=true)
+     */
+    protected $pitanje3pp1pp1;
+
+    /**
+     * @var string $pitanje3pp1pp2
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_3_pp_1_pp_2", type="string", length=20, nullable=true)
+     */
+    protected $pitanje3pp1pp2;
+
+    /**
+     * @var string $pitanje4pp1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_4_pp_1", type="string", length=20, nullable=true)
+     */
+    protected $pitanje4pp1;
+
+    /**
+     * @var string $pitanje5pp1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_5_pp_1", type="string", length=20, nullable=true)
+     */
+    protected $pitanje5pp1;
+
+    /**
+     * @var string $pitanje6pp1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_6_pp_1", type="string", length=20, nullable=true)
+     */
+    protected $pitanje6pp1;
+
+    /**
+     * @var string $pitanje7pp1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_7_pp_1", type="string", length=20, nullable=true)
+     */
+    protected $pitanje7pp1;
+
+    /**
+     * @var string $pitanje7pp2
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_7_pp_2", type="string", length=20, nullable=true)
+     */
+    protected $pitanje7pp2;
+
+    /**
+     * @var string $pitanje7pp3
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_7_pp_3", type="string", length=20, nullable=true)
+     */
+    protected $pitanje7pp3;
+
+    /**
+     * @var string $pitanje8pp1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_8_pp_1", type="string", length=20, nullable=true)
+     */
+    protected $pitanje8pp1;
+
+    /**
+     * @var string $pitanje8pp2
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_8_pp_2", type="string", length=20, nullable=true)
+     */
+    protected $pitanje8pp2;
+
+    /**
+     * @var string $pitanje8pp3
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_8_pp_3", type="string", length=20, nullable=true)
+     */
+    protected $pitanje8pp3;
+
+    /**
+     * @var string $pitanje8pp4
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_8_pp_4", type="string", length=20, nullable=true)
+     */
+    protected $pitanje8pp4;
+
+    /**
+     * @var string $pitanje8pp5
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_8_pp_5", type="string", length=20, nullable=true)
+     */
+    protected $pitanje8pp5;
+
+    /**
+     * @var string $pitanje8pp6
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_8_pp_6", type="string", length=20, nullable=true)
+     */
+    protected $pitanje8pp6;
+
+    /**
+     * @var string $pitanje8pp7
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_8_pp_7", type="string", length=20, nullable=true)
+     */
+    protected $pitanje8pp7;
+
+    /**
+     * @var string $pitanje9pp1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_9_pp_1", type="string", length=20, nullable=true)
+     */
+    protected $pitanje9pp1;
+
+    /**
+     * @var string $pitanje9pp2
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_9_pp_2", type="string", length=20, nullable=true)
+     */
+    protected $pitanje9pp2;
+
+    /**
+     * @var string $pitanje9pp3
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_9_pp_3", type="string", length=20, nullable=true)
+     */
+    protected $pitanje9pp3;
+
+    /**
+     * @var string $pitanje10pp1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_10_pp_1", type="string", length=20, nullable=true)
+     */
+    protected $pitanje10pp1;
+
+    /**
+     * @var string $pitanje10pp2pp1
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_10_pp_2_pp_1", type="string", length=20, nullable=true)
+     */
+    protected $pitanje10pp2pp1;
+
+    /**
+     * @var string $pitanje10pp2pp2
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_10_pp_2_pp_2", type="string", length=20, nullable=true)
+     */
+    protected $pitanje10pp2pp2;
+
+    /**
+     * @var string $pitanje10pp3
+     * @Assert\Type("string")
+     * @ORM\Column(name="pitanje_10_pp_3", type="string", length=20, nullable=true)
+     */
+    protected $pitanje10pp3;
+
+    /**
+     * @var string $odobrenoUgovorom1
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_ugovorom_1", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoUgovorom1;
+
+    /**
+     * @var string $odobrenoUgovorom2
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_ugovorom_2", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoUgovorom2;
+
+    /**
+     * @var string $odobrenoUgovorom3
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_ugovorom_3", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoUgovorom3;
+
+    /**
+     * @var string $odobrenoUgovorom4
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_ugovorom_4", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoUgovorom4;
+
+    /**
+     * @var string $odobrenoUgovorom5
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_ugovorom_5", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoUgovorom5;
+
+    /**
+     * @var string $odobrenoUgovorom6
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_ugovorom_6", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoUgovorom6;
+
+    /**
+     * @var string $nakonRealokacija1
+     * @Assert\Type("string")
+     * @ORM\Column(name="nakon_realokacija_1", type="string", length=20, nullable=true)
+     */
+    protected $nakonRealokacija1;
+
+    /**
+     * @var string $nakonRealokacija2
+     * @Assert\Type("string")
+     * @ORM\Column(name="nakon_realokacija_2", type="string", length=20, nullable=true)
+     */
+    protected $nakonRealokacija2;
+
+    /**
+     * @var string $nakonRealokacija3
+     * @Assert\Type("string")
+     * @ORM\Column(name="nakon_realokacija_3", type="string", length=20, nullable=true)
+     */
+    protected $nakonRealokacija3;
+
+    /**
+     * @var string $nakonRealokacija4
+     * @Assert\Type("string")
+     * @ORM\Column(name="nakon_realokacija_4", type="string", length=20, nullable=true)
+     */
+    protected $nakonRealokacija4;
+
+    /**
+     * @var string $nakonRealokacija5
+     * @Assert\Type("string")
+     * @ORM\Column(name="nakon_realokacija_5", type="string", length=20, nullable=true)
+     */
+    protected $nakonRealokacija5;
+
+    /**
+     * @var string $nakonRealokacija6
+     * @Assert\Type("string")
+     * @ORM\Column(name="nakon_realokacija_6", type="string", length=20, nullable=true)
+     */
+    protected $nakonRealokacija6;
+
+    /**
+     * @var string $zavrsnomIzvestaju1
+     * @Assert\Type("string")
+     * @ORM\Column(name="zavrsnom_izvestaju_1", type="string", length=20, nullable=true)
+     */
+    protected $zavrsnomIzvestaju1;
+
+    /**
+     * @var string $zavrsnomIzvestaju2
+     * @Assert\Type("string")
+     * @ORM\Column(name="zavrsnom_izvestaju_2", type="string", length=20, nullable=true)
+     */
+    protected $zavrsnomIzvestaju2;
+
+    /**
+     * @var string $zavrsnomIzvestaju3
+     * @Assert\Type("string")
+     * @ORM\Column(name="zavrsnom_izvestaju_3", type="string", length=20, nullable=true)
+     */
+    protected $zavrsnomIzvestaju3;
+
+    /**
+     * @var string $zavrsnomIzvestaju4
+     * @Assert\Type("string")
+     * @ORM\Column(name="zavrsnom_izvestaju_4", type="string", length=20, nullable=true)
+     */
+    protected $zavrsnomIzvestaju4;
+
+    /**
+     * @var string $zavrsnomIzvestaju5
+     * @Assert\Type("string")
+     * @ORM\Column(name="zavrsnom_izvestaju_5", type="string", length=20, nullable=true)
+     */
+    protected $zavrsnomIzvestaju5;
+
+    /**
+     * @var string $zavrsnomIzvestaju6
+     * @Assert\Type("string")
+     * @ORM\Column(name="zavrsnom_izvestaju_6", type="string", length=20, nullable=true)
+     */
+    protected $zavrsnomIzvestaju6;
+
+    /**
+     * @var string $odobrenihUgovorom1
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobrenih_ugovorom_1", type="string", length=20, nullable=true)
+     */
+    protected $odobrenihUgovorom1;
+
+    /**
+     * @var string $odobrenihUgovorom2
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobrenih_ugovorom_2", type="string", length=20, nullable=true)
+     */
+    protected $odobrenihUgovorom2;
+
+    /**
+     * @var string $odobrenihUgovorom3
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobrenih_ugovorom_3", type="string", length=20, nullable=true)
+     */
+    protected $odobrenihUgovorom3;
+
+    /**
+     * @var string $odobrenihUgovorom4
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobrenih_ugovorom_4", type="string", length=20, nullable=true)
+     */
+    protected $odobrenihUgovorom4;
+
+    /**
+     * @var string $odobrenihUgovorom5
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobrenih_ugovorom_5", type="string", length=20, nullable=true)
+     */
+    protected $odobrenihUgovorom5;
+
+    /**
+     * @var string $odobrenihUgovorom6
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobrenih_ugovorom_6", type="string", length=20, nullable=true)
+     */
+    protected $odobrenihUgovorom6;
+
+    /**
+     * @var string $zatrazenihZavrsimIzvescem1
+     * @Assert\Type("string")
+     * @ORM\Column(name="zatrazenih_zavrsim_izvescem_1", type="string", length=20, nullable=true)
+     */
+    protected $zatrazenihZavrsimIzvescem1;
+
+    /**
+     * @var string $zatrazenihZavrsimIzvescem2
+     * @Assert\Type("string")
+     * @ORM\Column(name="zatrazenih_zavrsim_izvescem_2", type="string", length=20, nullable=true)
+     */
+    protected $zatrazenihZavrsimIzvescem2;
+
+    /**
+     * @var string $zatrazenihZavrsimIzvescem3
+     * @Assert\Type("string")
+     * @ORM\Column(name="zatrazenih_zavrsim_izvescem_3", type="string", length=20, nullable=true)
+     */
+    protected $zatrazenihZavrsimIzvescem3;
+
+    /**
+     * @var string $zatrazenihZavrsimIzvescem4
+     * @Assert\Type("string")
+     * @ORM\Column(name="zatrazenih_zavrsim_izvescem_4", type="string", length=20, nullable=true)
+     */
+    protected $zatrazenihZavrsimIzvescem4;
+
+    /**
+     * @var string $zatrazenihZavrsimIzvescem5
+     * @Assert\Type("string")
+     * @ORM\Column(name="zatrazenih_zavrsim_izvescem_5", type="string", length=20, nullable=true)
+     */
+    protected $zatrazenihZavrsimIzvescem5;
+
+    /**
+     * @var string $zatrazenihZavrsimIzvescem6
+     * @Assert\Type("string")
+     * @ORM\Column(name="zatrazenih_zavrsim_izvescem_6", type="string", length=20, nullable=true)
+     */
+    protected $zatrazenihZavrsimIzvescem6;
+
+    /**
+     * @var string $danaNakonZavrsnogIzvesca1
+     * @Assert\Type("string")
+     * @ORM\Column(name="dana_nakon_zavrsnog_izvesca_1", type="string", length=20, nullable=true)
+     */
+    protected $danaNakonZavrsnogIzvesca1;
+
+    /**
+     * @var string $danaNakonZavrsnogIzvesca2
+     * @Assert\Type("string")
+     * @ORM\Column(name="dana_nakon_zavrsnog_izvesca_2", type="string", length=20, nullable=true)
+     */
+    protected $danaNakonZavrsnogIzvesca2;
+
+    /**
+     * @var string $danaNakonZavrsnogIzvesca3
+     * @Assert\Type("string")
+     * @ORM\Column(name="dana_nakon_zavrsnog_izvesca_3", type="string", length=20, nullable=true)
+     */
+    protected $danaNakonZavrsnogIzvesca3;
+
+    /**
+     * @var string $danaNakonZavrsnogIzvesca4
+     * @Assert\Type("string")
+     * @ORM\Column(name="dana_nakon_zavrsnog_izvesca_4", type="string", length=20, nullable=true)
+     */
+    protected $danaNakonZavrsnogIzvesca4;
+
+    /**
+     * @var string $danaNakonZavrsnogIzvesca5
+     * @Assert\Type("string")
+     * @ORM\Column(name="dana_nakon_zavrsnog_izvesca_5", type="string", length=20, nullable=true)
+     */
+    protected $danaNakonZavrsnogIzvesca5;
+
+    /**
+     * @var string $danaNakonZavrsnogIzvesca6
+     * @Assert\Type("string")
+     * @ORM\Column(name="dana_nakon_zavrsnog_izvesca_6", type="string", length=20, nullable=true)
+     */
+    protected $danaNakonZavrsnogIzvesca6;
+
+    /**
+     * @var string $odobrenoZavrsnogIzvesca1
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_zavrsnog_izvesca_1", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoZavrsnogIzvesca1;
+
+    /**
+     * @var string $odobrenoZavrsnogIzvesca2
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_zavrsnog_izvesca_2", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoZavrsnogIzvesca2;
+
+    /**
+     * @var string $odobrenoZavrsnogIzvesca3
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_zavrsnog_izvesca_3", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoZavrsnogIzvesca3;
+
+    /**
+     * @var string $odobrenoZavrsnogIzvesca4
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_zavrsnog_izvesca_4", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoZavrsnogIzvesca4;
+
+    /**
+     * @var string $odobrenoZavrsnogIzvesca5
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_zavrsnog_izvesca_5", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoZavrsnogIzvesca5;
+
+    /**
+     * @var string $odobrenoZavrsnogIzvesca6
+     * @Assert\Type("string")
+     * @ORM\Column(name="odobreno_zavrsnog_izvesca_6", type="string", length=20, nullable=true)
+     */
+    protected $odobrenoZavrsnogIzvesca6;
+
+    /**
+     * @var string $finansijskaKorelacija1
+     * @Assert\Type("string")
+     * @ORM\Column(name="finansijska_korelacija_1", type="string", length=20, nullable=true)
+     */
+    protected $finansijskaKorelacija1;
+
+    /**
+     * @var string $finansijskaKorelacija2
+     * @Assert\Type("string")
+     * @ORM\Column(name="finansijska_korelacija_2", type="string", length=20, nullable=true)
+     */
+    protected $finansijskaKorelacija2;
+
+    /**
+     * @var string $finansijskaKorelacija3
+     * @Assert\Type("string")
+     * @ORM\Column(name="finansijska_korelacija_3", type="string", length=20, nullable=true)
+     */
+    protected $finansijskaKorelacija3;
+
+    /**
+     * @var string $finansijskaKorelacija4
+     * @Assert\Type("string")
+     * @ORM\Column(name="finansijska_korelacija_4", type="string", length=20, nullable=true)
+     */
+    protected $finansijskaKorelacija4;
+
+    /**
+     * @var string $finansijskaKorelacija5
+     * @Assert\Type("string")
+     * @ORM\Column(name="finansijska_korelacija_5", type="string", length=20, nullable=true)
+     */
+    protected $finansijskaKorelacija5;
+
+    /**
+     * @var string $finansijskaKorelacija6
+     * @Assert\Type("string")
+     * @ORM\Column(name="finansijska_korelacija_6", type="string", length=20, nullable=true)
+     */
+    protected $finansijskaKorelacija6;
+
+    /**
+     * @var string $ukupnoDoSadaUpalceno
+     * @Assert\Type("string")
+     * @ORM\Column(name="ukupno_do_sada_upalceno", type="string", length=20, nullable=true)
+     */
+    protected $ukupnoDoSadaUpalceno;
+
+    /**
+     * @var string $preostaloZaIsplatu
+     * @Assert\Type("string")
+     * @ORM\Column(name="preostalo_za_isplatu", type="string", length=20, nullable=true)
+     */
+    protected $preostaloZaIsplatu;
+
+    /**
+     * @var string $preostaloZaPovrat
+     * @Assert\Type("string")
+     * @ORM\Column(name="preostalo_za_povrat", type="string", length=20, nullable=true)
+     */
+    protected $preostaloZaPovrat;
+
+    /**
+     * @var string $finansijskaKorelacija
+     * @Assert\Type("string")
+     * @ORM\Column(name="finansijska_korelacija", type="string", length=20, nullable=true)
+     */
+    protected $finansijskaKorelacija;
+
+    /**
+     * @var string $komentarObrade
+     * @Assert\Type("string")
+     * @ORM\Column(name="komentar_obrade", type="text", nullable=true)
+     */
+    protected $komentarObrade;
+
+    /**
+     * @var string $smanjenjeGranta
+     * @Assert\Type("string")
+     * @ORM\Column(name="smanjenje_granta", type="string", length=20, nullable=true)
+     */
+    protected $smanjenjeGranta;
+
+    /**
+     * @var string $preostaloZaZavrsnuIsplatu
+     * @Assert\Type("string")
+     * @ORM\Column(name="preostalo_za_zavrsnu_isplatu", type="string", length=20, nullable=true)
+     */
+    protected $preostaloZaZavrsnuIsplatu;
+
+    /**
+     * @var string $preostaloZaPovracaj
+     * @Assert\Type("string")
+     * @ORM\Column(name="preostalo_za_povracaj", type="string", length=20, nullable=true)
+     */
+    protected $preostaloZaPovracaj;
+
+    /**
+     * @var string $komentarPreporukeZaKorisnika
+     * @Assert\Type("string")
+     * @ORM\Column(name="komentar_preporuke_za_korisnika", type="text", nullable=true)
+     */
+    protected $komentarPreporukeZaKorisnika;
+
+    /**
+     * @var string $vrstaProjekta
+     * @Assert\Type("string")
+     * @ORM\Column(name="vrsta_projekta", type="string", length=30, nullable=true)
+     */
+    protected $vrstaProjekta;
+
+    /**
+     * @var string $nazivKorisnika
+     * @Assert\Type("string")
+     * @ORM\Column(name="naziv_korisnika", type="string", length=30, nullable=true)
+     */
+    protected $nazivKorisnika;
+
+    /**
+     * @var string $psredisteOrganizacije
+     * @Assert\Type("string")
+     * @ORM\Column(name="srediste_organizacije", type="string", length=30, nullable=true)
+     */
+    protected $sredisteOrganizacije;
+
+    /**
+     * @ORM\Column(name="datum_povere", type="date", nullable=true)
+     */
+    protected $datumProvere;
+
+    /**
+     * @var string $referentniBroj
+     * @Assert\Type("string")
+     * @ORM\Column(name="referentni_broj", type="string", length=30, nullable=true)
+     */
+    protected $referentniBroj;
+
+    /**
+     * @var string $nazivProjekta
+     * @Assert\Type("string")
+     * @ORM\Column(name="naziv_projekta", type="string", length=50, nullable=true)
+     */
+    protected $nazivProjekta;
+
+    /**
+     * @var string $potpis
+     * @Assert\Type("string")
+     * @ORM\Column(name="potpis", type="string", length=30, nullable=true)
+     */
+    protected $potpis;
+
+    /**
+     * @var string $propisanomObrascu
+     * @Assert\Type("string")
+     * @ORM\Column(name="propisanom_obrascu", type="string", length=10, nullable=true)
+     */
+    protected $propisanomObrascu;
+    /**
+     * @var string $predatURoku
+     * @Assert\Type("string")
+     * @ORM\Column(name="predat_u_roku", type="string", length=10, nullable=true)
+     */
+    protected $predatURoku;
+
+    /**
+     * @var string $ispunjenUCelosti
+     * @Assert\Type("string")
+     * @ORM\Column(name="ispunjen_u_celosti", type="string", length=10, nullable=true)
+     */
+    protected $ispunjenUCelosti;
+
+    /**
+     * @var string $ispunjenNaJezikuZavrsnogIzvestaja
+     * @Assert\Type("string")
+     * @ORM\Column(name="ispunjen_na_jeziku_zavrsnog_izvestaja", type="string", length=10, nullable=true)
+     */
+    protected $ispunjenNaJezikuZavrsnogIzvestaja;
+
+    /**
+     * @var string $prilozenaIzjava
+     * @Assert\Type("string")
+     * @ORM\Column(name="prilozena_izjava", type="string", length=10, nullable=true)
+     */
+    protected $prilozenaIzjava;
+
+    /**
+     * @var string $rasporedAktivnosti
+     * @Assert\Type("string")
+     * @ORM\Column(name="raspored_aktivnosti", type="string", length=10, nullable=true)
+     */
+    protected $rasporedAktivnosti;
+
+    /**
+     * @var string $izvestajJeFormalno
+     * @Assert\Type("string")
+     * @ORM\Column(name="izvestaj_je_formalno", type="string", length=20, nullable=true)
+     */
+    protected $izvestajJeFormalno;
+
+
     public function __construct()
     {
         parent::__construct();
@@ -1628,7 +2352,7 @@ class ProjectReporting extends AbstractAuditable
     }
 
     /**
-     * @param string $pitanje_105_1
+     * @param mixed $pitanje_105_1
      */
     public function setPitanje1051($pitanje_105_1)
     {
@@ -1700,36 +2424,1715 @@ class ProjectReporting extends AbstractAuditable
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getPitanje10513(): string
+    public function getPitanje10513()
     {
         return $this->pitanje_105_13;
     }
 
     /**
-     * @param string $pitanje_105_13
+     * @param mixed $pitanje_105_13
      */
-    public function setPitanje10513(string $pitanje_105_13)
+    public function setPitanje10513 ($pitanje_105_13)
     {
         $this->pitanje_105_13 = $pitanje_105_13;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getPitanje10514(): string
+    public function getPitanje10514()
     {
         return $this->pitanje_105_14;
     }
 
     /**
-     * @param string $pitanje_105_14
+     * @param mixed $pitanje_105_14
      */
-    public function setPitanje10514(string $pitanje_105_14)
+    public function setPitanje10514 ($pitanje_105_14)
     {
         $this->pitanje_105_14 = $pitanje_105_14;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUlazakIzvestaja()
+    {
+        return $this->ulazakIzvestaja;
+    }
+
+    /**
+     * @param mixed $ulazakIzvestaja
+     */
+    public function setUlazakIzvestaja($ulazakIzvestaja)
+    {
+        $this->ulazakIzvestaja = $ulazakIzvestaja;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProveruIzvrsio()
+    {
+        return $this->proveruIzvrsio;
+    }
+
+    /**
+     * @param mixed $proveruIzvrsio
+     */
+    public function setProveruIzvrsio ($proveruIzvrsio)
+    {
+        $this->proveruIzvrsio = $proveruIzvrsio;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPotpunaFinansijskaDokumentacija()
+    {
+        return $this->potpunaFinansijskaDokumentacija;
+    }
+
+    /**
+     * @param mixed $potpunaFinansijskaDokumentacija
+     */
+    public function setPotpunaFinansijskaDokumentacija ($potpunaFinansijskaDokumentacija)
+    {
+        $this->potpunaFinansijskaDokumentacija = $potpunaFinansijskaDokumentacija;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDatumPosete()
+    {
+        return $this->datumPosete;
+    }
+
+    /**
+     * @param mixed $datumPosete
+     */
+    public function setDatumPosete($datumPosete)
+    {
+        $this->datumPosete = $datumPosete;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDokumentPregledao()
+    {
+        return $this->dokumentPregledao;
+    }
+
+    /**
+     * @param mixed $dokumentPregledao
+     */
+    public function setDokumentPregledao($dokumentPregledao)
+    {
+        $this->dokumentPregledao = $dokumentPregledao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPotpunaDodatnaDokumentacija()
+    {
+        return $this->potpunaDodatnaDokumentacija;
+    }
+
+    /**
+     * @param mixed $potpunaDodatnaDokumentacija
+     */
+    public function setPotpunaDodatnaDokumentacija ($potpunaDodatnaDokumentacija)
+    {
+        $this->potpunaDodatnaDokumentacija = $potpunaDodatnaDokumentacija;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRazlogNepotpuneDokumentacije()
+    {
+        return $this->razlogNepotpuneDokumentacije;
+    }
+
+    /**
+     * @param mixed $razlogNepotpuneDokumentacije
+     */
+    public function setRazlogNepotpuneDokumentacije ($razlogNepotpuneDokumentacije)
+    {
+        $this->razlogNepotpuneDokumentacije = $razlogNepotpuneDokumentacije;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDatumTrazenjaDodatneDokumentacije()
+    {
+        return $this->datumTrazenjaDodatneDokumentacije;
+    }
+
+    /**
+     * @param mixed $datumTrazenjaDodatneDokumentacije
+     */
+    public function setDatumTrazenjaDodatneDokumentacije($datumTrazenjaDodatneDokumentacije)
+    {
+        $this->datumTrazenjaDodatneDokumentacije = $datumTrazenjaDodatneDokumentacije;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDatumDostavljanjaDodatneDokumentacije()
+    {
+        return $this->datumDostavljanjaDodatneDokumentacije;
+    }
+
+    /**
+     * @param mixed $datumDostavljanjaDodatneDokumentacije
+     */
+    public function setDatumDostavljanjaDodatneDokumentacije($datumDostavljanjaDodatneDokumentacije)
+    {
+        $this->datumDostavljanjaDodatneDokumentacije = $datumDostavljanjaDodatneDokumentacije;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApsorbovatiAlociranBudzet()
+    {
+        return $this->apsorbovatiAlociranBudzet;
+    }
+
+    /**
+     * @param mixed $apsorbovatiAlociranBudzet
+     */
+    public function setApsorbovatiAlociranBudzet ($apsorbovatiAlociranBudzet)
+    {
+        $this->apsorbovatiAlociranBudzet = $apsorbovatiAlociranBudzet;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDatumZavrsetkaObrade()
+    {
+        return $this->datumZavrsetkaObrade;
+    }
+
+    /**
+     * @param mixed $datumZavrsetkaObrade
+     */
+    public function setDatumZavrsetkaObrade($datumZavrsetkaObrade)
+    {
+        $this->datumZavrsetkaObrade = $datumZavrsetkaObrade;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje1pp1()
+    {
+        return $this->pitanje1pp1;
+    }
+
+    /**
+     * @param mixed $pitanje1pp1
+     */
+    public function setPitanje1pp1 ($pitanje1pp1)
+    {
+        $this->pitanje1pp1 = $pitanje1pp1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje3pp1pp1()
+    {
+        return $this->pitanje3pp1pp1;
+    }
+
+    /**
+     * @param mixed $pitanje3pp1pp1
+     */
+    public function setPitanje3pp1pp1 ($pitanje3pp1pp1)
+    {
+        $this->pitanje3pp1pp1 = $pitanje3pp1pp1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje4pp1()
+    {
+        return $this->pitanje4pp1;
+    }
+
+    /**
+     * @param mixed $pitanje4pp1
+     */
+    public function setPitanje4pp1 ($pitanje4pp1)
+    {
+        $this->pitanje4pp1 = $pitanje4pp1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje5pp1()
+    {
+        return $this->pitanje5pp1;
+    }
+
+    /**
+     * @param mixed $pitanje5pp1
+     */
+    public function setPitanje5pp1 ($pitanje5pp1)
+    {
+        $this->pitanje5pp1 = $pitanje5pp1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje6pp1()
+    {
+        return $this->pitanje6pp1;
+    }
+
+    /**
+     * @param mixed $pitanje6pp1
+     */
+    public function setPitanje6pp1 ($pitanje6pp1)
+    {
+        $this->pitanje6pp1 = $pitanje6pp1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje7pp1()
+    {
+        return $this->pitanje7pp1;
+    }
+
+    /**
+     * @param mixed $pitanje7pp1
+     */
+    public function setPitanje7pp1 ($pitanje7pp1)
+    {
+        $this->pitanje7pp1 = $pitanje7pp1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje7pp2()
+    {
+        return $this->pitanje7pp2;
+    }
+
+    /**
+     * @param mixed $pitanje7pp2
+     */
+    public function setPitanje7pp2 ($pitanje7pp2)
+    {
+        $this->pitanje7pp2 = $pitanje7pp2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje7pp3()
+    {
+        return $this->pitanje7pp3;
+    }
+
+    /**
+     * @param mixed $pitanje7pp3
+     */
+    public function setPitanje7pp3 ($pitanje7pp3)
+    {
+        $this->pitanje7pp3 = $pitanje7pp3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje8pp1()
+    {
+        return $this->pitanje8pp1;
+    }
+
+    /**
+     * @param mixed $pitanje8pp1
+     */
+    public function setPitanje8pp1 ($pitanje8pp1)
+    {
+        $this->pitanje8pp1 = $pitanje8pp1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje8pp2()
+    {
+        return $this->pitanje8pp2;
+    }
+
+    /**
+     * @param mixed $pitanje8pp2
+     */
+    public function setPitanje8pp2 ($pitanje8pp2)
+    {
+        $this->pitanje8pp2 = $pitanje8pp2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje8pp3()
+    {
+        return $this->pitanje8pp3;
+    }
+
+    /**
+     * @param mixed $pitanje8pp3
+     */
+    public function setPitanje8pp3 ($pitanje8pp3)
+    {
+        $this->pitanje8pp3 = $pitanje8pp3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje8pp4()
+    {
+        return $this->pitanje8pp4;
+    }
+
+    /**
+     * @param mixed $pitanje8pp4
+     */
+    public function setPitanje8pp4 ($pitanje8pp4)
+    {
+        $this->pitanje8pp4 = $pitanje8pp4;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje8pp5()
+    {
+        return $this->pitanje8pp5;
+    }
+
+    /**
+     * @param mixed $pitanje8pp5
+     */
+    public function setPitanje8pp5 ($pitanje8pp5)
+    {
+        $this->pitanje8pp5 = $pitanje8pp5;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoUgovorom1()
+    {
+        return $this->odobrenoUgovorom1;
+    }
+
+    /**
+     * @param mixed $odobrenoUgovorom1
+     */
+    public function setOdobrenoUgovorom1 ($odobrenoUgovorom1)
+    {
+        $this->odobrenoUgovorom1 = $odobrenoUgovorom1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoUgovorom2()
+    {
+        return $this->odobrenoUgovorom2;
+    }
+
+    /**
+     * @param mixed $odobrenoUgovorom2
+     */
+    public function setOdobrenoUgovorom2 ($odobrenoUgovorom2)
+    {
+        $this->odobrenoUgovorom2 = $odobrenoUgovorom2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoUgovorom3()
+    {
+        return $this->odobrenoUgovorom3;
+    }
+
+    /**
+     * @param mixed $odobrenoUgovorom3
+     */
+    public function setOdobrenoUgovorom3 ($odobrenoUgovorom3)
+    {
+        $this->odobrenoUgovorom3 = $odobrenoUgovorom3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoUgovorom4()
+    {
+        return $this->odobrenoUgovorom4;
+    }
+
+    /**
+     * @param mixed $odobrenoUgovorom4
+     */
+    public function setOdobrenoUgovorom4 ($odobrenoUgovorom4)
+    {
+        $this->odobrenoUgovorom4 = $odobrenoUgovorom4;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoUgovorom5()
+    {
+        return $this->odobrenoUgovorom5;
+    }
+
+    /**
+     * @param mixed $odobrenoUgovorom5
+     */
+    public function setOdobrenoUgovorom5 ($odobrenoUgovorom5)
+    {
+        $this->odobrenoUgovorom5 = $odobrenoUgovorom5;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoUgovorom6()
+    {
+        return $this->odobrenoUgovorom6;
+    }
+
+    /**
+     * @param mixed $odobrenoUgovorom6
+     */
+    public function setOdobrenoUgovorom6 ($odobrenoUgovorom6)
+    {
+        $this->odobrenoUgovorom6 = $odobrenoUgovorom6;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNakonRealokacija1()
+    {
+        return $this->nakonRealokacija1;
+    }
+
+    /**
+     * @param mixed $nakonRealokacija1
+     */
+    public function setNakonRealokacija1 ($nakonRealokacija1)
+    {
+        $this->nakonRealokacija1 = $nakonRealokacija1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNakonRealokacija2()
+    {
+        return $this->nakonRealokacija2;
+    }
+
+    /**
+     * @param mixed $nakonRealokacija2
+     */
+    public function setNakonRealokacija2 ($nakonRealokacija2)
+    {
+        $this->nakonRealokacija2 = $nakonRealokacija2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNakonRealokacija3()
+    {
+        return $this->nakonRealokacija3;
+    }
+
+    /**
+     * @param mixed $nakonRealokacija3
+     */
+    public function setNakonRealokacija3 ($nakonRealokacija3)
+    {
+        $this->nakonRealokacija3 = $nakonRealokacija3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNakonRealokacija4()
+    {
+        return $this->nakonRealokacija4;
+    }
+
+    /**
+     * @param mixed $nakonRealokacija4
+     */
+    public function setNakonRealokacija4 ($nakonRealokacija4)
+    {
+        $this->nakonRealokacija4 = $nakonRealokacija4;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNakonRealokacija5()
+    {
+        return $this->nakonRealokacija5;
+    }
+
+    /**
+     * @param mixed $nakonRealokacija5
+     */
+    public function setNakonRealokacija5 ($nakonRealokacija5)
+    {
+        $this->nakonRealokacija5 = $nakonRealokacija5;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNakonRealokacija6()
+    {
+        return $this->nakonRealokacija6;
+    }
+
+    /**
+     * @param mixed $nakonRealokacija6
+     */
+    public function setNakonRealokacija6 ($nakonRealokacija6)
+    {
+        $this->nakonRealokacija6 = $nakonRealokacija6;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZavrsnomIzvestaju1()
+    {
+        return $this->zavrsnomIzvestaju1;
+    }
+
+    /**
+     * @param mixed $zavrsnomIzvestaju1
+     */
+    public function setZavrsnomIzvestaju1 ($zavrsnomIzvestaju1)
+    {
+        $this->zavrsnomIzvestaju1 = $zavrsnomIzvestaju1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZavrsnomIzvestaju2()
+    {
+        return $this->zavrsnomIzvestaju2;
+    }
+
+    /**
+     * @param mixed $zavrsnomIzvestaju2
+     */
+    public function setZavrsnomIzvestaju2 ($zavrsnomIzvestaju2)
+    {
+        $this->zavrsnomIzvestaju2 = $zavrsnomIzvestaju2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZavrsnomIzvestaju3()
+    {
+        return $this->zavrsnomIzvestaju3;
+    }
+
+    /**
+     * @param mixed $zavrsnomIzvestaju3
+     */
+    public function setZavrsnomIzvestaju3 ($zavrsnomIzvestaju3)
+    {
+        $this->zavrsnomIzvestaju3 = $zavrsnomIzvestaju3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZavrsnomIzvestaju4()
+    {
+        return $this->zavrsnomIzvestaju4;
+    }
+
+    /**
+     * @param mixed $zavrsnomIzvestaju4
+     */
+    public function setZavrsnomIzvestaju4 ($zavrsnomIzvestaju4)
+    {
+        $this->zavrsnomIzvestaju4 = $zavrsnomIzvestaju4;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZavrsnomIzvestaju5()
+    {
+        return $this->zavrsnomIzvestaju5;
+    }
+
+    /**
+     * @param mixed $zavrsnomIzvestaju5
+     */
+    public function setZavrsnomIzvestaju5 ($zavrsnomIzvestaju5)
+    {
+        $this->zavrsnomIzvestaju5 = $zavrsnomIzvestaju5;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZavrsnomIzvestaju6()
+    {
+        return $this->zavrsnomIzvestaju6;
+    }
+
+    /**
+     * @param mixed $zavrsnomIzvestaju6
+     */
+    public function setZavrsnomIzvestaju6 ($zavrsnomIzvestaju6)
+    {
+        $this->zavrsnomIzvestaju6 = $zavrsnomIzvestaju6;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenihUgovorom1()
+    {
+        return $this->odobrenihUgovorom1;
+    }
+
+    /**
+     * @param mixed $odobrenihUgovorom1
+     */
+    public function setOdobrenihUgovorom1 ($odobrenihUgovorom1)
+    {
+        $this->odobrenihUgovorom1 = $odobrenihUgovorom1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenihUgovorom2()
+    {
+        return $this->odobrenihUgovorom2;
+    }
+
+    /**
+     * @param mixed $odobrenihUgovorom2
+     */
+    public function setOdobrenihUgovorom2 ($odobrenihUgovorom2)
+    {
+        $this->odobrenihUgovorom2 = $odobrenihUgovorom2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenihUgovorom3()
+    {
+        return $this->odobrenihUgovorom3;
+    }
+
+    /**
+     * @param mixed $odobrenihUgovorom3
+     */
+    public function setOdobrenihUgovorom3 ($odobrenihUgovorom3)
+    {
+        $this->odobrenihUgovorom3 = $odobrenihUgovorom3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenihUgovorom4()
+    {
+        return $this->odobrenihUgovorom4;
+    }
+
+    /**
+     * @param mixed $odobrenihUgovorom4
+     */
+    public function setOdobrenihUgovorom4 ($odobrenihUgovorom4)
+    {
+        $this->odobrenihUgovorom4 = $odobrenihUgovorom4;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenihUgovorom5()
+    {
+        return $this->odobrenihUgovorom5;
+    }
+
+    /**
+     * @param mixed $odobrenihUgovorom5
+     */
+    public function setOdobrenihUgovorom5 ($odobrenihUgovorom5)
+    {
+        $this->odobrenihUgovorom5 = $odobrenihUgovorom5;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenihUgovorom6()
+    {
+        return $this->odobrenihUgovorom6;
+    }
+
+    /**
+     * @param mixed $odobrenihUgovorom6
+     */
+    public function setOdobrenihUgovorom6 ($odobrenihUgovorom6)
+    {
+        $this->odobrenihUgovorom6 = $odobrenihUgovorom6;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZatrazenihZavrsimIzvescem1()
+    {
+        return $this->zatrazenihZavrsimIzvescem1;
+    }
+
+    /**
+     * @param mixed $zatrazenihZavrsimIzvescem1
+     */
+    public function setZatrazenihZavrsimIzvescem1 ($zatrazenihZavrsimIzvescem1)
+    {
+        $this->zatrazenihZavrsimIzvescem1 = $zatrazenihZavrsimIzvescem1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZatrazenihZavrsimIzvescem2()
+    {
+        return $this->zatrazenihZavrsimIzvescem2;
+    }
+
+    /**
+     * @param mixed $zatrazenihZavrsimIzvescem2
+     */
+    public function setZatrazenihZavrsimIzvescem2 ($zatrazenihZavrsimIzvescem2)
+    {
+        $this->zatrazenihZavrsimIzvescem2 = $zatrazenihZavrsimIzvescem2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZatrazenihZavrsimIzvescem3()
+    {
+        return $this->zatrazenihZavrsimIzvescem3;
+    }
+
+    /**
+     * @param mixed $zatrazenihZavrsimIzvescem3
+     */
+    public function setZatrazenihZavrsimIzvescem3 ($zatrazenihZavrsimIzvescem3)
+    {
+        $this->zatrazenihZavrsimIzvescem3 = $zatrazenihZavrsimIzvescem3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZatrazenihZavrsimIzvescem4()
+    {
+        return $this->zatrazenihZavrsimIzvescem4;
+    }
+
+    /**
+     * @param mixed $zatrazenihZavrsimIzvescem4
+     */
+    public function setZatrazenihZavrsimIzvescem4 ($zatrazenihZavrsimIzvescem4)
+    {
+        $this->zatrazenihZavrsimIzvescem4 = $zatrazenihZavrsimIzvescem4;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZatrazenihZavrsimIzvescem5()
+    {
+        return $this->zatrazenihZavrsimIzvescem5;
+    }
+
+    /**
+     * @param mixed $zatrazenihZavrsimIzvescem5
+     */
+    public function setZatrazenihZavrsimIzvescem5 ($zatrazenihZavrsimIzvescem5)
+    {
+        $this->zatrazenihZavrsimIzvescem5 = $zatrazenihZavrsimIzvescem5;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZatrazenihZavrsimIzvescem6()
+    {
+        return $this->zatrazenihZavrsimIzvescem6;
+    }
+
+    /**
+     * @param mixed $zatrazenihZavrsimIzvescem6
+     */
+    public function setZatrazenihZavrsimIzvescem6 ($zatrazenihZavrsimIzvescem6)
+    {
+        $this->zatrazenihZavrsimIzvescem6 = $zatrazenihZavrsimIzvescem6;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDanaNakonZavrsnogIzvesca1()
+    {
+        return $this->danaNakonZavrsnogIzvesca1;
+    }
+
+    /**
+     * @param mixed $danaNakonZavrsnogIzvesca1
+     */
+    public function setDanaNakonZavrsnogIzvesca1 ($danaNakonZavrsnogIzvesca1)
+    {
+        $this->danaNakonZavrsnogIzvesca1 = $danaNakonZavrsnogIzvesca1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDanaNakonZavrsnogIzvesca2()
+    {
+        return $this->danaNakonZavrsnogIzvesca2;
+    }
+
+    /**
+     * @param mixed $danaNakonZavrsnogIzvesca2
+     */
+    public function setDanaNakonZavrsnogIzvesca2 ($danaNakonZavrsnogIzvesca2)
+    {
+        $this->danaNakonZavrsnogIzvesca2 = $danaNakonZavrsnogIzvesca2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDanaNakonZavrsnogIzvesca3()
+    {
+        return $this->danaNakonZavrsnogIzvesca3;
+    }
+
+    /**
+     * @param mixed $danaNakonZavrsnogIzvesca3
+     */
+    public function setDanaNakonZavrsnogIzvesca3 ($danaNakonZavrsnogIzvesca3)
+    {
+        $this->danaNakonZavrsnogIzvesca3 = $danaNakonZavrsnogIzvesca3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDanaNakonZavrsnogIzvesca4()
+    {
+        return $this->danaNakonZavrsnogIzvesca4;
+    }
+
+    /**
+     * @param mixed $danaNakonZavrsnogIzvesca4
+     */
+    public function setDanaNakonZavrsnogIzvesca4 ($danaNakonZavrsnogIzvesca4)
+    {
+        $this->danaNakonZavrsnogIzvesca4 = $danaNakonZavrsnogIzvesca4;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDanaNakonZavrsnogIzvesca5()
+    {
+        return $this->danaNakonZavrsnogIzvesca5;
+    }
+
+    /**
+     * @param mixed $danaNakonZavrsnogIzvesca5
+     */
+    public function setDanaNakonZavrsnogIzvesca5 ($danaNakonZavrsnogIzvesca5)
+    {
+        $this->danaNakonZavrsnogIzvesca5 = $danaNakonZavrsnogIzvesca5;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDanaNakonZavrsnogIzvesca6()
+    {
+        return $this->danaNakonZavrsnogIzvesca6;
+    }
+
+    /**
+     * @param mixed $danaNakonZavrsnogIzvesca6
+     */
+    public function setDanaNakonZavrsnogIzvesca6 ($danaNakonZavrsnogIzvesca6)
+    {
+        $this->danaNakonZavrsnogIzvesca6 = $danaNakonZavrsnogIzvesca6;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoZavrsnogIzvesca1()
+    {
+        return $this->odobrenoZavrsnogIzvesca1;
+    }
+
+    /**
+     * @param mixed $odobrenoZavrsnogIzvesca1
+     */
+    public function setOdobrenoZavrsnogIzvesca1 ($odobrenoZavrsnogIzvesca1)
+    {
+        $this->odobrenoZavrsnogIzvesca1 = $odobrenoZavrsnogIzvesca1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoZavrsnogIzvesca2()
+    {
+        return $this->odobrenoZavrsnogIzvesca2;
+    }
+
+    /**
+     * @param mixed $odobrenoZavrsnogIzvesca2
+     */
+    public function setOdobrenoZavrsnogIzvesca2 ($odobrenoZavrsnogIzvesca2)
+    {
+        $this->odobrenoZavrsnogIzvesca2 = $odobrenoZavrsnogIzvesca2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoZavrsnogIzvesca3()
+    {
+        return $this->odobrenoZavrsnogIzvesca3;
+    }
+
+    /**
+     * @param mixed $odobrenoZavrsnogIzvesca3
+     */
+    public function setOdobrenoZavrsnogIzvesca3 ($odobrenoZavrsnogIzvesca3)
+    {
+        $this->odobrenoZavrsnogIzvesca3 = $odobrenoZavrsnogIzvesca3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoZavrsnogIzvesca4()
+    {
+        return $this->odobrenoZavrsnogIzvesca4;
+    }
+
+    /**
+     * @param mixed $odobrenoZavrsnogIzvesca4
+     */
+    public function setOdobrenoZavrsnogIzvesca4 ($odobrenoZavrsnogIzvesca4)
+    {
+        $this->odobrenoZavrsnogIzvesca4 = $odobrenoZavrsnogIzvesca4;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoZavrsnogIzvesca5()
+    {
+        return $this->odobrenoZavrsnogIzvesca5;
+    }
+
+    /**
+     * @param mixed $odobrenoZavrsnogIzvesca5
+     */
+    public function setOdobrenoZavrsnogIzvesca5 ($odobrenoZavrsnogIzvesca5)
+    {
+        $this->odobrenoZavrsnogIzvesca5 = $odobrenoZavrsnogIzvesca5;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdobrenoZavrsnogIzvesca6()
+    {
+        return $this->odobrenoZavrsnogIzvesca6;
+    }
+
+    /**
+     * @param mixed $odobrenoZavrsnogIzvesca6
+     */
+    public function setOdobrenoZavrsnogIzvesca6 ($odobrenoZavrsnogIzvesca6)
+    {
+        $this->odobrenoZavrsnogIzvesca6 = $odobrenoZavrsnogIzvesca6;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFinansijskaKorelacija1()
+    {
+        return $this->finansijskaKorelacija1;
+    }
+
+    /**
+     * @param mixed $finansijskaKorelacija1
+     */
+    public function setFinansijskaKorelacija1 ($finansijskaKorelacija1)
+    {
+        $this->finansijskaKorelacija1 = $finansijskaKorelacija1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFinansijskaKorelacija2()
+    {
+        return $this->finansijskaKorelacija2;
+    }
+
+    /**
+     * @param mixed $finansijskaKorelacija2
+     */
+    public function setFinansijskaKorelacija2 ($finansijskaKorelacija2)
+    {
+        $this->finansijskaKorelacija2 = $finansijskaKorelacija2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFinansijskaKorelacija3()
+    {
+        return $this->finansijskaKorelacija3;
+    }
+
+    /**
+     * @param mixed $finansijskaKorelacija3
+     */
+    public function setFinansijskaKorelacija3 ($finansijskaKorelacija3)
+    {
+        $this->finansijskaKorelacija3 = $finansijskaKorelacija3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFinansijskaKorelacija4()
+    {
+        return $this->finansijskaKorelacija4;
+    }
+
+    /**
+     * @param mixed $finansijskaKorelacija4
+     */
+    public function setFinansijskaKorelacija4 ($finansijskaKorelacija4)
+    {
+        $this->finansijskaKorelacija4 = $finansijskaKorelacija4;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFinansijskaKorelacija5()
+    {
+        return $this->finansijskaKorelacija5;
+    }
+
+    /**
+     * @param mixed $finansijskaKorelacija5
+     */
+    public function setFinansijskaKorelacija5 ($finansijskaKorelacija5)
+    {
+        $this->finansijskaKorelacija5 = $finansijskaKorelacija5;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFinansijskaKorelacija6()
+    {
+        return $this->finansijskaKorelacija6;
+    }
+
+    /**
+     * @param mixed $finansijskaKorelacija6
+     */
+    public function setFinansijskaKorelacija6 ($finansijskaKorelacija6)
+    {
+        $this->finansijskaKorelacija6 = $finansijskaKorelacija6;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUkupnoDoSadaUpalceno()
+    {
+        return $this->ukupnoDoSadaUpalceno;
+    }
+
+    /**
+     * @param mixed $ukupnoDoSadaUpalceno
+     */
+    public function setUkupnoDoSadaUpalceno ($ukupnoDoSadaUpalceno)
+    {
+        $this->ukupnoDoSadaUpalceno = $ukupnoDoSadaUpalceno;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPreostaloZaIsplatu()
+    {
+        return $this->preostaloZaIsplatu;
+    }
+
+    /**
+     * @param mixed $preostaloZaIsplatu
+     */
+    public function setPreostaloZaIsplatu ($preostaloZaIsplatu)
+    {
+        $this->preostaloZaIsplatu = $preostaloZaIsplatu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPreostaloZaPovrat()
+    {
+        return $this->preostaloZaPovrat;
+    }
+
+    /**
+     * @param mixed $preostaloZaPovrat
+     */
+    public function setPreostaloZaPovrat ($preostaloZaPovrat)
+    {
+        $this->preostaloZaPovrat = $preostaloZaPovrat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFinansijskaKorelacija()
+    {
+        return $this->finansijskaKorelacija;
+    }
+
+    /**
+     * @param mixed $finansijskaKorelacija
+     */
+    public function setFinansijskaKorelacija ($finansijskaKorelacija)
+    {
+        $this->finansijskaKorelacija = $finansijskaKorelacija;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKomentarObrade()
+    {
+        return $this->komentarObrade;
+    }
+
+    /**
+     * @param mixed $komentarObrade
+     */
+    public function setKomentarObrade ($komentarObrade)
+    {
+        $this->komentarObrade = $komentarObrade;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSmanjenjeGranta()
+    {
+        return $this->smanjenjeGranta;
+    }
+
+    /**
+     * @param mixed $smanjenjeGranta
+     */
+    public function setSmanjenjeGranta ($smanjenjeGranta)
+    {
+        $this->smanjenjeGranta = $smanjenjeGranta;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPreostaloZaZavrsnuIsplatu()
+    {
+        return $this->preostaloZaZavrsnuIsplatu;
+    }
+
+    /**
+     * @param mixed $preostaloZaZavrsnuIsplatu
+     */
+    public function setPreostaloZaZavrsnuIsplatu ($preostaloZaZavrsnuIsplatu)
+    {
+        $this->preostaloZaZavrsnuIsplatu = $preostaloZaZavrsnuIsplatu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPreostaloZaPovracaj()
+    {
+        return $this->preostaloZaPovracaj;
+    }
+
+    /**
+     * @param mixed $preostaloZaPovracaj
+     */
+    public function setPreostaloZaPovracaj ($preostaloZaPovracaj)
+    {
+        $this->preostaloZaPovracaj = $preostaloZaPovracaj;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje3pp1pp2()
+    {
+        return $this->pitanje3pp1pp2;
+    }
+
+    /**
+     * @param mixed $pitanje3pp1pp2
+     */
+    public function setPitanje3pp1pp2($pitanje3pp1pp2)
+    {
+        $this->pitanje3pp1pp2 = $pitanje3pp1pp2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje9pp1()
+    {
+        return $this->pitanje9pp1;
+    }
+
+    /**
+     * @param mixed $pitanje9pp1
+     */
+    public function setPitanje9pp1($pitanje9pp1)
+    {
+        $this->pitanje9pp1 = $pitanje9pp1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje9pp2()
+    {
+        return $this->pitanje9pp2;
+    }
+
+    /**
+     * @param mixed $pitanje9pp2
+     */
+    public function setPitanje9pp2($pitanje9pp2)
+    {
+        $this->pitanje9pp2 = $pitanje9pp2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje9pp3()
+    {
+        return $this->pitanje9pp3;
+    }
+
+    /**
+     * @param mixed $pitanje9pp3
+     */
+    public function setPitanje9pp3($pitanje9pp3)
+    {
+        $this->pitanje9pp3 = $pitanje9pp3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje10pp1()
+    {
+        return $this->pitanje10pp1;
+    }
+
+    /**
+     * @param mixed $pitanje10pp1
+     */
+    public function setPitanje10pp1($pitanje10pp1)
+    {
+        $this->pitanje10pp1 = $pitanje10pp1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje10pp2pp1()
+    {
+        return $this->pitanje10pp2pp1;
+    }
+
+    /**
+     * @param mixed $pitanje10pp2pp1
+     */
+    public function setPitanje10pp2pp1($pitanje10pp2pp1)
+    {
+        $this->pitanje10pp2pp1 = $pitanje10pp2pp1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje10pp2pp2()
+    {
+        return $this->pitanje10pp2pp2;
+    }
+
+    /**
+     * @param mixed $pitanje10pp2pp2
+     */
+    public function setPitanje10pp2pp2($pitanje10pp2pp2)
+    {
+        $this->pitanje10pp2pp2 = $pitanje10pp2pp2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje10pp3()
+    {
+        return $this->pitanje10pp3;
+    }
+
+    /**
+     * @param mixed $pitanje10pp3
+     */
+    public function setPitanje10pp3($pitanje10pp3)
+    {
+        $this->pitanje10pp3 = $pitanje10pp3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje8pp6()
+    {
+        return $this->pitanje8pp6;
+    }
+
+    /**
+     * @param mixed $pitanje8pp6
+     */
+    public function setPitanje8pp6($pitanje8pp6)
+    {
+        $this->pitanje8pp6 = $pitanje8pp6;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPitanje8pp7()
+    {
+        return $this->pitanje8pp7;
+    }
+
+    /**
+     * @param mixed $pitanje8pp7
+     */
+    public function setPitanje8pp7($pitanje8pp7)
+    {
+        $this->pitanje8pp7 = $pitanje8pp7;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKomentarPreporukeZaKorisnika()
+    {
+        return $this->komentarPreporukeZaKorisnika;
+    }
+
+    /**
+     * @param mixed $komentarPreporukeZaKorisnika
+     */
+    public function setKomentarPreporukeZaKorisnika( $komentarPreporukeZaKorisnika)
+    {
+        $this->komentarPreporukeZaKorisnika = $komentarPreporukeZaKorisnika;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVrstaProjekta()
+    {
+        return $this->vrstaProjekta;
+    }
+
+    /**
+     * @param mixed $vrstaProjekta
+     */
+    public function setVrstaProjekta($vrstaProjekta)
+    {
+        $this->vrstaProjekta = $vrstaProjekta;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNazivKorisnika()
+    {
+        return $this->nazivKorisnika;
+    }
+
+    /**
+     * @param mixed $nazivKorisnika
+     */
+    public function setNazivKorisnika($nazivKorisnika)
+    {
+        $this->nazivKorisnika = $nazivKorisnika;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSredisteOrganizacije()
+    {
+        return $this->sredisteOrganizacije;
+    }
+
+    /**
+     * @param mixed $sredisteOrganizacije
+     */
+    public function setSredisteOrganizacije($sredisteOrganizacije)
+    {
+        $this->sredisteOrganizacije = $sredisteOrganizacije;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDatumProvere()
+    {
+        return $this->datumProvere;
+    }
+
+    /**
+     * @param mixed $datumProvere
+     */
+    public function setDatumProvere($datumProvere)
+    {
+        $this->datumProvere = $datumProvere;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReferentniBroj()
+    {
+        return $this->referentniBroj;
+    }
+
+    /**
+     * @param mixed $referentniBroj
+     */
+    public function setReferentniBroj($referentniBroj)
+    {
+        $this->referentniBroj = $referentniBroj;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNazivProjekta()
+    {
+        return $this->nazivProjekta;
+    }
+
+    /**
+     * @param mixed $nazivProjekta
+     */
+    public function setNazivProjekta($nazivProjekta)
+    {
+        $this->nazivProjekta = $nazivProjekta;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPotpis()
+    {
+        return $this->potpis;
+    }
+
+    /**
+     * @param mixed $potpis
+     */
+    public function setPotpis($potpis)
+    {
+        $this->potpis = $potpis;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPropisanomObrascu()
+    {
+        return $this->propisanomObrascu;
+    }
+
+    /**
+     * @param mixed $propisanomObrascu
+     */
+    public function setPropisanomObrascu($propisanomObrascu)
+    {
+        $this->propisanomObrascu = $propisanomObrascu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPredatURoku()
+    {
+        return $this->predatURoku;
+    }
+
+    /**
+     * @param mixed $predatURoku
+     */
+    public function setPredatURoku($predatURoku)
+    {
+        $this->predatURoku = $predatURoku;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIspunjenUCelosti()
+    {
+        return $this->ispunjenUCelosti;
+    }
+
+    /**
+     * @param mixed $ispunjenUCelosti
+     */
+    public function setIspunjenUCelosti($ispunjenUCelosti)
+    {
+        $this->ispunjenUCelosti = $ispunjenUCelosti;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIspunjenNaJezikuZavrsnogIzvestaja()
+    {
+        return $this->ispunjenNaJezikuZavrsnogIzvestaja;
+    }
+
+    /**
+     * @param mixed $ispunjenNaJezikuZavrsnogIzvestaja
+     */
+    public function setIspunjenNaJezikuZavrsnogIzvestaja($ispunjenNaJezikuZavrsnogIzvestaja)
+    {
+        $this->ispunjenNaJezikuZavrsnogIzvestaja = $ispunjenNaJezikuZavrsnogIzvestaja;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrilozenaIzjava()
+    {
+        return $this->prilozenaIzjava;
+    }
+
+    /**
+     * @param mixed $prilozenaIzjava
+     */
+    public function setPrilozenaIzjava($prilozenaIzjava)
+    {
+        $this->prilozenaIzjava = $prilozenaIzjava;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRasporedAktivnosti()
+    {
+        return $this->rasporedAktivnosti;
+    }
+
+    /**
+     * @param mixed $rasporedAktivnosti
+     */
+    public function setRasporedAktivnosti($rasporedAktivnosti)
+    {
+        $this->rasporedAktivnosti = $rasporedAktivnosti;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIzvestajJeFormalno()
+    {
+        return $this->izvestajJeFormalno;
+    }
+
+    /**
+     * @param mixed $izvestajJeFormalno
+     */
+    public function setIzvestajJeFormalno($izvestajJeFormalno)
+    {
+        $this->izvestajJeFormalno = $izvestajJeFormalno;
+    }
 
 }

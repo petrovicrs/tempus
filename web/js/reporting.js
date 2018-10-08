@@ -67,6 +67,146 @@ jQuery(document).ready(function() {
         })
         $("#ukupnoPotpisanih").text(potpisanih);
     });
+
+    loadReporting();
+    var odobrenoUgovorom = 0;
+    var nakonRealokacija = 0;
+    var zavrsnomIzvestaju = 0;
+    var odobrenihUgovorom = 0;
+    var zatrazenihZavrsimIzvescem = 0;
+    var danaNakonZavrsnogIzvesca = 0;
+    var odobrenoZavrsnogIzvesca = 0;
+    var finansijskaKorelacija = 0;
+
+    $('.odobrenoUgovorom').each(function (i, obj) {
+        if (this.value != undefined) {
+            odobrenoUgovorom = odobrenoUgovorom + +this.value;
+        }
+
+    })
+    $("#odobrenoUgovorom").text(odobrenoUgovorom);
+
+    $( ".odobrenoUgovorom" ).change(function() {
+        odobrenoUgovorom = 0;
+        $('.odobrenoUgovorom').each(function (i, obj) {
+            odobrenoUgovorom = odobrenoUgovorom + +this.value;
+        })
+        $("#odobrenoUgovorom").text(odobrenoUgovorom);
+    });
+
+    $('.nakonRealokacija').each(function (i, obj) {
+        if (this.value != undefined) {
+            nakonRealokacija = nakonRealokacija + +this.value;
+        }
+
+    })
+    $("#nakonRealokacija").text(nakonRealokacija);
+
+    $( ".nakonRealokacija" ).change(function() {
+        nakonRealokacija = 0;
+        $('.nakonRealokacija').each(function (i, obj) {
+            nakonRealokacija = nakonRealokacija + +this.value;
+        })
+        $("#nakonRealokacija").text(nakonRealokacija);
+    });
+
+    $('.zavrsnomIzvestaju').each(function (i, obj) {
+        if (this.value != undefined) {
+            zavrsnomIzvestaju = zavrsnomIzvestaju + +this.value;
+        }
+
+    })
+    $("#zavrsnomIzvestaju").text(zavrsnomIzvestaju);
+
+    $( ".zavrsnomIzvestaju" ).change(function() {
+        zavrsnomIzvestaju = 0;
+        $('.zavrsnomIzvestaju').each(function (i, obj) {
+            zavrsnomIzvestaju = zavrsnomIzvestaju + +this.value;
+        })
+        $("#zavrsnomIzvestaju").text(zavrsnomIzvestaju);
+    });
+
+    $('.odobrenihUgovorom').each(function (i, obj) {
+        if (this.value != undefined) {
+            odobrenihUgovorom = odobrenihUgovorom + +this.value;
+        }
+
+    })
+    $("#odobrenihUgovorom").text(odobrenihUgovorom);
+
+    $( ".odobrenihUgovorom" ).change(function() {
+        odobrenihUgovorom = 0;
+        $('.odobrenihUgovorom').each(function (i, obj) {
+            odobrenihUgovorom = odobrenihUgovorom + +this.value;
+        })
+        $("#odobrenihUgovorom").text(odobrenihUgovorom);
+    });
+
+    $('.zatrazenihZavrsimIzvescem').each(function (i, obj) {
+        if (this.value != undefined) {
+            zatrazenihZavrsimIzvescem = zatrazenihZavrsimIzvescem + +this.value;
+        }
+
+    })
+    $("#zatrazenihZavrsimIzvescem").text(zatrazenihZavrsimIzvescem);
+
+    $( ".zatrazenihZavrsimIzvescem" ).change(function() {
+        zatrazenihZavrsimIzvescem = 0;
+        $('.zatrazenihZavrsimIzvescem').each(function (i, obj) {
+            zatrazenihZavrsimIzvescem = zatrazenihZavrsimIzvescem + +this.value;
+        })
+        $("#zatrazenihZavrsimIzvescem").text(zatrazenihZavrsimIzvescem);
+    });
+
+    $('.danaNakonZavrsnogIzvesca').each(function (i, obj) {
+        if (this.value != undefined) {
+            danaNakonZavrsnogIzvesca = danaNakonZavrsnogIzvesca + +this.value;
+        }
+
+    })
+    $("#danaNakonZavrsnogIzvesca").text(danaNakonZavrsnogIzvesca);
+
+    $( ".danaNakonZavrsnogIzvesca" ).change(function() {
+        danaNakonZavrsnogIzvesca = 0;
+        $('.danaNakonZavrsnogIzvesca').each(function (i, obj) {
+            danaNakonZavrsnogIzvesca = danaNakonZavrsnogIzvesca + +this.value;
+        })
+        $("#danaNakonZavrsnogIzvesca").text(danaNakonZavrsnogIzvesca);
+    });
+
+    $('.odobrenoZavrsnogIzvesca').each(function (i, obj) {
+        if (this.value != undefined) {
+            odobrenoZavrsnogIzvesca = odobrenoZavrsnogIzvesca + +this.value;
+        }
+
+    })
+    $("#odobrenoZavrsnogIzvesca").text(odobrenoZavrsnogIzvesca);
+
+    $( ".odobrenoZavrsnogIzvesca" ).change(function() {
+        odobrenoZavrsnogIzvesca = 0;
+        $('.odobrenoZavrsnogIzvesca').each(function (i, obj) {
+            odobrenoZavrsnogIzvesca = odobrenoZavrsnogIzvesca + +this.value;
+        })
+        $("#odobrenoZavrsnogIzvesca").text(odobrenoZavrsnogIzvesca);
+    });
+
+    $('.finansijskaKorelacija').each(function (i, obj) {
+        if (this.value != undefined) {
+            finansijskaKorelacija = finansijskaKorelacija + +this.value;
+        }
+
+    })
+    $("#finansijskaKorelacija").text(finansijskaKorelacija);
+
+    $( ".finansijskaKorelacija" ).change(function() {
+        finansijskaKorelacija = 0;
+        $('.finansijskaKorelacija').each(function (i, obj) {
+            finansijskaKorelacija = finansijskaKorelacija + +this.value;
+        })
+        $("#finansijskaKorelacija").text(finansijskaKorelacija);
+    });
+
+
 });
 
 function loadReporting() {

@@ -50,7 +50,7 @@ class UsersController extends AbstractController
             $results->setProject($project);
             $this->getResultsRepository()->save($results);
 
-            return $this->redirectToRoute('reporting_create');
+            return $this->redirectToRoute('reporting_start');
         }
 
         return $this->render('results/create.twig', ['my_form' => $resultsForm->createView(),
@@ -82,7 +82,7 @@ class UsersController extends AbstractController
             $this->getResultsRepository()->save($result);
 
             if (!$result->getProject()->getIsCompleted()) {
-                return $this->redirectToRoute('reporting_create');
+                return $this->redirectToRoute('reporting_start');
             }
 
         }

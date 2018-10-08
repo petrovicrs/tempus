@@ -16,6 +16,10 @@ use AppBundle\Entity\ReportingQuestionsAndAnswers;
 use AppBundle\Form\ProjectReportingForm;
 use AppBundle\Form\ProjectReportingProveraDokumentacijeForm;
 use AppBundle\Form\ProjectReportingStepOne105Form;
+use AppBundle\Form\ProjectReportingStepThree101Form;
+use AppBundle\Form\ProjectReportingStepThree102Form;
+use AppBundle\Form\ProjectReportingStepThree105Form;
+use AppBundle\Form\ProjectReportingStepFiveForm;
 use AppBundle\Form\ReportingEditStartForm;
 use AppBundle\Form\ReportingStartForm;
 use Symfony\Component\HttpFoundation\Request;
@@ -122,6 +126,12 @@ class ReportingController extends AbstractController
 
         $reportingStartForm->handleRequest($request);
 
+        /** @var ProjectReporting $projectReporting */
+        $projectReporting = $this->getProjectReportingRepository()->findBy(
+            ['project' => $project->getId()],
+            ['id' => 'DESC']
+        );
+
         if ($reportingStartForm->isSubmitted() && $reportingStartForm->isValid())
         {
             $reporting->setProject($project);
@@ -131,8 +141,18 @@ class ReportingController extends AbstractController
 
             if ($reportingType === 'Srednjerocni izvestaj') {
                 return $this->redirectToRoute('reporting_create_type_one', ['active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
-            } else if ($reportingType === 'Zavrsni izvestaj') {
+            }
+            if ($reportingType === 'Zavrsni izvestaj') {
                 return $this->redirectToRoute('reporting_create_type_two', ['active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+            }
+            if ($reportingType === 'Provera dokumentacije na licu mesta') {
+                return $this->redirectToRoute('reporting_create_type_three', ['active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+            }
+            if ($reportingType === 'Obrazac za proveru finansijskog dela izvestaja') {
+                return $this->redirectToRoute('reporting_create_type_four', ['active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+            }
+            if ($reportingType === 'Obrazac za prveru formalne prihvatljivosti finalnog izvestaja') {
+                return $this->redirectToRoute('reporting_create_type_five', ['active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
         }
 
@@ -142,6 +162,7 @@ class ReportingController extends AbstractController
             'isCompleted' => $isCompleted,
             'actionTab' => $this->showActionTab($project),
             'projectId' => $project->getId(),
+            'projectReporting' => $projectReporting
         ];
 
         return $this->render('reporting/create-report.twig', $data);
@@ -187,11 +208,11 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if ($keyAction == 'ka1') {
+            if ($keyAction === 'ka1') {
                 return $this->redirectToRoute('attachments_create');
-            } else {
-                return $this->redirectToRoute('equipment_create');
             }
+
+            return $this->redirectToRoute('equipment_create');
         }
 
         return $this->render(
@@ -217,11 +238,19 @@ class ReportingController extends AbstractController
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
-        $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
-            'action' => $this->generateUrl('reporting_create_type_two'),
-            'method' => 'POST',
-            'locale' => $request->getLocale()
-        ]);
+        if ($project->getActions()->getNameSr() === 'KA105') {
+            $projectReportingForm = $this->createForm(ProjectReportingStepOne105Form::class, $projectReporting, [
+                'action' => $this->generateUrl('reporting_create_type_two'),
+                'method' => 'POST',
+                'locale' => $request->getLocale()
+            ]);
+        } else {
+            $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
+                'action' => $this->generateUrl('reporting_create_type_two'),
+                'method' => 'POST',
+                'locale' => $request->getLocale()
+            ]);
+        }
 
         $keyAction = $project->getKeyActions()->getNameSr();
 
@@ -239,11 +268,12 @@ class ReportingController extends AbstractController
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if ($keyAction == 'ka1') {
+            if ($keyAction === 'ka1') {
                 return $this->redirectToRoute('attachments_create');
-            } else {
-                return $this->redirectToRoute('equipment_create');
             }
+
+            return $this->redirectToRoute('equipment_create');
+
         }
 
         return $this->render(
@@ -269,11 +299,27 @@ class ReportingController extends AbstractController
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
-        $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
-            'action' => $this->generateUrl('reporting_create_type_one'),
-            'method' => 'POST',
-            'locale' => $request->getLocale()
-        ]);
+        $projectAction = $project->getActions()->getNameSr();
+
+        if ($projectAction === 'KA101' || $projectAction === 'KA104') {
+            $projectReportingForm = $this->createForm(ProjectReportingStepThree101Form::class, $projectReporting, [
+                'action' => $this->generateUrl('reporting_create_type_three'),
+                'method' => 'POST',
+                'locale' => $request->getLocale()
+            ]);
+        } elseif ($projectAction === 'KA102') {
+            $projectReportingForm = $this->createForm(ProjectReportingStepThree102Form::class, $projectReporting, [
+                'action' => $this->generateUrl('reporting_create_type_three'),
+                'method' => 'POST',
+                'locale' => $request->getLocale()
+            ]);
+        } elseif ($projectAction === 'KA105') {
+            $projectReportingForm = $this->createForm(ProjectReportingStepThree105Form::class, $projectReporting, [
+                'action' => $this->generateUrl('reporting_create_type_three'),
+                'method' => 'POST',
+                'locale' => $request->getLocale()
+            ]);
+        }
 
         $keyAction = $project->getKeyActions()->getNameSr();
 
@@ -283,17 +329,24 @@ class ReportingController extends AbstractController
 
             $projectReporting->setProject($project);
 
+            $reportingType = $this->getReportingTypeRepository()->findOneBy(
+                ['nameSr' => 'Provera dokumentacije na licu mesta']
+            );
+
+            $projectReporting->setReportingType($reportingType);
+
             $this->getProjectReportingRepository()->save($projectReporting);
 
-            if ($keyAction == 'ka1') {
+            if ($keyAction === 'ka1') {
                 return $this->redirectToRoute('attachments_create');
-            } else {
-                return $this->redirectToRoute('equipment_create');
             }
+
+            return $this->redirectToRoute('equipment_create');
+
         }
 
         return $this->render(
-            'reporting/create.twig',
+            'reporting/create-report-type-three.twig',
             [
                 'my_form' => $projectReportingForm->createView(),
                 'keyAction' => $project->getKeyActions()->getNameSr(),
@@ -315,11 +368,27 @@ class ReportingController extends AbstractController
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
-        $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
-            'action' => $this->generateUrl('reporting_create_type_one'),
-            'method' => 'POST',
-            'locale' => $request->getLocale()
-        ]);
+        $projectAction = $project->getActions()->getNameSr();
+
+        if ($projectAction === 'KA101' || $projectAction === 'KA104') {
+            $projectReportingForm = $this->createForm(ProjectReportingStepThree101Form::class, $projectReporting, [
+                'action' => $this->generateUrl('reporting_create_type_three'),
+                'method' => 'POST',
+                'locale' => $request->getLocale()
+            ]);
+        } elseif ($projectAction === 'KA102') {
+            $projectReportingForm = $this->createForm(ProjectReportingStepThree102Form::class, $projectReporting, [
+                'action' => $this->generateUrl('reporting_create_type_three'),
+                'method' => 'POST',
+                'locale' => $request->getLocale()
+            ]);
+        } elseif ($projectAction === 'KA105') {
+            $projectReportingForm = $this->createForm(ProjectReportingStepThree105Form::class, $projectReporting, [
+                'action' => $this->generateUrl('reporting_create_type_three'),
+                'method' => 'POST',
+                'locale' => $request->getLocale()
+            ]);
+        }
 
         $keyAction = $project->getKeyActions()->getNameSr();
 
@@ -328,6 +397,12 @@ class ReportingController extends AbstractController
         if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
 
             $projectReporting->setProject($project);
+
+            $reportingType = $this->getReportingTypeRepository()->findOneBy(
+                ['nameSr' => 'Obrazac za proveru finansijskog dela izvestaja']
+            );
+
+            $projectReporting->setReportingType($reportingType);
 
             $this->getProjectReportingRepository()->save($projectReporting);
 
@@ -339,7 +414,7 @@ class ReportingController extends AbstractController
         }
 
         return $this->render(
-            'reporting/create.twig',
+            'reporting/create-report-type-four.twig',
             [
                 'my_form' => $projectReportingForm->createView(),
                 'keyAction' => $project->getKeyActions()->getNameSr(),
@@ -352,17 +427,17 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/create-report-type-fife", name="reporting_create_type_fife", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/reporting/create-report-type-five", name="reporting_create_type_five", requirements={"locale": "%app.locales%"})
      */
-    public function createReportTypeFifeAction(Request $request)
+    public function createReportTypeFiveAction(Request $request)
     {
         $projectReporting = new ProjectReporting();
 
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
-        $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
-            'action' => $this->generateUrl('reporting_create_type_one'),
+        $projectReportingForm = $this->createForm(ProjectReportingStepFiveForm::class, $projectReporting, [
+            'action' => $this->generateUrl('reporting_create_type_five'),
             'method' => 'POST',
             'locale' => $request->getLocale()
         ]);
@@ -375,6 +450,12 @@ class ReportingController extends AbstractController
 
             $projectReporting->setProject($project);
 
+            $reportingType = $this->getReportingTypeRepository()->findOneBy(
+                ['nameSr' => 'Obrazac za prveru formalne prihvatljivosti finalnog izvestaja']
+            );
+
+            $projectReporting->setReportingType($reportingType);
+
             $this->getProjectReportingRepository()->save($projectReporting);
 
             if ($keyAction == 'ka1') {
@@ -385,7 +466,7 @@ class ReportingController extends AbstractController
         }
 
         return $this->render(
-            'reporting/create.twig',
+            'reporting/create-report-type-five.twig',
             [
                 'my_form' => $projectReportingForm->createView(),
                 'keyAction' => $project->getKeyActions()->getNameSr(),
@@ -431,8 +512,18 @@ class ReportingController extends AbstractController
 
             if ($reportingType === 'Srednjerocni izvestaj') {
                 return $this->redirectToRoute('reporting_edit_type_one', ['projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
-            } else if ($reportingType === 'Zavrsni izvestaj') {
+            }
+            if ($reportingType === 'Zavrsni izvestaj') {
                 return $this->redirectToRoute('reporting_edit_type_two', ['projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+            }
+            if ($reportingType === 'Provera dokumentacije na licu mesta') {
+                return $this->redirectToRoute('reporting_edit_type_three', ['projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+            }
+            if ($reportingType === 'Obrazac za proveru finansijskog dela izvestaja') {
+                return $this->redirectToRoute('reporting_edit_type_four', ['projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
+            }
+            if ($reportingType === 'Obrazac za prveru formalne prihvatljivosti finalnog izvestaja') {
+                return $this->redirectToRoute('reporting_edit_type_five', ['projectId' => $projectId, 'active' => 'reporting', 'actionTab' => $actionTab, 'isCompleted' => $isCompleted]);
             }
         }
 
@@ -532,6 +623,345 @@ class ReportingController extends AbstractController
             'isCompleted' => $project->getIsCompleted(),
             'actionTab' => $this->showActionTab($project),
             'action' => $project->getActions()->getNameSr()
+        ]);
+    }
+
+    /**
+     * @Route("/{locale}/reporting/edit-report-type-two/{projectId}/report/{reportId}", name="reporting_edit_type_two",
+     *      defaults={"reportId": null}, requirements={"locale": "%app.locales%", "reportId": "\d+$|^$", "projectId": "\d+"})
+     */
+    public function reportingEditTypeTwoAction(Request $request, $reportId = null, $projectId)
+    {
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        if ($reportId !== null) {
+            /** @var ProjectReporting $projectReporting */
+            $projectReporting = $this->getProjectReportingRepository()->findOneBy(
+                ['id' => $reportId]
+            );
+
+            if ($project->getActions()->getNameSr() === 'KA105') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepOne105Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_two', ['reportId' => $reportId, 'projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale(),
+                    'isCompleted' => $project->getIsCompleted(),
+                ]);
+            } else {
+                $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_two', ['reportId' => $reportId, 'projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale(),
+                    'isCompleted' => $project->getIsCompleted(),
+                ]);
+            }
+        } else {
+            $projectReporting = new ProjectReporting();
+            $projectReporting->setProject($project);
+
+            if ($project->getActions()->getNameSr() === 'KA105') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepOne105Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_two', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale(),
+                    'isCompleted' => $project->getIsCompleted(),
+                ]);
+            } else {
+                $projectReportingForm = $this->createForm(ProjectReportingForm::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_two', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale(),
+                    'isCompleted' => $project->getIsCompleted(),
+                ]);
+            }
+        }
+
+        $keyAction = $project->getKeyActions()->getNameSr();
+
+        $projectReportingForm->handleRequest($request);
+
+        if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
+
+            $projectReporting->setProject($project);
+
+            $reportingType = $this->getReportingTypeRepository()->findOneBy(
+                ['nameSr' => 'Zavrsni izvestaj']
+            );
+
+            $projectReporting->setReportingType($reportingType);
+
+            $this->getProjectReportingRepository()->save($projectReporting);
+
+            if (!$project->getIsCompleted()) {
+                if ($keyAction === 'ka1') {
+                    return $this->redirectToRoute('attachments_create');
+                }
+
+                return $this->redirectToRoute('equipment_create');
+
+            }
+        }
+
+        return $this->render('reporting/edit-report-type-two.twig', [
+            'my_form' => $projectReportingForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'projectId' => $project->getId(),
+            'isCompleted' => $project->getIsCompleted(),
+            'actionTab' => $this->showActionTab($project),
+            'action' => $project->getActions()->getNameSr()
+        ]);
+    }
+
+    /**
+     * @Route("/{locale}/reporting/edit-report-type-three/{projectId}/report/{reportId}", name="reporting_edit_type_three",
+     *      defaults={"reportId": null}, requirements={"locale": "%app.locales%", "reportId": "\d+$|^$", "projectId": "\d+"})
+     */
+    public function reportingEditTypeThreeAction(Request $request, $reportId = null, $projectId)
+    {
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        $projectAction = $project->getActions()->getNameSr();
+        if ($reportId !== null) {
+            /** @var ProjectReporting $projectReporting */
+            $projectReporting = $this->getProjectReportingRepository()->findOneBy(
+                ['id' => $reportId]
+            );
+
+            if ($projectAction === 'KA101' || $projectAction === 'KA104') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree101Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_three', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale(),
+                ]);
+            } elseif ($projectAction === 'KA102') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree102Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_three', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale()
+                ]);
+            } elseif ($projectAction === 'KA105') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree105Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_three', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale()
+                ]);
+            }
+        } else {
+            $projectReporting = new ProjectReporting();
+            $projectReporting->setProject($project);
+
+            if ($projectAction === 'KA101' || $projectAction === 'KA104') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree101Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_three', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale()
+                ]);
+            } elseif ($projectAction === 'KA102') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree102Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_three', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale()
+                ]);
+            } elseif ($projectAction === 'KA105') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree105Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_three', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale()
+                ]);
+            }
+        }
+
+        $keyAction = $project->getKeyActions()->getNameSr();
+
+        $projectReportingForm->handleRequest($request);
+
+        if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
+
+            $projectReporting->setProject($project);
+
+            $reportingType = $this->getReportingTypeRepository()->findOneBy(
+                ['nameSr' => 'Provera dokumentacije na licu mesta']
+            );
+
+            $projectReporting->setReportingType($reportingType);
+
+            $this->getProjectReportingRepository()->save($projectReporting);
+
+            return $this->redirectToRoute('reporting_edit');
+        }
+
+        return $this->render('reporting/edit-report-type-three.twig', [
+            'my_form' => $projectReportingForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'projectId' => $project->getId(),
+            'isCompleted' => $project->getIsCompleted(),
+            'actionTab' => $this->showActionTab($project),
+            'action' => $project->getActions()->getNameSr(),
+        ]);
+    }
+
+    /**
+     * @Route("/{locale}/reporting/edit-report-type-four/{projectId}/report/{reportId}", name="reporting_edit_type_four",
+     *      defaults={"reportId": null}, requirements={"locale": "%app.locales%", "reportId": "\d+$|^$", "projectId": "\d+"})
+     */
+    public function reportingEditTypeFourAction(Request $request, $reportId = null, $projectId)
+    {
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        $projectAction = $project->getActions()->getNameSr();
+        if ($reportId !== null) {
+            /** @var ProjectReporting $projectReporting */
+            $projectReporting = $this->getProjectReportingRepository()->findOneBy(
+                ['id' => $reportId]
+            );
+
+            if ($projectAction === 'KA101' || $projectAction === 'KA104') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree101Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_four', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale(),
+                ]);
+            } elseif ($projectAction === 'KA102') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree102Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_four', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale()
+                ]);
+            } elseif ($projectAction === 'KA105') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree105Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_four', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale()
+                ]);
+            }
+        } else {
+            $projectReporting = new ProjectReporting();
+            $projectReporting->setProject($project);
+
+            if ($projectAction === 'KA101' || $projectAction === 'KA104') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree101Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_four', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale()
+                ]);
+            } elseif ($projectAction === 'KA102') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree102Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_four', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale()
+                ]);
+            } elseif ($projectAction === 'KA105') {
+                $projectReportingForm = $this->createForm(ProjectReportingStepThree105Form::class, $projectReporting, [
+                    'action' => $this->generateUrl('reporting_edit_type_four', ['projectId' => $projectId]),
+                    'method' => 'POST',
+                    'locale' => $request->getLocale()
+                ]);
+            }
+        }
+
+        $keyAction = $project->getKeyActions()->getNameSr();
+
+        $projectReportingForm->handleRequest($request);
+
+        if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
+
+            $projectReporting->setProject($project);
+
+            $reportingType = $this->getReportingTypeRepository()->findOneBy(
+                ['nameSr' => 'Obrazac za proveru finansijskog dela izvestaja']
+            );
+
+            $projectReporting->setReportingType($reportingType);
+
+            $this->getProjectReportingRepository()->save($projectReporting);
+
+            if (!$project->getIsCompleted()) {
+                if ($keyAction === 'ka1') {
+                    return $this->redirectToRoute('attachments_create');
+                }
+
+                return $this->redirectToRoute('equipment_create');
+
+            }
+        }
+
+        return $this->render('reporting/edit-report-type-four.twig', [
+            'my_form' => $projectReportingForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'projectId' => $project->getId(),
+            'isCompleted' => $project->getIsCompleted(),
+            'actionTab' => $this->showActionTab($project),
+            'action' => $project->getActions()->getNameSr(),
+        ]);
+    }
+
+    /**
+     * @Route("/{locale}/reporting/edit-report-type-five/{projectId}/report/{reportId}", name="reporting_edit_type_five",
+     *      defaults={"reportId": null}, requirements={"locale": "%app.locales%", "reportId": "\d+$|^$", "projectId": "\d+"})
+     */
+    public function reportingEditTypeFiveAction(Request $request, $reportId = null, $projectId)
+    {
+        /** @var Project $project */
+        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
+
+        if ($reportId !== null) {
+            /** @var ProjectReporting $projectReporting */
+            $projectReporting = $this->getProjectReportingRepository()->findOneBy(
+                ['id' => $reportId]
+            );
+            $projectReportingForm = $this->createForm(ProjectReportingStepFiveForm::class, $projectReporting, [
+                'action' => $this->generateUrl('reporting_edit_type_five', ['projectId' => $projectId]),
+                'method' => 'POST',
+                'locale' => $request->getLocale(),
+            ]);
+        } else {
+            $projectReporting = new ProjectReporting();
+            $projectReporting->setProject($project);
+
+            $projectReportingForm = $this->createForm(ProjectReportingStepFiveForm::class, $projectReporting, [
+                'action' => $this->generateUrl('reporting_edit_type_five', ['projectId' => $projectId]),
+                'method' => 'POST',
+                'locale' => $request->getLocale()
+            ]);
+
+        }
+
+        $keyAction = $project->getKeyActions()->getNameSr();
+
+        $projectReportingForm->handleRequest($request);
+
+        if ($projectReportingForm->isSubmitted() && $projectReportingForm->isValid()) {
+
+            $projectReporting->setProject($project);
+
+            $reportingType = $this->getReportingTypeRepository()->findOneBy(
+                ['nameSr' => 'Obrazac za prveru formalne prihvatljivosti finalnog izvestaja']
+            );
+
+            $projectReporting->setReportingType($reportingType);
+
+            $this->getProjectReportingRepository()->save($projectReporting);
+
+            if (!$project->getIsCompleted()) {
+                if ($keyAction === 'ka1') {
+                    return $this->redirectToRoute('attachments_create');
+                }
+
+                return $this->redirectToRoute('equipment_create');
+
+            }
+        }
+
+        return $this->render('reporting/edit-report-type-five.twig', [
+            'my_form' => $projectReportingForm->createView(),
+            'keyAction' => $project->getKeyActions()->getNameSr(),
+            'projectId' => $project->getId(),
+            'isCompleted' => $project->getIsCompleted(),
+            'actionTab' => $this->showActionTab($project),
+            'action' => $project->getActions()->getNameSr(),
         ]);
     }
 

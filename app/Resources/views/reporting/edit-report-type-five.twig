@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/reporting.js')}}"></script>
+    <section id="main">
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar.html.twig' with {'active': 'reporting', 'actionTab': actionTab, 'isCompleted': isCompleted} %}
+    {% endif %}
+    {%  if keyAction == 'ka2' %}
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting'} %}
+    {% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls reporting">
+                <a href="{{ localizedPath('reporting_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
+                <div class="general-info">
+                    {{ form_start(my_form) }}
+                        <div class="col-xs-12">
+                            <h2>{% trans %}Obrazac za proveru formalne prihvatljivosti finalnog izvestaja Erasmus+ / KA1{% endtrans %}</h2>
+                            <h2>{% trans %}Osnovne informacije{% endtrans %}</h2>
+                        </div>
+                        <div>
+                            {{ form_label(my_form.vrstaProjekta, 'Vrsta projekta:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.vrstaProjekta, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.nazivKorisnika, 'Naziv korisnika:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.nazivKorisnika, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.sredisteOrganizacije, 'Srediste organizacije/institucije:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.sredisteOrganizacije, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.datumProvere, 'Datum provere:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.datumProvere) }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.referentniBroj, 'Referentni broj projekta:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.referentniBroj, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.nazivProjekta, 'Naziv projekta:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.nazivProjekta, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.datumPrijemaIzvestaja, 'Datum prijema izvestaja:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.datumPrijemaIzvestaja) }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.potpis, 'Potpis:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.potpis, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div><br/>
+                        <div class="col-xs-12">
+                            <h2>{% trans %}Kriterijumi formalne prihvatljivosti{% endtrans %}</h2>
+                        </div>
+                        <div>
+                            {{ form_label(my_form.propisanomObrascu, '1. Izvestaj predat na propisanom obrascu:' |trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.propisanomObrascu, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            {{ form_label(my_form.predatURoku, '2. Izvestaj je predat u roku koji je definisan Ugovorom sa korisnikom:' |trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.predatURoku, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            {{ form_label(my_form.ispunjenUCelosti, '3. Izvestaj je ispunjen u celosti:' |trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.ispunjenUCelosti, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            {{ form_label(my_form.ispunjenNaJezikuZavrsnogIzvestaja, '4. Izvestaj je ispunjen na jeziku koji je u obrascu odabran kao jezik zavrsnog izvestaja:' |trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.ispunjenNaJezikuZavrsnogIzvestaja, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            {{ form_label(my_form.prilozenaIzjava, '5. Prilozena Izjava o tacnosti podataka (Declaration of honour) je pecatirana i potpisana:' |trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.prilozenaIzjava, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/><br/>
+                        <div>
+                            {{ form_label(my_form.rasporedAktivnosti, '6. Prilozen je raspored aktivnosti:' |trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.rasporedAktivnosti, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+
+                        <div class="col-xs-12">
+                            <h3><b>{% trans %}Zaklkljucak {% endtrans %}</b></h3>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.izvestajJeFormalno, 'Finalni izvestaj je formalno'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.izvestajJeFormalno, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div class="col-xs-12">
+                            <h3><b>{% trans %}Komentar {% endtrans %}</b></h3>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.komentarObrade, 'U slucaju da izvestaj nije formalno prihvatljiv, potrebno je pojasniti razlog i da li se planira da se od korisnika zatrazi ordedjena korektivna mera'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.komentarObrade, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                    {{ form_end(my_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

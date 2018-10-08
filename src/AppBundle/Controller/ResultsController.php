@@ -120,7 +120,7 @@ class ResultsController extends AbstractController
             $this->getProjectResultsRepository()->save($projectResult);
 
             if (!$projectResult->getProject()->getIsCompleted()) {
-                return $this->redirectToRoute('reporting_create');
+                return $this->redirectToRoute('reporting_edit', ['projectId' => $projectId]);
             }
         }
         return $this->render('results/edit.twig',

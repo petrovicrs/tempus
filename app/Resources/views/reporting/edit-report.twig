@@ -15,7 +15,21 @@
                     <a href="{{ localizedPath('result_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
                     <div class="general-info">
                         {% for report in projectReporting %}
-                            Report type - <a href="{{ localizedPath('reporting_edit_type_one', {'reportId': report.id, 'projectId': projectId}) }}" > {{ report.reportingType.nameSr }} </a><br/><br/>
+                            {% if report.reportingType.id == 2 %}
+                                Report type - <a href="{{ localizedPath('reporting_edit_type_one', {'reportId': report.id, 'projectId': projectId}) }}" > {{ report.reportingType.nameSr }} </a><br/><br/>
+                            {% endif %}
+                            {% if report.reportingType.id == 3 %}
+                                Report type - <a href="{{ localizedPath('reporting_edit_type_two', {'reportId': report.id, 'projectId': projectId}) }}" > {{ report.reportingType.nameSr }} </a><br/><br/>
+                            {% endif %}
+                            {% if report.reportingType.id == 4 %}
+                                Report type - <a href="{{ localizedPath('reporting_edit_type_three', {'reportId': report.id, 'projectId': projectId}) }}" > {{ report.reportingType.nameSr }} </a><br/><br/>
+                            {% endif %}
+                            {% if report.reportingType.id == 5 %}
+                                Report type - <a href="{{ localizedPath('reporting_edit_type_four', {'reportId': report.id, 'projectId': projectId}) }}" > {{ report.reportingType.nameSr }} </a><br/><br/>
+                            {% endif %}
+                            {% if report.reportingType.id == 6 %}
+                                Report type - <a href="{{ localizedPath('reporting_edit_type_five', {'reportId': report.id, 'projectId': projectId}) }}" > {{ report.reportingType.nameSr }} </a><br/><br/>
+                            {% endif %}
                         {% endfor %}
                         {{ form_start(my_form) }}
                         <div>

@@ -1,0 +1,1791 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript" src="{{ asset('/js/reporting.js')}}"></script>
+    <section id="main">
+    {% if keyAction == 'ka1' %}
+        {% include 'sub-navbar.html.twig' with {'active': 'reporting', 'actionTab': actionTab, 'isCompleted': isCompleted} %}
+    {% endif %}
+    {%  if keyAction == 'ka2' %}
+        {% include 'sub-navbar-ka2.html.twig' with {'active': 'reporting'} %}
+    {% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="controls reporting">
+                <a href="{{ localizedPath('reporting_edit', {projectId: projectId}) }}"><button type="button" class="btn btn-info">Back</button></a>
+                <div class="general-info">
+                    {% if (action == 'KA101' or action == 'KA104') %}
+                        {{ form_start(my_form) }}
+                            <div class="col-xs-12">
+                                <h1>Provera dokumentacije na licu mesta Erasmus+ / KA (101 - 104)</h1>
+                                <h2>{% trans %}Osnovne informacije{% endtrans %}</h2>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.ulazakIzvestaja, 'Datum ulaska izvestaja u GF'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.ulazakIzvestaja) }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.proveruIzvrsio, 'Proveru izvrsio/la:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.proveruIzvrsio, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.potpunaFinansijskaDokumentacija, 'Da li je finansijska dokumentacija potpuna?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.potpunaFinansijskaDokumentacija, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.datumPosete, 'Datum poste'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.datumPosete) }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.dokumentPregledao, 'Pregledao/la:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.dokumentPregledao, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.potpunaDodatnaDokumentacija, 'Da li je dodatna dokumentacija potpuna?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.potpunaDodatnaDokumentacija, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.razlogNepotpuneDokumentacije, 'Ako nije, sta je i do kog kora trazeno korisniku?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.razlogNepotpuneDokumentacije, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                {{ form_label(my_form.datumTrazenjaDodatneDokumentacije, 'Datum trazenja dodatne dokumentacije'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.datumTrazenjaDodatneDokumentacije)  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.datumDostavljanjaDodatneDokumentacije, 'Datum dostavljanja dodatne dokumentacije'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.datumDostavljanjaDodatneDokumentacije)  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.apsorbovatiAlociranBudzet, 'Da li deluje da ce korisnik apsorbovati alocirani budzet?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.apsorbovatiAlociranBudzet, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>Ako jeste:
+                            <div>
+                                {{ form_label(my_form.datumZavrsetkaObrade, 'Datum zavrsetka obrade izvestaja'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.datumZavrsetkaObrade) }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                Rok za obradu izvestaja 30 dana
+                            </div><br/>
+                            <div class="col-xs-12">
+                                <h2>{% trans %}Kriterijumi za proveru finansijske prihvatljivosti{% endtrans %}</h2>
+                            </div>
+                            <div>
+                                <b>1. Provera prijavljenih mobilnosti:</b><br/>
+                                {{ form_label(my_form.pitanje1pp1, '1.1 Ukupan broj prijavljnih mobilnosti je manji ili jednak odobrenim mobilnostima'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje1pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <b>2. Provera datuma odrzavanja aktivnosti:</b><br/>
+                                {{ form_label(my_form.pitanje2pp1, '2.1. Datumi aktivnosti moraju biti u okviru datuma pocetka i kraja projekta'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje2pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <b>3. Provera provedenog broja dana aktivnosti i prihvatljivost obracuna u skladu sa Aneksom II Ugovora:</b><br/>
+                                3.1. Broj dana/meseci aktivnosti za svaku pojedinu mobilnost u skladu s odobrenim brojem dana/meseci<br/>
+                                {{ form_label(my_form.pitanje3pp1pp1, '3.1.1. Nastavno i nenastavno osoblje: 2 dana do 2 meseca iskljucujuci dane putovanja'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje3pp1pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <b>4. Provera udaljenosti puta:</b><br/>
+                                {{ form_label(my_form.pitanje4pp1, '4.1. Udaljenost puta je u skladu sa udaljenoscu koja je odredjena prema alatu Evropske komisije za izracunavanje razdaljine'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje4pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/><br/>
+                            <div>
+                                <b>5. Provera zatrazenog iznosa za kurs</b><br/>
+                                {{ form_label(my_form.pitanje5pp1, '5.1. Provera da je duzina trajanja kursa u skladu sa zatrazenim sredstvima'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje5pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/><br/>
+                            <div>
+                                <b>6. Provera zatrazenog iznosa osobe sa hendikepom</b><br/>
+                                {{ form_label(my_form.pitanje6pp1, '6.1. Provera da je tip zatrazenog troska u skladu sa tipom odobrenog troska'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje6pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <b>7. Provera prilozene propratne dokumentacije za vanredne troskove</b><br/>
+                                {{ form_label(my_form.pitanje7pp1, '7.1. Vrsta dokumentacije za pojedinacnu vrstu vanrednog troska prema odredbama opsih uslova Ugovora'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje7pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div><br/><br/><br/>
+                                {{ form_label(my_form.pitanje7pp2, '7.2. Provera da je tip zatrazenog troska u skladu sa tipom odobrenog troska'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje7pp2, {'attr': {'class': 'form-control'}})  }}
+                                </div><br/><br/><br/>
+                                {{ form_label(my_form.pitanje7pp3, '7.3. Obracun'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje7pp3, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/><br/>
+                            <div>
+                                <b>8. Provera prilozene propratne dokumentacije za troskove mobilnosti</b><br/>
+                                {{ form_label(my_form.pitanje8pp1, '8.1. Troskovi putovanja - avio karte, autobuske karte...'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje8pp1, {'attr': {'class': 'form-control'}})  }}
+                                </div><br/><br/>
+                                {{ form_label(my_form.pitanje8pp2, '8.2. Putno nalog'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje8pp2, {'attr': {'class': 'form-control'}})  }}
+                                </div><br/><br/>
+                                {{ form_label(my_form.pitanje8pp3, '8.3. Racun za smestaj, hranu'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje8pp3, {'attr': {'class': 'form-control'}})  }}
+                                </div><br/><br/>
+                                {{ form_label(my_form.pitanje8pp4, '8.4. Isplacena individualna podrska uceniku'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje8pp4, {'attr': {'class': 'form-control'}})  }}
+                                </div><br/><br/>
+                                {{ form_label(my_form.pitanje8pp5, '8.5. Obracun'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.pitanje8pp5, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <table border="1px">
+                                    <tr>
+                                        <td>
+                                            Proracun
+                                        </td>
+                                        <td>
+                                            Odobreno <br/>ugovorom
+                                        </td>
+                                        <td>
+                                            Stanje nakon<br/>realokacija
+                                        </td>
+                                        <td>
+                                            Iskazano u <br/>zavrsnom izvestaju
+                                        </td>
+                                        <td>
+                                            Broj dana / ucesnika<br/>odobrenih ugovorom
+                                        </td>
+                                        <td>
+                                            Broj dana / ucesnika zatrazenih<br/>zavrsnim izvjescem
+                                        </td>
+                                        <td>
+                                            Odobren broj dana / ucesnika nakon<br/>zavrsnog izvjesca
+                                        </td>
+                                        <td>
+                                            Odobreno nakon u <br/>zavrsnog izvjesca
+                                        </td>
+                                        <td>
+                                            Finansijska korekcija
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            1. Troskovi puta
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoUgovorom1, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.nakonRealokacija1, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zavrsnomIzvestaju1, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenihUgovorom1, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zatrazenihZavrsimIzvescem1, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.danaNakonZavrsnogIzvesca1, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoZavrsnogIzvesca1, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.finansijskaKorelacija1, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            2. Individualna podrska
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoUgovorom2, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.nakonRealokacija2, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zavrsnomIzvestaju2, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenihUgovorom2, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zatrazenihZavrsimIzvescem2, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.danaNakonZavrsnogIzvesca2, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoZavrsnogIzvesca2, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.finansijskaKorelacija2, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            3. Organizaciona podrska
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoUgovorom3, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.nakonRealokacija3, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zavrsnomIzvestaju3, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenihUgovorom3, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zatrazenihZavrsimIzvescem3, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.danaNakonZavrsnogIzvesca3, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoZavrsnogIzvesca3, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.finansijskaKorelacija3, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            4. Podrska za lica sa hendikepom
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoUgovorom4, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.nakonRealokacija4, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zavrsnomIzvestaju4, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenihUgovorom4, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zatrazenihZavrsimIzvescem4, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.danaNakonZavrsnogIzvesca4, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoZavrsnogIzvesca4, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.finansijskaKorelacija4, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            5. Vanredni troskovi
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoUgovorom5, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.nakonRealokacija5, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zavrsnomIzvestaju5, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenihUgovorom5, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zatrazenihZavrsimIzvescem5, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.danaNakonZavrsnogIzvesca5, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoZavrsnogIzvesca5, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.finansijskaKorelacija5, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            6. Troskovi kursa
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoUgovorom6, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.nakonRealokacija6, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zavrsnomIzvestaju6, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenihUgovorom6, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.zatrazenihZavrsimIzvescem6, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.danaNakonZavrsnogIzvesca6, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.odobrenoZavrsnogIzvesca6, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.finansijskaKorelacija6, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Ukupno
+                                        </td>
+                                        <td>
+                                            <div id="odobrenoUgovorom"></div>
+                                        </td>
+                                        <td>
+                                            <div id="nakonRealokacija"></div>
+                                        </td>
+                                        <td>
+                                            <div id="zavrsnomIzvestaju"></div>
+                                        </td>
+                                        <td>
+                                            <div id="odobrenihUgovorom"></div>
+                                        </td>
+                                        <td>
+                                            <div id="zatrazenihZavrsimIzvescem"></div>
+                                        </td>
+                                        <td>
+                                            <div id="danaNakonZavrsnogIzvesca"></div>
+                                        </td>
+                                        <td>
+                                            <div id="odobrenoZavrsnogIzvesca"></div>
+                                        </td>
+                                        <td>
+                                            <div id="finansijskaKorelacija"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div><br/>
+                            <div>
+                                <table border="1px">
+                                    <tr>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                            Iznos
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Ukupno do sada uplaceno:
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.ukupnoDoSadaUpalceno, {'attr': {'class': 'form-control'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Preostalo za zavrsnu isplatu:
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.preostaloZaIsplatu, {'attr': {'class': 'form-control'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Preostalo za povrat:
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.preostaloZaPovrat, {'attr': {'class': 'form-control'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Finansijka korekcija:
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.finansijskaKorelacija, {'attr': {'class': 'form-control'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div><br/>
+                            <div>
+                                {{ form_label(my_form.komentarObrade, 'Komentar obrade finansijskog izvestaja:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.komentarObrade, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form_label(my_form.smanjenjeGranta, 'Smanjenje granta usled loseg kvaliteta'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                                <div class="form-inline">
+                                    {{ form_widget(my_form.smanjenjeGranta, {'attr': {'class': 'form-control'}})  }}
+                                </div>
+                            </div><br/>
+                            <div>
+                                <table border="1px">
+                                    <tr>
+                                        <td>
+                                            Preostalo za zavrsnu isplatu
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.preostaloZaZavrsnuIsplatu, {'attr': {'class': 'form-control'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Preostalo za povracaj
+                                        </td>
+                                        <td>
+                                            <div class="form-inline">
+                                                {{ form_widget(my_form.preostaloZaPovracaj, {'attr': {'class': 'form-control'}})  }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        {{ form_end(my_form) }}
+                    {% elseif (action == 'KA102') %}
+                        {{ form_start(my_form) }}
+                        <div class="col-xs-12">
+                            <h1>{% trans %}Obrazac za proveru finansijskog dela izvestaja KA102 projedkta{% endtrans %}</h1>
+                            <h2>{% trans %}Osnovne informacije{% endtrans %}</h2>
+                        </div>
+                        <div>
+                            {{ form_label(my_form.ulazakIzvestaja, 'Datum ulaska izvestaja u GF'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.ulazakIzvestaja) }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.proveruIzvrsio, 'Proveru izvrsio/la:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.proveruIzvrsio, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.potpunaFinansijskaDokumentacija, 'Da li je finansijska dokumentacija potpuna?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.potpunaFinansijskaDokumentacija, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.datumPosete, 'Datum poste'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.datumPosete) }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.dokumentPregledao, 'Pregledao/la:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.dokumentPregledao, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.potpunaDodatnaDokumentacija, 'Da li je dodatna dokumentacija potpuna?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.potpunaDodatnaDokumentacija, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.razlogNepotpuneDokumentacije, 'Ako nije, sta je i do kog kora trazeno korisniku?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.razlogNepotpuneDokumentacije, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            {{ form_label(my_form.apsorbovatiAlociranBudzet, 'Da li deluje da ce korisnik apsorbovati alocirani budzet?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.apsorbovatiAlociranBudzet, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>Ako jeste:
+                        <div>
+                            {{ form_label(my_form.datumZavrsetkaObrade, 'Datum zavrsetka obrade izvestaja'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.datumZavrsetkaObrade) }}
+                            </div>
+                        </div><br/>
+                        <div class="col-xs-12">
+                            <h2>{% trans %}Kriterijumi za proveru finansijske prihvatljivosti{% endtrans %}</h2>
+                        </div>
+                        <div>
+                            <b>1. Provera prijavljenih mobilnosti:</b><br/>
+                            {{ form_label(my_form.pitanje1pp1, '1.1 Ukupan broj prijavljnih mobilnosti je manji ili jednak odobrenim mobilnostima'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje1pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            <b>2. Provera datuma odrzavanja aktivnosti:</b><br/>
+                            {{ form_label(my_form.pitanje2pp1, '2.1. Datumi aktivnosti moraju biti u okviru datuma pocetka i kraja projekta'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje2pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            <b>3. Provera provedenog broja dana aktivnosti i prihvatljivost obracuna u skladu sa Aneksom II Ugovora:</b><br/>
+                            3.1. Broj dana/meseci aktivnosti za svaku pojedinu mobilnost u skladu s odobrenim brojem dana/meseci<br/>
+                            {{ form_label(my_form.pitanje3pp1pp1, '3.1.1. Nastavno i nenastavno osoblje: 2 dana do 2 meseca'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje3pp1pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje3pp1pp2, '3.1.2. Ucenici: 2 nedelje do 2 meseca'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje3pp1pp2, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            <b>4. Provera udaljenosti puta:</b><br/>
+                            {{ form_label(my_form.pitanje4pp1, '4.1. Udaljenost puta je u skladu sa udaljenoscu koja je odredjena prema alatu Evropske komisije za izracunavanje razdaljine'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje4pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/><br/>
+                        <div>
+                            <b>5. Provera zatrazenog iznosa za posebne potrebe</b><br/>
+                            {{ form_label(my_form.pitanje6pp1, '5.1. Provera da je vrsta zatrazenog troska u skladu sa tipom odobrenog troska'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje6pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            <b>6. Provera prilozene propratne dokumentacije za vanredne troskove</b><br/>
+                            {{ form_label(my_form.pitanje7pp1, '6.1. Vrsta dokumentacije za pojedinacnu vrstu vanrednog troska prema odredbama opsih uslova Ugovora'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje7pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/><br/>
+                            {{ form_label(my_form.pitanje7pp2, '6.2. Provera da je tip zatrazenog troska u skladu sa tipom odobrenog troska'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje7pp2, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/><br/>
+                            {{ form_label(my_form.pitanje7pp3, '6.3. Obracun'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje7pp3, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/><br/>
+                        <div>
+                            <b>7. Provera prilozene propratne dokumentacije za troskove mobilnosti - neka od dokumenata koje korisnici mogu pokazati</b><br/>
+                            {{ form_label(my_form.pitanje8pp1, '7.1. Troskovi putovanja - avio karte, autobuske karte...'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje8pp2, '7.2. Putni nalog'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp2, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje8pp3, '7.3. Racun za smestaj, hranu'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp3, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje8pp4, '7.4. Isplacena individualna podrska uceniku'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp4, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje8pp5, '7.5. Obracun'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp5, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            <table border="1px">
+                                <tr>
+                                    <td>
+                                        Proracun
+                                    </td>
+                                    <td>
+                                        Odobreno <br/>ugovorom
+                                    </td>
+                                    <td>
+                                        Stanje nakon<br/>realokacija
+                                    </td>
+                                    <td>
+                                        Iskazano u <br/>zavrsnom izvestaju
+                                    </td>
+                                    <td>
+                                        Broj dana / ucesnika<br/>odobrenih ugovorom
+                                    </td>
+                                    <td>
+                                        Broj dana / ucesnika zatrazenih<br/>zavrsnim izvjescem
+                                    </td>
+                                    <td>
+                                        Odobren broj dana / ucesnika nakon<br/>zavrsnog izvjesca
+                                    </td>
+                                    <td>
+                                        Odobreno nakon u <br/>zavrsnog izvjesca
+                                    </td>
+                                    <td>
+                                        Finansijska korekcija
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        1. Troskovi puta
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom1, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija1, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju1, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom1, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem1, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca1, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca1, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija1, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        2. Individualna podrska
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom2, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija2, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju2, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom2, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem2, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca2, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca2, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija2, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        3. Organizaciona podrska
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom3, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija3, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju3, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom3, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem3, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca3, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca3, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija3, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        4. Podrska za lica sa hendikepom
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom4, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija4, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju4, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom4, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem4, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca4, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca4, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija4, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        5. Vanredni troskovi
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom5, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija5, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju5, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom5, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem5, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca5, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca5, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija5, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        6. Troskovi kursa
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom6, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija6, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju6, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom6, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem6, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca6, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca6, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija6, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Ukupno
+                                    </td>
+                                    <td>
+                                        <div id="odobrenoUgovorom"></div>
+                                    </td>
+                                    <td>
+                                        <div id="nakonRealokacija"></div>
+                                    </td>
+                                    <td>
+                                        <div id="zavrsnomIzvestaju"></div>
+                                    </td>
+                                    <td>
+                                        <div id="odobrenihUgovorom"></div>
+                                    </td>
+                                    <td>
+                                        <div id="zatrazenihZavrsimIzvescem"></div>
+                                    </td>
+                                    <td>
+                                        <div id="danaNakonZavrsnogIzvesca"></div>
+                                    </td>
+                                    <td>
+                                        <div id="odobrenoZavrsnogIzvesca"></div>
+                                    </td>
+                                    <td>
+                                        <div id="finansijskaKorelacija"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div><br/>
+                        <div>
+                            <table border="1px">
+                                <tr>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        Iznos
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Ukupno do sada uplaceno:
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.ukupnoDoSadaUpalceno, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Preostalo za zavrsnu isplatu:
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.preostaloZaIsplatu, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Preostalo za povrat:
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.preostaloZaPovrat, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Finansijka korekcija:
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.komentarObrade, 'Komentar obrade finansijskog izvestaja:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.komentarObrade, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div>
+                            {{ form_label(my_form.smanjenjeGranta, 'Smanjenje granta usled loseg kvaliteta'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.smanjenjeGranta, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            <table border="1px">
+                                <tr>
+                                    <td>
+                                        Preostalo za zavrsnu isplatu
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.preostaloZaZavrsnuIsplatu, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Preostalo za povracaj
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.preostaloZaPovracaj, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {{ form_end(my_form) }}
+                    {% elseif (action == 'KA105') %}
+                        {{ form_start(my_form) }}
+                        <div class="col-xs-12">
+                            <h1>Obrazac za proveru finansijskog dela izvestaja KA105 projekta</h1>
+                            <h2>{% trans %}Osnovne informacije{% endtrans %}</h2>
+                        </div>
+                        <div>
+                            {{ form_label(my_form.ulazakIzvestaja, 'Datum ulaska izvestaja u GF'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.ulazakIzvestaja) }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.proveruIzvrsio, 'Proveru izvrsio/la:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.proveruIzvrsio, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.potpunaFinansijskaDokumentacija, 'Da li je finansijska dokumentacija potpuna?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.potpunaFinansijskaDokumentacija, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.datumPosete, 'Datum poste'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.datumPosete) }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.dokumentPregledao, 'Pregledao/la:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.dokumentPregledao, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.potpunaDodatnaDokumentacija, 'Da li je dodatna dokumentacija potpuna?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.potpunaDodatnaDokumentacija, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.razlogNepotpuneDokumentacije, 'Ako nije, sta je i do kog kora trazeno korisniku?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.razlogNepotpuneDokumentacije, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            {{ form_label(my_form.datumTrazenjaDodatneDokumentacije, 'Datum trazenja dodatne dokumentacije'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.datumTrazenjaDodatneDokumentacije)  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.datumDostavljanjaDodatneDokumentacije, 'Datum dostavljanja dodatne dokumentacije'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.datumDostavljanjaDodatneDokumentacije)  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.apsorbovatiAlociranBudzet, 'Da li deluje da ce korisnik apsorbovati alocirani budzet?'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.apsorbovatiAlociranBudzet, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>Ako jeste:
+                        <div>
+                            {{ form_label(my_form.datumZavrsetkaObrade, 'Datum zavrsetka obrade izvestaja'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.datumZavrsetkaObrade) }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            Rok za obradu izvestaja 30 dana
+                        </div><br/>
+                        <div class="col-xs-12">
+                            <h2>{% trans %}Kriterijumi za proveru finansijske prihvatljivosti{% endtrans %}</h2>
+                        </div>
+                        <div>
+                            <b>1. Provera prijavljenih mobilnosti:</b><br/>
+                            {{ form_label(my_form.pitanje1pp1, '1.1 Ukupan broj prijavljnih mobilnosti je manji ili jednak odobrenim mobilnostima'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje1pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            <b>2. Provera formalno prihvatljivog minimalnog/maksimalnog broja ucesnika po partneru:</b><br/>
+                            {{ form_label(my_form.pitanje9pp1, '2.1 Razmene mladih - min 4 ucesnika po grupi (iskljucujuci lidere), min 16 ucesnika do max 40 ucesnika u projektu
+                                        (iskljucujuci lidere) svaka grupa mora imati minimum jednog lidera po nacionalnoj osnovi'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje9pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje9pp2, '2.2 EVS - max 10 volontera po projektu'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje9pp2, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje9pp3, '2.3 Mobilnost lica koji rade sa mladima - max xx ucesnika u svakoj planiranoj aktivnosti po projektu'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje9pp3, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                        </div><br/><br/>
+                        <div>
+                            <b>3. Provera formalno prihvatljivih godina ucesnika:</b><br/>
+                            {{ form_label(my_form.pitanje10pp1, '3.1 Razmene mladnih: 13-30 (uslov za 2017, Lideri grupa moraju imati najmanje 18 godina)'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje10pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            3.2. EVS 17 - 30<br/>
+                            {{ form_label(my_form.pitanje10pp2pp1, '3.2.1 donja granica - ucesnici moraju imati minimalno 13 godina s datumom pocetka aktivnosti'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje10pp2pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje10pp2pp2, '3.2.2 gornja granica - ucesnici ne smeju biti stariji od navedene gornje granice u momentu prijave projekta'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje10pp2pp2, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje10pp3, '3.3 Mobilnost lica koji rade sa mladima - nema ogranicenja u godinama'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje10pp3, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                        </div><br/><br/>
+                        <div>
+                            <b>4. Provera datuma odrzavanja aktivnosti:</b><br/>
+                            {{ form_label(my_form.pitanje2pp1, '4.1. Datumi aktivnosti moraju biti u okviru datuma pocetka i kraja projekta'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje2pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            <b>5. Provera provedenih dana aktivnosti i u skladu sa tim prihvatljivost obracuna u okviru stavke Organizacioni troskovi:</b><br/>
+                            5.1. Broj dana/meseci aktivnosti za svaku pojedinacnu mobilnost u skladu s odobrenim brojem dana/meseci<br/>
+                            {{ form_label(my_form.pitanje3pp1pp1, '5.1. Broj dana/meseci aktivnosti za svaku pojedinacnu mobilnost u skladu s odobrenim brojem dana/meseci'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje3pp1pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/>
+                            (u slucaju odrzavanja aktivnosti u manjem broju dana od odobrenog umanjiti proporcionalno stavku Organizacioni troskovi)<br/>
+                            Razmene mladih - 5-21 dan<br/>
+                            EVS - kratkorocni EVS - 2 nedelje do 2 meseca; dugorocni EVS - 2 - 12 meseci <br/>
+                            Mobilnost osoba koje rade s mladima - 2 dana do 2 meseca<br/>
+                        </div><br/><br/>
+                        <div>
+                            <b>6. Provera ucestvovanja partnerskih organizacija koje su odobrene ugovorom/amandmanom ugovora:</b><br/>
+                            {{ form_label(my_form.pitanje4pp1, '6.1. Udaljenost puta je u skladu sa udaljenosti koja je odredjena prema alatu Evropske komisije za izracunavanje razdaljine'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje4pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/><br/>
+                        <div>
+                            <b>7. Provera zatrazenog iznosa osobe sa hendikepom</b><br/>
+                            {{ form_label(my_form.pitanje6pp1, '7.1. Provera da je tip zatrazenog troska u skladu sa tipom odobrenog troska'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje6pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            <b>8. Provera prilozene propratne dokumentacije za vanredne troskove</b><br/>
+                            {{ form_label(my_form.pitanje7pp1, '8.1. Vrsta dokumentacije za pojedinacnu vrstu vanrednog troska prema odredbama opsih uslova Ugovora'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje7pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/><br/>
+                            {{ form_label(my_form.pitanje7pp2, '8.2. Provera da je tip zatrazenog troska u skladu sa tipom odobrenog troska'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje7pp2, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/><br/>
+                            {{ form_label(my_form.pitanje7pp3, '8.3. Obracun'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje7pp3, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/><br/>
+                        <div>
+                            <b>9. Provera prilozene propratne dokumentacije za troskove mobilnosti</b><br/>
+                            {{ form_label(my_form.pitanje8pp1, '9.1. Troskovi putovanja - avio karte, autobuske karte, renta vozila, putarina...'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp1, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje8pp2, '9.2. racuni radnig materijala'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp2, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje8pp3, '9.3. racuni opreme (iznajmljena ili kupljena)'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp3, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje8pp4, '9.4. ugovori sa saradnicima (autorski ugovori, ugovori o delu...)'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp4, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje8pp5, '9.5. Racun za smestaj, hranu, osvezenje tokom dogadjaja (u EVS-u ugovor o zakupu stana)'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp5, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje8pp6, '9.6. Isplacena individualna podrska ucesniku (samo za EVS projekte)'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp6, {'attr': {'class': 'form-control'}})  }}
+                            </div><br/><br/>
+                            {{ form_label(my_form.pitanje8pp7, '9.7. Obracun'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.pitanje8pp7, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            {{ form_label(my_form.razlogNepotpuneDokumentacije, 'Komentar preporuke za korisnika:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.razlogNepotpuneDokumentacije, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/><br/>
+                        <div>
+                            <table border="1px">
+                                <tr>
+                                    <td>
+                                        Proracun
+                                    </td>
+                                    <td>
+                                        Odobreno <br/>ugovorom
+                                    </td>
+                                    <td>
+                                        Stanje nakon<br/>realokacija
+                                    </td>
+                                    <td>
+                                        Iskazano u <br/>zavrsnom izvestaju
+                                    </td>
+                                    <td>
+                                        Broj dana / ucesnika<br/>odobrenih ugovorom
+                                    </td>
+                                    <td>
+                                        Broj dana / ucesnika zatrazenih<br/>zavrsnim izvjescem
+                                    </td>
+                                    <td>
+                                        Odobren broj dana / ucesnika nakon<br/>zavrsnog izvjesca
+                                    </td>
+                                    <td>
+                                        Odobreno nakon u <br/>zavrsnog izvjesca
+                                    </td>
+                                    <td>
+                                        Finansijska korekcija
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        1. Troskovi puta
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom1, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija1, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju1, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom1, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem1, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca1, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca1, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija1, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        2. Individualna podrska
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom2, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija2, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju2, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom2, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem2, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca2, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca2, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija2, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        3. Organizaciona podrska
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom3, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija3, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju3, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom3, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem3, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca3, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca3, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija3, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        4. Podrska za lica sa hendikepom
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom4, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija4, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju4, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom4, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem4, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca4, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca4, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija4, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        5. Vanredni troskovi
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom5, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija5, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju5, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom5, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem5, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca5, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca5, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija5, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        6. Troskovi kursa
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoUgovorom6, {'attr': {'class': 'form-control odobrenoUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.nakonRealokacija6, {'attr': {'class': 'form-control nakonRealokacija'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zavrsnomIzvestaju6, {'attr': {'class': 'form-control zavrsnomIzvestaju'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenihUgovorom6, {'attr': {'class': 'form-control odobrenihUgovorom'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.zatrazenihZavrsimIzvescem6, {'attr': {'class': 'form-control zatrazenihZavrsimIzvescem'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.danaNakonZavrsnogIzvesca6, {'attr': {'class': 'form-control danaNakonZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.odobrenoZavrsnogIzvesca6, {'attr': {'class': 'form-control odobrenoZavrsnogIzvesca'}})  }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija6, {'attr': {'class': 'form-control finansijskaKorelacija'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Ukupno
+                                    </td>
+                                    <td>
+                                        <div id="odobrenoUgovorom"></div>
+                                    </td>
+                                    <td>
+                                        <div id="nakonRealokacija"></div>
+                                    </td>
+                                    <td>
+                                        <div id="zavrsnomIzvestaju"></div>
+                                    </td>
+                                    <td>
+                                        <div id="odobrenihUgovorom"></div>
+                                    </td>
+                                    <td>
+                                        <div id="zatrazenihZavrsimIzvescem"></div>
+                                    </td>
+                                    <td>
+                                        <div id="danaNakonZavrsnogIzvesca"></div>
+                                    </td>
+                                    <td>
+                                        <div id="odobrenoZavrsnogIzvesca"></div>
+                                    </td>
+                                    <td>
+                                        <div id="finansijskaKorelacija"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div><br/>
+                        <div>
+                            <table border="1px">
+                                <tr>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        Iznos
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Ukupno do sada uplaceno:
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.ukupnoDoSadaUpalceno, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Preostalo za zavrsnu isplatu:
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.preostaloZaIsplatu, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Preostalo za povrat:
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.preostaloZaPovrat, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Finansijka korekcija:
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.finansijskaKorelacija, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div><br/>
+                        <div>
+                            {{ form_label(my_form.komentarObrade, 'Komentar obrade finansijskog izvestaja:'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.komentarObrade, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div>
+                            {{ form_label(my_form.smanjenjeGranta, 'Smanjenje granta usled loseg kvaliteta'|trans, {'label_attr': {'class': 'control-label col-xs-2'}}) }}
+                            <div class="form-inline">
+                                {{ form_widget(my_form.smanjenjeGranta, {'attr': {'class': 'form-control'}})  }}
+                            </div>
+                        </div><br/>
+                        <div>
+                            <table border="1px">
+                                <tr>
+                                    <td>
+                                        Preostalo za zavrsnu isplatu
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.preostaloZaZavrsnuIsplatu, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Preostalo za povracaj
+                                    </td>
+                                    <td>
+                                        <div class="form-inline">
+                                            {{ form_widget(my_form.preostaloZaPovracaj, {'attr': {'class': 'form-control'}})  }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {{ form_end(my_form) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

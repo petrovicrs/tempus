@@ -447,7 +447,7 @@ class ProjectReportingForm extends AbstractType
             $builder->add('submit', SubmitType::class, array('label_format' => 'Save Changes'));
         }
         else {
-            $builder->add('submit', SubmitType::class, array('label_format' => 'Next'));
+            $builder->add('submit', SubmitType::class, array('label_format' => 'Save'));
         }
     }
 

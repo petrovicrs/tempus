@@ -2,82 +2,43 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-
-        <title>{% block title %}{% trans %}Welcome{% endtrans %}!{% endblock %}</title>
-
-        {% block stylesheets %}
-            {% stylesheets '@bootstrap_css' '@calendar_css' %}
-                <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
-            {% endstylesheets %}
-            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/css/kbs.css') }}"/>
-            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/css/style.css') }}"/>
-
-            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
-            <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
-
-            <link rel="stylesheet" href="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.css"/>
-
-
-        {% endblock %}
-
-
+        <title>{% if page_title %}{{ page_title }} | {% endif %}{% trans %}base.head_title{% endtrans %}</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-
-        <div id="traka"></div>
-        <nav class="navbar navbar-default" style="height: 75px">
-            <div class="container-fluid">
-                <div class="navbar-header col-xs-6">
-                    <a class="navbar-brand" href="#">
-                        <img alt="Project Database - Erasmus+, Tempus, Erasmus Mundus and Lifelong Learning Programme"
-                             src="{{ asset('/images/logo_horizontal_en-470e29804c52b459fae2c00b8ead4843.png') }}">
-                    </a>
-                </div>
-                <div class="col-xs-6 text-right login">
-                    <div class="col-xs-9 no-padding">
-                        {% include 'main-navbar.html.twig' with {'active': 'reporting'} %}
-                    </div>
-                    <div class="col-xs-3">
-                        <ul>
-                            {% if is_granted('ROLE_USER') %}
-                                <li><a href="{{ path('security_logout') }}">Logout</a></li>
-                            {% else %}
-                                <li><a href="{{ path('security_login') }}">Login</a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        {% include 'js-scripts.html.twig' %}
+        {% include 'stylesheets.html.twig' %}
     </head>
-    <body class="home project">
-    <div class="loader"></div>
-
-    {% block javascripts %}
-    {% javascripts '@jquery' '@bootstrap_js' '@calendar_js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
-
-    <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#example').DataTable();
-            $('.table-hidden').show();
-        } );
-    </script>
-
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
-    {% endblock %}
-        {% block body %}
-        {% endblock %}
-
+    <body>
+        <div id="page-wrapper">
+            <div id="horizontal-tape"></div>
+            <div id="page" class="container">
+                {% include 'menu-bar/menu-bar.html.twig' %}
+                {% include 'alert.html.twig' %}
+                <div id="columns" class="columns clearfix">
+                    <main id="content-column" class="content-column" role="main">
+                        <div class="content-inner">
+                            <div id="main-content">
+                                <header>
+                                    <h1 id="page-title">{{ page_title }}</h1>
+                                </header>
+                                <div id="content" class="region">
+                                    <div class="loader"></div>
+                                    {% block body %}{% endblock %}
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+                <footer class="container-fluid" id="footer">
+                    <div class="row-fluid">
+                        <p class="col-md-12">
+                            <small>
+                                Tempus ©
+                                <img alt="" class="logo" src="/images/eu_flag_tempus.png">
+                            </small>
+                        </p>
+                    </div>
+                </footer>
+            </div>
+        </div>
     </body>
 </html>

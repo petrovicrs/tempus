@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jovanmijatovic
- * Date: 6/3/17
- * Time: 7:34 PM
- */
+
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\DifficultiesParticipantsAreFacing;
@@ -60,38 +55,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class ProjectController extends AbstractController
-{
+class ProjectController extends AbstractController {
+
     /**
-     * @Route("/", name="default_route")
-     * @Route("/statistic", name="statistic_route")
+     * @Route("/{locale}/statistic", name="statistic_route")
      */
-    public function statisticAction()
-    {
+    public function statisticAction() {
+        $this->setPageTitle($this->translate('Statistics'));
         $projects = $this->getProjectRepository()->findBy(['isCompleted' => 1]);
         $institutions = $this->getInstitutionRepository()->findAll();
         $person = $persons = $this->getPersonRepository()->findAll();
-
-        return $this->render('project/statistic.twig', ['projects' => $projects, 'institutions' => $institutions,
-            'persons' => $person]);
+        return $this->render('project/statistic.twig', [
+            'projects' => $projects,
+            'institutions' => $institutions,
+            'persons' => $person
+        ]);
     }
 
-     /**
-     * @Route("/{locale}/project/list", name="project_list", requirements={"locale": "%app.locales%"})
+    /**
+     * @Route("/{locale}/admin/project/list", name="project_list", requirements={"locale": "%app.locales%"})
      */
-    public function listAction()
-    {
+    public function listAction() {
         $result = $this->getProjectRepository()->findBy(['isCompleted' => 1]);
 
         return $this->render('project/list.twig', ['result' => $result]);
     }
 
     /**
-     * @Route("/{locale}/project/create", name="project_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/project/create", name="project_create", requirements={"locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_PROJECT_CREATE') or is_granted('ROLE_ADMIN')")
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
@@ -105,48 +99,47 @@ class ProjectController extends AbstractController
 
         $actionTab = $this->showActionTab($project);
 
-        if ($projectForm->isSubmitted() && $projectForm->isValid())
-        {
+        if ($projectForm->isSubmitted() && $projectForm->isValid()) {
             $this->getProjectRepository()->saveProject($project);
-            
+
             /** @var ProjectApplicantOrganisation $applicantOrganisation */
-            foreach($project->getApplicantOrganisations() as $applicantOrganisation){
+            foreach ($project->getApplicantOrganisations() as $applicantOrganisation) {
                 $applicantOrganisation->setProject($project);
                 $this->getApplicantOrganisationRepository()->save($applicantOrganisation);
             }
 
             /** @var ProjectPartnerOrganisation $partnerOrganisation */
-            foreach($project->getPartnerOrganisations() as $partnerOrganisation){
+            foreach ($project->getPartnerOrganisations() as $partnerOrganisation) {
                 $partnerOrganisation->setProject($project);
                 $this->getProjectPartnerOrganisationRepository()->save($partnerOrganisation);
             }
 
             /** @var ProjectLimitation $limitation */
-            foreach($project->getLimitations() as $limitation){
+            foreach ($project->getLimitations() as $limitation) {
                 $limitation->setProject($project);
                 $this->getProjectLimitationRepository()->save($limitation);
             }
 
             /** @var ProjectContactPerson $contactPerson */
-            foreach($project->getContactPersons() as $contactPerson){
+            foreach ($project->getContactPersons() as $contactPerson) {
                 $contactPerson->setProject($project);
                 $this->getProjectContactPersonRepository()->save($contactPerson);
             }
 
             /** @var ProjectTopic $topic */
-            foreach($project->getTopics() as $topic){
+            foreach ($project->getTopics() as $topic) {
                 $topic->setProject($project);
                 $this->getProjectTopicRepository()->save($topic);
             }
 
             /** @var ProjectSubjectArea $subjectArea */
-            foreach($project->getSubjectAreas() as $subjectArea){
+            foreach ($project->getSubjectAreas() as $subjectArea) {
                 $subjectArea->setProject($project);
                 $this->getProjectSubjectAreasRepository()->save($subjectArea);
             }
 
             /** @var ProjectNote $note */
-            foreach($project->getNotes() as $note){
+            foreach ($project->getNotes() as $note) {
                 $note->setProject($project);
                 $this->getProjectNotesRepository()->save($note);
             }
@@ -169,12 +162,11 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/project/create-project", name="project_create_start", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/project/create-project", name="project_create_start", requirements={"locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_PROJECT_CREATE') or is_granted('ROLE_ADMIN')")
      *
      */
-    public function createProjectAction(Request $request)
-    {
+    public function createProjectAction(Request $request) {
         $project = new Project();
 
         $projectForm = $this->createForm(ProjectStartForm::class, $project, [
@@ -185,8 +177,7 @@ class ProjectController extends AbstractController
 
         $projectForm->handleRequest($request);
 
-        if ($projectForm->isSubmitted() && $projectForm->isValid())
-        {
+        if ($projectForm->isSubmitted() && $projectForm->isValid()) {
             $project->setUser($this->getUser());
             $this->getProjectRepository()->saveProject($project);
 
@@ -199,19 +190,17 @@ class ProjectController extends AbstractController
 
         }
 
-        $data = [
-            'my_form' => $projectForm->createView()
-        ];
 
-        return $this->render('project/project-create.twig', $data);
+        return $this->render('project/project-create.twig', [
+            'form' => $projectForm->createView()
+        ]);
     }
 
     /**
-     * @Route("/{locale}/project-ka2/create", name="project_ka2_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/project-ka2/create", name="project_ka2_create", requirements={"locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_PROJECT_CREATE') or is_granted('ROLE_ADMIN')")
      */
-    public function createKa2Action(Request $request)
-    {
+    public function createKa2Action(Request $request) {
         /** @var Project $project */
         $project = $this->getLastProjectForCurrentUser();
 
@@ -223,36 +212,35 @@ class ProjectController extends AbstractController
 
         $projectForm->handleRequest($request);
 
-        if ($projectForm->isSubmitted() && $projectForm->isValid())
-        {
+        if ($projectForm->isSubmitted() && $projectForm->isValid()) {
             $this->getProjectRepository()->saveProject($project);
 
             /** @var DifficultiesParticipantsAreFacing $difficulty */
-            foreach($project->getDifficultiesParticipantsAreFacing() as $difficulty){
+            foreach ($project->getDifficultiesParticipantsAreFacing() as $difficulty) {
                 $difficulty->setProject($project);
                 $this->getProjectTargetGroupRepository()->save($difficulty);
             }
 
             /** @var ProjectTargetGroup $targetGroup */
-            foreach($project->getProjectTargetGroup() as $targetGroup){
+            foreach ($project->getProjectTargetGroup() as $targetGroup) {
                 $targetGroup->setProject($project);
                 $this->getProjectTargetGroupRepository()->save($targetGroup);
             }
 
             /** @var ProjectSubjectArea $subjectArea */
-            foreach($project->getSubjectAreas() as $subjectArea){
+            foreach ($project->getSubjectAreas() as $subjectArea) {
                 $subjectArea->setProject($project);
                 $this->getProjectSubjectAreasRepository()->save($subjectArea);
             }
 
             /** @var ProjectPriority $priority */
-            foreach($project->getProjectPriority() as $priority){
+            foreach ($project->getProjectPriority() as $priority) {
                 $priority->setProject($project);
                 $this->getProjectPriorityRepository()->save($priority);
             }
 
             /** @var ProjectContact $contact */
-            foreach($project->getContacts() as $contact){
+            foreach ($project->getContacts() as $contact) {
                 $contact->setProject($project);
                 $this->getContactsRepository()->save($contact);
             }
@@ -271,11 +259,10 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/project/edit/{projectId}", name="project_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/project/edit/{projectId}", name="project_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_EDIT') or is_granted('ROLE_USER_PROJECT_EDIT_MY') or is_granted('ROLE_USER_PROJECT_EDIT_ALL') or is_granted('ROLE_ADMIN')")
      */
-    public function editAction(Request $request, $projectId)
-    {
+    public function editAction(Request $request, $projectId) {
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
@@ -294,7 +281,7 @@ class ProjectController extends AbstractController
             'method' => 'POST',
             'isCompleted' => $project->getIsCompleted(),
         ]);
-       
+
         $originalApplicantOrganisations = new ArrayCollection();
         $originalPartnerOrganisations = new ArrayCollection();
         $originalLimitations = new ArrayCollection();
@@ -307,27 +294,27 @@ class ProjectController extends AbstractController
             $originalApplicantOrganisations->add($applicantOrganisation);
         }
 
-        foreach ($project->getPartnerOrganisations() as $partnerOrganisation){
+        foreach ($project->getPartnerOrganisations() as $partnerOrganisation) {
             $originalPartnerOrganisations->add($partnerOrganisation);
         }
 
-        foreach ($project->getLimitations() as $limitation){
+        foreach ($project->getLimitations() as $limitation) {
             $originalLimitations->add($limitation);
         }
 
-        foreach ($project->getContactPersons() as $contactPerson){
+        foreach ($project->getContactPersons() as $contactPerson) {
             $originalContactPersons->add($contactPerson);
         }
 
-        foreach ($project->getTopics() as $topic){
+        foreach ($project->getTopics() as $topic) {
             $originalTopics->add($topic);
         }
 
-        foreach ($project->getSubjectAreas() as $subjectArea){
+        foreach ($project->getSubjectAreas() as $subjectArea) {
             $originalSubjectAreas->add($subjectArea);
         }
 
-        foreach ($project->getNotes() as $note){
+        foreach ($project->getNotes() as $note) {
             $originalNotes->add($note);
         }
 
@@ -448,15 +435,14 @@ class ProjectController extends AbstractController
                 'projectId' => $projectId,
                 'isCompleted' => $project->getIsCompleted(),
                 'actionTab' => $this->showActionTab($project),
-        ]);
+            ]);
     }
 
     /**
-     * @Route("/{locale}/project-ka2/edit/{projectId}", name="project_ka2_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/project-ka2/edit/{projectId}", name="project_ka2_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_EDIT') or is_granted('ROLE_USER_PROJECT_EDIT_MY') or is_granted('ROLE_USER_PROJECT_EDIT_ALL') or is_granted('ROLE_ADMIN')")
      */
-    public function editKa2Action(Request $request, $projectId)
-    {
+    public function editKa2Action(Request $request, $projectId) {
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
@@ -490,15 +476,15 @@ class ProjectController extends AbstractController
             $originalTargetGroups->add($targetGroup);
         }
 
-        foreach ($project->getSubjectAreas() as $subjectArea){
+        foreach ($project->getSubjectAreas() as $subjectArea) {
             $originalSubjectAreas->add($subjectArea);
         }
 
-        foreach ($project->getProjectPriority() as $priority){
+        foreach ($project->getProjectPriority() as $priority) {
             $originalPriorities->add($priority);
         }
 
-        foreach ($project->getContacts() as $contact){
+        foreach ($project->getContacts() as $contact) {
             $originalContacts->add($contact);
         }
 
@@ -596,11 +582,10 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/project/{projectId}", name="project_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/project/{projectId}", name="project_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_VIEW') or is_granted('ROLE_USER_PROJECT_VIEW_MY') or is_granted('ROLE_USER_PROJECT_VIEW_ALL') or is_granted('ROLE_ADMIN')")
      */
-    public function viewProjectAction($projectId)
-    {
+    public function viewProjectAction($projectId) {
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USER_PROJECT_VIEW_MY') &&
@@ -616,7 +601,7 @@ class ProjectController extends AbstractController
         /** @var Project $project */
         if (!$project) {
             throw $this->createNotFoundException(
-                'No project found for id '. $projectId
+                'No project found for id ' . $projectId
             );
         }
 
@@ -632,27 +617,27 @@ class ProjectController extends AbstractController
             $originalApplicantOrganisations->add($applicantOrganisation);
         }
 
-        foreach ($project->getPartnerOrganisations() as $partnerOrganisation){
+        foreach ($project->getPartnerOrganisations() as $partnerOrganisation) {
             $originalPartnerOrganisations->add($partnerOrganisation);
         }
 
-        foreach ($project->getLimitations() as $limitation){
+        foreach ($project->getLimitations() as $limitation) {
             $originalLimitations->add($limitation);
         }
 
-        foreach ($project->getContactPersons() as $contactPerson){
+        foreach ($project->getContactPersons() as $contactPerson) {
             $originalContactPersons->add($contactPerson);
         }
 
-        foreach ($project->getTopics() as $topic){
+        foreach ($project->getTopics() as $topic) {
             $originalTopics->add($topic);
         }
 
-        foreach ($project->getSubjectAreas() as $subjectArea){
+        foreach ($project->getSubjectAreas() as $subjectArea) {
             $originalSubjectAreas->add($subjectArea);
         }
 
-        foreach ($project->getNotes() as $note){
+        foreach ($project->getNotes() as $note) {
             $originalNotes->add($note);
         }
 
@@ -660,11 +645,10 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/project-ka2/{projectId}", name="project_ka2_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/project-ka2/{projectId}", name="project_ka2_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_VIEW') or is_granted('ROLE_USER_PROJECT_VIEW_MY') or is_granted('ROLE_USER_PROJECT_VIEW_ALL') or is_granted('ROLE_ADMIN')")
      */
-    public function viewProjectKa2Action($projectId)
-    {
+    public function viewProjectKa2Action($projectId) {
         /** @var Project $project */
         $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
 
@@ -680,7 +664,7 @@ class ProjectController extends AbstractController
 
         if (!$project) {
             throw $this->createNotFoundException(
-                'No project found for id '. $projectId
+                'No project found for id ' . $projectId
             );
         }
 
@@ -698,15 +682,15 @@ class ProjectController extends AbstractController
             $originalTargetGroups->add($targetGroup);
         }
 
-        foreach ($project->getSubjectAreas() as $subjectArea){
+        foreach ($project->getSubjectAreas() as $subjectArea) {
             $originalSubjectAreas->add($subjectArea);
         }
 
-        foreach ($project->getProjectPriority() as $priority){
+        foreach ($project->getProjectPriority() as $priority) {
             $originalPriorities->add($priority);
         }
 
-        foreach ($project->getContacts() as $contact){
+        foreach ($project->getContacts() as $contact) {
             $originalContacts->add($contact);
         }
 
@@ -715,36 +699,33 @@ class ProjectController extends AbstractController
 
 
     /**
-     * @Route("/{locale}/project/{projectId}/file/resource/{resourceId}", name="project_resource_file", requirements={"projectId": "\d+", "resourceId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/project/{projectId}/file/resource/{resourceId}", name="project_resource_file", requirements={"projectId": "\d+", "resourceId": "\d+", "locale": "%app.locales%"})
      */
-    public function getFileAction($projectId, $resourceId)
-    {
+    public function getFileAction($projectId, $resourceId) {
         /** @var Resources $resource */
         $resource = $this->getResourcesRepository()->find($resourceId);
-        if($resource != null && $resource->getProjectResources() != null && $resource->getProjectResources()->getProject() != null &&
+        if ($resource != null && $resource->getProjectResources() != null && $resource->getProjectResources()->getProject() != null &&
             $resource->getProjectResources()->getProject()->getId() == $projectId) {
-            return new BinaryFileResponse($this->get('util.file_uploader')->getTargetDir().'/'.$resource->getFile()->getFile());
+            return new BinaryFileResponse($this->get('util.file_uploader')->getTargetDir() . '/' . $resource->getFile()->getFile());
         }
 
         throw new AccessDeniedHttpException();
     }
 
     /**
-     * @Route("/{locale}/project/{projectId}/file/attachment/{attachmentManuallyUploadedId}", name="project_attachment_file", requirements={"projectId": "\d+", "attachmentManuallyUploadedId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/project/{projectId}/file/attachment/{attachmentManuallyUploadedId}", name="project_attachment_file", requirements={"projectId": "\d+", "attachmentManuallyUploadedId": "\d+", "locale": "%app.locales%"})
      */
-    public function getAttachmentFileAction($projectId, $attachmentManuallyUploadedId)
-    {
+    public function getAttachmentFileAction($projectId, $attachmentManuallyUploadedId) {
 
         /** @var AttachmentsManuallyUploaded $attachmentManuallyUploaded */
         $attachmentManuallyUploaded = $this->getAttachmentsManuallyUploadedRepository()->find($attachmentManuallyUploadedId);
-        if($attachmentManuallyUploaded != null && $attachmentManuallyUploaded->getAttachments() != null && $attachmentManuallyUploaded->getAttachments()->getProject() != null &&
+        if ($attachmentManuallyUploaded != null && $attachmentManuallyUploaded->getAttachments() != null && $attachmentManuallyUploaded->getAttachments()->getProject() != null &&
             $attachmentManuallyUploaded->getAttachments()->getProject()->getId() == $projectId) {
-            return new BinaryFileResponse($this->get('util.file_uploader')->getTargetDir().'/'.$attachmentManuallyUploaded->getFile()->getFile());
+            return new BinaryFileResponse($this->get('util.file_uploader')->getTargetDir() . '/' . $attachmentManuallyUploaded->getFile()->getFile());
         }
 
         throw new AccessDeniedHttpException();
     }
-
 
 
     /**
@@ -879,14 +860,12 @@ class ProjectController extends AbstractController
     /**
      * @return AttachmentsManuallyUploadedRepository
      */
-    private function getAttachmentsManuallyUploadedRepository()
-    {
+    private function getAttachmentsManuallyUploadedRepository() {
         return $this->get('doctrine_entity_repository.attachments_manually_uploaded');
     }
 
 
-    private function getResourcesRepository()
-    {
+    private function getResourcesRepository() {
         return $this->get('doctrine_entity_repository.resources');
     }
 

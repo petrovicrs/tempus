@@ -1,0 +1,101 @@
+common:
+  loading: 'Učitavanje...'
+  edit: 'Izmeni'
+base:
+  head_title: 'Project Database - Erasmus+, Tempus, Erasmus Mundus and Lifelong Learning Programme'
+home:
+  submit: 'Pretraži'
+security:
+  login:
+    username: 'Korisničko ime'
+    password: 'Lozinka'
+    remember_me: 'Zapamti me'
+    submit: 'Uloguj se'
+resetting:
+  reset:
+    submit: 'Resetuj'
+registration:
+  submit: 'Registruj se'
+change_password:
+  submit: 'Promeni lozinku'
+profile:
+  edit:
+    label: 'Uredi nalog'
+    submit: 'Sačuvaj'
+  show:
+    username: 'Korisničko ime'
+logout: 'Odjavi se'
+login: 'Prijavi se'
+error:
+  oops: 'Uups!'
+  404: '404'
+  500: '500'
+  404_not_found: 'Žao nam je, Tražena stranica nije pronađena!'
+  500_internal_server_error: 'Interna greška!'
+  go_back: 'Nazad'
+  take_me_home: 'Nazad na naslovnu'
+datatable:
+  common:
+    are_you_sure: 'Da li ste sigurni?'
+    you_need_to_select_at_least_one_element: 'Morate da odaberete bar jedan element'
+    search: 'Pretraži'
+    execute: 'Izvrši'
+    ok: 'U redu'
+  datatable:
+    edit: 'Izmeni'
+    add: 'Dodaj'
+    view: 'Vidi'
+    searchPlaceholder: ""
+    emptyTable:     "Nema podataka"
+    info:           "Prikaz _START_ do _END_ od _TOTAL_ rekorda"
+    infoEmpty:      "Prikaz 0 do 0 od 0 rekorda"
+    infoFiltered:   "(filtriranje od _MAX_ ukupno rekorda)"
+    infoPostFix:    ""
+    infoThousands:  ","
+    lengthMenu:     "Prikaz _MENU_ rekorda"
+    loadingRecords: "Učitavanje..."
+    processing:     "Procesiranje..."
+    search:         "Pretraga:"
+    zeroRecords:    "Nema pronađenih rekorda"
+    paginate:
+      first:    "Prvi"
+      last:     "Poslednji"
+      next:     "Sledeći"
+      previous: "Prethodni"
+    aria:
+      sortAscending:  ": aktiviraj za sortiranje kolone rastuće"
+      sortDescending: ": aktiviraj za sortiranje kolone opadajuće"
+  user:
+    name: 'Ime'
+    surname: 'Prezime'
+    email: 'E-pošta'
+    enabled: 'Omogućen'
+    last_login: 'Poslednje logovanje'
+    login_count: 'Broj loginovanja'
+form:
+  user:
+    name: 'Ime'
+    surname: 'Prezime'
+    username: 'Korisničko ime'
+    email: 'E-pošta'
+    password: 'Lozinka'
+    enabled: 'Omogućen'
+    roles: 'Role'
+    password_confirmation: 'Potvrda lozinke'
+    password_mismatch: 'Lozinke se ne podudaraju'
+page:
+  users:
+    title: 'Korisnici'
+  add_user:
+    title: 'Dodaj korisnika'
+msg:
+  save: 'Sačuvaj'
+  edit: 'Izmeni'
+  add: 'Dodaj'
+  yes: 'Da'
+  no: 'Ne'
+  action: 'Akcija'
+  actions: 'Akcije'
+  view: 'Vidi'
+  logout: 'Odjavi se'
+  login: 'Prijavi se'

@@ -1,0 +1,81 @@
+group:
+  edit:
+    submit: 'Ажурирај групу'
+  show:
+    name: 'Назив групе'
+  new:
+    submit: 'Kreiraj grupu'
+  flash:
+    updated: 'Kреирај групу'
+    created: 'Група је креирана'
+    deleted: 'Група је обрисана'
+security:
+  login:
+    username: 'Kорисничко име'
+    password: 'Лозинка'
+    remember_me: 'Запамти ме'
+    submit: 'Пријави се'
+profile:
+  show:
+    username: 'Kорисничко име'
+    email: 'Адреса е-поште'
+  edit:
+    submit: 'Ажурирај'
+  flash:
+    updated: 'Профил је ажуриран'
+change_password:
+  submit: 'Измени лозинку'
+  flash:
+    success: 'Лозинка је измењена'
+registration:
+  check_email: 'Порука је послата на адресу %email%. Она садржи активациони линк који морате кликнути да би активирали Ваш налог'
+  confirmed: 'Честитамо %username%, Ваш налог је сада активан'
+  back: 'Назад на претходну страну'
+  submit: 'Региструј се'
+  flash:
+    user_created: 'Kориснички налог је успешно креиран'
+  email:
+    subject: 'Добродошли %username%!'
+    message: |
+      Здраво %username%!
+
+      Да би активирали Ваш налог посетите %confirmationUrl%
+
+      Овај линк можете употребити само једном да бисте потврдили Ваш налог.
+
+      С поштовањем,
+      тим сајта.
+
+resetting:
+  check_email: 'Порука је послата на адресу %email%. Она садржи линк који морате кликнути да би ресетовали Вашу лозинку.'
+  request:
+    username: 'Kорисничко име или адреса е-поште'
+    submit: 'Ресетуј лозинку'
+  reset:
+    submit: 'Измени лозинку'
+  flash:
+    success: 'Лозинка је успешно ресетована.'
+  email:
+    subject: 'Ресетовање лозинке'
+    message: |
+      Здраво %username%!
+
+      Да би ресетовали Вашу лозинку посетите %confirmationUrl%
+
+      С поштовањем,
+      тим сајта.
+
+layout:
+  logout: 'Одјављивање'
+  login: 'Пријављивање'
+  register: 'Регистрација'
+  logged_in_as: 'Пријављен као %username%'
+form:
+  group_name: 'Назив групе'
+  username: 'Kорисничко име'
+  email: 'Адреса е-поште'
+  current_password: 'Тренутна лозинка'
+  password: 'Лозинка'
+  password_confirmation: 'Потврда лозинке'
+  new_password: 'Нова лозинка'
+  new_password_confirmation: 'Потврда лозинке'

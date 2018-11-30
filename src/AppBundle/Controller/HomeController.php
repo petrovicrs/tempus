@@ -1,0 +1,268 @@
+<?php
+
+namespace AppBundle\Controller;
+
+
+use AppBundle\Form\ProjectSearchForm;
+use AppBundle\Repository\ProjectRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+/**
+ * Class HomeController
+ *
+ * @package AppBundle\Controller
+ */
+class HomeController extends AbstractController {
+
+    /**
+     * @Route("/", name="default_home_route")
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function homeDefaultAction(Request $request) {
+        return $this->redirectToRoute('default_route', ['locale' => $request->getLocale()]);
+    }
+
+    /**
+     * @Route("/{locale}/", name="default_route", requirements={"locale": "%app.locales%"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function homeAction(Request $request) {
+
+        $projectResultsForm = $this->createForm(ProjectSearchForm::class, null, [
+            'action' => $this->generateUrl('default_route'),
+            'method' => 'GET',
+            'locale' => $request->getLocale()
+        ]);
+
+        $projectResultsForm->handleRequest($request);
+
+        $results = [];
+        if ($projectResultsForm->isValid()) {
+            $data = $projectResultsForm->getData();
+
+            $queryBuilder = $this->getProjectRepository()->createQueryBuilder('o');
+
+            $queryBuilder->where('o.isCompleted = :isCompleted')
+                ->setParameter("isCompleted", true);
+
+            //project project query builder
+            if (!is_null($data[ProjectSearchForm::ACRONYM])) {
+                $queryBuilder->andWhere('o.acronym LIKE :acronym')
+                    ->setParameter('acronym', '%' . $data[ProjectSearchForm::ACRONYM] . '%');
+            }
+            if (!is_null($data[ProjectSearchForm::TITLE])) {
+                $queryBuilder->andWhere('o.nameEn LIKE :title OR o.nameSr LIKE :title')
+                    ->setParameter('title', '%' . $data[ProjectSearchForm::TITLE] . '%');
+            }
+            if (!is_null($data[ProjectSearchForm::REFERENCE_NUMBER])) {
+                $queryBuilder->andWhere('o.projectNumber LIKE :referenceNumber')
+                    ->setParameter('referenceNumber', '%' . $data[ProjectSearchForm::REFERENCE_NUMBER] . '%');
+            }
+            if (!is_null($data[ProjectSearchForm::PROGRAMMES])) {
+                $queryBuilder->andWhere('o.programmes = :programmes')
+                    ->setParameter("programmes", $data[ProjectSearchForm::PROGRAMMES]);
+            }
+            if (!is_null($data[ProjectSearchForm::KEY_ACTIONS])) {
+                $queryBuilder->andWhere('o.keyActions = :keyActions')
+                    ->setParameter("keyActions", $data[ProjectSearchForm::KEY_ACTIONS]);
+            }
+            if (!is_null($data[ProjectSearchForm::ACTIONS])) {
+                $queryBuilder->andWhere('o.actions = :actions')
+                    ->setParameter("actions", $data[ProjectSearchForm::ACTIONS]);
+            }
+            if (!is_null($data[ProjectSearchForm::START_DATE_START])) {
+                $queryBuilder->andWhere('o.startDatetime >= :startDateStart')
+                    ->setParameter("startDateStart", $data[ProjectSearchForm::START_DATE_START]);
+            }
+            if (!is_null($data[ProjectSearchForm::START_DATE_END])) {
+                $queryBuilder->andWhere('o.startDatetime <= :startDateEnd')
+                    ->setParameter("startDateEnd", $data[ProjectSearchForm::START_DATE_END]);
+            }
+            if (!is_null($data[ProjectSearchForm::END_DATE_START])) {
+                $queryBuilder->andWhere('o.endDatetime >= :endDateStart')
+                    ->setParameter("endDateStart", $data[ProjectSearchForm::END_DATE_START]);
+            }
+            if (!is_null($data[ProjectSearchForm::END_DATE_END])) {
+                $queryBuilder->andWhere('o.endDatetime <= :endDateEnd')
+                    ->setParameter("endDateEnd", $data[ProjectSearchForm::END_DATE_END]);
+            }
+
+            if (!is_null($data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION])
+                || sizeof($data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION_COUNTRY]) != 0) {
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\ProjectPartnerOrganisation',
+                    'ppo',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'o = ppo.project'
+                );
+            }
+
+            if (!is_null($data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION])) {
+                $queryBuilder->andWhere('ppo.organisation = :partnerOrganizationInstitution')
+                    ->setParameter("partnerOrganizationInstitution", $data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION]);
+            }
+
+            if (sizeof($data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION_COUNTRY]) != 0) {
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\Institution',
+                    'inst',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'ppo.organisation = inst'
+                )->leftJoin(
+                    'AppBundle\Entity\InstitutionAddress',
+                    'inst_addr',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'inst = inst_addr.institution'
+                )->andWhere('inst_addr.country IN (:partnerOrganizationInstitutionCountry)')
+                    ->setParameter("partnerOrganizationInstitutionCountry", $data[ProjectSearchForm::PARTNER_ORGANIZATION_INSTITUTION_COUNTRY]);
+            }
+
+
+            if (!is_null($data[ProjectSearchForm::PARTNER_ORGANIZATION_PERSON])) {
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\ProjectContactPerson',
+                    'projectContactPerson',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'o = projectContactPerson.project'
+                )->leftJoin(
+                    'AppBundle\Entity\Person',
+                    'person3',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'person3 = projectContactPerson.person'
+                )->leftJoin(
+                    'AppBundle\Entity\ProjectPartners',
+                    'projectPartners',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'o = projectPartners.project'
+                )->leftJoin(
+                    'AppBundle\Entity\Partners',
+                    'partners',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'projectPartners = partners.projectPartners'
+                )->leftJoin(
+                    'AppBundle\Entity\Person',
+                    'person',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'person = partners.projectCoordinator'
+                )->leftJoin(
+                    'AppBundle\Entity\Person',
+                    'person2',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'person2 = partners.legalRepresentative'
+                )->andWhere(
+                    'CONCAT(CONCAT(person.firstNameEn, \' \'),  person.lastNameEn) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person.firstNameSr, \' \'),  person.lastNameSr) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person.firstNameOriginalLetter, \' \'),  person.lastNameOriginalLetter) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person2.firstNameEn, \' \'),  person2.lastNameEn) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person2.firstNameSr, \' \'),  person2.lastNameSr) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person2.firstNameOriginalLetter, \' \'),  person2.lastNameOriginalLetter) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person3.firstNameSr, \' \'),  person3.lastNameSr) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person3.firstNameSr, \' \'),  person3.lastNameSr) LIKE :partnerOrganizationPerson OR
+                    CONCAT(CONCAT(person2.firstNameOriginalLetter, \' \'),  person2.lastNameOriginalLetter) LIKE :partnerOrganizationPerson')
+                    ->setParameter('partnerOrganizationPerson', '%' . $data[ProjectSearchForm::PARTNER_ORGANIZATION_PERSON] . '%');;
+            }
+
+
+            /** DELIVERABLES */
+            if (!is_null($data[ProjectSearchForm::DELIVERABLE_TYPE]) ||
+                !is_null($data[ProjectSearchForm::DELIVERABLE_STATUS]) ||
+                !is_null($data[ProjectSearchForm::DELIVERABLE_TITLE])) {
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\ProjectDeliverablesActivities',
+                    'projectDeliverablesActivities',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'o = projectDeliverablesActivities.project'
+                )->leftJoin(
+                    'AppBundle\Entity\ProjectDeliverable',
+                    'projectDeliverable',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'projectDeliverable.projectDeliverablesActivities = projectDeliverablesActivities'
+                );
+            }
+
+            if (!is_null($data[ProjectSearchForm::DELIVERABLE_TYPE])) {
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\ProjectDeliverableType',
+                    'projectDeliverableType',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'projectDeliverable.deliverableType = projectDeliverableType'
+                )->andWhere(
+                    'projectDeliverableType = :projectDeliverableType')
+                    ->setParameter("projectDeliverableType", $data[ProjectSearchForm::DELIVERABLE_TYPE]);
+            }
+
+            if (!is_null($data[ProjectSearchForm::DELIVERABLE_STATUS])) {
+                $queryBuilder->andWhere(
+                    'projectDeliverable.deliverableStatus = :deliverableStatus')
+                    ->setParameter("deliverableStatus", $data[ProjectSearchForm::DELIVERABLE_STATUS]);
+            }
+            if (!is_null($data[ProjectSearchForm::DELIVERABLE_TITLE])) {
+                $queryBuilder->andWhere(
+                    'projectDeliverable.titleEn LIKE :deliverableType OR projectDeliverable.titleSr LIKE :deliverableType')
+                    ->setParameter("deliverableType", '%' . $data[ProjectSearchForm::DELIVERABLE_TITLE] . '%');
+            }
+
+
+            /** SUBJECT AREA */
+            if (!is_null($data[ProjectSearchForm::SUBJECT_AREA])) {
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\ProjectSubjectArea',
+                    'projectSubjectArea',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'o = projectSubjectArea.project'
+                )->andWhere('projectSubjectArea.areaType= :subjectArea')
+                    ->setParameter("subjectArea", $data[ProjectSearchForm::SUBJECT_AREA]);
+            }
+
+            /** EQUIPMENT */
+            if (!is_null($data[ProjectSearchForm::EQUIPMENT_TYPE]) || !is_null($data[ProjectSearchForm::EQUIPMENT_TITLE]) ||
+                !is_null($data[ProjectSearchForm::EQUIPMENT_QUANTITY]) || !is_null($data[ProjectSearchForm::EQUIPMENT_DESCRIPTION])) {
+                $queryBuilder->leftJoin(
+                    'AppBundle\Entity\Equipment',
+                    'equipment',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'o = equipment.project'
+                );
+            }
+            if (!is_null($data[ProjectSearchForm::EQUIPMENT_TYPE])) {
+                $queryBuilder->andWhere('equipment.equipmentType= :equipmentType')
+                    ->setParameter("equipmentType", $data[ProjectSearchForm::EQUIPMENT_TYPE]);
+            }
+            if (!is_null($data[ProjectSearchForm::EQUIPMENT_TITLE])) {
+                $queryBuilder->andWhere('equipment.titleSr LIKE :equipmentTitle OR equipment.titleEn LIKE :equipmentTitle')
+                    ->setParameter("equipmentTitle", '%' . $data[ProjectSearchForm::EQUIPMENT_TITLE] . '%');
+            }
+            if (!is_null($data[ProjectSearchForm::EQUIPMENT_QUANTITY])) {
+                $queryBuilder->andWhere('equipment.quantity = :quantity')
+                    ->setParameter("quantity", $data[ProjectSearchForm::EQUIPMENT_QUANTITY]);
+            }
+            if (!is_null($data[ProjectSearchForm::EQUIPMENT_DESCRIPTION])) {
+                $queryBuilder->andWhere('equipment.descriptionSr LIKE :equipmentDescription OR equipment.descriptionEn LIKE :equipmentDescription')
+                    ->setParameter("equipmentDescription", '%' . $data[ProjectSearchForm::EQUIPMENT_DESCRIPTION] . '%');
+            }
+
+
+            $results = $queryBuilder->getQuery()->getResult();
+        }
+
+        return $this->render('home.twig', [
+            'form' => $projectResultsForm->createView(),
+            'results' => $results
+        ]);
+    }
+
+    /**
+     * @return ProjectRepository
+     */
+    private function getProjectRepository() {
+        /** @var ProjectRepository $repo */
+        $repo = $this->get('doctrine_entity_repository.project');
+        return $repo;
+    }
+
+}

@@ -24,7 +24,7 @@ class PersonContactsController extends AbstractController
 {
 
     /**
-     * @Route("/{locale}/person-contacts/create", name="person_contacts_create_action", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/person-contacts/create", name="person_contacts_create_action", requirements={"locale": "%app.locales%"})
      *
      */
     public function createAction(Request $request)
@@ -52,7 +52,7 @@ class PersonContactsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/person-contacts/create/{personId}", name="person_contacts_create_form", requirements={"personId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/person-contacts/create/{personId}", name="person_contacts_create_form", requirements={"personId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function createPersonAction($personId)

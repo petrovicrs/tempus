@@ -11,7 +11,7 @@ class SearchController extends AbstractController {
 
 
     /**
-     * @Route("/{locale}/search/projects", name="search_projects", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/search/projects", name="search_projects", requirements={"locale": "%app.locales%"})
      */
     public function searchProjects(Request $request)
     {

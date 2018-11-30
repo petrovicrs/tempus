@@ -32,7 +32,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class PersonController extends AbstractController
 {
     /**
-     * @Route("/{locale}/person/list", name="person_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/person/list", name="person_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction()
     {
@@ -42,7 +42,7 @@ class PersonController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/person/create", name="person_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/person/create", name="person_create", requirements={"locale": "%app.locales%"})
      *
      */
     public function createAction(Request $request)
@@ -106,7 +106,7 @@ class PersonController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/person/view/{personId}", name="person_view", requirements={"personId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/person/view/{personId}", name="person_view", requirements={"personId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($personId)
     {
@@ -120,7 +120,7 @@ class PersonController extends AbstractController
 
 
     /**
-     * @Route("/{locale}/person/edit/{personId}", name="person_edit", requirements={"personId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/person/edit/{personId}", name="person_edit", requirements={"personId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function editAction(Request $request, $personId)

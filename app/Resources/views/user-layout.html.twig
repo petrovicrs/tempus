@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% if pagetitle %}{{ pagetitle }} | {% endif %}{% trans %}base.head_title{% endtrans %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    {% include 'js-scripts.html.twig' %}
+    {% include 'stylesheets.html.twig' %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/css/login.css') }}"/>
+</head>
+<body class="html not-front not-logged-in one-sidebar sidebar-first page-user page-user-login openx-set">
+<div id="auth_box" class="login">
+    <div id="top_part" class="part top-part">
+        <h1 id="the_logo">
+            <a href="/">
+                <img alt="Project Database - Erasmus+, Tempus, Erasmus Mundus and Lifelong Learning Programme"
+                     src="{{ asset('/images/logo_horizontal_en-470e29804c52b459fae2c00b8ead4843.png') }}">
+            </a>
+        </h1>
+    </div>
+    <div id="middle_part" class="part middle-part">
+        <div><h1 id="page-title">{{ pagetitle }}</h1></div>
+        <div class="region region-content">
+            <div id="block-system-main" class="block block-system">
+                <div class="content">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bottom_part" class="part botton-part">
+        <footer class="container-fluid" id="footer">
+            <div class="row-fluid">
+                <p class="col-md-12">
+                    <small>
+                        Tempus ©
+                        <img alt="" class="logo" src="/images/eu_flag_tempus.png">
+                    </small>
+                </p>
+            </div>
+        </footer>
+    </div>
+</div>
+</body>
+</html>

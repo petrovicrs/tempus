@@ -1,0 +1,11 @@
+<div id="main-nav" class="navbar" style="height: 75px">
+    <ul class="nav navbar-nav">
+        <li class="{% if activeRoute('search') %}active{% endif %}"><a href="{{ localizedPath('search_projects')}}">Search</a></li>
+        <li class="{% if activeRoute('person') %}active{% endif %}"><a href="{{ localizedPath('person_list')}}">Person</a></li>
+        <li class="{% if activeRoute('institution') %}active{% endif %}"><a href="{{ localizedPath('institution_list')}}">Institution/Organization</a></li>
+        <li class="{% if activeRoute('project') or activeRoute('default') or subNavRoute() %}active{% endif %}"><a href="{{ localizedPath('project_list')}}">Project</a></li>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li class="{% if activeRoute('user-permission') %}active{% endif %}"><a href="{{ localizedPath('choose_user')}}">Users</a></li>
+        {% endif %}
+    </ul>
+</div>

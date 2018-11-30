@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Security;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -14,16 +15,14 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Translation\Translator;
 
-class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
-{
+class LoginFormAuthenticator extends AbstractFormLoginAuthenticator {
     private $formFactory;
     private $em;
     private $router;
     private $passwordEncoder;
     private $translator;
 
-    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, RouterInterface $router, UserPasswordEncoder $passwordEncoder, Translator $translator)
-    {
+    public function __construct(FormFactoryInterface $formFactory, EntityManager $em, RouterInterface $router, UserPasswordEncoder $passwordEncoder, Translator $translator) {
         $this->formFactory = $formFactory;
         $this->em = $em;
         $this->router = $router;
@@ -31,19 +30,16 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $this->translator = $translator;
     }
 
-    protected function getLoginUrl()
-    {
+    protected function getLoginUrl() {
 
-        return $this->router->generate('security_login');
+        return $this->router->generate('fos_user_security_login');
     }
 
-    protected function getDefaultSuccessRedirectUrl()
-    {
-        return $this->router->generate('project_list',  ['locale' => $this->translator->getLocale()]);
+    protected function getDefaultSuccessRedirectUrl() {
+        return $this->router->generate('project_list', ['locale' => $this->translator->getLocale()]);
     }
 
-    public function getCredentials(Request $request)
-    {
+    public function getCredentials(Request $request) {
         $isLoginSubmit = $request->getPathInfo() == '/login' && $request->isMethod('POST');
 
         if (!$isLoginSubmit) {
@@ -66,16 +62,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         return $data;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
-    {
+    public function getUser($credentials, UserProviderInterface $userProvider) {
         $username = $credentials['_username'];
 
         return $this->em->getRepository('AppBundle:User')
             ->findOneBy(['email' => $username]);
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
-    {
+    public function checkCredentials($credentials, UserInterface $user) {
         $password = $credentials['_password'];
         if ($this->passwordEncoder->isPasswordValid($user, $password)) {
             return true;

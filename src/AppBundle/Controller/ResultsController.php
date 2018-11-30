@@ -20,7 +20,7 @@ use AppBundle\Repository\ProjectRepository;
 class ResultsController extends AbstractController
 {
     /**
-     * @Route("/{locale}/results/list", name="results_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/results/list", name="results_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction(Request $request)
     {
@@ -30,7 +30,7 @@ class ResultsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/results/create", name="results_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/results/create", name="results_create", requirements={"locale": "%app.locales%"})
      */
     public function createAction(Request $request)
     {
@@ -66,7 +66,7 @@ class ResultsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/results/edit/{projectId}", name="result_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/results/edit/{projectId}", name="result_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function editAction(Request $request, $projectId)
@@ -135,7 +135,7 @@ class ResultsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/results/view/{projectId}", name="result_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/results/view/{projectId}", name="result_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($projectId)
     {

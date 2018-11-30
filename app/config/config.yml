@@ -6,8 +6,8 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    app.locales: en|sr
-    locale: en
+    app.locales: en|sr|lat
+    locale: sr
 
 jms_serializer:
     visitors:
@@ -32,7 +32,7 @@ framework:
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        save_path:   /var/lib/php/sessions
     fragments:       ~
     http_method_override: true
     assets: ~
@@ -46,8 +46,8 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form_themes:
-     - 'bootstrap_3_layout.html.twig'
-     - 'form/file_widget.html.twig'
+        - 'bootstrap_4_horizontal_layout.html.twig'
+        - 'form/file_widget.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -90,28 +90,6 @@ nelmio_cors:
         hosts: []
         origin_regex: false
 
-# Nelmio API Doc
-#nelmio_api_doc:
-#    sandbox:
-#        accept_type:        "application/json"
-#        body_format:
-#            formats:        [ "json" ]
-#            default_format: "json"
-#        request_format:
-#            formats:
-#                json:       "application/json"
-
-## FOSRest Configuration
-#fos_rest:
-#    body_listener: true
-#    format_listener:
-#        rules:
-#            - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
-#    param_fetcher_listener: true
-#    view:
-#        view_response_listener: 'force'
-#        formats:
-#            json: true
 
 assetic:
     debug:          "%kernel.debug%"
@@ -159,9 +137,46 @@ assetic:
             inputs:
                 - "%kernel.root_dir%/../components/calendar/fullcalendar.min.css"
             filters: [cssrewrite]
-#
-## FOS User Bundle
-#fos_user:
-#    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
-#    firewall_name: main
-#    user_class: AppBundle\Entity\User
+
+# FOS User Bundle
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    from_email:
+        address: "noreply@tempus.com"
+        sender_name: "No Reply"
+translation:
+    locales: ["en", "sr", 'lat']
+    symfony_profiler: # must be placed in config_dev.yml
+        enabled: true
+    webui:
+        enabled: true
+    configs:
+        app:
+            dirs: ["%kernel.root_dir%/Resources/views", "%kernel.root_dir%/../src"]
+            output_dir: "%kernel.root_dir%/Resources/translations"
+            excluded_names: ["*TestCase.php", "*Test.php"]
+            excluded_dirs: [cache, data, logs]
+datatables:
+    # Load i18n data from DataTables CDN or locally
+    language_from_cdn:    false
+    # Default HTTP method to be used for callbacks
+    method:               GET # One of "GET"; "POST"
+    # Default options to load into DataTables
+    options:
+        pageLength: 10
+    # Where to persist the current table state automatically
+    persist_state:        fragment # One of "none"; "query"; "fragment"; "local"; "session"
+    # Default service used to render templates, built-in TwigRenderer uses global Twig environment
+    renderer:             Omines\DataTablesBundle\Twig\TwigRenderer
+    # Default template to be used for DataTables HTML
+    template:             '@DataTables/datatable_html.html.twig'
+    # Default parameters to be passed to the template
+    template_parameters:
+        # Default class attribute to apply to the root table elements
+        className:        'table table-striped table-bordered table-hover'
+        # If and where to enable the DataTables Filter module
+        columnFilter:     thead # One of "thead"; "tfoot"; "both"; null
+    # Default translation domain to be used
+    translation_domain:   messages

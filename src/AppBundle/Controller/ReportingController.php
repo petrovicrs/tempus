@@ -104,7 +104,7 @@ class ReportingController extends AbstractController
     const PITANJE_105_22 = '22. Preporuke na osnovu sprovedene evaluacije:';
 
     /**
-     * @Route("/{locale}/reporting/create-report/{project}", name="reporting_start", requirements={"locale": "%app.locales%", "project": "\d+"})
+     * @Route("/{locale}/admin/reporting/create-report/{project}", name="reporting_start", requirements={"locale": "%app.locales%", "project": "\d+"})
      * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_PROJECT_CREATE') or is_granted('ROLE_ADMIN')")
      *
      */
@@ -172,7 +172,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/create-report-type-one/{project}", name="reporting_create_type_one", requirements={"locale": "%app.locales%", "project": "\d+"})
+     * @Route("/{locale}/admin/reporting/create-report-type-one/{project}", name="reporting_create_type_one", requirements={"locale": "%app.locales%", "project": "\d+"})
      */
     public function createReportTypeOneAction(Request $request, Project $project = null)
     {
@@ -229,7 +229,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/create-report-type-two/{project}", name="reporting_create_type_two", requirements={"locale": "%app.locales%", "project": "\d+"})
+     * @Route("/{locale}/admin/reporting/create-report-type-two/{project}", name="reporting_create_type_two", requirements={"locale": "%app.locales%", "project": "\d+"})
      */
     public function createReportTypeTwoAction(Request $request, Project $project = null)
     {
@@ -286,7 +286,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/create-report-type-three/{project}", name="reporting_create_type_three", requirements={"locale": "%app.locales%", "project": "\d+"})
+     * @Route("/{locale}/admin/reporting/create-report-type-three/{project}", name="reporting_create_type_three", requirements={"locale": "%app.locales%", "project": "\d+"})
      */
     public function createReportTypeThreeAction(Request $request, Project $project = null)
     {
@@ -353,7 +353,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/create-report-type-four/{project}", name="reporting_create_type_four", requirements={"locale": "%app.locales%", "project": "\d+"})
+     * @Route("/{locale}/admin/reporting/create-report-type-four/{project}", name="reporting_create_type_four", requirements={"locale": "%app.locales%", "project": "\d+"})
      */
     public function createReportTypeFourAction(Request $request, Project $project = null)
     {
@@ -418,7 +418,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/create-report-type-five/{project}", name="reporting_create_type_five", requirements={"locale": "%app.locales%", "project": "\d+"})
+     * @Route("/{locale}/admin/reporting/create-report-type-five/{project}", name="reporting_create_type_five", requirements={"locale": "%app.locales%", "project": "\d+"})
      */
     public function createReportTypeFiveAction(Request $request, Project $project = null)
     {
@@ -467,7 +467,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/edit/{projectId}", name="reporting_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
+     * @Route("/{locale}/admin/reporting/edit/{projectId}", name="reporting_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
     public function editAction(Request $request, $projectId)
     {
@@ -529,7 +529,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/edit-report-type-one/{projectId}/report/{reportId}", name="reporting_edit_type_one",
+     * @Route("/{locale}/admin/reporting/edit-report-type-one/{projectId}/report/{reportId}", name="reporting_edit_type_one",
      *      defaults={"reportId": null}, requirements={"locale": "%app.locales%", "reportId": "\d+$|^$", "projectId": "\d+"})
      */
     public function reportingEditTypeOneAction(Request $request, $reportId = null, $projectId)
@@ -608,7 +608,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/edit-report-type-two/{projectId}/report/{reportId}", name="reporting_edit_type_two",
+     * @Route("/{locale}/admin/reporting/edit-report-type-two/{projectId}/report/{reportId}", name="reporting_edit_type_two",
      *      defaults={"reportId": null}, requirements={"locale": "%app.locales%", "reportId": "\d+$|^$", "projectId": "\d+"})
      */
     public function reportingEditTypeTwoAction(Request $request, $reportId = null, $projectId)
@@ -687,7 +687,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/edit-report-type-three/{projectId}/report/{reportId}", name="reporting_edit_type_three",
+     * @Route("/{locale}/admin/reporting/edit-report-type-three/{projectId}/report/{reportId}", name="reporting_edit_type_three",
      *      defaults={"reportId": null}, requirements={"locale": "%app.locales%", "reportId": "\d+$|^$", "projectId": "\d+"})
      */
     public function reportingEditTypeThreeAction(Request $request, $reportId = null, $projectId)
@@ -775,7 +775,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/edit-report-type-four/{projectId}/report/{reportId}", name="reporting_edit_type_four",
+     * @Route("/{locale}/admin/reporting/edit-report-type-four/{projectId}/report/{reportId}", name="reporting_edit_type_four",
      *      defaults={"reportId": null}, requirements={"locale": "%app.locales%", "reportId": "\d+$|^$", "projectId": "\d+"})
      */
     public function reportingEditTypeFourAction(Request $request, $reportId = null, $projectId)
@@ -863,7 +863,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/edit-report-type-five/{projectId}/report/{reportId}", name="reporting_edit_type_five",
+     * @Route("/{locale}/admin/reporting/edit-report-type-five/{projectId}/report/{reportId}", name="reporting_edit_type_five",
      *      defaults={"reportId": null}, requirements={"locale": "%app.locales%", "reportId": "\d+$|^$", "projectId": "\d+"})
      */
     public function reportingEditTypeFiveAction(Request $request, $reportId = null, $projectId)
@@ -922,7 +922,7 @@ class ReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/reporting/view/{projectId}", name="reporting_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/reporting/view/{projectId}", name="reporting_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($projectId)
     {

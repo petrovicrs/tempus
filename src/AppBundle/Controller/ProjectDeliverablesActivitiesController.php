@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ProjectDeliverablesActivitiesController extends AbstractController
 {
     /**
-     * @Route("/{locale}/deliverables-activities/list", name="deliverables_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/deliverables-activities/list", name="deliverables_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction(Request $request)
     {
@@ -33,7 +33,7 @@ class ProjectDeliverablesActivitiesController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/deliverables-activities/create", name="deliverables_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/deliverables-activities/create", name="deliverables_create", requirements={"locale": "%app.locales%"})
      */
     public function createAction(Request $request)
     {
@@ -85,7 +85,7 @@ class ProjectDeliverablesActivitiesController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/deliverables-activities/edit/{projectId}", name="deliverables_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
+     * @Route("/{locale}/admin/deliverables-activities/edit/{projectId}", name="deliverables_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
     public function editAction(Request $request, $projectId)
     {
@@ -175,7 +175,7 @@ class ProjectDeliverablesActivitiesController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/deliverables-activities/view/{projectId}", name="deliverables_view", requirements={"locale": "%app.locales%", "projectId": "\d+"})
+     * @Route("/{locale}/admin/deliverables-activities/view/{projectId}", name="deliverables_view", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
     public function viewAction(Request $request, $projectId)
     {

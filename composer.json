@@ -18,7 +18,7 @@
   },
   "require": {
     "php": ">=7.0",
-    "symfony/symfony": "3.2.*",
+    "symfony/symfony": "3.4",
     "doctrine/orm": "^2.5",
     "doctrine/doctrine-bundle": "^1.6",
     "doctrine/doctrine-cache-bundle": "^1.2",
@@ -35,7 +35,12 @@
     "nelmio/api-doc-bundle" : "*",
     "components/jquery": "1.11.1",
     "symfony/assetic-bundle": "*",
-    "twbs/bootstrap": "3.*"
+    "twbs/bootstrap": "3.*",
+    "friendsofsymfony/user-bundle": "~2.0",
+    "knplabs/knp-menu-bundle": "^2.0",
+    "symfony/webpack-encore-pack": "^1.0",
+    "php-translation/symfony-bundle": "^0.8.1",
+    "omines/datatables-bundle": "^0.2.1"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",

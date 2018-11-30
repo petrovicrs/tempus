@@ -50,7 +50,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class InstitutionController extends AbstractController
 {
     /**
-     * @Route("/{locale}/institution/list", name="institution_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/institution/list", name="institution_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction()
     {
@@ -60,11 +60,12 @@ class InstitutionController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/institution/create", name="institution_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/institution/create", name="institution_create", requirements={"locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_INSTITUTION_CREATE') or is_granted('ROLE_ADMIN')")
      */
     public function createAction(Request $request)
     {
+        $this->setPageTitle($this->translate('Add institution'));
         $institutions = new Institution();
 
         $institutionForm = $this->createForm(InstitutionsForm::class, $institutions, [
@@ -149,11 +150,11 @@ class InstitutionController extends AbstractController
 
         }
 
-        return $this->render('institution/create.twig', ['my_form' => $institutionForm->createView()]);
+        return $this->render('institution/create.twig', ['form' => $institutionForm->createView()]);
     }
 
     /**
-     * @Route("/{locale}/institution/edit/{institutionId}", name="institution_edit", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/institution/edit/{institutionId}", name="institution_edit", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_EDIT') or is_granted('ROLE_USER_INSTITUTION_EDIT_MY') or is_granted('ROLE_USER_INSTITUTION_EDIT_ALL') or is_granted('ROLE_ADMIN')")
      */
     public function editAction(Request $request, $institutionId)
@@ -382,7 +383,7 @@ class InstitutionController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/institution/view/{institutionId}", name="institution_view", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/institution/view/{institutionId}", name="institution_view", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_VIEW') or is_granted('ROLE_USER_INSTITUTION_VIEW_MY') or is_granted('ROLE_USER_INSTITUTION_VIEW_ALL') or is_granted('ROLE_ADMIN')")
      */
     public function viewAction(Request $request, $institutionId)
@@ -426,7 +427,7 @@ class InstitutionController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/institution/delete/{institutionId}", name="delete_institution", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/institution/delete/{institutionId}", name="delete_institution", requirements={"institutionId": "\d+", "locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_VIEW') or is_granted('ROLE_USER_INSTITUTION_VIEW_MY') or is_granted('ROLE_USER_INSTITUTION_VIEW_ALL') or is_granted('ROLE_ADMIN')")
      */
     public function deleteInstitution($institutionId)
@@ -441,7 +442,7 @@ class InstitutionController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/institution/{institutionId}/file/risk-level/{riskLevelId}", name="institution_risk_level_file", requirements={"institutionId": "\d+", "riskLevelId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/institution/{institutionId}/file/risk-level/{riskLevelId}", name="institution_risk_level_file", requirements={"institutionId": "\d+", "riskLevelId": "\d+", "locale": "%app.locales%"})
      */
     public function getFileAction($institutionId, $riskLevelId)
     {

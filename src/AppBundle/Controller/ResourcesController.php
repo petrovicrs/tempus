@@ -29,7 +29,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class ResourcesController extends AbstractController
 {
     /**
-     * @Route("/{locale}/resources/list", name="resources_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/admin/resources/list", name="resources_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction(Request $request)
     {
@@ -38,7 +38,7 @@ class ResourcesController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/resources/create", name="resources_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/admin/resources/create", name="resources_create", requirements={"locale": "%app.locales%"})
      */
     public function createAction(Request $request)
     {
@@ -90,7 +90,7 @@ class ResourcesController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/resources/edit/{projectId}", name="resource_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/admin/resources/edit/{projectId}", name="resource_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function editAction(Request $request, $projectId)
@@ -199,7 +199,7 @@ class ResourcesController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/resources/view/{projectId}", name="resource_view", requirements={"$projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/admin/resources/view/{projectId}", name="resource_view", requirements={"$projectId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($projectId)
     {

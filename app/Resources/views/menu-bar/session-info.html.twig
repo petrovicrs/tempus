@@ -1,0 +1,6 @@
+<div id="session">
+    <a href="{{ localizedPath('fos_user_profile_edit', {'locale': app.request.getLocale()})}}" id="username" class="tooltipster tooltipster-bottom" title="{% trans %}profile.edit.label{% endtrans %}">
+        <span class="email">{{ app.user.email }}</span>
+    </a>
+    <a href="{{ localizedPath('fos_user_security_logout') }}" id="logout" class="tooltipster tooltipster-bottom" title="Одјави се">{% trans %}logout{% endtrans %}</a>
+</div>

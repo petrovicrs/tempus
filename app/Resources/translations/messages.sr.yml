@@ -1,107 +1,98 @@
-'Symfony is great': '__Symfony is great'
-'Project title': 'Ime Projekta'
-Programe: Program
-Partners: Partneri
-'Add Project': 'Dodaj projekat'
-'Add Person': 'Dodaj novu osobu'
-'Add Institution': 'Dodaj instituciju'
-'Create project': 'Kreiranje Projekta'
-'Edit project': 'Izmeni projekat'
-Project: Projekat
-'Original letter': '__Original letter'
-Edit: __Edit
-Grant: __Grant
-'Project Status': 'Status projekta'
-'Eligibility period start': '__Eligibility period start'
-'Eligibility period end': '__Eligibility period end'
-'Extended until': '__Extended until'
-Website: 'Veb Strana'
-Facebook: __Facebook
-'Project Summary': '__Project Summary'
-Objectives: __Objectives
-Programme: __Programme
-Welcome: 'Dobro dosli'
-'Add person': 'Dodaj novu osobu'
-Name: Ime
-Surname: Prezime
-Person: Osoba
-'Person contact': 'Kontakt osoba'
-Type: Tip
-'Add new contact': 'Dodaj novi kontakt'
-'Add person contact': 'Dodaj novu kontakt osobu'
-name: Ime
-surname: Prezime
-submit: Kreiraj
-'Name English': 'Ime Engleski'
-'Name Serbian': 'Ime Srpski'
-Description: Opis
-Goals: Ciljevi
-'Organisation name Original Alphabet': 'Originalni Naziv Organizacije'
-Acronym: Akronim
-Program: Program
-Status: Status
-Scope: Opseg
-'Application Year': 'Godina apliciranja'
-'Reference Number': 'Referentni broj'
-Duration: Trajanje
-'End Datetime': 'Datum zavrsetka'
-'Start Datetime': 'Datum pocetka'
-'Extended Time': 'Produzeno vreme'
-'Grant Amount': Vrednost
-'coFinancing Amount': 'Vrednost kofinansiranja'
-'Total Project Value': 'Ukupna vrednost projekta'
-Mark: Ocena
-'Mark Explanation': 'Objasnjenje ocene'
-Submit: Napravi
-'Contact Type': 'Tip kontakta'
-Value: Vrednost
-'Parent Institution': 'Maticna institucija'
-Founder: Osnivac
-'Founder Original Letter': 'Originalan naziv osnivaca'
-'Legal Representative': 'Zvanican predstavnik'
-'Contact Person': 'Kontakt osoba'
-'pic Number': 'pic broj'
-'National Registration Number': 'Nacionalni Registracioni broj'
-'Vat/Tax Number': 'Poreski broj'
-'Hierarchy Level': 'Hijerarhijski nivo'
-'Institution Type': 'Tip institucije'
-Country: Drzava
-'Founder Type': 'Tip osnivaca'
-'Founder Country': 'Zemlja osnivac'
-Address: Adresa
-'Postal Code': 'Postanski broj'
-City: Grad
-'Web Site': 'Web Strana'
-'Belonging To Group': 'Pripada grupi'
-Note: Beleska
-Accreditation: Akreditacija
-'Accreditation Valid From': 'Akreditacija vazi od'
-'Accreditation Valid To': 'Akreditacija vazi do'
-Accreditor: Akreditor
-'Organisation name English': 'Ime Organizacije na Engleskom'
-'Organisation name Serbian': 'Ime Organizacije na Srpskom'
-'Organization Name English': '__Organization Name English'
-'Organization Name Serbian': '__Organization Name Serbian'
-'Organization Name Original Alphabet': '__Organization Name Original Alphabet'
-'National Registration Nr': '__National Registration Nr'
-'VAT/Tax Nr': '__VAT/Tax Nr'
-Contact: __Contact
-Public: __Public
-PIC: __PIC
-'Validated?': '__Validated?'
-'Primary?': '__Primary?'
-'First name Eng': '__First name Eng'
-'First name Srb': '__First name Srb'
-'First name Original alphabet': '__First name Original alphabet'
-'Last name Eng': '__Last name Eng'
-'Last name Srb': '__Last name Srb'
-'Last name Original alphabet': '__Last name Original alphabet'
-Initials: __Initials
-'Title (prefix)': '__Title (prefix)'
-'Title (suffix)': '__Title (suffix)'
-Gender: __Gender
-'Person with disabilities': '__Person with disabilities'
-'Person with fewer opportunities': '__Person with fewer opportunities'
-Create: __Create
-'Application year': '__Application year'
-'Reference number': '__Reference number'
+common:
+  loading: 'Учитавање...'
+  edit: 'Измени'
+base:
+  head_title: 'Project Database - Erasmus+, Tempus, Erasmus Mundus and Lifelong Learning Programme'
+home:
+  submit: 'Претражи'
+security:
+  login:
+    username: 'Корисничко име'
+    password: 'Лозинка'
+    remember_me: 'Запамти ме'
+    submit: 'Улогуј се'
+resetting:
+  reset:
+    submit: 'Ресетуј'
+registration:
+  submit: 'Региструј се'
+change_password:
+  submit: 'Промени лозинку'
+profile:
+  edit:
+    label: 'Уреди налог'
+    submit: 'Сачувај'
+  show:
+    username: 'Корисничко име'
+logout: 'Одјави се'
+login: 'Пријави се'
+error:
+  oops: 'Уупс!'
+  404: '404'
+  500: '500'
+  404_not_found: 'Жао нам је, Тражена страница није пронађена!'
+  500_internal_server_error: 'Интерна грешка!'
+  go_back: 'Назад'
+  take_me_home: 'Назад на насловну'
+datatable:
+  common:
+    are_you_sure: 'Да ли сте сигурни?'
+    you_need_to_select_at_least_one_element: 'Морате да одаберете бар један елемент'
+    search: 'Претражи'
+    execute: 'Изврши'
+    ok: 'У реду'
+  datatable:
+    searchPlaceholder: ""
+    emptyTable:     "Нема података"
+    info:           "Приказ _START_ до _END_ од _TOTAL_ рекорда"
+    infoEmpty:      "Приказ 0 до 0 од 0 рекорда"
+    infoFiltered:   "(филтрирање од _MAX_ укупно рекорда)"
+    infoPostFix:    ""
+    infoThousands:  ","
+    lengthMenu:     "Приказ _MENU_ рекорда"
+    loadingRecords: "Учитавање..."
+    processing:     "Процесирање..."
+    search:         "Претрага:"
+    zeroRecords:    "Нема пронађених рекорда"
+    paginate:
+      first:    "Прва"
+      last:     "Последња"
+      next:     "Следећа"
+      previous: "Претходна"
+    aria:
+      sortAscending:  ": активирај за сортирање колоне растуће"
+      sortDescending: ": активирај за сортирање колоне опадајуће"
+  user:
+    name: 'Име'
+    surname: 'Презиме'
+    email: 'Е-пошта'
+    enabled: 'Омогућен'
+    last_login: 'Последње логовање'
+    login_count: 'Број логиновања'
+form:
+  user:
+    name: 'Име'
+    surname: 'Презиме'
+    username: 'Kорисничко име'
+    email: 'Е-пошта'
+    password: 'Лозинка'
+    enabled: 'Омогућен'
+    roles: 'Роле'
+    password_confirmation: 'Потврда лозинке'
+    password_mismatch: 'Лозинке се не подударају'
+page:
+  users:
+    title: 'Корисници'
+  add_user:
+    title: 'Додај корисника'
+msg:
+  save: 'Сачувај'
+  edit: 'Измени'
+  add: 'Додај'
+  yes: 'Да'
+  no: 'Не'
+  action: 'Акција'
+  actions: 'Акције'
+  view: 'Види'
+  logout: 'Одјави се'
+  login: 'Пријави се'

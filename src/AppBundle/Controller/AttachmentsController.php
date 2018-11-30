@@ -33,7 +33,7 @@ use Twig\Extension\DebugExtension;
 class AttachmentsController extends AbstractController
 {
     /**
-     * @Route("/{locale}/attachments/list", name="attachments_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/attachments/list", name="attachments_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction(Request $request)
     {
@@ -46,7 +46,7 @@ class AttachmentsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/attachments/create", name="attachments_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/attachments/create", name="attachments_create", requirements={"locale": "%app.locales%"})
      */
     public function createAction(Request $request)
     {
@@ -122,7 +122,7 @@ class AttachmentsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/attachments/edit/{projectId}", name="attachment_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/attachments/edit/{projectId}", name="attachment_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
     public function editAction(Request $request, $projectId)
     {
@@ -253,7 +253,7 @@ class AttachmentsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/attachments/view/{projectId}", name="attachments_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/attachments/view/{projectId}", name="attachments_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($projectId)
     {

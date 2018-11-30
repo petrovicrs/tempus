@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="datatable_list">
+        {% if datatable_link and datatable_link_title %}
+        <div id="list_link"><a href="{{ datatable_link }}">{{ datatable_link_title }}</a></div>
+        {% endif %}
+        <div id="list_wrapper">
+            {% trans %} common.loading {% endtrans %}
+        </div>
+        <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+        <script>
+            $(function() {
+                $('#list_wrapper').initDataTables({{ datatable_settings(datatable) }});
+            });
+        </script>
+    </div>
+{% endblock %}

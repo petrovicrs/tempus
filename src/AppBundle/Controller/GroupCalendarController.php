@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupCalendarController extends AbstractController
 {
     /**
-     * @Route("/{locale}/group-calendar/list", name="group_calendar_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/admin/group-calendar/list", name="group_calendar_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction()
     {
@@ -34,7 +34,7 @@ class GroupCalendarController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/group-calendar/create", name="group_calendar_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/group-calendar/create", name="group_calendar_create", requirements={"locale": "%app.locales%"})
      */
     public function createAction(Request $request)
     {
@@ -79,7 +79,7 @@ class GroupCalendarController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/group-calendar/edit/{projectId}", name="group_calendar_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
+     * @Route("/{locale}/admin/group-calendar/edit/{projectId}", name="group_calendar_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
     public function editAction(Request $request, $projectId)
     {
@@ -149,7 +149,7 @@ class GroupCalendarController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/group-calendar/view/{projectId}", name="group_calendar_view", requirements={"locale": "%app.locales%", "projectId": "\d+"})
+     * @Route("/{locale}/admin/group-calendar/view/{projectId}", name="group_calendar_view", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
     public function viewAction(Request $request, $projectId)
     {

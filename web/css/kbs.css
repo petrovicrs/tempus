@@ -4438,7 +4438,8 @@ form.filter .input-group select:last-child,
 .pagination>.active>span:hover,
 .pagination>.active>span:focus {
     z-index: 2;
-    color: #fff;
+    /*color: #fff;*/
+    color: #000000;
     background-color: #428bca;
     border-color: #428bca;
     cursor: default
@@ -6039,8 +6040,6 @@ button.close {
     }
 }
 .container-fluid {
-    padding-left: 30px;
-    padding-right: 30px
 }
 @media print {
     .container-fluid {
@@ -8580,7 +8579,7 @@ form.filter .eligibility_period .input-prepend input {
     width: 116px !important
 }
 body {
-    background: #797979 url(/images/main_bg-b73ae29810bc041b75948230d26f4f3b.jpg)
+    background: #797979 url(/images/body_bg-496ed5798a19254f80c4b139b4fcb4db.jpg)
 }
 h1 {
     font-size: 36px
@@ -8588,9 +8587,15 @@ h1 {
 a {
     transition: all 0.125s ease-in
 }
-#traka {
-    height: 9px;
+#horizontal-tape {
+    height: 10px;
     background: url(/images/header_traka-f6cd05016fd710db00ec1de10780d25d.jpg)
+}
+#page {
+    width: 90%;
+}
+.container {
+    background-color: #ffffff;
 }
 #header {
     padding: 10px 0;

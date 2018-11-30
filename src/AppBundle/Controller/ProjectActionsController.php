@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ProjectActionsController extends AbstractController
 {
     /**
-     * @Route("/{locale}/project-actions/list/{keyActionId}", options={"expose"=true}, name="project_actions_list", requirements={"keyActionId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/project-actions/list/{keyActionId}", options={"expose"=true}, name="project_actions_list", requirements={"keyActionId": "\d+", "locale": "%app.locales%"})
      */
     public function citiesAction(Request $request, $keyActionId)
     {

@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 class PartnersController extends AbstractController
 {
     /**
-     * @Route("/{locale}/partners/list", name="partners_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/partners/list", name="partners_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction(Request $request)
     {
@@ -34,7 +34,7 @@ class PartnersController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/partners/create", name="partner_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/partners/create", name="partner_create", requirements={"locale": "%app.locales%"})
      */
     public function createAction(Request $request)
     {
@@ -88,7 +88,7 @@ class PartnersController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/partners/edit/{projectId}", name="partner_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/partners/edit/{projectId}", name="partner_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
     public function editAction(Request $request, $projectId)
     {
@@ -217,7 +217,7 @@ class PartnersController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/partners/view/{projectId}", name="partner_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/partners/view/{projectId}", name="partner_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($projectId)
     {

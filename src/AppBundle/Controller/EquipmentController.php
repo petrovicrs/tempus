@@ -25,7 +25,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class EquipmentController extends AbstractController
 {
     /**
-     * @Route("/{locale}/equipment/list", name="equipment_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/equipment/list", name="equipment_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction(Request $request)
     {
@@ -35,7 +35,7 @@ class EquipmentController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/equipment/create", name="equipment_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/equipment/create", name="equipment_create", requirements={"locale": "%app.locales%"})
      */
     public function createAction(Request $request)
     {
@@ -74,7 +74,7 @@ class EquipmentController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/equipment/edit/{projectId}", name="equipment_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/equipment/edit/{projectId}", name="equipment_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function editAction(Request $request, $projectId)
@@ -140,7 +140,7 @@ class EquipmentController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/equipment/view/{projectId}", name="equipment_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/equipment/view/{projectId}", name="equipment_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($projectId)
     {

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container error-page error-page-500">
+        <div class="error-template">
+            <h1>{% trans %}error.oops{% endtrans %}</h1>
+            <h2>{% trans %}error.500{% endtrans %}</h2>
+            <div class="error-details">
+                <strong>{% trans %}error.500_internal_server_error{% endtrans %}</strong>
+            </div>
+            <div class="error-actions">
+                <span class="go-back">
+                    <a href="#" onclick="window.history.back()" class="btn btn-primary btn-lg">
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                        {% trans %}error.go_back{% endtrans %}
+                    </a>
+                </span>
+                <span class="go-home">
+                    <a href="/" class="btn btn-primary btn-lg">
+                        <span class="glyphicon glyphicon-home"></span>
+                        {% trans %}error.take_me_home{% endtrans %}
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

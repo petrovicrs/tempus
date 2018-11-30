@@ -33,7 +33,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class UserPermissionController extends AbstractController
 {
     /**
-     * @Route("/{locale}/user-permission/choose-user", name="choose_user", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/user-permission/choose-user", name="choose_user", requirements={"locale": "%app.locales%"})
      */
     public function chooseUserAction(Request $request)
     {
@@ -62,7 +62,7 @@ class UserPermissionController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/user-permission/edit/{userId}", name="permission_edit", requirements={"userId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/user-permission/edit/{userId}", name="permission_edit", requirements={"userId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function editAction(Request $request, $userId)

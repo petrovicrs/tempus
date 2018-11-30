@@ -1,0 +1,16 @@
+<div id="menu-bar" class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="inner-container inner-container-left">
+            {% include 'menu-bar/logo.html.twig' %}
+        </div>
+        <div class="inner-container inner-container-center">
+            {% include 'menu-bar/main-navbar.html.twig' with {'active': 'reporting'} %}
+        </div>
+        <div class="inner-container inner-container-right">
+            <div>{% include 'menu-bar/language-selector.html.twig' %}</div>
+            {% if is_granted('ROLE_USER') %}
+                <div>{% include 'menu-bar/session-info.html.twig' %}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>

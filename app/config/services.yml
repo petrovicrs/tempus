@@ -1,11 +1,15 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/service_container.html
-parameters:
+#parameters:
 #    parameter_name: value
 parameters:
     my.file_type_extension.class: AppBundle\FormType\FileTypeExtension
 
 services:
+    _defaults: { public: true }
+    my.data_builder:
+        class: AppBundle\DataTableBuilder\AbstractDataTableBuilder
+        arguments: [ "@service_container" ]
     my.twig.extension:
         class: AppBundle\Twig\LocalizedPath
         arguments: [ "@service_container" ]
@@ -16,8 +20,18 @@ services:
         arguments: [ "@service_container" ]
         tags:
            - { name: twig.extension }
+    my.listener.locale:
+        class: AppBundle\EventListener\LocaleSessionListener
+        arguments: [ '%kernel.default_locale%' ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+    my.listener.login:
+        class: AppBundle\EventListener\LoginListener
+        autowire: true
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login }
     listener.requestresponse:
-        class: AppBundle\EventListener\KernelListener
+        class: AppBundle\EventListener\LocaleTranslatorListener
         arguments: [ "@service_container" ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
@@ -29,12 +43,10 @@ services:
       public: false
       tags:
         - { name: serializer.normalizer }
-
     my.file_type_extension:
       class: %my.file_type_extension.class%
       tags:
         - { name: form.type_extension, alias: file, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
-
     doctrine_entity_repository.application:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
@@ -503,3 +515,11 @@ services:
         autowire: true
         tags:
             - { name: doctrine.event_subscriber }
+# custom managers
+    my.managers.role_manager:
+        class: AppBundle\Manager\RoleManager
+        arguments: [ "@service_container" ]
+# data table builders
+    AppBundle\DataTableType\UserDataTableType:
+        autowire: true
+        autoconfigure: true

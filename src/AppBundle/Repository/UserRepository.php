@@ -1,19 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nemtish
- * Date: 22.07.17
- * Time: 18:05
- */
 
 namespace AppBundle\Repository;
 
+/**
+ * Class UserRepository
+ *
+ * @package AppBundle\Repository
+ */
+class UserRepository extends \Doctrine\ORM\EntityRepository {
 
-class UserRepository extends \Doctrine\ORM\EntityRepository
-{
-    public function save($activity) {
-
-        $this->_em->persist($activity);
+    /**
+     * @param $user
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save($user) {
+        $this->_em->persist($user);
         $this->_em->flush();
     }
+
 }

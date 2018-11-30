@@ -1,0 +1,98 @@
+common:
+  loading: 'Loading...'
+  edit: 'Edit'
+base:
+  head_title: 'Project Database - Erasmus+, Tempus, Erasmus Mundus and Lifelong Learning Programme'
+home:
+  submit: 'Search'
+security:
+  login:
+    username: 'Username'
+    password: 'Password'
+    remember_me: 'Remember me'
+    submit: 'Submit'
+resetting:
+  reset:
+    submit: 'Submit'
+registration:
+  submit: 'Submit'
+change_password:
+  submit: 'Submit'
+profile:
+  edit:
+    label: 'Edit profile'
+    submit: 'Submit'
+  show:
+    username: 'Username'
+logout: 'Log out'
+login: 'Log in'
+error:
+  oops: 'Oops!'
+  404: '404'
+  500: '500'
+  404_not_found: 'Sorry, an error has occurred, Requested page not found!'
+  500_internal_server_error: 'Internal Server Error!'
+  go_back: 'Go Back'
+  take_me_home: 'Take Me Home'
+datatable:
+  common:
+    are_you_sure: Are you sure ?
+    you_need_to_select_at_least_one_element: You need to select at least one element.
+    search: Search
+    execute: Execute
+    ok: OK
+  datatable:
+    searchPlaceholder: ""
+    emptyTable:     "No data available in table"
+    info:           "Showing _START_ to _END_ of _TOTAL_ entries"
+    infoEmpty:      "Showing 0 to 0 of 0 entries"
+    infoFiltered:   "(filtered from _MAX_ total entries)"
+    infoPostFix:    ""
+    infoThousands:  ","
+    lengthMenu:     "Show _MENU_ entries"
+    loadingRecords: "Loading..."
+    processing:     "Processing..."
+    search:         "Search:"
+    zeroRecords:    "No matching records found"
+    paginate:
+      first:    "First"
+      last:     "Last"
+      next:     "Next"
+      previous: "Previous"
+    aria:
+      sortAscending:  ": activate to sort column ascending"
+      sortDescending: ": activate to sort column descending"
+  user:
+    name: 'First name'
+    surname: 'Last name'
+    email: 'E-mail'
+    enabled: 'Enabled'
+    last_login: 'Last login'
+    login_count: 'Login count'
+form:
+  user:
+    name: 'First name'
+    surname: 'Last name'
+    username: 'Username'
+    email: 'E-mail'
+    password: 'Password'
+    enabled: 'Enabled'
+    roles: 'Roles'
+    password_confirmation: 'Repeat password'
+    password_mismatch: 'Password mismatch'
+page:
+  users:
+    title: 'Users'
+  add_user:
+    title: 'Add user'
+msg:
+  save: 'Save'
+  edit: 'Edit'
+  yes: 'Yes'
+  no: 'No'
+  add: 'Add'
+  action: 'Actions'
+  actions: 'Actions'
+  view: 'View'
+  logout: 'Log out'
+  login: 'Log in'

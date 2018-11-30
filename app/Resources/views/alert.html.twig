@@ -1,0 +1,9 @@
+{% if successMessage is defined %}
+    <div class="alert alert-success"> {{ successMessage }} </div>
+{% elseif infoMessage is defined %}
+    <div class="alert alert-info"> {{ infoMessage }} </div>
+{% elseif warningMessage is defined %}
+    <div class="alert alert-warning"> {{ warningMessage }} </div>
+{% elseif dangerMessage is defined %}
+    <div class="alert alert-danger"> {{ dangerMessage }} </div>
+{% endif %}

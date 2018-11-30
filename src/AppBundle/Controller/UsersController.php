@@ -1,116 +1,121 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nemtish
- * Date: 08.08.17
- * Time: 22:27
- */
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Project;
+use AppBundle\Form\UserForm;
+use AppBundle\Repository\UserRepository;
+use AppBundle\DataTableType\UserDataTableType;
+use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use AppBundle\Repository\ProjectRepository;
 
-class UsersController extends AbstractController
-{
-    /**
-     * @Route("/{locale}/users/list", name="user_list", requirements={"locale": "%app.locales%"})
-     */
-    public function listAction(Request $request)
-    {
-        $results = $this->getResultsRepository()->findAll();
-
-        return $this->render('results/list.twig', ['results' => $results]);
-    }
+/**
+ * Class UsersController
+ *
+ * @package AppBundle\Controller
+ */
+class UsersController extends AbstractController {
 
     /**
-     * @Route("/{locale}/users/create", name="user_create", requirements={"locale": "%app.locales%"})
-     */
-    public function createAction(Request $request)
-    {
-        $results = new Results();
-
-        /** @var Project $project */
-        $project = $this->getLastProjectForCurrentUser();
-
-        $resultsForm = $this->createForm(ResultsForm::class, $results, [
-            'action' => $this->generateUrl('results_create'),
-            'method' => 'POST',
-            'locale' => $request->getLocale()
-        ]);
-
-        $resultsForm->handleRequest($request);
-
-        if ($resultsForm->isSubmitted() && $resultsForm->isValid()) {
-
-            $results->setProject($project);
-            $this->getResultsRepository()->save($results);
-
-            return $this->redirectToRoute('reporting_start');
-        }
-
-        return $this->render('results/create.twig', ['my_form' => $resultsForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr(), 'projectId' => $project->getId(),
-            'isCompleted' => $project->getIsCompleted()]);
-    }
-
-    /**
-     * @Route("/{locale}/users/edit/{projectId}", name="user_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/users/list", name="user_list", requirements={"locale": "%app.locales%"})
+     * @param Request $request
      *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $projectId)
-    {
-        /** @var Results $result */
-        $result = $this->getResultsRepository()->findOneBy(['project' => $projectId]);
-
-        /** @var Project $project */
-        $project = $this->getProjectRepository()->findOneBy(['id' => $projectId]);
-
-        $resultForm = $this->createForm(ResultsForm::class, $result, [
-            'action' => $this->generateUrl('result_edit', ['projectId' => $projectId]),
-            'method' => 'POST',
-            'locale' => $request->getLocale()
+    public function listAction(Request $request) {
+        $this->setPageTitle($this->translate('page.users.title'));
+        $table = $this->createDataTableFromType(UserDataTableType::class, [], [
+            'searching' => true
         ]);
-
-        $resultForm->handleRequest($request);
-
-        if ($resultForm->isSubmitted() && $resultForm->isValid()) {
-            $this->getResultsRepository()->save($result);
-
-            if (!$result->getProject()->getIsCompleted()) {
-                return $this->redirectToRoute('reporting_start');
-            }
-
+        $table->handleRequest($request);
+        if ($table->isCallback()) {
+            return $table->getResponse();
         }
-
-        return $this->render('results/edit.twig', ['my_form' => $resultForm->createView(),
-            'keyAction' => $project->getKeyActions()->getNameSr(), 'isCompleted' => $project->getIsCompleted()]);
+        return $this->render('list/list.html.twig', [
+            'datatable' => $table,
+            'datatable_link_title' => $this->translate('page.add_user.title'),
+            'datatable_link' => $this->generateUrl('user_create', ['locale' => $request->getLocale()]),
+        ]);
     }
 
     /**
-     * @Route("/{locale}/users/view/{resultId}", name="user_view", requirements={"resultId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/users/create", name="user_create", requirements={"locale": "%app.locales%"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function viewAction($resultId)
-    {
-        $result = $this->getResultsRepository()->findOneBy(['id' => $resultId]);
-
-        return $this->render('results/view.twig', ['result' => $result]);
-    }
-
-    private function getResultsRepository()
-    {
-        return $this->get('doctrine_entity_repository.results');
+    public function createAction(Request $request) {
+        $this->setPageTitle($this->translate('page.users.new_user_title'));
+        /** @var $userManager UserManagerInterface */
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->createUser();
+        $form = $this->createForm(UserForm::class, $user, [
+            'action' => $this->generateUrl('user_create'),
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userManager->updateUser($user);
+            $this->setInfoMessage('User crated');
+        }
+        return $this->render('form/form.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @return ProjectRepository
+     * @Route("/{locale}/admin/users/edit/{userId}", name="user_edit", requirements={"userId": "\d+", "locale": "%app.locales%"})
+     * @param Request $request
+     * @param int $userId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    private function getProjectRepository() {
-
-        return $this->get('doctrine_entity_repository.project');
+    public function editAction(Request $request, int $userId) {
+        $this->setPageTitle($this->translate('page.users.edit_user_title'));
+        $user = $this->getUserRepository()->find($userId);
+        $form = $this->createForm(UserForm::class, $user, [
+            'action' => $this->generateUrl('user_edit', ['userId' => $userId]),
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getUserRepository()->save($user);
+            $this->setInfoMessage('User updated');
+        }
+        return $this->render('form/form.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
+
+    /**
+     * @Route("/{locale}/admin/users/view/{userId}", name="user_view", requirements={"userId": "\d+", "locale": "%app.locales%"})
+     * @param Request $request
+     * @param int $userId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewAction(Request $request, int $userId) {
+        $this->setPageTitle($this->translate('page.users.view_user_title'));
+        $user = $this->getUserRepository()->find($userId);
+        $form = $this->createForm(UserForm::class, $user, [
+            'action' => $this->generateUrl('user_view', ['userId' => $userId]),
+            'method' => 'POST',
+            'disabled' => true,
+        ]);
+        return $this->render('form/form.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @return UserRepository
+     */
+    private function getUserRepository() {
+        /** @var UserRepository $repo */
+        $repo = $this->container->get('doctrine_entity_repository.user');
+        return $repo;
+    }
+
 }

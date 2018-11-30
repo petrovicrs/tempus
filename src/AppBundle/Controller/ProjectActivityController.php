@@ -21,7 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class ProjectActivityController extends AbstractController
 {
     /**
-     * @Route("/{locale}/activities/list/{projectId}", name="project_activities_list", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/activities/list/{projectId}", name="project_activities_list", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
     public function listAction($projectId)
     {
@@ -33,7 +33,7 @@ class ProjectActivityController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/activities/create", name="project_activity_create", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/activities/create", name="project_activity_create", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function createAction(Request $request)
@@ -58,7 +58,7 @@ class ProjectActivityController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/activities/view/{activityId}", name="activity_view", requirements={"activityId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/activities/view/{activityId}", name="activity_view", requirements={"activityId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($personId)
     {
@@ -72,7 +72,7 @@ class ProjectActivityController extends AbstractController
 
 
     /**
-     * @Route("/{locale}/activity/edit/{activityId}", name="activity_edit", requirements={"activityId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/activity/edit/{activityId}", name="activity_edit", requirements={"activityId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function editAction(Request $request, $personId)

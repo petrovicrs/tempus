@@ -1,52 +1,32 @@
 <?php
+
 namespace AppBundle\Entity;
 
-use Symfony\Component\Security\Core\Role\Role;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
-class User implements UserInterface
-{
+class User extends BaseUser {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $surname;
-
-    /**
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $email;
-
-    /**
-     * The encoded password
-     *
-     * @ORM\Column(type="string")
-     */
-    private $password;
-
-    /**
-     * A non-persisted field that's used to create the encoded password.
-     *
-     * @var string
-     */
-    private $plainPassword;
+    protected $surname;
 
     /**
      * @ORM\ManyToOne(
@@ -58,134 +38,87 @@ class User implements UserInterface
     protected $permission;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserRole", mappedBy="user", cascade={"persist"})
+     * @ORM\Column(type="integer")
      */
-    private $roles;
+    protected $loginCount = 0;
 
-    public function __construct()
-    {
-        //$this->roles = new ArrayCollection();
-    }
-
-//    public function getRoles()
-//    {
-//        return $this->roles->toArray();
-//    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    public function getUsername()
-    {
-        return $this->email;
-    }
-
-    public function getRoles()
-    {
-        $roles = [];
-
-        /** @var UserRole $role */
-        foreach($this->roles as $role) {
-            $roles[] = $role->getRole()->getName();
-        }
-
-        return $roles;
-    }
-
-    public function setRoles(array $roles)
-    {
-        $this->roles = $roles;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-    public function getSalt()
-    {
-        // TODO: Implement getSalt() method.
-    }
-
-    public function eraseCredentials()
-    {
-        $this->plainPassword = null;
-    }
-
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-    public function setPlainPassword($plainPassword)
-    {
-        $this->plainPassword = $plainPassword;
-        // forces the object to look "dirty" to Doctrine. Avoids
-        // Doctrine *not* saving this entity, if only plainPassword changes
-        $this->password = null;
-    }
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $isLocked = 0;
 
     /**
      * @return mixed
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
     /**
      * @param mixed $name
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
     }
 
     /**
      * @return mixed
      */
-    public function getSurname()
-    {
+    public function getSurname() {
         return $this->surname;
     }
 
     /**
      * @param mixed $surname
      */
-    public function setSurname($surname)
-    {
+    public function setSurname($surname) {
         $this->surname = $surname;
     }
 
     /**
      * @return mixed
      */
-    public function getPermission()
-    {
+    public function getPermission() {
         return $this->permission;
     }
 
     /**
      * @param mixed $permission
      */
-    public function setPermission($permission)
-    {
+    public function setPermission($permission) {
         $this->permission = $permission;
     }
 
-    public function getFullName()
-    {
+    public function getFullName() {
         return $this->getName() . ' ' . $this->getSurname();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLoginCount() {
+        return $this->loginCount;
+    }
+
+    /**
+     * @param mixed $loginCount
+     */
+    public function setLoginCount($loginCount) {
+        $this->loginCount = $loginCount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsLocked() {
+        return $this->isLocked;
+    }
+
+    /**
+     * @param mixed $isLocked
+     */
+    public function setIsLocked($isLocked) {
+        $this->isLocked = $isLocked;
+    }
+
 }

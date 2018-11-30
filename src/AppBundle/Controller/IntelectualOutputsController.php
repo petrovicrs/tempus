@@ -21,7 +21,7 @@ use AppBundle\Repository\ProjectRepository;
 class IntelectualOutputsController extends AbstractController
 {
     /**
-     * @Route("/{locale}/intelectual-outputs/list", name="intelectual_outputs_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/intelectual-outputs/list", name="intelectual_outputs_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction(Request $request)
     {
@@ -31,7 +31,7 @@ class IntelectualOutputsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/intelectual-outputs/create", name="intelectual_outputs_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/intelectual-outputs/create", name="intelectual_outputs_create", requirements={"locale": "%app.locales%"})
      */
     public function createAction(Request $request)
     {
@@ -67,7 +67,7 @@ class IntelectualOutputsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/intelectual-outputs/edit/{projectId}", name="intelectual_output_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/intelectual-outputs/edit/{projectId}", name="intelectual_output_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function editAction(Request $request, $projectId)
@@ -142,7 +142,7 @@ class IntelectualOutputsController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/intelectual-outputs/view/{projectId}", name="intelectual_output_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/intelectual-outputs/view/{projectId}", name="intelectual_output_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($projectId)
     {

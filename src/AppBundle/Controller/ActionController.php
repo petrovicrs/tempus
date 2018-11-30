@@ -30,7 +30,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class ActionController extends AbstractController
 {
     /**
-     * @Route("/{locale}/action/list", name="action_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/action/list", name="action_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction(Request $request)
     {
@@ -45,7 +45,7 @@ class ActionController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/action/create", name="action_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/action/create", name="action_create", requirements={"locale": "%app.locales%"})
      */
     public function createAction(Request $request)
     {
@@ -95,7 +95,7 @@ class ActionController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/action/edit/{projectId}", name="action_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/action/edit/{projectId}", name="action_edit", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      *
      */
     public function editAction(Request $request, $projectId)
@@ -202,7 +202,7 @@ class ActionController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/action/view/{projectId}", name="action_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
+     * @Route("/{locale}/admin/action/view/{projectId}", name="action_view", requirements={"projectId": "\d+", "locale": "%app.locales%"})
      */
     public function viewAction($projectId)
     {

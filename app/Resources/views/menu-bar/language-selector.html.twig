@@ -1,0 +1,16 @@
+<ul id="locales">
+    {% set locales = [
+        { 'title': "Српски", 'locale': "sr" },
+        { 'title': "Srpski", 'locale': "lat" },
+        { 'title': "English", 'locale': "en" }
+    ] %}
+    {% set route = app.request.attributes.get('_route') %}
+    {% set routeParams = app.request.attributes.get('_route_params') %}
+    {% if route %}
+        {% for item in locales %}
+            {% if item.locale != app.request.getLocale() %}
+                <li class="{{ item.locale }}"><a href="{{ localizedPathMerged(route, routeParams, {'locale': item.locale}) }}">{{ item.title }}</a></li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</ul>

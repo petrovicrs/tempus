@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MonitoringReportingController extends AbstractController
 {
     /**
-     * @Route("/{locale}/monitoring/list", name="monitoring_list", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/monitoring/list", name="monitoring_list", requirements={"locale": "%app.locales%"})
      */
     public function listAction()
     {
@@ -31,7 +31,7 @@ class MonitoringReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/monitoring/create", name="monitoring_create", requirements={"locale": "%app.locales%"})
+     * @Route("/{locale}/admin/monitoring/create", name="monitoring_create", requirements={"locale": "%app.locales%"})
      */
     public function createAction(Request $request)
     {
@@ -74,7 +74,7 @@ class MonitoringReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/monitoring/edit/{projectId}", name="monitoring_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
+     * @Route("/{locale}/admin/monitoring/edit/{projectId}", name="monitoring_edit", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
     public function editAction(Request $request, $projectId)
     {
@@ -142,7 +142,7 @@ class MonitoringReportingController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}/monitoring/view/{projectId}", name="monitoring_view", requirements={"locale": "%app.locales%", "projectId": "\d+"})
+     * @Route("/{locale}/admin/monitoring/view/{projectId}", name="monitoring_view", requirements={"locale": "%app.locales%", "projectId": "\d+"})
      */
     public function viewAction($projectId)
     {

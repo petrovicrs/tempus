@@ -3,7 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% if page_title %}{{ page_title }} | {% endif %}{% trans %}base.head_title{% endtrans %}</title>
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" href="{{ asset('favicon.png') }}" sizes="32x32" />
+        <link rel="icon" href="{{ asset('favicon.png') }}" sizes="192x192" />
+        <link rel="apple-touch-icon-precomposed" href="{{ asset('favicon.png') }}" />
+        <meta name="msapplication-TileImage" content="{{ asset('favicon.png') }}" />
         {% include 'js-scripts.html.twig' %}
         {% include 'stylesheets.html.twig' %}
     </head>

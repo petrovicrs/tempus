@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% if pagetitle %}{{ pagetitle }} | {% endif %}{% trans %}base.head_title{% endtrans %}</title>
+    <title>{% if page_title is defined %}{{ page_title }} | {% endif %}{% trans %}base.head_title{% endtrans %}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     {% include 'js-scripts.html.twig' %}
     {% include 'stylesheets.html.twig' %}
@@ -19,7 +19,7 @@
         </h1>
     </div>
     <div id="middle_part" class="part middle-part">
-        <div><h1 id="page-title">{{ pagetitle }}</h1></div>
+        <div><h1 id="page-title">{% if page_title is defined %}{{ page_title }}{% endif %}</h1></div>
         <div class="region region-content">
             <div id="block-system-main" class="block block-system">
                 <div class="content">

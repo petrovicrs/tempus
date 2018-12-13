@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Form\UserForm;
+use AppBundle\Form\User\UserForm;
 use AppBundle\Repository\UserRepository;
 use AppBundle\DataTableType\UserDataTableType;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -45,7 +45,7 @@ class UsersController extends AbstractController {
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request) {
-        $this->setPageTitle($this->translate('page.users.new_user_title'));
+        $this->setPageTitle($this->translate('page.users.add_user.title'));
         /** @var $userManager UserManagerInterface */
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->createUser();
@@ -60,6 +60,7 @@ class UsersController extends AbstractController {
         }
         return $this->render('form/form.html.twig', [
             'form' => $form->createView(),
+            'form_classes' => 'user-form user-create-form'
         ]);
     }
 
@@ -73,11 +74,39 @@ class UsersController extends AbstractController {
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function editAction(Request $request, int $userId) {
-        $this->setPageTitle($this->translate('page.users.edit_user_title'));
+        $this->setPageTitle($this->translate('page.users.edit_user.title'));
         $user = $this->getUserRepository()->find($userId);
         $form = $this->createForm(UserForm::class, $user, [
             'action' => $this->generateUrl('user_edit', ['userId' => $userId]),
             'method' => 'POST',
+            'with_password_field' => false
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getUserRepository()->save($user);
+            $this->setInfoMessage('User updated');
+        }
+        return $this->render('form/form.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{locale}/admin/users/edit-password/{userId}", name="user_edit_password", requirements={"userId": "\d+", "locale": "%app.locales%"})
+     * @param Request $request
+     * @param int $userId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function editPasswordAction(Request $request, int $userId) {
+        $this->setPageTitle($this->translate('page.users.edit_user_password.title'));
+        $user = $this->getUserRepository()->find($userId);
+        $form = $this->createForm(UserForm::class, $user, [
+            'action' => $this->generateUrl('user_edit', ['userId' => $userId]),
+            'method' => 'POST',
+            'with_password_field' => true
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

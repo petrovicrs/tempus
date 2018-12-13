@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\User;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class UserForm
@@ -24,9 +25,6 @@ class UserForm extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-
-//        $container->getParameter('security.role_hierarchy.roles');
-
         $builder
             ->add('name', TextType::class, [
                 'label' => 'form.user.name',
@@ -48,32 +46,19 @@ class UserForm extends AbstractType {
                 'attr' => [
                 ],
             ])
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'options' => [
-                    'attr' => [
-                    ],
-                ],
-                'first_options' => ['label' => 'form.user.password'],
-                'second_options' => ['label' => 'form.user.password_confirmation'],
-                'invalid_message' => 'form.user.password_mismatch',
-            ])
             ->add('roles', ChoiceType::class, [
+                'label' => 'form.user.roles',
                 'attr' => [
                     'class' => 'field-type-choice',
                 ],
                 'multiple' => true,
                 'expanded' => true,
                 'choices' => [
-                    'form.user.roles.super_admin' => 'ROLE_SUPER_ADMIN',
-                    'form.user.roles.admin' => 'ROLE_ADMIN',
-                    'form.user.roles.report' => 'ROLE_REPORT',
-                    'form.user.roles.lookup' => 'ROLE_LOOKUP',
-                    'form.user.roles.mailing_list' => 'ROLE_MAILING_LIST',
-                    'form.user.roles.persons_manager' => 'ROLE_PERSONS_MANAGER',
-                    'form.user.roles.persons_read_only' => 'ROLE_PERSONS_READ_ONLY',
-                    'form.user.roles.institutions_manager' => 'ROLE_INSTITUTIONS_MANAGER',
-                    'form.user.roles.institutions_manager_read_only' => 'ROLE_INSTITUTIONS_READ_ONLY',
+                    'form.user.role.super_admin' => 'ROLE_SUPER_ADMIN',
+                    'form.user.role.admin' => 'ROLE_ADMIN',
+                    'form.user.role.normal' => 'ROLE_NORMAL',
+                    'form.user.role.minimal' => 'ROLE_MINIMAL',
+                    'form.user.role.custom' => 'ROLE_CUSTOM',
                 ],
             ])
             ->add('enabled', CheckboxType::class, [

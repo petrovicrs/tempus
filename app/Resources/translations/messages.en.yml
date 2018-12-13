@@ -80,11 +80,19 @@ form:
     roles: 'Roles'
     password_confirmation: 'Repeat password'
     password_mismatch: 'Password mismatch'
+    role:
+      super_admin: 'Super admin'
+      admin: 'Administrator'
+      normal: 'Normal'
+      minimal: 'Minimal'
+      custom: 'Custom'
 page:
   users:
     title: 'Users'
-  add_user:
-    title: 'Add user'
+    add_user:
+      title: 'Add user'
+    edit_user:
+      title: 'Edit user'
 msg:
   save: 'Save'
   edit: 'Edit'

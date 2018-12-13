@@ -250,7 +250,16 @@ li {
     border: 0;
     box-shadow: none;
 }
-.form-group .form-control-label:after {
+.form-group .form-control-label.required:after {
+    content:" *";
+    color:red;
+}
+/**** CONTENT ****/
+#content .user-form .form-group legend.col-form-legend {
+    font-size: 14px;
+    font-weight: bold;
+}
+#content .user-form .form-group legend.col-form-legend.required:after {
     content:" *";
     color:red;
 }

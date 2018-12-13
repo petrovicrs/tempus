@@ -83,11 +83,19 @@ form:
     roles: 'Role'
     password_confirmation: 'Potvrda lozinke'
     password_mismatch: 'Lozinke se ne podudaraju'
+    role:
+      super_admin: 'Super admin'
+      admin: 'Administrator'
+      normal: 'Normalna'
+      minimal: 'Minimalna'
+      custom: 'Proizvoljna'
 page:
   users:
     title: 'Korisnici'
-  add_user:
-    title: 'Dodaj korisnika'
+    add_user:
+      title: 'Dodaj korisnika'
+    edit_user:
+      title: 'Izmeni korisnika'
 msg:
   save: 'Sačuvaj'
   edit: 'Izmeni'

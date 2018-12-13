@@ -80,11 +80,19 @@ form:
     roles: 'Роле'
     password_confirmation: 'Потврда лозинке'
     password_mismatch: 'Лозинке се не подударају'
+    role:
+      super_admin:
+      admin:
+      normal:
+      minimal:
+      custom:
 page:
   users:
     title: 'Корисници'
-  add_user:
-    title: 'Додај корисника'
+    add_user:
+      title: 'Додај корисника'
+    edit_user:
+      title: 'Измени корисника'
 msg:
   save: 'Сачувај'
   edit: 'Измени'

@@ -18,7 +18,7 @@ use AppBundle\Entity\UserProjectPermission;
 use AppBundle\Entity\UserRole;
 use AppBundle\Form\ChooseUserForm;
 use AppBundle\Form\ProjectResultsForm;
-use AppBundle\Form\UserPermissionForm;
+use AppBundle\Form\User\UserPermissionForm;
 use AppBundle\Repository\RolesRepository;
 use AppBundle\Repository\UserInstitutionRepository;
 use AppBundle\Repository\UserProjectRepository;

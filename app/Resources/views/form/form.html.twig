@@ -2,8 +2,10 @@
 
 {% block body %}
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <div class="form-wrapper {% if form_classes is defined %}{{ form_classes }}{% endif %}">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
 
 {% endblock %}

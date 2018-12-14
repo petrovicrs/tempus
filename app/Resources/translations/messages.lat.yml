@@ -94,8 +94,23 @@ page:
     title: 'Korisnici'
     add_user:
       title: 'Dodaj korisnika'
+      success: 'Uspešno ste kreirali novog korisnika: %email%'
     edit_user:
-      title: 'Izmeni korisnika'
+      title: 'Izmeni korisnika: %email%'
+      success: 'Uspešno ste izmenili korisnika: %email%'
+    view_user:
+      title: 'Vidi korisnika: %email%'
+    edit_user_password:
+      title: 'Izmeni lozinku: %email%'
+      success: 'Uspešno ste izmenili lozinku korisniku: %email%'
+    user_edit_permissions:
+      title: 'Izmeni privilegije korisniku: %email%'
+      success: 'Uspešno ste izmenili privilegije korisniku: %email%'
+menu:
+  users:
+    edit_user: 'Izmeni korisnika'
+    edit_user_password: 'Izmeni lozinku'
+    edit_user_permissions: 'Izmeni privilegije korisniku'
 msg:
   save: 'Sačuvaj'
   edit: 'Izmeni'

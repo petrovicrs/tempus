@@ -523,3 +523,14 @@ services:
     AppBundle\DataTableType\UserDataTableType:
         autowire: true
         autoconfigure: true
+# menus
+    my.menu.user_menu_builder:
+        class: AppBundle\Menu\UserMenuBuilder
+        arguments: ["@knp_menu.factory"]
+
+    my.menu.user_menu:
+        class: Knp\Menu\MenuItem
+        factory: ["@my.menu.user_menu_builder", create]
+        arguments: ["@request_stack"]
+        tags:
+            - { name: knp_menu.menu, alias: user_menu }

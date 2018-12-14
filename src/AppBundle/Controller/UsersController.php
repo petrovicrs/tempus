@@ -2,7 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Form\User\UserForm;
+use AppBundle\Entity\User;
+use AppBundle\Form\UserForm\UserChangePasswordForm;
+use AppBundle\Form\UserForm\UserForm;
+use AppBundle\Form\UserForm\UserPermissionForm;
 use AppBundle\Repository\UserRepository;
 use AppBundle\DataTableType\UserDataTableType;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -33,8 +36,8 @@ class UsersController extends AbstractController {
         }
         return $this->render('list/list.html.twig', [
             'datatable' => $table,
-            'datatable_link_title' => $this->translate('page.add_user.title'),
             'datatable_link' => $this->generateUrl('user_create', ['locale' => $request->getLocale()]),
+            'datatable_link_title' => $this->translate('page.users.add_user.title'),
         ]);
     }
 
@@ -52,11 +55,13 @@ class UsersController extends AbstractController {
         $form = $this->createForm(UserForm::class, $user, [
             'action' => $this->generateUrl('user_create'),
             'method' => 'POST',
+            'new_user' => true
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->updateUser($user);
-            $this->setInfoMessage('User crated');
+            $this->setInfoMessage($this->translate('page.users.add_user.success', ['%email%' => $user->getEmail()]), true);
+            return $this->redirectToRoute('user_edit_permissions');
         }
         return $this->render('form/form.html.twig', [
             'form' => $form->createView(),
@@ -70,24 +75,26 @@ class UsersController extends AbstractController {
      * @param int $userId
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function editAction(Request $request, int $userId) {
-        $this->setPageTitle($this->translate('page.users.edit_user.title'));
+        /** @var User $user */
         $user = $this->getUserRepository()->find($userId);
+        $this->setPageTitle($this->translate('page.users.edit_user.title', ['%email%' => $user->getEmail()]));
         $form = $this->createForm(UserForm::class, $user, [
             'action' => $this->generateUrl('user_edit', ['userId' => $userId]),
             'method' => 'POST',
-            'with_password_field' => false
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getUserRepository()->save($user);
-            $this->setInfoMessage('User updated');
+            /** @var $userManager UserManagerInterface */
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updateUser($user);
+            $this->setInfoMessage($this->translate('page.users.edit_user.success', ['%email%' => $user->getEmail()]), true);
+            return $this->redirectToRoute('user_edit_permissions');
         }
         return $this->render('form/form.html.twig', [
             'form' => $form->createView(),
+            'sub_menu' => 'user_menu'
         ]);
     }
 
@@ -97,24 +104,26 @@ class UsersController extends AbstractController {
      * @param int $userId
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function editPasswordAction(Request $request, int $userId) {
-        $this->setPageTitle($this->translate('page.users.edit_user_password.title'));
+        /** @var User $user */
         $user = $this->getUserRepository()->find($userId);
-        $form = $this->createForm(UserForm::class, $user, [
-            'action' => $this->generateUrl('user_edit', ['userId' => $userId]),
+        $this->setPageTitle($this->translate('page.users.edit_user_password.title', ['%email%' => $user->getEmail()]));
+        $form = $this->createForm(UserChangePasswordForm::class, $user, [
+            'action' => $this->generateUrl('user_edit_password', ['userId' => $userId]),
             'method' => 'POST',
-            'with_password_field' => true
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getUserRepository()->save($user);
-            $this->setInfoMessage('User updated');
+            /** @var $userManager UserManagerInterface */
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updatePassword($user);
+            $userManager->updateUser($user);
+            $this->setInfoMessage($this->translate('page.users.edit_user_password.success', ['%email%' => $user->getEmail()]));
         }
         return $this->render('form/form.html.twig', [
             'form' => $form->createView(),
+            'sub_menu' => 'user_menu'
         ]);
     }
 
@@ -126,8 +135,9 @@ class UsersController extends AbstractController {
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction(Request $request, int $userId) {
-        $this->setPageTitle($this->translate('page.users.view_user_title'));
+        /** @var User $user */
         $user = $this->getUserRepository()->find($userId);
+        $this->setPageTitle($this->translate('page.users.view_user.title', ['%email%' => $user->getEmail()]));
         $form = $this->createForm(UserForm::class, $user, [
             'action' => $this->generateUrl('user_view', ['userId' => $userId]),
             'method' => 'POST',
@@ -135,6 +145,34 @@ class UsersController extends AbstractController {
         ]);
         return $this->render('form/form.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{locale}/admin/users/edit-user-permissions/{userId}", name="user_edit_permissions", requirements={"userId": "\d+", "locale": "%app.locales%"})
+     * @param Request $request
+     * @param int $userId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function editUserPermissionAction(Request $request, int $userId) {
+        /** @var User $user */
+        $user = $this->getUserRepository()->find($userId);
+        $this->setPageTitle($this->translate('page.users.user_edit_permissions.title', ['%email%' => $user->getEmail()]));
+        $form = $this->createForm(UserPermissionForm::class, $user, [
+            'action' => $this->generateUrl('user_edit_permissions', ['userId' => $userId]),
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getUserRepository()->save($user);
+            $this->setInfoMessage('User updated');
+        }
+        return $this->render('form/form.html.twig', [
+            'form' => $form->createView(),
+            'sub_menu' => 'user_menu'
         ]);
     }
 

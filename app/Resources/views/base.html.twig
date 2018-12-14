@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% if page_title %}{{ page_title }} | {% endif %}{% trans %}base.head_title{% endtrans %}</title>
+        <title>{% if page_title is defined %}{{ page_title }} | {% endif %}{% trans %}base.head_title{% endtrans %}</title>
         <link rel="icon" href="{{ asset('favicon.png') }}" sizes="32x32" />
         <link rel="icon" href="{{ asset('favicon.png') }}" sizes="192x192" />
         <link rel="apple-touch-icon-precomposed" href="{{ asset('favicon.png') }}" />
@@ -21,7 +21,7 @@
                         <div class="content-inner">
                             <div id="main-content">
                                 <header>
-                                    <h1 id="page-title">{{ page_title }}</h1>
+                                    <h1 id="page-title">{% if page_title is defined %}{{ page_title }}{% endif %}</h1>
                                 </header>
                                 <div id="content" class="region">
                                     <div class="loader"></div>

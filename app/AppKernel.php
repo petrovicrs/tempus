@@ -23,7 +23,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Translation\Bundle\TranslationBundle(),
             new \Omines\DataTablesBundle\DataTablesBundle(),
-//            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
         ];
         return $bundles;
     }

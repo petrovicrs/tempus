@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -27,15 +29,6 @@ class User extends BaseUser {
      * @ORM\Column(type="string")
      */
     protected $surname;
-
-    /**
-     * @ORM\ManyToOne(
-     *      targetEntity="UserPermission",
-     *      inversedBy="user"
-     * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
-    protected $permission;
 
     /**
      * @ORM\Column(type="integer")
@@ -73,13 +66,6 @@ class User extends BaseUser {
      */
     public function setSurname($surname) {
         $this->surname = $surname;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPermission() {
-        return $this->permission;
     }
 
     /**

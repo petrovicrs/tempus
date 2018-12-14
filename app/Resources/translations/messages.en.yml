@@ -91,8 +91,23 @@ page:
     title: 'Users'
     add_user:
       title: 'Add user'
+      success: 'You have successfully created new user: %email%'
     edit_user:
-      title: 'Edit user'
+      title: 'Edit user: %email%'
+      success: 'You have successfully edited user: %email%'
+    view_user:
+      title: 'View user: %email%'
+    edit_user_password:
+      title: 'Edit password: %email%'
+      success: 'You have successfully changed password for user: %email%'
+    user_edit_permissions:
+      title: 'Edit users permissions: %email%'
+      success: 'You have successfully changed permissions for user: %email%'
+menu:
+  users:
+    edit_user: 'Edit user'
+    edit_user_password: 'Edit users password'
+    edit_user_permissions: 'Edit users permissions'
 msg:
   save: 'Save'
   edit: 'Edit'

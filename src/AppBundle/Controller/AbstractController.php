@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Omines\DataTablesBundle\Controller\DataTablesTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class AbstractController
@@ -36,11 +37,13 @@ abstract class AbstractController extends Controller {
      *
      * @param string $string
      *
+     * @param array $parameters
      * @return string
      */
-    protected function translate(string $string) {
+    protected function translate(string $string, array $parameters = []) {
+        /** @var TranslatorInterface $translator */
         $translator = $this->get('translator');
-        return $translator->trans($string);
+        return $translator->trans($string, $parameters);
     }
 
     /**

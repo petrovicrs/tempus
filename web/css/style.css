@@ -258,6 +258,7 @@ li {
 #content .user-form .form-group legend.col-form-legend {
     font-size: 14px;
     font-weight: bold;
+    border: 0;
 }
 #content .user-form .form-group legend.col-form-legend.required:after {
     content:" *";

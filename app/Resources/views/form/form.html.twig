@@ -1,7 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    {% if sub_menu is defined %}
+        <div class="sub-menu-wrapper">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    {{ knp_menu_render(sub_menu) }}
+                </div>
+            </nav>
+        </div>
+    {% endif %}
     <div class="form-wrapper {% if form_classes is defined %}{{ form_classes }}{% endif %}">
         {{ form_start(form) }}
         {{ form_widget(form) }}

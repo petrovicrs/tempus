@@ -81,18 +81,33 @@ form:
     password_confirmation: 'Потврда лозинке'
     password_mismatch: 'Лозинке се не подударају'
     role:
-      super_admin:
-      admin:
-      normal:
-      minimal:
-      custom:
+      super_admin: 'Супер админ'
+      admin: 'Администратор'
+      normal: 'Нормална'
+      minimal: 'Минимална'
+      custom: 'Произвољна'
 page:
   users:
     title: 'Корисници'
     add_user:
       title: 'Додај корисника'
+      success: 'Успешно сте креирали новог корисника: %email%'
     edit_user:
-      title: 'Измени корисника'
+      title: 'Измени корисника: %email%'
+      success: 'Успешно сте изменили корисника: %email%'
+    view_user:
+      title: 'Види корисника: %email%'
+    edit_user_password:
+       title: 'Измени лозинку кориснику: %email%'
+       success: 'Успешно сте изменили лозинку кориснику: %email%'
+    user_edit_permissions:
+      title: 'Измени привилегије кориснику: %email%'
+      success: 'Успешно сте изменили привилегије кориснику: %email%'
+menu:
+  users:
+    edit_user: 'Измени корисника'
+    edit_user_password: 'Измени лозинку кориснику'
+    edit_user_permissions: 'Измени привилегије кориснику'
 msg:
   save: 'Сачувај'
   edit: 'Измени'

@@ -1,0 +1,32 @@
+<div class="back-link">
+{% if back_link is defined %}
+    <a href="{{ back_link }}" class="btn outline btn-primary">
+        <span class='fa fa-arrow-left icon'></span>
+        <span class="text"> {% trans %}msg.back{% endtrans %}</span>
+    </a>
+{% else %}
+    <a href="#" class="btn outline btn-primary">
+        <span class='fa fa-arrow-left icon' onclick="window.history.back()"></span>
+        <span class="text"> {% trans %}msg.back{% endtrans %}</span>
+    </a>
+{% endif %}
+</div>
+{% if sub_menu is defined %}
+    <div class="sub-menu-wrapper">
+        <nav class="navbar navbar-default">
+            {{ knp_menu_render(sub_menu) }}
+        </nav>
+    </div>
+{% endif %}
+<div class="form-wrapper {% if form_classes is defined %}{{ form_classes }}{% endif %}">
+    {{ form(form) }}
+</div>
+
+<script type="text/javascript">
+    $('.jquery-collection-element').collection({
+        up: '<a href="#" class="btn btn-default"><span class="fa fa-arrow-up"></span></span></a>',
+        down: '<a href="#" class="btn btn-default"><span class="fa fa-arrow-down"></span></span></a>',
+        add: '<a href="#" class="btn btn-default"><span class="fa fa-plus-circle"></span></a>',
+        remove: '<a href="#" class="btn btn-default"><span class="fa fa-trash-o"></span></a>',
+    });
+</script>

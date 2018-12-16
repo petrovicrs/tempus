@@ -40,7 +40,10 @@
     "knplabs/knp-menu-bundle": "^2.0",
     "symfony/webpack-encore-pack": "^1.0",
     "php-translation/symfony-bundle": "^0.8.1",
-    "omines/datatables-bundle": "^0.2.1"
+    "omines/datatables-bundle": "^0.2.1",
+    "stof/doctrine-extensions-bundle": "^1.3",
+    "adamquaile/symfony-fieldset-bundle": "^1.1",
+    "ninsuo/symfony-collection": "^2.1"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",
@@ -57,10 +60,12 @@
       "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
     ],
     "post-install-cmd": [
-      "@symfony-scripts"
+      "@symfony-scripts",
+      "Fuz\\Symfony\\Collection\\ScriptHandler::postInstall"
     ],
     "post-update-cmd": [
-      "@symfony-scripts"
+      "@symfony-scripts",
+      "Fuz\\Symfony\\Collection\\ScriptHandler::postUpdate"
     ]
   },
   "extra": {

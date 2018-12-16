@@ -2,16 +2,64 @@
 
 {% block body %}
     <div id="datatable_list">
-        {% if datatable_link and datatable_link_title %}
-        <div id="list_link"><a href="{{ datatable_link }}">{{ datatable_link_title }}</a></div>
+        {% if (datatable_link is not empty) and (datatable_link_title is not empty)%}
+        <div id="list_link">
+            <a href="{{ datatable_link }}" class="btn btn-primary">
+                <span class="fa fa-plus-circle icon"></span>
+                <span class="text"> {{ datatable_link_title }}</span>
+            </a>
+        </div>
         {% endif %}
         <div id="list_wrapper">
             {% trans %} common.loading {% endtrans %}
         </div>
-        <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
         <script>
             $(function() {
-                $('#list_wrapper').initDataTables({{ datatable_settings(datatable) }});
+                $('#list_wrapper').initDataTables({{ datatable_settings(datatable) }},{
+                    dom:'Blfrtip',
+                    buttons: [
+                        {
+                            "extend": 'colvis',
+                            "text" : '{% trans %}msg.columns{% endtrans %}',
+                            "className" : 'btn btn-default',
+                        },
+                        {
+                            "extend": 'excelHtml5',
+                            "text" : 'Excel',
+                            "className" : 'btn btn-default',
+                            "exportOptions" : {
+                                "columns": ':visible'
+                            }
+                            {% if page_title is not empty %}, 'title' : '{{ page_title }}'{% endif %}
+                        },
+                        {
+                            "extend": 'csvHtml5',
+                            "text" : 'CSV',
+                            "className" : 'btn btn-default',
+                            "exportOptions" : {
+                                "columns": ':visible'
+                            }
+                            {% if page_title is not empty %}, 'title' : '{{ page_title }}'{% endif %}
+                        },
+                        {
+                            "extend": 'pdfHtml5',
+                            "text" : 'PDF',
+                            "className" : 'btn btn-default',
+                            "exportOptions" : {
+                                "columns": ':visible'
+                            }
+                            {% if page_title is not empty %}, 'title' : '{{ page_title }}'{% endif %}
+                        }/*,
+                        {
+                            "extend": 'print',
+                            "text" : 'Print',
+                            "className" : 'btn btn-default',
+                            "exportOptions" : {
+                                "columns": ':visible'
+                            }
+                        }*/
+                    ]
+                });
             });
         </script>
     </div>

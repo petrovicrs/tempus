@@ -22,8 +22,10 @@ class AppKernel extends Kernel
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Translation\Bundle\TranslationBundle(),
-            new \Omines\DataTablesBundle\DataTablesBundle(),
+            new Omines\DataTablesBundle\DataTablesBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new AdamQuaile\Bundle\FieldsetBundle\AdamQuaileFieldsetBundle(),
         ];
         return $bundles;
     }

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="back-link">
+    {% if back_link is defined %}
+        <a href="{{ back_link }}" class="btn outline btn-primary">
+            <span class='fa fa-arrow-left icon'></span>
+            <span class="text"> {% trans %}msg.back{% endtrans %}</span>
+        </a>
+    {% else %}
+        <a href="#" class="btn outline btn-primary">
+            <span class='fa fa-arrow-left icon' onclick="window.history.back()"></span>
+            <span class="text"> {% trans %}msg.back{% endtrans %}</span>
+        </a>
+    {% endif %}
+    </div>
+    {% if sub_menu is defined %}
+        <div class="sub-menu-wrapper">
+            <nav class="navbar navbar-default">
+                {{ knp_menu_render(sub_menu) }}
+            </nav>
+        </div>
+    {% endif %}
+    <div class="form-wrapper {% if form_classes is defined %}{{ form_classes }}{% endif %}">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

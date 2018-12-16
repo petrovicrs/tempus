@@ -1,19 +1,24 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nemtish
- * Date: 02.09.17
- * Time: 17:34
- */
 
 namespace AppBundle\Repository;
 
+/**
+ * @TODO remove => unused
+ *
+ * Class UserProjectPermissionRepository
+ *
+ * @package AppBundle\Repository
+ */
+class UserProjectPermissionRepository extends AbstractRepository {
 
-class UserProjectPermissionRepository extends AbstractRepository
-{
-    public function save($action) {
-
-        $this->_em->persist($action);
+    /**
+     * @param $permission
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save($permission) {
+        $this->_em->persist($permission);
         $this->_em->flush();
     }
 }

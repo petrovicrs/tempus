@@ -1,0 +1,5 @@
+{% extends 'base.html.twig' %}
+{% form_theme form with ['bootstrap_4_horizontal_layout.html.twig', 'form/fieldset.html.twig', 'form/collection.html.twig', 'form/file_widget.html.twig'] only %}
+{% block body %}
+    {% include 'form/form-common.html.twig' %}
+{% endblock %}

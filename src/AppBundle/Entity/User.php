@@ -2,8 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\ORM\Mapping\Column;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -21,14 +20,14 @@ class User extends BaseUser {
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-    protected $name;
+    protected $name = null;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-    protected $surname;
+    protected $surname = null;
 
     /**
      * @ORM\Column(type="integer")
@@ -39,6 +38,25 @@ class User extends BaseUser {
      * @ORM\Column(type="integer")
      */
     protected $isLocked = 0;
+
+    /**
+     * @var ArrayCollection
+     */
+    protected $programsAccess;
+
+    /**
+     * @var ArrayCollection
+     */
+    protected $projectsAccess;
+
+    /**
+     * User constructor.
+     */
+    public function __construct() {
+        parent::__construct();
+        $this->projectsAccess = new ArrayCollection();
+        $this->programsAccess = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -66,13 +84,6 @@ class User extends BaseUser {
      */
     public function setSurname($surname) {
         $this->surname = $surname;
-    }
-
-    /**
-     * @param mixed $permission
-     */
-    public function setPermission($permission) {
-        $this->permission = $permission;
     }
 
     public function getFullName() {
@@ -105,6 +116,34 @@ class User extends BaseUser {
      */
     public function setIsLocked($isLocked) {
         $this->isLocked = $isLocked;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getProgramsAccess(): ArrayCollection {
+        return $this->programsAccess;
+    }
+
+    /**
+     * @param ArrayCollection $programsAccess
+     */
+    public function setProgramsAccess(ArrayCollection $programsAccess) {
+        $this->programsAccess = $programsAccess;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getProjectsAccess(): ArrayCollection {
+        return $this->projectsAccess;
+    }
+
+    /**
+     * @param ArrayCollection $projectsAccess
+     */
+    public function setProjectsAccess(ArrayCollection $projectsAccess) {
+        $this->projectsAccess = $projectsAccess;
     }
 
 }

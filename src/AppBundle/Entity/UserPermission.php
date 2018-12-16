@@ -10,6 +10,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
+ * @TODO remove -> unused
+ *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserPermissionRepository")
  * @ORM\Table(name="user_permissions")
  */

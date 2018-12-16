@@ -8,6 +8,8 @@ imports:
 parameters:
     app.locales: en|sr|lat
     locale: sr
+    knp.doctrine_behaviors.timestampable_subscriber.db_field_type: datetimetz
+    knp.doctrine_behaviors.blameable_subscriber.auditable_entity: AppBundle\Entity\AbstractAuditable
 
 jms_serializer:
     visitors:
@@ -47,7 +49,9 @@ twig:
     strict_variables: "%kernel.debug%"
     form_themes:
         - 'bootstrap_4_horizontal_layout.html.twig'
+        - 'bootstrap_4_layout.html.twig'
         - 'form/file_widget.html.twig'
+        - 'form/collection.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -70,7 +74,10 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-
+stof_doctrine_extensions:
+    orm:
+        default:
+            blameable: true
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"

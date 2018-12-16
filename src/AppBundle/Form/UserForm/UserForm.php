@@ -40,7 +40,7 @@ class UserForm extends AbstractType {
                 'label' => 'form.user.email',
                 'disabled' => !$newUser,
             ])
-            ->add('username', null, [
+            ->add('username', TextType::class, [
                 'label' => 'form.user.username',
                 'disabled' => !$newUser,
             ]);

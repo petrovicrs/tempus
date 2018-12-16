@@ -21,6 +21,10 @@ security:
             security: false
 
         main:
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 86400 # 1 day in seconds
+                path:     /
             pattern: ^/
             form_login:
                 provider: fos_userbundle

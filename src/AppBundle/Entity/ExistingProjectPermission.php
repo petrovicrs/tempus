@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @TODO remove -> unused
+ *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ExistingProjectPermissionRepository")
  * @ORM\Table(name="existing_project_permission")
  */

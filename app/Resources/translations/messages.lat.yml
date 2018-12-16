@@ -112,6 +112,8 @@ menu:
     edit_user_password: 'Izmeni lozinku'
     edit_user_permissions: 'Izmeni privilegije korisniku'
 msg:
+  columns: 'Kolone'
+  back: 'Nazad'
   save: 'Sačuvaj'
   edit: 'Izmeni'
   add: 'Dodaj'

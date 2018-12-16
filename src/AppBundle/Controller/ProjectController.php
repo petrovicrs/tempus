@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\DataTableType\ProjectsDataTableType;
 use AppBundle\Entity\DifficultiesParticipantsAreFacing;
 use AppBundle\Entity\DifficultyType;
 use AppBundle\Entity\AttachmentsManuallyUploaded;
@@ -74,11 +75,28 @@ class ProjectController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/project/list", name="project_list", requirements={"locale": "%app.locales%"})
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function listAction() {
-        $result = $this->getProjectRepository()->findBy(['isCompleted' => 1]);
+    public function listAction(Request $request) {
+        $this->setPageTitle($this->translate('page.project.title'));
+        $table = $this->createDataTableFromType(ProjectsDataTableType::class, [], [
+            'searching' => true
+        ]);
+        $table->handleRequest($request);
+        if ($table->isCallback()) {
+            return $table->getResponse();
+        }
+        return $this->render('list/list.html.twig', [
+            'datatable' => $table,
+            'datatable_link' => $this->generateUrl('project_create', ['locale' => $request->getLocale()]),
+            'datatable_link_title' => $this->translate('page.project.add_project.title'),
+        ]);
 
-        return $this->render('project/list.twig', ['result' => $result]);
+
+//        $result = $this->getProjectRepository()->findBy(['isCompleted' => 1]);
+//        return $this->render('project/list.twig', ['result' => $result]);
     }
 
     /**
@@ -97,7 +115,7 @@ class ProjectController extends AbstractController {
 
         $projectForm->handleRequest($request);
 
-        $actionTab = $this->showActionTab($project);
+        $actionTab = $project ? $this->showActionTab($project) : null;
 
         if ($projectForm->isSubmitted() && $projectForm->isValid()) {
             $this->getProjectRepository()->saveProject($project);
@@ -164,7 +182,9 @@ class ProjectController extends AbstractController {
     /**
      * @Route("/{locale}/admin/project/create-project", name="project_create_start", requirements={"locale": "%app.locales%"})
      * @Security("is_granted('ROLE_USER_CREATE') or is_granted('ROLE_USER_PROJECT_CREATE') or is_granted('ROLE_ADMIN')")
+     * @param Request $request
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createProjectAction(Request $request) {
         $project = new Project();
@@ -191,7 +211,7 @@ class ProjectController extends AbstractController {
         }
 
 
-        return $this->render('project/project-create.twig', [
+        return $this->render('form/form.html.twig', [
             'form' => $projectForm->createView()
         ]);
     }

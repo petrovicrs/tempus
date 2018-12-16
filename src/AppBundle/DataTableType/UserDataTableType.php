@@ -4,13 +4,14 @@ namespace AppBundle\DataTableType;
 
 use AppBundle\Entity\User;
 use AppBundle\Helper\HtmlBuilderHelper;
-use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
-use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Omines\DataTablesBundle\Column\DateTimeColumn;
-use Omines\DataTablesBundle\Column\MapColumn;
-use Omines\DataTablesBundle\Column\NumberColumn;
+use Omines\DataTablesBundle\Column\BoolColumn;
 use Omines\DataTablesBundle\DataTable;
+use Omines\DataTablesBundle\Column\MapColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
+use Omines\DataTablesBundle\Column\NumberColumn;
+use Omines\DataTablesBundle\Column\DateTimeColumn;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 
 /**
  * Class UserDataTableType
@@ -18,7 +19,6 @@ use Omines\DataTablesBundle\Column\TextColumn;
  * @package AppBundle\DataTableType
  */
 class UserDataTableType extends AbstractDataTableType {
-
 
     /**
      * @param DataTable $dataTable
@@ -65,25 +65,22 @@ class UserDataTableType extends AbstractDataTableType {
                 'searchable' => true,
                 'globalSearchable' => true,
             ])
-            ->add('enabled', MapColumn::class, [
+            ->add('enabled', BoolColumn::class, [
                 'label' => 'datatable.user.enabled',
                 'className' => 'text-center',
-                'raw' => true,
-                'default' => '',
-                'map' => [
-                    0 => HtmlBuilderHelper::createDangerSymbolHtml(20),
-                    1 => HtmlBuilderHelper::createSuccessSymbolHtml(20),
-                ],
+                'trueValue' => HtmlBuilderHelper::createSuccessSymbolHtml(1),
+                'falseValue' => HtmlBuilderHelper::createDangerSymbolHtml(0),
+                'nullValue' => '',
             ])
             ->add('view_link', TextColumn::class, [
                 'label' => 'msg.view',
                 'className' => 'text-center',
                 'raw' => true,
                 'data' => function (User $user) {
-                    return HtmlBuilderHelper::createLinkHtml($this->generateRoute('user_view', [
+                    return HtmlBuilderHelper::createInfoLinkSymbolHtml($this->generateRoute('user_view', [
                         'locale' => $this->getLocale(),
                         'userId' => $user->getId(),
-                    ]), $this->translate('msg.view'));
+                    ]));
                 },
             ])
             ->add('edit_link', TextColumn::class, [
@@ -91,10 +88,10 @@ class UserDataTableType extends AbstractDataTableType {
                 'className' => 'text-center',
                 'raw' => true,
                 'data' => function (User $user) {
-                    return HtmlBuilderHelper::createLinkHtml($this->generateRoute('user_edit', [
+                    return HtmlBuilderHelper::createEditLinkSymbolHtml($this->generateRoute('user_edit', [
                         'locale' => $this->getLocale(),
                         'userId' => $user->getId(),
-                    ]), $this->translate('msg.edit'));
+                    ]));
                 },
             ])
             ->addOrderBy('lastLogin', DataTable::SORT_DESCENDING)

@@ -225,42 +225,129 @@ li {
 #footer img.logo {
     float: right;
 }
+#datatable_list #list_wrapper .dt-buttons,
 #datatable_list #list_wrapper .dataTables_length {
     float: left;
+    margin-right: 20px;
 }
 #datatable_list #list_link {
     margin: 20px 0;
 }
-#datatable_list #list_link a {
-    display: inline-block;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 32px;
-    white-space: nowrap;
+/*#datatable_list #list_link a {*/
+    /*background-image: url(/images/admin/actions-32px.png);*/
+    /*padding-left: 35px;*/
+    /*background-repeat: no-repeat;*/
+/*}*/
+/*#datatable_list #list_link a.btn-primary:hover,*/
+/*#datatable_list #list_link a.btn-primary:focus {*/
+     /*background-position: 0 0;*/
+/*}*/
+
+#datatable_list #dt_wrapper .dt-buttons {
+    position: relative;
+}
+#datatable_list #dt_wrapper .dt-buttons .dt-button-collection {
+    position: absolute;
+    top: 50px;
+    z-index: 999;
+    background-color: #fff;
+    border-color: #ddd;
     color: #333;
-    text-shadow: 0 1px 0 #fff;
-    border-radius: 3px;
-    transition: all 0.15s ease-in-out;
-    opacity: 0.5;
-    min-width: 74px;
-    height: 32px;
-    padding: 0 0 0 38px;
-    background: url(/images/admin/actions-32px.png) no-repeat;
-    border: 0;
-    box-shadow: none;
+    text-shadow: 0 1px 0 #f3f3f3;
+    box-shadow: 0 0 12px rgba(0,0,0,.6);
+}
+#datatable_list #dt_wrapper .dt-buttons .dt-button-collection .dt-button {
+    display: block;
+    width: 100%;
+    background-color: #f6f6f6;
+    color: #333;
+    text-shadow: 0 1px 0 #f3f3f3;
+    margin-bottom: 0;
+    font-weight: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    border-radius: 4px;
+    text-align: left;
+}
+#datatable_list #dt_wrapper .dt-buttons .dt-button-collection .dt-button:before {
+    content: "\f096";
+    font-family: FontAwesome;
+    padding-right: 10px;
+}
+#datatable_list #dt_wrapper .dt-buttons .dt-button-collection .dt-button.active:before {
+    content: "\f046";
+    font-family: FontAwesome;
+    padding-right: 10px;
 }
 .form-group .form-control-label.required:after {
     content:" *";
     color:red;
 }
 /**** CONTENT ****/
-#content .user-form .form-group legend.col-form-legend {
+#content #user_form .form-group legend.col-form-legend {
     font-size: 14px;
     font-weight: bold;
     border: 0;
 }
-#content .user-form .form-group legend.col-form-legend.required:after {
+#content #user_form .form-group legend.col-form-legend.required:after {
     content:" *";
     color:red;
+}
+#content .back-link {
+    margin-bottom: 10px;
+}
+#content #list_link a,
+#content .back-link a{
+    color: #ffffff;
+    text-decoration: none;
+}
+#content #list_link a span.icon,
+#content .back-link a span.icon {
+    font-size:24px;
+    vertical-align: middle;
+    text-decoration: none;
+}
+#content #list_link a span.text,
+#content .back-link a span.text {
+    vertical-align: middle;
+    font-size: 16px;
+    text-transform: lowercase;
+    margin-left: 5px;
+    text-decoration: none;
+}
+#content .sub-menu-wrapper nav.navbar.navbar-default {
+    margin-bottom: -2px;
+    border: 0;
+    border-bottom: 1px solid #777;
+}
+
+#content .sub-menu-wrapper nav.navbar.navbar-default .navbar-nav > .active>a,
+#content .sub-menu-wrapper nav.navbar.navbar-default .navbar-nav > .active>a:hover,
+#content .sub-menu-wrapper nav.navbar.navbar-default .navbar-nav > .active>a:focus,
+#content .sub-menu-wrapper nav.navbar.navbar-default .navbar-nav > .current>a,
+#content .sub-menu-wrapper nav.navbar.navbar-default .navbar-nav > .current>a:hover,
+#content .sub-menu-wrapper nav.navbar.navbar-default .navbar-nav > .current>a:focus {
+    border: 1px solid #777;
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 0;
+}
+#content .sub-menu-wrapper nav.navbar.navbar-default .navbar-nav > li.current {
+    border-bottom: 0;
+    margin-bottom: -1px;
+}
+#content .form-wrapper {
+    border: 1px solid #777;
+    border-radius: 5px;
+}
+/**** FORM ****/
+#content form .jquery-collection-element legend {
+    display: none;
 }

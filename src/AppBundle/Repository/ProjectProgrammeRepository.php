@@ -4,13 +4,19 @@ namespace AppBundle\Repository;
 
 /**
  * Class ProjectProgrammeRepository
+ *
  * @package AppBundle\Repository
  */
-class ProjectProgrammeRepository extends \Doctrine\ORM\EntityRepository
-{
-    public function save($personNoteType) {
+class ProjectProgrammeRepository extends \Doctrine\ORM\EntityRepository {
 
-        $this->_em->persist($personNoteType);
+    /**
+     * @param $program
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save($program) {
+        $this->_em->persist($program);
         $this->_em->flush();
     }
 

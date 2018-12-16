@@ -109,6 +109,8 @@ menu:
     edit_user_password: 'Измени лозинку кориснику'
     edit_user_permissions: 'Измени привилегије кориснику'
 msg:
+  columns: 'Колоне'
+  back: 'Назад'
   save: 'Сачувај'
   edit: 'Измени'
   add: 'Додај'

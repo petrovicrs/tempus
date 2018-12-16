@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Reporting;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Omines\DataTablesBundle\Controller\DataTablesTrait;
@@ -178,12 +179,12 @@ abstract class AbstractController extends Controller {
      * @return bool
      */
     protected function showActionTab(Project $project) {
-        $action = $project->getActions()->getNameSr();
-
-        if ($action == 'KA101' || $action == 'KA102' || $action == 'KA103' || $action == 'KA104' || $action == 'KA105'
-            || $action == 'KA106' || $action == 'KA107' || $action == 'KA125') {
-            return true;
-        }
+//        $action = $project->getActions()->getNameSr();
+//
+//        if ($action == 'KA101' || $action == 'KA102' || $action == 'KA103' || $action == 'KA104' || $action == 'KA105'
+//            || $action == 'KA106' || $action == 'KA107' || $action == 'KA125') {
+//            return true;
+//        }
 
         return false;
     }

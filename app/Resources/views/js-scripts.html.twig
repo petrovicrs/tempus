@@ -1,7 +1,16 @@
 {% javascripts '@jquery' '@bootstrap_js' '@calendar_js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
-<script type="text/javascript" src="{{ asset('/js/tooltipster-init.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/js/tooltipster.bundle.min.js') }}"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.collection.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/tooltipster-init.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/tooltipster.bundle.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/datatables/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/datatables/dataTables.buttons.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/datatables/jszip.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/datatables/pdfmake.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/datatables/vfs_fonts.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/datatables/buttons.html5.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/datatables/buttons.colVis.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/datatables/buttons.print.min.js') }}"></script>

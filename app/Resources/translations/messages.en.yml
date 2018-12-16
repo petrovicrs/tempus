@@ -109,6 +109,8 @@ menu:
     edit_user_password: 'Edit users password'
     edit_user_permissions: 'Edit users permissions'
 msg:
+  columns: 'Columns'
+  back: 'Back'
   save: 'Save'
   edit: 'Edit'
   yes: 'Yes'

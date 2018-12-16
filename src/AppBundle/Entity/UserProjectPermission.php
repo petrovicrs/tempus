@@ -15,6 +15,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
+ * @TODO remove -> unused
+ *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserProjectPermissionRepository")
  * @ORM\Table(name="user_project_permissions")
  */

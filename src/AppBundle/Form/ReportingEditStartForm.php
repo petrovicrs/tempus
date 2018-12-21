@@ -7,7 +7,7 @@
  */
 namespace AppBundle\Form;
 
-use AppBundle\FormEventListener\AddProjectActionSubscriber;
+use AppBundle\Listener\AddProjectActionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -61,15 +61,15 @@ class UserForm extends AbstractType {
                 ]);
         }
         $builder
-            ->add('roles', ChoiceType::class, [
-                'label' => 'form.user.roles',
+            ->add('role', ChoiceType::class, [
+                'label' => 'form.user.role_',
                 'attr' => [
                     'class' => 'field-type-choice',
                 ],
-                'multiple' => true,
+                'multiple' => false,
                 'expanded' => true,
                 'choices' => [
-                    'form.user.role.super_admin' => 'ROLE_SUPER_ADMIN',
+                    'form.user.role.super_admin' => 'ROLE_APP_SUPER_ADMIN',
                     'form.user.role.admin' => 'ROLE_ADMIN',
                     'form.user.role.normal' => 'ROLE_NORMAL',
                     'form.user.role.minimal' => 'ROLE_MINIMAL',

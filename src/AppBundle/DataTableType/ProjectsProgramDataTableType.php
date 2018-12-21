@@ -3,7 +3,7 @@
 namespace AppBundle\DataTableType;
 
 use AppBundle\Entity\ProjectProgramme;
-use AppBundle\Helper\HtmlBuilderHelper;
+use AppBundle\Util\HtmlBuilderHelper;
 use AppBundle\Repository\ProjectProgram;
 use Omines\DataTablesBundle\Adapter\ArrayAdapter;
 use Omines\DataTablesBundle\Column\BoolColumn;
@@ -40,8 +40,9 @@ class ProjectsProgramDataTableType extends AbstractDataTableType {
                 'label' => 'datatable.project.program.type',
                 'raw' => false,
                 'map' => [
-                    ProjectProgramme::TYPE_PROGRAM => $this->translate('datatable.project.program.type.program'),
-                    ProjectProgramme::TYPE_SUBPROGRAM => $this->translate('datatable.project.program.type.subprogram'),
+                    ProjectProgramme::TYPE_UNKNOWN => ' - ',
+                    ProjectProgramme::TYPE_PROGRAM => $this->translate('form.project.form.type.program'),
+                    ProjectProgramme::TYPE_SUBPROGRAM => $this->translate('form.project.form.type.subprogram'),
                 ],
             ])
             ->add('is_active', BoolColumn::class, [
@@ -50,9 +51,6 @@ class ProjectsProgramDataTableType extends AbstractDataTableType {
                 'trueValue' => HtmlBuilderHelper::createSuccessSymbolHtml(1),
                 'falseValue' => HtmlBuilderHelper::createDangerSymbolHtml(0),
                 'nullValue' => '',
-            ])
-            ->add('created_at', TextColumn::class, [
-                'label' => 'msg.createdAt',
             ])
             ->add('view_link', TextColumn::class, [
                 'label' => 'msg.view',
@@ -91,17 +89,6 @@ class ProjectsProgramDataTableType extends AbstractDataTableType {
     }
 
     /**
-     * @return string
-     */
-    private function getNameColumnName() {
-        $result = 'name_en';
-        if ($this->getLocale() == "sr") {
-            $result = 'name_sr';
-        }
-        return $result;
-    }
-
-    /**
      * Get project programs
      */
     private function getPrograms() {
@@ -110,26 +97,28 @@ class ProjectsProgramDataTableType extends AbstractDataTableType {
         /** @var ProjectProgramme[] $programs */
         $programs = $repo->createQueryBuilder('p')->where('p.parent IS NULL')->getQuery()->execute();
         $result = [];
-        foreach ($programs as $program) {
-            $level = -1;
-            $this->mapResult($program, $result, $level);
+        $currentLevel = 0;
+        if (is_array($programs) && (bool)count($programs)) {
+            $this->mapResult($programs, $result, $currentLevel);
         }
         return $result;
     }
 
     /**
-     * @param ProjectProgramme $program
+     * @param array $programs
      * @param array $result
-     * @param int $level
+     * @param $currentLevel
      */
-    private function mapResult(ProjectProgramme $program, &$result, &$level) {
-        $level++;
-        $oldLevel = $level;
-        $result[] = $this->programToArray($program, $level);
-        foreach ($program->getChildren() as $child) {
-            $this->mapResult($child, $result, $level);
+    private function mapResult(array $programs, &$result, &$currentLevel) {
+        foreach ($programs as $program) {
+            /** @var ProjectProgramme $program */
+            $result[] = $this->programToArray($program, $currentLevel);
+            if ($program->getChildren()->count()) {
+                $childrenLevel = $currentLevel;
+                $childrenLevel++;
+                $this->mapResult($program->getChildren()->toArray(), $result, $childrenLevel);
+            }
         }
-        $level = $oldLevel;
     }
 
     private function programToArray(ProjectProgramme $programme, $level) {
@@ -138,10 +127,25 @@ class ProjectsProgramDataTableType extends AbstractDataTableType {
         $result['level'] = $level;
         $result['name_en'] = $programme->getNameEn();
         $result['name_sr'] = $programme->getNameSr();
+        $result['name_lat'] = $programme->getNameLat();
         $result['program_type'] = $programme->getProgramType();
         $result['is_active'] = $programme->getIsActive();
-        $result['created_at'] = $programme->getCreatedAt()->format('d.m.Y');
         return $result;
+    }
+
+    /**
+     * Return common name column
+     *
+     * @return string
+     */
+    protected function getNameColumnName() {
+        $nameColumn = 'name_en';
+        if ($this->getLocale() === 'sr') {
+            $nameColumn = 'name_sr';
+        } elseif ($this->getLocale() === 'lat') {
+            $nameColumn = 'name_lat';
+        }
+        return $nameColumn;
     }
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.getLocale() }}">
     <head>
         <meta charset="UTF-8" />
         <title>{% if page_title is defined and page_title is not empty %}{{ page_title }} | {% endif %}{% trans %}base.head_title{% endtrans %}</title>

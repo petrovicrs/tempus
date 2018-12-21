@@ -27,14 +27,20 @@ class UserProgramAccessForm extends AbstractType {
                 'class' => 'AppBundle:ProjectProgramme',
                 'required' => false,
                 'choice_label' => 'name' . ucfirst($options['locale']),
-                'label' => 'Program',
+                'label' => 'form.user.access.program',
+                'attr' => [
+                    'class' => 'form-inline'
+                ],
             ])
             ->add('hasAccess', ChoiceType::class, [
                 'label' => 'Access',
-                'choices'  => array(
-                    'Allow access' => true,
-                    'Deny access' => false,
-                ),
+                'choices'  => [
+                    'form.user.access.allow' => true,
+                    'form.user.access.deny' => false,
+                ],
+                'attr' => [
+                    'class' => 'form-inline'
+                ],
             ])
         ;
     }

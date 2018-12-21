@@ -4,7 +4,12 @@
             {% include 'menu-bar/logo.html.twig' %}
         </div>
         <div class="inner-container inner-container-center">
-            {% include 'menu-bar/main-navbar.html.twig' with {'active': 'reporting'} %}
+            {% set menu = knp_menu_render('main_menu') %}
+            <nav class="navbar navbar-default {% if menu is not defined or menu is empty %} has-no-menu {% endif %}">
+                <div class="container-fluid">
+                    {{ menu | raw }}
+                </div>
+            </nav>
         </div>
         <div class="inner-container inner-container-right">
             <div>{% include 'menu-bar/language-selector.html.twig' %}</div>
@@ -14,3 +19,10 @@
         </div>
     </div>
 </div>
+<script>
+    (function($){
+        $(document).ready(function(){
+            $('#main_menu').superfish({});
+        });
+    })(jQuery);
+</script>

@@ -131,7 +131,7 @@ li {
 }
 #menu-bar {
     background: url(/images/header_bg.jpg) left center;
-    box-shadow: inset 0 2px 0 rgba(255,255,255,0.7), inset 0 -2px 16px rgba(0,0,0,0.15), 0 1px 6px rgba(0,0,0,0.1);
+    box-shadow: inset 0 0 0 rgba(255,255,255,0.7), inset 0 0 0 rgba(0,0,0,0.15), 0 0 0 rgba(0,0,0,0.1);
     opacity: 0.925;
     text-align: center;
 }
@@ -139,6 +139,14 @@ li {
     display: inline-block;
     vertical-align: top;
     float: none;
+}
+#menu-bar .inner-container.inner-container-center nav.navbar {
+    margin-top: 20px;
+}
+#menu-bar .inner-container.inner-container-center nav.navbar.has-no-menu {
+    background: no-repeat;
+    border: navajowhite;
+    box-shadow: none;
 }
 #menu-bar .inner-container.inner-container-left {
     float: left;
@@ -290,6 +298,9 @@ li {
     color:red;
 }
 /**** CONTENT ****/
+#content form {
+    position: relative;
+}
 #content #user_form .form-group legend.col-form-legend {
     font-size: 14px;
     font-weight: bold;
@@ -350,4 +361,39 @@ li {
 /**** FORM ****/
 #content form .jquery-collection-element legend {
     display: none;
+}
+
+
+/**** EDIT USER PERMISSION FORM ****/
+#user_permission_form .jquery-collection-element fieldset > div {
+    display: inline-block;
+    vertical-align: middle;
+    width: 95%;
+}
+#user_permission_form .jquery-collection-element .user_permission_form_programsAccessAllowedFieldset_programsAccess-collection-actions,
+#user_permission_form .jquery-collection-element .user_permission_form_projectsAccessAllowedFieldset_projectsAccess-collection-actions {
+    display: inline-block;
+    vertical-align: middle;
+    width: auto;
+    padding-top: 10px;
+
+}
+#user_permission_form .jquery-collection-element fieldset > div .form-group {
+    display: inline-block;
+    vertical-align: middle;
+    width: 45%;
+    margin-right: 3%;
+}
+
+/**** MAIN MENU ****/
+#menu-bar .sf-menu li {
+    background: #f8f8f8;
+}
+#menu-bar .sf-menu a {
+    color: #555;
+    text-decoration: none;
+    border: 0;
+}
+#menu-bar .sf-arrows .sf-with-ul:after {
+    border-top-color: #555;
 }

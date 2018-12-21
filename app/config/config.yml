@@ -11,10 +11,10 @@ parameters:
     knp.doctrine_behaviors.timestampable_subscriber.db_field_type: datetimetz
     knp.doctrine_behaviors.blameable_subscriber.auditable_entity: AppBundle\Entity\AbstractAuditable
 
-jms_serializer:
-    visitors:
-        json:
-            options: [JSON_UNESCAPED_UNICODE]
+#jms_serializer:
+#    visitors:
+#        json:
+#            options: [JSON_UNESCAPED_UNICODE]
 framework:
     #esi:             ~
     translator:      { fallbacks: ["locale"] }

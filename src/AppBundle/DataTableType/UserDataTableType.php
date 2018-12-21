@@ -3,7 +3,7 @@
 namespace AppBundle\DataTableType;
 
 use AppBundle\Entity\User;
-use AppBundle\Helper\HtmlBuilderHelper;
+use AppBundle\Util\HtmlBuilderHelper;
 use Omines\DataTablesBundle\Column\BoolColumn;
 use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\Column\MapColumn;

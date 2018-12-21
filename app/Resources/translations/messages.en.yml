@@ -1,6 +1,8 @@
 common:
   loading: 'Loading...'
   edit: 'Edit'
+  nameSr: 'Serbian name'
+  nameEn: 'English name'
 base:
   head_title: 'Project Database - Erasmus+, Tempus, Erasmus Mundus and Lifelong Learning Programme'
 home:
@@ -69,7 +71,25 @@ datatable:
     enabled: 'Enabled'
     last_login: 'Last login'
     login_count: 'Login count'
+  user_group:
+    name: 'User group'
+    isActive: 'Is active'
+  project:
+    program:
+      name: 'Name'
+      isActive: 'Is active'
+      type: 'Type'
 form:
+  project:
+    form:
+      parent: 'Parent'
+      nameSr: 'Serbian name'
+      nameEn: 'English name'
+      isActive: 'Is active'
+      typeName: 'Type'
+      type:
+        program: 'Program'
+        subprogram: 'Sub program'
   user:
     name: 'First name'
     surname: 'Last name'
@@ -78,6 +98,7 @@ form:
     password: 'Password'
     enabled: 'Enabled'
     roles: 'Roles'
+    role_: 'Role'
     password_confirmation: 'Repeat password'
     password_mismatch: 'Password mismatch'
     role:
@@ -86,7 +107,27 @@ form:
       normal: 'Normal'
       minimal: 'Minimal'
       custom: 'Custom'
+    access:
+      programs: 'Programs'
+      projects: 'Projects'
+      program: 'Program'
+      project: 'Project'
+      allow: 'Allow'
+      deny: 'Deny'
+  user_group:
+      program: 'Program'
 page:
+  project:
+    program:
+      title: 'Programs'
+    add_program:
+      title: 'Add program'
+      success: 'You have successfully added program: %name%'
+    edit_program:
+      title: 'Edit program'
+      success: 'You have successfully saved program: %name%'
+    view_program:
+      title: 'View program'
   users:
     title: 'Users'
     add_user:
@@ -103,6 +144,16 @@ page:
     user_edit_permissions:
       title: 'Edit users permissions: %email%'
       success: 'You have successfully changed permissions for user: %email%'
+    user_group:
+      title: 'User groups'
+    add_user_group:
+      title: 'Add user group'
+      success: 'You have successfully saved group: %name%'
+    edit_user_group:
+      title: 'Edit user group: %name%'
+      success: 'You have successfully edited group: %name%'
+    view_user_group:
+      title: 'View user group: %name%'
 menu:
   users:
     edit_user: 'Edit user'

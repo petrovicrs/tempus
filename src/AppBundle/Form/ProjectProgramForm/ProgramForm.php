@@ -3,6 +3,7 @@
 namespace AppBundle\Form\ProjectProgramForm;
 
 use AppBundle\Entity\ProjectProgramme;
+use AppBundle\Repository\ProjectProgrammeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -24,9 +25,10 @@ class ProgramForm extends AbstractType {
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $entity = $builder->getData();
         $builder
             ->add('programType', ChoiceType::class, [
-                'label' => 'form.project.form.type',
+                'label' => 'form.project.form.typeName',
                 'multiple' => false,
                 'choices' => [
                     'form.project.form.type.program' => ProjectProgramme::TYPE_PROGRAM,
@@ -39,6 +41,17 @@ class ProgramForm extends AbstractType {
                 'choice_label' => 'name' . ucfirst($options['locale']),
                 'empty_data'  => null,
                 'required' => false,
+                'query_builder' => function(ProjectProgrammeRepository $repo) use ($entity) {
+                    $params = null;
+                    $queryBuilder = $repo->createQueryBuilder('p');
+                    $id = $entity->getId();
+                    if (isset($id)) {
+                        $params[':programId'] = $id;
+                        $queryBuilder->where('p.id <> :programId');
+                        $queryBuilder->setParameter(':programId', $id);
+                    }
+                    return $queryBuilder->orderBy('p.id', 'ASC');
+                }
             ])
             ->add('nameSr', TextType::class, [
                 'label' => 'form.project.form.nameSr',

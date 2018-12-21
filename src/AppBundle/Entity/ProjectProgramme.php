@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Traits\NamedTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,9 +14,12 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ProjectProgramme extends AbstractAuditable {
 
+    const TYPE_UNKNOWN = 0;
     const TYPE_PROGRAM = 1;
     const TYPE_SUBPROGRAM = 2;
     const TYPE_PROJECT_TYPE = 3;
+
+    use NamedTrait;
 
     /**
      * @ORM\Id
@@ -23,16 +27,6 @@ class ProjectProgramme extends AbstractAuditable {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(name="name_en", type="string")
-     */
-    protected $nameEn;
-
-    /**
-     * @ORM\Column(name="name_sr", type="string")
-     */
-    protected $nameSr;
 
     /**
      * @ORM\OneToMany(targetEntity="ProjectProgramme", mappedBy="parent")
@@ -62,7 +56,6 @@ class ProjectProgramme extends AbstractAuditable {
      * ProjectProgramme constructor.
      */
     public function __construct() {
-        parent::__construct();
         $this->children = new ArrayCollection();
     }
 
@@ -91,7 +84,7 @@ class ProjectProgramme extends AbstractAuditable {
     /**
      * @param ProjectProgramme $parent
      */
-    public function setParent(ProjectProgramme $parent) {
+    public function setParent($parent) {
         $this->parent = $parent;
     }
 
@@ -100,41 +93,6 @@ class ProjectProgramme extends AbstractAuditable {
      */
     public function getId() {
         return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNameEn() {
-        return $this->nameEn;
-    }
-
-    /**
-     * @param mixed $nameEn
-     */
-    public function setNameEn($nameEn) {
-        $this->nameEn = $nameEn;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getNameSr() {
-        return $this->nameSr;
-    }
-
-    /**
-     * @param mixed $nameSr
-     */
-    public function setNameSr($nameSr) {
-        $this->nameSr = $nameSr;
-    }
-
-    public function getName($locale) {
-        if ($locale == "sr") {
-            return $this->nameSr;
-        }
-        return $this->nameEn;
     }
 
     /**

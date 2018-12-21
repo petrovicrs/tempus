@@ -28,7 +28,7 @@ class UserPermissionForm extends AbstractType {
         $builder
             ->add('programsAccessAllowedFieldset', FieldsetType::class, [
                 'label' => false,
-                'legend' => 'form.user.access.allowed_programs',
+                'legend' => 'form.user.access.programs',
                 'attr' => [
                     'class' => 'collection-element'
                 ],
@@ -51,7 +51,7 @@ class UserPermissionForm extends AbstractType {
             ])
             ->add('projectsAccessAllowedFieldset', FieldsetType::class, [
                 'label' => false,
-                'legend' => 'form.user.access.allowed_projects',
+                'legend' => 'form.user.access.projects',
                 'attr' => [
                     'class' => 'collection-element'
                 ],

@@ -1,6 +1,8 @@
 common:
   loading: 'Učitavanje...'
   edit: 'Izmeni'
+  nameSr: 'Srpski naziv'
+  nameEn: 'Englesko naziv'
 base:
   head_title: 'Project Database - Erasmus+, Tempus, Erasmus Mundus and Lifelong Learning Programme'
 home:
@@ -72,7 +74,25 @@ datatable:
     enabled: 'Omogućen'
     last_login: 'Poslednje logovanje'
     login_count: 'Broj loginovanja'
+  user_group:
+    name: 'Korisnička groupa'
+    isActive: 'Aktivan'
+  project:
+    program:
+      name: 'Naziv'
+      isActive: 'Aktivan'
+      type: 'Tip'
 form:
+  project:
+    form:
+      parent: 'Roditelj'
+      nameSr: 'Srpski naziv'
+      nameEn: 'Englesko naziv'
+      isActive: 'Aktivan'
+      typeName: 'Top'
+      type:
+        program: 'Program'
+        subprogram: 'Potprogram'
   user:
     name: 'Ime'
     surname: 'Prezime'
@@ -81,6 +101,7 @@ form:
     password: 'Lozinka'
     enabled: 'Omogućen'
     roles: 'Role'
+    role_: 'Rola'
     password_confirmation: 'Potvrda lozinke'
     password_mismatch: 'Lozinke se ne podudaraju'
     role:
@@ -89,7 +110,27 @@ form:
       normal: 'Normalna'
       minimal: 'Minimalna'
       custom: 'Proizvoljna'
+    access:
+      programs: 'Programi'
+      projects: 'Projekti'
+      program: 'Program'
+      project: 'Projekаt'
+      allow: 'Dozvoli'
+      deny: 'Odbij'
+  user_group:
+      program: 'Program'
 page:
+  project:
+    program:
+      title: 'Program'
+    add_program:
+      title: 'Dodaj program'
+      success: 'Uspešno ste dodali program program: %name%'
+    edit_program:
+      title: 'Izmeni program'
+      success: 'Uspešno ste izmenili program: %name%'
+    view_program:
+      title: 'Vidi program'
   users:
     title: 'Korisnici'
     add_user:
@@ -106,6 +147,16 @@ page:
     user_edit_permissions:
       title: 'Izmeni privilegije korisniku: %email%'
       success: 'Uspešno ste izmenili privilegije korisniku: %email%'
+    user_group:
+      title: 'Korisnička grupa'
+    add_user_group:
+      title: 'Dodaj korisničku grupu'
+      success: 'Uspešno ste dodali korisničku grupu: %name%'
+    edit_user_group:
+      title: 'Izmeni korisničku: %name%'
+      success: 'Uspešno ste izmenili korisničku grupu: %name%'
+    view_user_group:
+      title: 'Vidi korisničku grupu: %name%'
 menu:
   users:
     edit_user: 'Izmeni korisnika'

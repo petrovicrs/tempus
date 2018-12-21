@@ -27,7 +27,7 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/list", name="user_list", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      *
@@ -51,7 +51,7 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/create", name="user_create", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      *
@@ -83,7 +83,7 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/edit/{userId}", name="user_edit", requirements={"userId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      * @param int $userId
@@ -115,7 +115,7 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/edit-password/{userId}", name="user_edit_password", requirements={"userId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      * @param int $userId
@@ -147,7 +147,7 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/view/{userId}", name="user_view", requirements={"userId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      * @param int $userId
@@ -171,7 +171,7 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/edit-user-permissions/{userId}", name="user_edit_permissions", requirements={"userId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      * @param int $userId
@@ -229,7 +229,7 @@ class UsersController extends AbstractController {
                 $projectsAccess->setUser($user);
                 $this->getUserProjectAccessRepository()->save($projectsAccess);
             }
-            $this->setInfoMessage('User updated');
+            $this->setInfoMessage($this->translate('page.users.user_edit_permissions.success', ['%email%' => $user->getEmail()]));
         }
         return $this->render('form/form.html.twig', [
             'form' => $form->createView(),

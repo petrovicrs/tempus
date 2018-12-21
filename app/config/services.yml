@@ -8,12 +8,13 @@ parameters:
 services:
     _defaults: { public: true }
     gedmo.listener.blameable:
-        class: Gedmo\Blameable\BlameableListener
+        class: AppBundle\Listener\BlameableListener
         tags:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
+            - [ setSecurityStorage, [ '@security.token_storage' ] ]
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
-            - [ setUserValue, [ "@security.token_storage" ] ]
+#            - [ setUserValue, [ "@security.token_storage" ] ]
     gedmo.listener.timestampable:
         class: Gedmo\Timestampable\TimestampableListener
         tags:
@@ -485,6 +486,11 @@ services:
         factory: ["@doctrine", getRepository]
         arguments:
             - AppBundle\Entity\UserPermission
+    doctrine_entity_repository.user_group:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - AppBundle\Entity\UserGroup
     doctrine_entity_repository.existing_project_permission:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine", getRepository]
@@ -551,6 +557,9 @@ services:
     AppBundle\DataTableType\UserDataTableType:
         autowire: true
         autoconfigure: true
+    AppBundle\DataTableType\UserGroupDataTableType:
+        autowire: true
+        autoconfigure: true
     AppBundle\DataTableType\ProjectsDataTableType:
         autowire: true
         autoconfigure: true
@@ -558,12 +567,18 @@ services:
         autowire: true
         autoconfigure: true
 # menus
-    my.menu.user_menu_builder:
-        class: AppBundle\Menu\UserMenuBuilder
-        arguments: ["@knp_menu.factory"]
+    my.menu.builder:
+        class: AppBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory", "@service_container"]
+    my.menu.main_menu:
+        class: Knp\Menu\MenuItem
+        factory: ["@my.menu.builder", createMainMenu]
+        arguments: ["@request_stack"]
+        tags:
+            - { name: knp_menu.menu, alias: main_menu }
     my.menu.user_menu:
         class: Knp\Menu\MenuItem
-        factory: ["@my.menu.user_menu_builder", create]
+        factory: ["@my.menu.builder", createUserMenu]
         arguments: ["@request_stack"]
         tags:
             - { name: knp_menu.menu, alias: user_menu }

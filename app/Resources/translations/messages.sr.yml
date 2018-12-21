@@ -1,6 +1,8 @@
 common:
   loading: 'Учитавање...'
   edit: 'Измени'
+  nameSr: 'Српски назив'
+  nameEn: 'Енглески назив'
 base:
   head_title: 'Project Database - Erasmus+, Tempus, Erasmus Mundus and Lifelong Learning Programme'
 home:
@@ -69,7 +71,25 @@ datatable:
     enabled: 'Омогућен'
     last_login: 'Последње логовање'
     login_count: 'Број логиновања'
+  user_group:
+    name: 'Корисничка група'
+    isActive: 'Активан'
+  project:
+    program:
+      name: 'Назив'
+      isActive: 'Активан'
+      type: 'Тип'
 form:
+  project:
+    form:
+      parent: 'Родитељ'
+      nameSr: 'Српски назив'
+      nameEn: 'Енглески назив'
+      isActive: 'Активан'
+      typeName: 'Тип'
+      type:
+        program: 'Програм'
+        subprogram: 'Потпрограм'
   user:
     name: 'Име'
     surname: 'Презиме'
@@ -78,6 +98,7 @@ form:
     password: 'Лозинка'
     enabled: 'Омогућен'
     roles: 'Роле'
+    role_: 'Рола'
     password_confirmation: 'Потврда лозинке'
     password_mismatch: 'Лозинке се не подударају'
     role:
@@ -86,7 +107,27 @@ form:
       normal: 'Нормална'
       minimal: 'Минимална'
       custom: 'Произвољна'
+    access:
+      programs: 'Програми'
+      projects: 'Пројекти'
+      program: 'Програм'
+      project: 'Пројекат'
+      allow: 'Дозволи'
+      deny: 'Одбиј'
+  user_group:
+    program: 'Програм'
 page:
+  project:
+    program:
+      title: 'Програм'
+    add_program:
+      title: 'Додај програм'
+      success: 'Успешно сте додали програм: %name%'
+    edit_program:
+      title: 'Измени програм'
+      success: 'Успешно сте изменили програм: %name%'
+    view_program:
+      title: 'Види програм'
   users:
     title: 'Корисници'
     add_user:
@@ -103,6 +144,16 @@ page:
     user_edit_permissions:
       title: 'Измени привилегије кориснику: %email%'
       success: 'Успешно сте изменили привилегије кориснику: %email%'
+    user_group:
+      title: 'Корисничка група'
+    add_user_group:
+      title: 'Додај корисничку групу'
+      success: 'Успешно сте додали корисничку групу: %name%'
+    edit_user_group:
+      title: 'Измени корисничку групу: %name%'
+      success: 'Успешно сте изменили корисничку групу: %name%'
+    view_user_group:
+      title: 'Види корисничку групу: %name%'
 menu:
   users:
     edit_user: 'Измени корисника'

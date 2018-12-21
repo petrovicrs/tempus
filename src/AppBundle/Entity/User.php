@@ -30,6 +30,11 @@ class User extends BaseUser {
     protected $surname = null;
 
     /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $role;
+
+    /**
      * @ORM\Column(type="integer")
      */
     protected $loginCount = 0;
@@ -88,6 +93,22 @@ class User extends BaseUser {
 
     public function getFullName() {
         return $this->getName() . ' ' . $this->getSurname();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole() {
+        $roles = $this->getRoles();
+        return $this->role ? $this->role : reset($roles);
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role) {
+        $this->setRoles([$role]);
+        $this->role = $role;
     }
 
     /**

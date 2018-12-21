@@ -21,7 +21,7 @@ class ProjectProgramController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/project-programs/list", name="project_programs_list", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      *
@@ -45,7 +45,7 @@ class ProjectProgramController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/project-programs/create", name="project_programs_create", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      *
@@ -80,7 +80,7 @@ class ProjectProgramController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/project-programs/edit/{programId}", name="project_programs_edit", requirements={"programId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
      * @param Request $request
      * @param int $programId
      *
@@ -118,7 +118,7 @@ class ProjectProgramController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/project-programs/view/{programId}", name="project_programs_view", requirements={"programId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
      * @param Request $request
      * @param int $programId
      *

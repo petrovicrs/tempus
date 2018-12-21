@@ -457,6 +457,14 @@ class Project extends AbstractAuditable
     }
 
     /**
+     * @return string
+     */
+    public function getNameLat()
+    {
+        return $this->nameSr;
+    }
+
+    /**
      * @param string $nameSr
      */
     public function setNameSr($nameSr)

@@ -29,13 +29,13 @@ class UserProjectAccessForm extends AbstractType {
                 'class' => 'AppBundle:Project',
                 'required' => false,
                 'choice_label' => 'name' . ucfirst($options['locale']),
-                'label' => false,
+                'label' => 'form.user.access.project',
             ])
             ->add('hasAccess', ChoiceType::class, [
                 'label' => 'Access',
                 'choices'  => array(
-                    'Allow access' => true,
-                    'Deny access' => false,
+                    'form.user.access.allow' => true,
+                    'form.user.access.deny' => false,
                 ),
             ]);
     }

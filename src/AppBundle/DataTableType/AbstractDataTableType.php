@@ -64,6 +64,22 @@ abstract class AbstractDataTableType implements DataTableTypeInterface {
     }
 
     /**
+     * Return common name column
+     *
+     * @return string
+     */
+    protected function getNameColumnName() {
+        $nameColumn = 'nameEn';
+        if ($this->getLocale() === 'sr') {
+            $nameColumn = 'nameSr';
+        } elseif ($this->getLocale() === 'lat') {
+//            $nameColumn = 'nameLat';
+            $nameColumn = 'nameSr';
+        }
+        return $nameColumn;
+    }
+
+    /**
      * Get translator
      *
      * @return TranslatorInterface

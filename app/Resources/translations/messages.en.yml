@@ -74,12 +74,25 @@ datatable:
   user_group:
     name: 'User group'
     isActive: 'Is active'
+    program: 'Program'
   project:
     program:
       name: 'Name'
       isActive: 'Is active'
       type: 'Type'
+  option_field:
+    name: 'Name'
+    identifier: 'Identifier'
+    acronym: 'Acronym'
+    code: 'Code'
+    option_count: 'Entry count'
+  option_field_option:
+    name: 'Name'
+    code: 'Code'
 form:
+  common:
+    nameSr: 'Serbian name'
+    nameEn: 'English name'
   project:
     form:
       parent: 'Parent'
@@ -114,8 +127,13 @@ form:
       project: 'Project'
       allow: 'Allow'
       deny: 'Deny'
+      group: 'Group'
   user_group:
-      program: 'Program'
+    program: 'Program'
+  option_field:
+    identifier: 'Identifier'
+    acronym: 'Acronym'
+    code: 'Code'
 page:
   project:
     program:
@@ -154,6 +172,28 @@ page:
       success: 'You have successfully edited group: %name%'
     view_user_group:
       title: 'View user group: %name%'
+  option_fields:
+    list:
+      title: 'Lookup'
+    add_option:
+      title: 'New type'
+    edit_option:
+      title: 'Edit type'
+      success: 'You have successfully edited type'
+    add_option_field:
+      title: 'New entry'
+  option_field_options:
+    list:
+      title: 'Entry of type: %name%'
+    add_option_field_option:
+      title: 'Add entry'
+      title_type: 'Add entry of type: %name%'
+      success: 'You have successfully edited entry'
+    view_option_field_option:
+      title: 'View entry: %name%'
+    edit_option_field_option:
+      title: 'Edit entry'
+      success: 'You have successfully edited entry'
 menu:
   users:
     edit_user: 'Edit user'
@@ -167,6 +207,8 @@ msg:
   yes: 'Yes'
   no: 'No'
   add: 'Add'
+  close: 'Close'
+  isActive: 'Is active'
   action: 'Actions'
   actions: 'Actions'
   view: 'View'

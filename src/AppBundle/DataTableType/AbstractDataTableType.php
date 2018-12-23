@@ -41,6 +41,15 @@ abstract class AbstractDataTableType implements DataTableTypeInterface {
         return $this->getRouter()->generate($name, $params, $referenceType);
     }
 
+    /**
+     * @param $attributes
+     * @param null $subject
+     *
+     * @return bool
+     */
+    protected function isGranted($attributes, $subject = null) {
+        return $this->container->get('security.authorization_checker')->isGranted($attributes, $subject);
+    }
 
     /**
      * Translate string

@@ -2,14 +2,10 @@
 
 namespace AppBundle\Form\UserForm;
 
-use AppBundle\Entity\Project;
-use AppBundle\Entity\ProjectProgramme;
 use AppBundle\Entity\UserProjectAccess;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,7 +23,6 @@ class UserProjectAccessForm extends AbstractType {
         $builder
             ->add('project', EntityType::class, [
                 'class' => 'AppBundle:Project',
-                'required' => false,
                 'choice_label' => 'name' . ucfirst($options['locale']),
                 'label' => 'form.user.access.project',
             ])

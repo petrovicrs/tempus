@@ -10,6 +10,7 @@ use AppBundle\DataTableType\ProjectsProgramDataTableType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -21,7 +22,7 @@ class ProjectProgramController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/project-programs/list", name="project_programs_list", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      *
@@ -45,7 +46,7 @@ class ProjectProgramController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/project-programs/create", name="project_programs_create", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      *
@@ -59,7 +60,9 @@ class ProjectProgramController extends AbstractController {
         $form = $this->createForm(ProgramForm::class, $program, [
             'action' => $this->generateUrl('project_programs_create'),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'entityManager' => $this->getDoctrine()->getManager()
+
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -80,7 +83,7 @@ class ProjectProgramController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/project-programs/edit/{programId}", name="project_programs_edit", requirements={"programId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      * @param Request $request
      * @param int $programId
      *
@@ -92,10 +95,14 @@ class ProjectProgramController extends AbstractController {
         $this->setPageTitle($this->translate('page.project.edit_program.title'));
         /** @var ProjectProgramme $program */
         $program = $this->getDoctrine()->getRepository(ProjectProgramme::class)->find($programId);
+        if (!$program) {
+            throw new NotFoundHttpException();
+        }
         $form = $this->createForm(ProgramForm::class, $program, [
             'action' => $this->generateUrl('project_programs_edit', ['programId' => $programId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'entityManager' => $this->getDoctrine()->getManager()
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -118,7 +125,7 @@ class ProjectProgramController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/project-programs/view/{programId}", name="project_programs_view", requirements={"programId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      * @param Request $request
      * @param int $programId
      *
@@ -128,6 +135,9 @@ class ProjectProgramController extends AbstractController {
         $this->setPageTitle($this->translate('page.project.view_program.title'));
         /** @var ProjectProgramme $program */
         $program = $this->getDoctrine()->getRepository(ProjectProgramme::class)->find($programId);
+        if (!$program) {
+            throw new NotFoundHttpException();
+        }
         $form = $this->createForm(ProgramForm::class, $program, [
             'locale' => $request->getLocale(),
             'disabled' => true,

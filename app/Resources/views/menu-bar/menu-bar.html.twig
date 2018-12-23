@@ -4,12 +4,14 @@
             {% include 'menu-bar/logo.html.twig' %}
         </div>
         <div class="inner-container inner-container-center">
-            {% set menu = knp_menu_render('main_menu') %}
-            <nav class="navbar navbar-default {% if menu is not defined or menu is empty %} has-no-menu {% endif %}">
-                <div class="container-fluid">
-                    {{ menu | raw }}
-                </div>
-            </nav>
+            {% if is_granted('ROLE_USER') %}
+                {% set menu = knp_menu_render('main_menu') %}
+                <nav class="navbar navbar-default {% if menu is not defined or menu is empty %} has-no-menu {% endif %}">
+                    <div class="container-fluid">
+                        {{ menu | raw }}
+                    </div>
+                </nav>
+            {% endif %}
         </div>
         <div class="inner-container inner-container-right">
             <div>{% include 'menu-bar/language-selector.html.twig' %}</div>

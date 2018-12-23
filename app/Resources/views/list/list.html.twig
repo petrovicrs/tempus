@@ -2,7 +2,20 @@
 
 {% block body %}
     <div id="datatable_list">
-        {% if (datatable_link is not empty) and (datatable_link_title is not empty)%}
+        <div class="back-link">
+            {% if back_link is defined %}
+                <a href="{{ back_link }}" class="btn outline btn-primary">
+                    <span class='fa fa-arrow-left icon'></span>
+                    <span class="text"> {% trans %}msg.back{% endtrans %}</span>
+                </a>
+            {% else %}
+                <a href="#" class="btn outline btn-primary">
+                    <span class='fa fa-arrow-left icon' onclick="window.history.back()"></span>
+                    <span class="text"> {% trans %}msg.back{% endtrans %}</span>
+                </a>
+            {% endif %}
+        </div>
+        {% if datatable_link is defined and datatable_link is not empty and datatable_link_title is defined and datatable_link_title is not empty%}
         <div id="list_link">
             <a href="{{ datatable_link }}" class="btn btn-primary">
                 <span class="fa fa-plus-circle icon"></span>

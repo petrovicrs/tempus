@@ -12,6 +12,12 @@ use FOS\UserBundle\Model\User as BaseUser;
  */
 class User extends BaseUser {
 
+    const ROLE_APP_SUPER_ADMIN = 'ROLE_APP_SUPER_ADMIN';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_NORMAL = 'ROLE_NORMAL';
+    const ROLE_MINIMAL = 'ROLE_MINIMAL';
+    const ROLE_CUSTOM = 'ROLE_CUSTOM';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -55,6 +61,13 @@ class User extends BaseUser {
     protected $projectsAccess;
 
     /**
+     * @ORM\OneToOne(targetEntity="UserGroup")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @var UserGroup|null
+     */
+    protected $userGroup;
+
+    /**
      * User constructor.
      */
     public function __construct() {
@@ -96,7 +109,7 @@ class User extends BaseUser {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getRole() {
         $roles = $this->getRoles();
@@ -165,6 +178,20 @@ class User extends BaseUser {
      */
     public function setProjectsAccess(ArrayCollection $projectsAccess) {
         $this->projectsAccess = $projectsAccess;
+    }
+
+    /**
+     * @return UserGroup|null
+     */
+    public function getUserGroup(): ?UserGroup {
+        return $this->userGroup;
+    }
+
+    /**
+     * @param UserGroup|null $userGroup
+     */
+    public function setUserGroup(UserGroup $userGroup) {
+        $this->userGroup = $userGroup;
     }
 
 }

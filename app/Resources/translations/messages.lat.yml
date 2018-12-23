@@ -77,12 +77,25 @@ datatable:
   user_group:
     name: 'Korisnička groupa'
     isActive: 'Aktivan'
+    program: 'Program'
   project:
     program:
       name: 'Naziv'
       isActive: 'Aktivan'
       type: 'Tip'
+  option_field:
+    name: 'Naziv'
+    identifier: 'Identifikator'
+    acronym: 'Akronim'
+    code: 'Kod'
+    option_count: 'Broj stavki'
+  option_field_option:
+    name: 'Naziv'
+    code: 'Kod'
 form:
+  common:
+    nameSr: 'Srpski naziv'
+    nameEn: 'Englesko naziv'
   project:
     form:
       parent: 'Roditelj'
@@ -117,8 +130,13 @@ form:
       project: 'Projekаt'
       allow: 'Dozvoli'
       deny: 'Odbij'
+      group: 'Groupa'
   user_group:
-      program: 'Program'
+    program: 'Program'
+  option_field:
+    identifier: 'Identifikator'
+    acronym: 'Akronim'
+    code: 'Kod'
 page:
   project:
     program:
@@ -157,6 +175,28 @@ page:
       success: 'Uspešno ste izmenili korisničku grupu: %name%'
     view_user_group:
       title: 'Vidi korisničku grupu: %name%'
+  option_fields:
+    list:
+      title: 'Šifrarnik'
+    add_option:
+      title: 'Dodaj tip'
+    edit_option:
+      title: 'Izmeni tip'
+      success: 'Uspešno ste izmenili tip'
+    add_option_field:
+      title: 'Dodaj tip'
+  option_field_options:
+    list:
+      title: 'Stavke tipa: %name%'
+    add_option_field_option:
+      title: 'Dodaj stavku'
+      title_type: 'Dodaj stavku tipa: %name%'
+      success: 'Uspešno ste dodali stavku'
+    view_option_field_option:
+      title: 'Vidi stavku: %name%'
+    edit_option_field_option:
+      title: 'Izmeni stavku'
+      success: 'Uspešno ste izmenili stavku'
 menu:
   users:
     edit_user: 'Izmeni korisnika'
@@ -170,6 +210,8 @@ msg:
   add: 'Dodaj'
   yes: 'Da'
   no: 'Ne'
+  isActive: 'Aktivan'
+  close: 'Zatvori'
   action: 'Akcija'
   actions: 'Akcije'
   view: 'Vidi'

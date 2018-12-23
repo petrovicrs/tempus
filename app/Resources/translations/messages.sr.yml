@@ -74,12 +74,25 @@ datatable:
   user_group:
     name: 'Корисничка група'
     isActive: 'Активан'
+    program: 'Програм'
   project:
     program:
       name: 'Назив'
       isActive: 'Активан'
       type: 'Тип'
+  option_field:
+    name: 'Назив'
+    identifier: 'Идентификатор'
+    acronym: 'Акроним'
+    code: 'Код'
+    option_count: 'Број ставки'
+  option_field_option:
+    name: 'Назив'
+    code: 'Код'
 form:
+  common:
+    nameSr: 'Српски назив'
+    nameEn: 'Енглески назив'
   project:
     form:
       parent: 'Родитељ'
@@ -114,8 +127,13 @@ form:
       project: 'Пројекат'
       allow: 'Дозволи'
       deny: 'Одбиј'
+      group: 'Група'
   user_group:
     program: 'Програм'
+  option_field:
+    identifier: 'Идентификатор'
+    acronym: 'Акроним'
+    code: 'Код'
 page:
   project:
     program:
@@ -154,6 +172,29 @@ page:
       success: 'Успешно сте изменили корисничку групу: %name%'
     view_user_group:
       title: 'Види корисничку групу: %name%'
+  option_fields:
+    list:
+      title: 'Шифрарник'
+    add_option:
+      title: 'Додај тип'
+    edit_option:
+      title: 'Измени тип'
+      success: 'Успешно сте изменили тип'
+    add_option_field:
+      title: 'Додај тип'
+      success: 'Успешно сте додали тип'
+  option_field_options:
+    list:
+      title: 'Ставке типа: %name%'
+    add_option_field_option:
+      title: 'Додај ставку'
+      title_type: 'Додај ставку типа: %name%'
+      success: 'Успешно сте додали ставку'
+    view_option_field_option:
+      title: 'Види ставку: %name%'
+    edit_option_field_option:
+      title: 'Измени ставку'
+      success: 'Успешно сте изменили ставку'
 menu:
   users:
     edit_user: 'Измени корисника'
@@ -167,6 +208,8 @@ msg:
   add: 'Додај'
   yes: 'Да'
   no: 'Не'
+  isActive: 'Активан'
+  close: 'Затвори'
   action: 'Акција'
   actions: 'Акције'
   view: 'Види'

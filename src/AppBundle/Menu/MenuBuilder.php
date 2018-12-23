@@ -6,6 +6,7 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 /**
  * Class MenuBuilder
@@ -36,8 +37,13 @@ class MenuBuilder {
             'title' => 'Project programs',
             'children' => []
         ],
+        'option_fields_list' => [
+            'title' => 'Lookup',
+            'children' => []
+        ],
         'user_list' => [
             'title' => 'Users',
+            'roles' => ['ROLE_SUPER_ADMIN', 'ROLE_APP_SUPER_ADMIN'],
             'children' => [
                 'user_group_list' => [
                     'title' => 'User groups',
@@ -58,6 +64,9 @@ class MenuBuilder {
     /** @var ContainerInterface */
     private $container;
 
+    /** @var AuthorizationChecker */
+    private $securityContext;
+
     /**
      * @param FactoryInterface $factory
      * @param ContainerInterface $container
@@ -65,6 +74,7 @@ class MenuBuilder {
     public function __construct(FactoryInterface $factory, ContainerInterface $container) {
         $this->factory = $factory;
         $this->container = $container;
+        $this->securityContext = $this->container->get('security.authorization_checker');
     }
 
     /**
@@ -73,12 +83,13 @@ class MenuBuilder {
      * @return \Knp\Menu\ItemInterface
      */
     public function createMainMenu(RequestStack $requestStack) {
-        $securityContext = $this->container->get('security.authorization_checker');
         $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('id', 'main_menu');
         $menu->setChildrenAttribute('class', 'nav navbar-nav sf-menu');
         foreach ($this->getMainMenuItems() as $menuItem) {
-            $this->addMenuItem($menuItem, $menu, $requestStack);
+            if ($menuItem->isAccessible()) {
+                $this->addMenuItem($menuItem, $menu, $requestStack);
+            }
         }
         return $menu;
     }
@@ -121,18 +132,25 @@ class MenuBuilder {
     private function getMainMenuItems() {
         $menuItems = [];
         foreach (self::$main_menu_items as $route => $item) {
-            $menuItem = $this->createMenuItem($route, $item['title'], $item['children']);
+            $title = isset($item['title']) ? $item['title'] : '_______________MISSING_TITLE_______________';
+            $children = isset($item['children']) ? $item['children'] : [];
+            $roles = isset($item['roles']) ? $item['roles'] : [];
+            $menuItem = $this->createMenuItem($route, $title, $children, $roles);
             $menuItems[] = $menuItem;
         }
         return $menuItems;
     }
 
-    private function createMenuItem($route, $title, array $children = []) {
-        $menuItem = new MenuItem();
+    private function createMenuItem($route, $title, array $children = [], array $roles = []) {
+        $menuItem = new MenuItem($this->securityContext);
         $menuItem->setRoute($route);
         $menuItem->setTitle($title);
+        $menuItem->setAccessibleRoles($roles);
         foreach ($children as $child_route => $child) {
-            $childItem = $this->createMenuItem($child_route , $child['title'], $child['children']);
+            $title = isset($child['title']) ? $child['title'] : '_______________MISSING_TITLE_______________';
+            $children = isset($child['children']) ? $child['children'] : [];
+            $roles = isset($child['roles']) ? $child['roles'] : [];
+            $childItem = $this->createMenuItem($child_route , $title, $children, $roles);
             $menuItem->addChild($childItem);
         }
         return $menuItem;

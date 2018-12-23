@@ -15,7 +15,7 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -27,17 +27,18 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/list", name="user_list", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(Request $request) {
+        $accessibleUserIds = $this->getUserAcl()->getAccessibleUserIds($this->getUser());
         $this->setPageTitle($this->translate('page.users.title'));
-        $table = $this->createDataTableFromType(UserDataTableType::class, [], [
-            'searching' => true
-        ]);
+        $table = $this->createDataTableFromType(UserDataTableType::class,
+            ['accessibleUserIds' => $accessibleUserIds], ['searching' => true]
+        );
         $table->handleRequest($request);
         if ($table->isCallback()) {
             return $table->getResponse();
@@ -51,7 +52,7 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/create", name="user_create", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      *
@@ -65,14 +66,13 @@ class UsersController extends AbstractController {
         $form = $this->createForm(UserForm::class, $user, [
             'action' => $this->generateUrl('user_create'),
             'method' => 'POST',
-            'new_user' => true
+            'new_user' => true,
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $userManager->updateUser($user);
             $this->setInfoMessage($this->translate('page.users.add_user.success', ['%email%' => $user->getEmail()]), true);
-            $savedUser = $userManager->findUserByEmail($user->getEmail());
-            return $this->redirectToRoute('user_edit_permissions', ['userId' => $savedUser->getId()]);
+            return $this->redirectToRoute('user_edit_permissions', ['userId' => $user->getId()]);
         }
         return $this->render('form/form-inline.html.twig', [
             'form' => $form->createView(),
@@ -83,7 +83,7 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/edit/{userId}", name="user_edit", requirements={"userId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      * @param int $userId
@@ -91,8 +91,14 @@ class UsersController extends AbstractController {
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, int $userId) {
+        if (!$this->getUserAcl()->isAccessible($userId, $this->getUser())) {
+            throw new AccessDeniedException();
+        }
         /** @var User $user */
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+        if (!$user) {
+            throw new NotFoundHttpException();
+        }
         $this->setPageTitle($this->translate('page.users.edit_user.title', ['%email%' => $user->getEmail()]));
         $form = $this->createForm(UserForm::class, $user, [
             'action' => $this->generateUrl('user_edit', ['userId' => $userId]),
@@ -115,7 +121,7 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/edit-password/{userId}", name="user_edit_password", requirements={"userId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      * @param int $userId
@@ -123,8 +129,14 @@ class UsersController extends AbstractController {
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editPasswordAction(Request $request, int $userId) {
+        if (!$this->getUserAcl()->isAccessible($userId, $this->getUser())) {
+            throw new AccessDeniedException();
+        }
         /** @var User $user */
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+        if (!$user) {
+            throw new NotFoundHttpException();
+        }
         $this->setPageTitle($this->translate('page.users.edit_user_password.title', ['%email%' => $user->getEmail()]));
         $form = $this->createForm(UserChangePasswordForm::class, $user, [
             'action' => $this->generateUrl('user_edit_password', ['userId' => $userId]),
@@ -147,7 +159,7 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/view/{userId}", name="user_view", requirements={"userId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      * @param int $userId
@@ -155,8 +167,14 @@ class UsersController extends AbstractController {
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function viewAction(Request $request, int $userId) {
+        if (!$this->getUserAcl()->isAccessible($userId, $this->getUser())) {
+            throw new AccessDeniedException();
+        }
         /** @var User $user */
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+        if (!$user) {
+            throw new NotFoundHttpException();
+        }
         $this->setPageTitle($this->translate('page.users.view_user.title', ['%email%' => $user->getEmail()]));
         $form = $this->createForm(UserForm::class, $user, [
             'action' => $this->generateUrl('user_view', ['userId' => $userId]),
@@ -171,7 +189,7 @@ class UsersController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/users/edit-user-permissions/{userId}", name="user_edit_permissions", requirements={"userId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      * @param int $userId
@@ -181,8 +199,14 @@ class UsersController extends AbstractController {
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function editUserPermissionAction(Request $request, int $userId) {
+        if (!$this->getUserAcl()->isAccessible($userId, $this->getUser())) {
+            throw new AccessDeniedException();
+        }
         /** @var User $user */
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+        if (!$user) {
+            throw new NotFoundHttpException();
+        }
         $programs = $this->getUserProgramAccessRepository()
             ->createQueryBuilder('p')
             ->where('p.user = :userId')
@@ -197,7 +221,8 @@ class UsersController extends AbstractController {
         $form = $this->createForm(UserPermissionForm::class, $user, [
             'action' => $this->generateUrl('user_edit_permissions', ['userId' => $userId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'entityManager' => $this->getDoctrine()->getManager()
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -229,6 +254,9 @@ class UsersController extends AbstractController {
                 $projectsAccess->setUser($user);
                 $this->getUserProjectAccessRepository()->save($projectsAccess);
             }
+            /** @var $userManager UserManagerInterface */
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updateUser($user);
             $this->setInfoMessage($this->translate('page.users.user_edit_permissions.success', ['%email%' => $user->getEmail()]));
         }
         return $this->render('form/form.html.twig', [
@@ -236,15 +264,6 @@ class UsersController extends AbstractController {
             'sub_menu' => 'user_menu',
             'back_link' => $this->generateUrl('user_list')
         ]);
-    }
-
-    /**
-     * @return UserRepository
-     */
-    private function getUserRepository() {
-        /** @var UserRepository $repo */
-        $repo = $this->container->get('doctrine_entity_repository.user');
-        return $repo;
     }
 
     /**

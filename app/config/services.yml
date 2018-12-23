@@ -21,6 +21,12 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+    my.user_project_acl:
+        class: AppBundle\Lib\Project\Provider\UserProjectAcl
+        arguments: [ "@service_container" ]
+    my.user_acl:
+        class: AppBundle\Lib\User\Provider\UserAcl
+        arguments: [ "@service_container" ]
     my.data_builder:
         class: AppBundle\DataTableBuilder\AbstractDataTableBuilder
         arguments: [ "@service_container" ]
@@ -564,6 +570,12 @@ services:
         autowire: true
         autoconfigure: true
     AppBundle\DataTableType\ProjectsProgramDataTableType:
+        autowire: true
+        autoconfigure: true
+    AppBundle\DataTableType\OptionFieldsDataTableType:
+        autowire: true
+        autoconfigure: true
+    AppBundle\DataTableType\OptionFieldOptionsDataTableType:
         autowire: true
         autoconfigure: true
 # menus

@@ -27,6 +27,7 @@ class UserProgramAccess extends AbstractAuditable {
 
     /**
      * @ORM\ManyToOne(targetEntity="ProjectProgramme")
+     * @var ProjectProgramme
      */
     protected $program;
 
@@ -36,7 +37,7 @@ class UserProgramAccess extends AbstractAuditable {
     protected $hasAccess;
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId() {
         return $this->id;
@@ -57,7 +58,7 @@ class UserProgramAccess extends AbstractAuditable {
     }
 
     /**
-     * @return mixed
+     * @return ProjectProgramme
      */
     public function getProgram() {
         return $this->program;

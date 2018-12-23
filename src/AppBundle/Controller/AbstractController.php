@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Reporting;
+use AppBundle\Lib\Project\Provider\UserProjectAcl;
+use AppBundle\Lib\User\Provider\UserAcl;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -138,15 +140,10 @@ abstract class AbstractController extends Controller {
      *
      * @return string
      */
-    protected function generateUrl(
-        $route,
-        $parameters = array(),
-        $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
-    ) {
+    protected function generateUrl($route, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH) {
         if (!isset($parameters['locale'])) {
             $parameters['locale'] = $this->get('translator')->getLocale();
         }
-
         return $this->container->get('router')->generate($route, $parameters, $referenceType);
     }
 
@@ -155,8 +152,25 @@ abstract class AbstractController extends Controller {
         if (!isset($parameters['locale'])) {
             $parameters['locale'] = $this->get('translator')->getLocale();
         }
-
         return $this->redirect($this->generateUrl($route, $parameters), $status);
+    }
+
+    /**
+     * @return UserAcl
+     */
+    protected function getUserAcl() {
+        /** @var UserAcl $acl */
+        $acl = $this->get('my.user_acl');
+        return $acl;
+    }
+
+    /**
+     * @return UserProjectAcl
+     */
+    protected function getUserProjectAcl() {
+        /** @var UserProjectAcl $acl */
+        $acl = $this->get('my.user_project_acl');
+        return $acl;
     }
 
     /**

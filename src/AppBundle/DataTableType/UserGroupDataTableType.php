@@ -33,6 +33,17 @@ class UserGroupDataTableType extends AbstractDataTableType {
                 'searchable' => true,
                 'globalSearchable' => true,
             ])
+            ->add('program', TextColumn::class, [
+                'label' => 'datatable.user_group.program',
+                'raw' => false,
+                'className' => '',
+                'visible' => true,
+                'searchable' => true,
+                'globalSearchable' => true,
+                'data' => function (UserGroup $group) {
+                    return $group->getProgram()->getName($this->getLocale());
+                },
+            ])
             ->add('isActive', BoolColumn::class, [
                 'label' => 'datatable.user_group.isActive',
                 'className' => 'text-center',
@@ -62,7 +73,6 @@ class UserGroupDataTableType extends AbstractDataTableType {
                     ]));
                 },
             ])
-//            ->addOrderBy('createdAt', DataTable::SORT_DESCENDING)
             ->createAdapter(ORMAdapter::class, [
                 'entity' => UserGroup::class,
                 'query' => function (QueryBuilder $builder) {

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -21,7 +22,7 @@ class UsersGroupController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/user-group/list", name="user_group_list", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      *
@@ -45,7 +46,7 @@ class UsersGroupController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/user-group/create", name="user_group_create", requirements={"locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      *
@@ -59,7 +60,8 @@ class UsersGroupController extends AbstractController {
         $form = $this->createForm(UserGroupForm::class, $group, [
             'action' => $this->generateUrl('user_group_create'),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'entityManager' => $this->getDoctrine()->getManager()
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -78,7 +80,7 @@ class UsersGroupController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/user-group/edit/{groupId}", name="user_group_edit", requirements={"groupId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      * @param int $groupId
@@ -90,13 +92,17 @@ class UsersGroupController extends AbstractController {
     public function editAction(Request $request, int $groupId) {
         /** @var UserGroup $group */
         $group = $this->getDoctrine()->getRepository(UserGroup::class)->find($groupId);
+        if (!$group) {
+            throw new NotFoundHttpException();
+        }
         $this->setPageTitle($this->translate('page.users.edit_user_group.title', [
             '%name%' => $group->getName($request->getLocale())
         ]));
         $form = $this->createForm(UserGroupForm::class, $group, [
             'action' => $this->generateUrl('user_group_edit', ['groupId' => $groupId]),
             'method' => 'POST',
-            'locale' => $request->getLocale()
+            'locale' => $request->getLocale(),
+            'entityManager' => $this->getDoctrine()->getManager()
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -114,7 +120,7 @@ class UsersGroupController extends AbstractController {
 
     /**
      * @Route("/{locale}/admin/user-group/view/{groupId}", name="user_group_view", requirements={"groupId": "\d+", "locale": "%app.locales%"})
-     * @Security("is_granted('ROLE_APP_SUPER_ADMIN')")
+     * @Security("is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_APP_SUPER_ADMIN')")
      *
      * @param Request $request
      * @param int $groupId
@@ -124,6 +130,9 @@ class UsersGroupController extends AbstractController {
     public function viewAction(Request $request, int $groupId) {
         /** @var UserGroup $group */
         $group = $this->getDoctrine()->getRepository(UserGroup::class)->find($groupId);
+        if (!$group) {
+            throw new NotFoundHttpException();
+        }
         $this->setPageTitle($this->translate('page.users.view_user_group.title', [
             '%name%' => $group->getName($request->getLocale())
         ]));

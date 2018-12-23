@@ -45,12 +45,14 @@ class ProjectsProgramDataTableType extends AbstractDataTableType {
                     ProjectProgramme::TYPE_SUBPROGRAM => $this->translate('form.project.form.type.subprogram'),
                 ],
             ])
-            ->add('is_active', BoolColumn::class, [
+            ->add('is_active', MapColumn::class, [
                 'label' => 'datatable.project.program.isActive',
                 'className' => 'text-center',
-                'trueValue' => HtmlBuilderHelper::createSuccessSymbolHtml(1),
-                'falseValue' => HtmlBuilderHelper::createDangerSymbolHtml(0),
-                'nullValue' => '',
+                'raw' => true,
+                'map' => [
+                    true => HtmlBuilderHelper::createSuccessSymbolHtml(1),
+                    false => HtmlBuilderHelper::createDangerSymbolHtml(0),
+                ]
             ])
             ->add('view_link', TextColumn::class, [
                 'label' => 'msg.view',

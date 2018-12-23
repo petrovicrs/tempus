@@ -2,13 +2,16 @@
 
 namespace AppBundle\Form\UserForm;
 
-use AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType;
 use AppBundle\Entity\User;
+use AppBundle\Entity\UserGroup;
+use Doctrine\ORM\EntityManager;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use AdamQuaile\Bundle\FieldsetBundle\Form\FieldsetType;
 
 /**
  * Class UserPermissionForm
@@ -16,6 +19,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @package AppBundle\Form\User
  */
 class UserPermissionForm extends AbstractType {
+
+    /** @var EntityManager */
+    private $entityManager;
 
     /** @var string */
     private $locale;
@@ -25,7 +31,24 @@ class UserPermissionForm extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $this->locale = $options['locale'];
+        $this->entityManager = $options['entityManager'];
         $builder
+            ->add('userGroupFieldset', FieldsetType::class, [
+                'label' => false,
+                'legend' => 'form.user.access.group',
+                'attr' => [
+                    'class' => 'collection-element'
+                ],
+                'fields' => function(FormBuilderInterface $builder) {
+                    $builder
+                        ->add('userGroup', EntityType::class, [
+                            'class' => 'AppBundle:UserGroup',
+                            'choice_label' => 'name' . ucfirst($this->locale),
+                            'required' => false,
+                        ])
+                    ;
+                }
+            ])
             ->add('programsAccessAllowedFieldset', FieldsetType::class, [
                 'label' => false,
                 'legend' => 'form.user.access.programs',
@@ -37,7 +60,8 @@ class UserPermissionForm extends AbstractType {
                         ->add('programsAccess', CollectionType::class, [
                             'entry_type'  => UserProgramAccessForm::class,
                             'entry_options'  => [
-                                'locale' => $this->locale
+                                'locale' => $this->locale,
+                                'entityManager' => $this->entityManager
                             ],
                             'allow_add'    => true,
                             'label' => false,
@@ -89,7 +113,8 @@ class UserPermissionForm extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'locale' => 'en'
+            'locale' => 'en',
+            'entityManager' => null
         ]);
     }
 

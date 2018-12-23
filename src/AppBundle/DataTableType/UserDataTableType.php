@@ -4,9 +4,9 @@ namespace AppBundle\DataTableType;
 
 use AppBundle\Entity\User;
 use AppBundle\Util\HtmlBuilderHelper;
+use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Column\BoolColumn;
 use Omines\DataTablesBundle\DataTable;
-use Omines\DataTablesBundle\Column\MapColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\Column\NumberColumn;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
@@ -25,6 +25,7 @@ class UserDataTableType extends AbstractDataTableType {
      * @param array $typeOptions
      */
     public function configure(DataTable $dataTable, array $typeOptions) {
+        $accessibleUserIds = $typeOptions['accessibleUserIds'];
         $dataTable
             ->add('email', TextColumn::class, [
                 'label' => 'datatable.user.email',
@@ -97,6 +98,13 @@ class UserDataTableType extends AbstractDataTableType {
             ->addOrderBy('lastLogin', DataTable::SORT_DESCENDING)
             ->createAdapter(ORMAdapter::class, [
                 'entity' => User::class,
+                'query' => function (QueryBuilder $builder) use ($accessibleUserIds) {
+                    $builder
+                        ->select('u')
+                        ->from(User::class, 'u')
+                        ->where($builder->expr()->in('u.id', $accessibleUserIds));
+                    ;
+                },
                 'criteria' => [
                     new SearchCriteriaProvider(),
                 ],

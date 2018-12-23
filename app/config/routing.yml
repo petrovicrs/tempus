@@ -6,7 +6,9 @@ fos_user:
     prefix:   /{locale}
 _translation_webui:
     resource: "@TranslationBundle/Resources/config/routing_webui.yml"
-    prefix:  /admin
+    prefix:  /admin/f649f4bd58bcba407446b5d0d75e0e1c
+_bazinga_jstranslation:
+    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
 #
 #NelmioApiDocBundle:
 #    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"

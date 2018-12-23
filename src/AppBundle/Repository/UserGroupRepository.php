@@ -10,7 +10,7 @@ namespace AppBundle\Repository;
 class UserGroupRepository extends \Doctrine\ORM\EntityRepository {
 
     /**
-     * @param $user
+     * @param $group
      *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException

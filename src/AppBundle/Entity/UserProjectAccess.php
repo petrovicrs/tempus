@@ -27,11 +27,13 @@ class UserProjectAccess extends AbstractAuditable {
 
     /**
      * @ORM\ManyToOne(targetEntity="Project")
+     * @var Project
      */
     protected $project;
 
     /**
      * @ORM\Column(type="boolean")
+     * @var bool
      */
     protected $hasAccess;
 
@@ -57,21 +59,21 @@ class UserProjectAccess extends AbstractAuditable {
     }
 
     /**
-     * @return mixed
+     * @return Project
      */
     public function getProject() {
         return $this->project;
     }
 
     /**
-     * @param mixed $project
+     * @param Project $project
      */
     public function setProject($project) {
         $this->project = $project;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function getHasAccess() {
         return $this->hasAccess;

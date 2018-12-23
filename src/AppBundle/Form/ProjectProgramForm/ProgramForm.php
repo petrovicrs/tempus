@@ -63,7 +63,8 @@ class ProgramForm extends AbstractType {
                 },
                 'attr' => [
                     'class' => 'tree-structure-element',
-                    'data-tree-structure' => $this->getTreeStructure()
+                    'data-tree-title' => 'form.project.form.parent',
+                    'data-tree-structure' => $this->getTreeStructure(),
                 ]
             ])
             ->add('nameSr', TextType::class, [
